@@ -1,0 +1,85 @@
+Date : 2026-05-13 09:15:02
+Directory : c:\Users\User\Desktop\Projects\karibuassalam
+Total : 45 files,  7810 codes, 18 comments, 678 blanks, all 8506 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript JSX |         29 |      2,785 |          5 |        253 |      3,043 |
+| JSON           |          2 |      1,887 |          0 |          2 |      1,889 |
+| PostCSS        |          1 |      1,533 |          1 |        282 |      1,816 |
+| JavaScript     |         10 |      1,400 |          7 |        102 |      1,509 |
+| MS SQL         |          1 |        115 |          5 |         13 |        133 |
+| Markdown       |          1 |         67 |          0 |         25 |         92 |
+| HTML           |          1 |         23 |          0 |          1 |         24 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                 | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                    |         45 |      7,810 |         18 |        678 |      8,506 |
+| . (Files)                                                                            |          5 |      1,982 |          0 |         30 |      2,012 |
+| src                                                                                  |         39 |      5,713 |         13 |        635 |      6,361 |
+| src (Files)                                                                          |          3 |      1,628 |          2 |        291 |      1,921 |
+| src\components                                                                       |         14 |        706 |          1 |         72 |        779 |
+| src\context                                                                          |          1 |         36 |          1 |          8 |         45 |
+| src\data                                                                             |          6 |        879 |          6 |         31 |        916 |
+| src\lib                                                                              |          1 |         15 |          0 |          5 |         20 |
+| src\pages                                                                            |         12 |      1,948 |          2 |        164 |      2,114 |
+| src\utils                                                                            |          2 |        501 |          1 |         64 |        566 |
+| supabase                                                                             |          1 |        115 |          5 |         13 |        133 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                             | language       | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\User\Desktop\Projects\karibuassalam\README.md                               | Markdown       |         67 |          0 |         25 |         92 |
+| c:\Users\User\Desktop\Projects\karibuassalam\index.html                              | HTML           |         23 |          0 |          1 |         24 |
+| c:\Users\User\Desktop\Projects\karibuassalam\package-lock.json                       | JSON           |      1,866 |          0 |          1 |      1,867 |
+| c:\Users\User\Desktop\Projects\karibuassalam\package.json                            | JSON           |         21 |          0 |          1 |         22 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\App.jsx                             | JavaScript JSX |         80 |          0 |          7 |         87 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\Accordion.jsx            | JavaScript JSX |         58 |          0 |          4 |         62 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\CTAButton.jsx            | JavaScript JSX |         31 |          0 |          4 |         35 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\Card.jsx                 | JavaScript JSX |          7 |          0 |          1 |          8 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\EcoVillageCards.jsx      | JavaScript JSX |         50 |          0 |          4 |         54 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\FloatingWhatsAppHelp.jsx | JavaScript JSX |         38 |          0 |          4 |         42 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\Footer.jsx               | JavaScript JSX |        126 |          1 |         16 |        143 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\Hero.jsx                 | JavaScript JSX |         42 |          0 |          2 |         44 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\LanguageToggle.jsx       | JavaScript JSX |         21 |          0 |          3 |         24 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\Navbar.jsx               | JavaScript JSX |        153 |          0 |         10 |        163 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\PartnerGrid.jsx          | JavaScript JSX |         88 |          0 |         13 |        101 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\RetreatCard.jsx          | JavaScript JSX |         36 |          0 |          4 |         40 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\SEO.jsx                  | JavaScript JSX |         27 |          0 |          4 |         31 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\Section.jsx              | JavaScript JSX |         24 |          0 |          1 |         25 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\components\WhatsAppButton.jsx       | JavaScript JSX |          5 |          0 |          2 |          7 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\context\LanguageContext.jsx         | JavaScript JSX |         36 |          1 |          8 |         45 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\data\bookingOptions.js              | JavaScript     |         40 |          0 |          6 |         46 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\data\faq.js                         | JavaScript     |         61 |          1 |          1 |         63 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\data\i18n.js                        | JavaScript     |        159 |          2 |         10 |        171 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\data\phraseTranslations.js          | JavaScript     |        436 |          1 |          3 |        440 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\data\retreats.js                    | JavaScript     |        157 |          1 |          7 |        165 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\data\siteConfig.js                  | JavaScript     |         26 |          1 |          4 |         31 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\lib\supabaseClient.js               | JavaScript     |         15 |          0 |          5 |         20 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\main.jsx                            | JavaScript JSX |         15 |          1 |          2 |         18 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\About.jsx                     | JavaScript JSX |        109 |          0 |          9 |        118 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\AdminDashboard.jsx            | JavaScript JSX |        463 |          0 |         34 |        497 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Booking.jsx                   | JavaScript JSX |        407 |          0 |         35 |        442 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Campus.jsx                    | JavaScript JSX |         59 |          1 |          6 |         66 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Contact.jsx                   | JavaScript JSX |        212 |          0 |         21 |        233 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\FAQ.jsx                       | JavaScript JSX |         46 |          0 |          4 |         50 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Food.jsx                      | JavaScript JSX |         51 |          0 |          6 |         57 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Home.jsx                      | JavaScript JSX |        216 |          1 |         14 |        231 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\RetreatDetail.jsx             | JavaScript JSX |        162 |          0 |         14 |        176 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Retreats.jsx                  | JavaScript JSX |         64 |          0 |          6 |         70 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Rooms.jsx                     | JavaScript JSX |         57 |          0 |          6 |         63 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\pages\Zanzibar.jsx                  | JavaScript JSX |        102 |          0 |          9 |        111 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\styles.css                          | PostCSS        |      1,533 |          1 |        282 |      1,816 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\utils\bookingAutomation.js          | JavaScript     |        444 |          0 |         57 |        501 |
+| c:\Users\User\Desktop\Projects\karibuassalam\src\utils\contact.js                    | JavaScript     |         57 |          1 |          7 |         65 |
+| c:\Users\User\Desktop\Projects\karibuassalam\supabase\schema.sql                     | MS SQL         |        115 |          5 |         13 |        133 |
+| c:\Users\User\Desktop\Projects\karibuassalam\vite.config.js                          | JavaScript     |          5 |          0 |          2 |          7 |
+| Total                                                                                |                |      7,810 |         18 |        678 |      8,506 |
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
