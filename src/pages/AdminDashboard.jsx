@@ -14,6 +14,7 @@ import {
   onStaffAuthChange,
   signInStaff,
   signOutStaff,
+  subscribeToBookingRequests,
   summarizeBookingStats,
   updateBookingStatusRemote,
 } from "../utils/bookingAutomation";
@@ -45,6 +46,15 @@ function formatDate(value) {
   });
 }
 
+function formatSyncTime(value) {
+  if (!value) return "Waiting for first sync";
+  return value.toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+}
+
 function outboundUrl(record, channel) {
   const message = buildBookingMessage(record);
   if (channel === "email") {
@@ -67,6 +77,8 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [authForm, setAuthForm] = useState({ email: "", password: "" });
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [lastSyncedAt, setLastSyncedAt] = useState(null);
+  const [liveSyncState, setLiveSyncState] = useState("idle");
 
   const stats = useMemo(() => summarizeBookingStats(records), [records]);
   const filteredRecords = useMemo(
@@ -103,6 +115,7 @@ export default function AdminDashboard() {
         const nextRecords = await loadBookingRequests();
         if (!active) return;
         setRecords(nextRecords);
+        setLastSyncedAt(new Date());
         setSelectedId((current) =>
           nextRecords.some((record) => record.id === current) ? current : nextRecords[0]?.id || ""
         );
@@ -129,11 +142,12 @@ export default function AdminDashboard() {
     };
   }, [backendMode, tx]);
 
-  async function refresh() {
-    setIsLoading(true);
+  async function refresh({ silent = false } = {}) {
+    if (!silent) setIsLoading(true);
     try {
       const nextRecords = await loadBookingRequests();
       setRecords(nextRecords);
+      setLastSyncedAt(new Date());
       setSelectedId((current) =>
         nextRecords.some((record) => record.id === current) ? current : nextRecords[0]?.id || ""
       );
@@ -142,9 +156,33 @@ export default function AdminDashboard() {
       setNotice(`${tx("Could not load booking requests.")} ${error.message || ""}`.trim());
       return records;
     } finally {
-      setIsLoading(false);
+      if (!silent) setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (backendMode !== "supabase" || !session) return undefined;
+
+    let refreshing = false;
+
+    async function refreshQuietly() {
+      if (refreshing) return;
+      refreshing = true;
+      try {
+        await refresh({ silent: true });
+      } finally {
+        refreshing = false;
+      }
+    }
+
+    const unsubscribe = subscribeToBookingRequests(refreshQuietly, setLiveSyncState);
+    const pollTimer = window.setInterval(refreshQuietly, 30000);
+
+    return () => {
+      window.clearInterval(pollTimer);
+      unsubscribe();
+    };
+  }, [backendMode, session]);
 
   async function handleStatusChange(event) {
     if (!selectedRecord) return;
@@ -249,8 +287,17 @@ export default function AdminDashboard() {
         )}
       >
         <div className="mode-banner">
-          <strong>{tx("Backend mode")}:</strong>{" "}
-          {backendMode === "supabase" ? tx("Supabase") : tx("Local fallback")}
+          <span>
+            <strong>{tx("Backend mode")}:</strong>{" "}
+            {backendMode === "supabase" ? tx("Supabase") : tx("Local fallback")}
+          </span>
+          {backendMode === "supabase" && session ? (
+            <span className="admin-sync-status">
+              <span className={`sync-dot ${liveSyncState === "SUBSCRIBED" ? "" : "is-connecting"}`} aria-hidden="true" />
+              {tx(liveSyncState === "SUBSCRIBED" ? "Live inbox connected" : "Connecting live inbox")}
+              <small>{tx("Last sync")}: {formatSyncTime(lastSyncedAt)}</small>
+            </span>
+          ) : null}
         </div>
 
         {notice ? <p className="form-status" role="status">{notice}</p> : null}
@@ -476,7 +523,7 @@ export default function AdminDashboard() {
                     {tx("Open Email")}
                   </a>
                   <button type="button" className="btn btn-ghost btn-sm" onClick={handleDelete}>
-                    {tx("Delete local request")}
+                    {tx("Delete request")}
                   </button>
                 </div>
               </>

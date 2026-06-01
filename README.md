@@ -25,6 +25,8 @@ Setup steps:
 4. Create staff users in Supabase Auth.
 5. Add each staff user to `public.staff_profiles` using the SQL note at the bottom of `supabase/schema.sql`.
 
+Rerun `supabase/schema.sql` after pulling schema updates. It is idempotent and enables Realtime updates for the booking inbox.
+
 Without those variables, `/booking` and `/admin` use browser local storage as a fallback.
 
 ## Content Editing Guide
@@ -44,12 +46,14 @@ Without those variables, `/booking` and `/admin` use browser local storage as a 
 - Structured booking form:
   - Public route: `/booking`
   - Saves booking requests to Supabase when configured
-  - Falls back to browser local storage when Supabase keys are missing
+  - Falls back transparently to browser local storage when Supabase is missing or unreachable
+  - Prompts guests to send the prepared WhatsApp or email handoff if cloud sync is unavailable
   - Adds automated priority, room estimate, next action, and reply draft
 - Operations dashboard:
   - Local admin route: `/admin`
   - Tracks booking status from `new` through `confirmed`
   - Requires Supabase staff sign-in when Supabase is configured
+  - Refreshes on Supabase Realtime changes, with a quiet 30-second polling fallback
   - Includes sample inquiry creation for workflow testing
 - WhatsApp number is configured in `src/data/siteConfig.js` as:
   - `SITE.whatsAppPhone` (used for `wa.me`)

@@ -141,8 +141,10 @@ export default function Booking() {
       });
       setSubmitted(record);
       setStatus(
-        backendMode === "supabase"
+        record.storageMode === "supabase"
           ? tx("Booking request saved to Supabase. The team can now manage it from the dashboard.")
+          : record.storageMode === "local-fallback"
+            ? tx("Cloud sync is temporarily unavailable. Your request is prepared below. Please send it by WhatsApp or email so the team receives it.")
           : tx("Booking request saved locally. Add Supabase keys to sync it for the whole team.")
       );
     } catch (error) {

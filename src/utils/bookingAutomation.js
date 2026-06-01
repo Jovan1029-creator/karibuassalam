@@ -299,33 +299,42 @@ function writeBookingRequests(records) {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 }
 
-export function saveBookingRequest(data = {}) {
-  const record = createBookingRecord(data);
+function saveLocalFallback(record, storageMode = "local", syncError = "") {
+  const localRecord = {
+    ...record,
+    storageMode,
+    syncError,
+  };
   const records = readBookingRequests();
-  writeBookingRequests([record, ...records]);
-  return record;
+  writeBookingRequests([localRecord, ...records]);
+  return localRecord;
+}
+
+export function saveBookingRequest(data = {}) {
+  return saveLocalFallback(createBookingRecord(data));
 }
 
 export async function saveBookingRequestRemote(data = {}) {
   const record = createBookingRecord(data);
 
   if (!isSupabaseConfigured) {
-    const records = readBookingRequests();
-    writeBookingRequests([record, ...records]);
-    return record;
+    return saveLocalFallback(record);
   }
 
-  const { data: savedRow, error } = await supabase
-    .from(TABLE_NAME)
-    .insert(toDbRow(record))
-    .select()
-    .single();
+  try {
+    const { error } = await supabase.from(TABLE_NAME).insert(toDbRow(record));
 
-  if (error) {
-    throw error;
+    if (error) {
+      return saveLocalFallback(record, "local-fallback", error.message);
+    }
+  } catch (error) {
+    return saveLocalFallback(record, "local-fallback", error.message);
   }
 
-  return fromDbRow(savedRow);
+  return {
+    ...record,
+    storageMode: "supabase",
+  };
 }
 
 export async function loadBookingRequests() {
@@ -482,6 +491,27 @@ export function onStaffAuthChange(callback) {
     callback(session);
   });
   return () => data.subscription.unsubscribe();
+}
+
+export function subscribeToBookingRequests(callback, onStatus = () => {}) {
+  if (!isSupabaseConfigured) return () => {};
+
+  const channel = supabase
+    .channel("karibuassalam-admin-booking-requests")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: TABLE_NAME,
+      },
+      callback
+    )
+    .subscribe(onStatus);
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
 }
 
 export async function signInStaff(email, password) {

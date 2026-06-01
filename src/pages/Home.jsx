@@ -6,14 +6,36 @@ import PartnerGrid from "../components/PartnerGrid";
 import EcoVillageCards from "../components/EcoVillageCards";
 import RetreatCard from "../components/RetreatCard";
 import CTAButton from "../components/CTAButton";
+import LiveNowStrip from "../components/LiveNowStrip";
+import CampusMoments from "../components/CampusMoments";
 import SEO from "../components/SEO";
 import { retreats } from "../data/retreats";
 import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import heroImg from "../../pics/rooms/Image-2-edited-768x576.webp";
+import roomImg from "../../pics/rooms/camps-22-768x576.webp";
+import safariImg from "../../pics/zanzibarpics/Blue Safari.jpg";
 import storyImg1 from "../../pics/our stories/camps-1-768x1023.jpeg";
 import storyImg2 from "../../pics/our stories/education-1.png";
 import storyImg3 from "../../pics/our stories/Kidness-camp-2.png";
+
+const heroSlides = [
+  {
+    src: heroImg,
+    alt: "Beachfront swing and gathering area at Assalam Ecolodge in Zanzibar",
+    label: "Assalam Ecolodge",
+  },
+  {
+    src: roomImg,
+    alt: "Prepared guest room at Assalam Ecolodge",
+    label: "Eco-village stays",
+  },
+  {
+    src: safariImg,
+    alt: "Zanzibar coast and ocean excursion setting",
+    label: "Explore Zanzibar",
+  },
+];
 
 const sensoryCards = [
   {
@@ -106,11 +128,12 @@ export default function Home() {
         subtitle={tx(
           "Explore Zanzibar through sight, touch, hear, and smell while balancing guided experiences, community volunteering, and meaningful time at our eco-village base."
         )}
-        imageSrc={heroImg}
-        imageAlt={tx("Assalam eco-village setting with open gathering spaces in Zanzibar")}
+        slides={heroSlides}
         ctaPrimary={{ to: "/booking", label: t.nav.bookNow }}
         ctaSecondary={{ to: "/retreats", variant: "secondary", label: t.common.exploreRetreats }}
       />
+
+      <LiveNowStrip />
 
       <Section
         title={tx("A platform for volunteers and halal tourists.")}
@@ -165,6 +188,8 @@ export default function Home() {
       >
         <PartnerGrid />
       </Section>
+
+      <CampusMoments />
 
       <Section
         eyebrow={tx("Travel To Impact")}

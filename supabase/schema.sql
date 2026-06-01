@@ -63,6 +63,20 @@ execute function public.set_updated_at();
 alter table public.staff_profiles enable row level security;
 alter table public.booking_requests enable row level security;
 
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_publication_tables
+    where pubname = 'supabase_realtime'
+      and schemaname = 'public'
+      and tablename = 'booking_requests'
+  ) then
+    alter publication supabase_realtime add table public.booking_requests;
+  end if;
+end;
+$$;
+
 grant select on public.staff_profiles to authenticated;
 grant insert on public.booking_requests to anon, authenticated;
 grant select, update, delete on public.booking_requests to authenticated;
