@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ECO_VILLAGE_LINKS, NAV_LINKS, SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
@@ -23,6 +23,8 @@ export default function Navbar() {
   const [ecoMobileOpen, setEcoMobileOpen] = useState(false);
   const navRef = useRef(null);
   const { t, tx } = useLanguage();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     function onKeyDown(event) {
@@ -48,7 +50,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="site-header" ref={navRef}>
+    <header className={`site-header ${isHome ? "site-header--home" : ""}`} ref={navRef}>
       <div className="container nav-shell">
         <Link to="/" className="brand-mark" onClick={() => setMobileOpen(false)}>
           <img src={SITE.logoSrc} alt={tx("Karibu Assalam logo")} />
