@@ -4,8 +4,8 @@ import Card from "../components/Card";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
 import stoneSpiceImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
-import eastCoastImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
-import blueSafariImg from "../../pics/zanzibarpics/Blue Safari.jpg";
+import eastCoastImg from "../../pics/zanzibarpics/Blue Safari.jpg";
+import blueSafariImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
 import historyImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 
 const historicHighlights = [
@@ -40,7 +40,7 @@ export default function Zanzibar() {
       <SEO
         title={tx("Zanzibar Experiences | Karibu Assalam")}
         description={tx(
-          "Explore Zanzibar experiences including Stone Town and Spice Garden visits, East Coast tours, Blue Safari, and historic Stone Town highlights."
+          "Explore Zanzibar experiences including Spice Garden visits, East Coast tours, Blue Safari, Turtle Cave, and historic Stone Town highlights."
         )}
         image={stoneSpiceImg}
       />
@@ -58,13 +58,13 @@ export default function Zanzibar() {
       <Section title={tx("Experience Modules")} className="surface-section">
         <div className="stack">
           <ZanzibarModule
-            title={tx("Stonetown & Spice Garden")}
+            title={tx("Spice Garden")}
             image={stoneSpiceImg}
-            alt="Stone Town and spice garden excursion scene"
+            alt="Spice garden excursion scene"
           >
             <p>
               {tx(
-                "A combined Zanzibar module connecting Stone Town exploration with a Spice Garden visit."
+                "A guided Spice Garden visit introduces Zanzibar's spice heritage through plants, scents, local farming knowledge, and cultural storytelling."
               )}
             </p>
           </ZanzibarModule>
@@ -88,6 +88,18 @@ export default function Zanzibar() {
           >
             <p>
               {tx("Blue Safari features snorkeling, marine life, and sandbank-focused ocean experiences.")}
+            </p>
+          </ZanzibarModule>
+
+          <ZanzibarModule
+            title={tx("Swimming with Turtles")}
+            image={blueSafariImg}
+            alt="Turquoise ocean scenery for Turtle Cave excursion"
+          >
+            <p>
+              {tx(
+                "Turtle Cave offers swimming with turtles, feeding encounters, and relaxation-focused nature escapes."
+              )}
             </p>
           </ZanzibarModule>
 

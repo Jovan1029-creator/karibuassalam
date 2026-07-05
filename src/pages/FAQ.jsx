@@ -14,7 +14,7 @@ export default function FAQ() {
       <SEO
         title={tx("FAQ | Karibu Assalam")}
         description={tx(
-          "Frequently asked questions about packing, travel timing, languages, cancellation, rescheduling, force majeure, and campus visits for Karibu Assalam."
+          "Frequently asked questions about reservations, deposits, check-in, airport transfers, meals, Wi-Fi, rooms, family stays, tours, and Karibu Assalam facilities."
         )}
         image={faqImg}
       />

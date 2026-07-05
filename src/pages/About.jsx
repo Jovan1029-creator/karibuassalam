@@ -2,12 +2,32 @@ import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import spiceImg from "../../pics/aboutpic/Spice Gardens.webp";
-import beachesImg from "../../pics/aboutpic/Zanzibar’s Beaches.webp";
-import stoneTownImg from "../../pics/aboutpic/Stone Town.webp";
 import impactImg from "../../pics/aboutpic/Making a Difference in Zanzibar.jpeg";
 import whyUsImg from "../../pics/aboutpic/Why Us.webp";
 import purposeImg from "../../pics/aboutpic/Traveling with Purpose.jpg";
 import { useLanguage } from "../context/LanguageContext";
+
+const whyReasons = [
+  "Camps since 2017",
+  "Authentic local experience",
+  "Small and meaningful group experiences",
+  "Strong local community network",
+  "Travel that creates real impact",
+  "Nature and sustainability",
+  "Cultural immersion",
+  "Halal-friendly environment",
+  "Safe and supportive atmosphere",
+];
+
+const impactItems = [
+  "Education programs at Assalam International School",
+  "Youth leadership and girls empowerment camps",
+  "Empowerment projects for local men and women",
+  "Orphan camps for children across Zanzibar",
+  "Community development initiatives",
+  "Environmental and permaculture projects",
+  "Cultural exchange and global citizenship programs",
+];
 
 function SplitSection({ title, text, image, alt, reverse = false, callout }) {
   return (
@@ -30,86 +50,89 @@ export default function About() {
   return (
     <main id="main-content">
       <SEO
-        title={tx("About Karibu Assalam | Spice Island Travel With Purpose")}
+        title={tx("About Karibu Assalam | Purpose-Driven Eco-Village in Zanzibar")}
         description={tx(
-          "Learn how Karibu Assalam connects Zanzibar travel, community impact, and sustainable tourism through camps and retreats since 2017."
+          "Karibu Assalam is a purpose-driven eco-village in Zanzibar created by Assalam Community Foundation, hosting travelers, volunteers, students, and youth groups."
         )}
         image={spiceImg}
       />
 
       <Hero
-        eyebrow={tx("About Karibu Assalam")}
-        title={tx("Spice Island travel with purpose")}
+        eyebrow={tx("What is Karibu Assalam?")}
+        title={tx("A purpose-driven eco-village in Zanzibar")}
         subtitle={tx(
-          "Karibu Assalam explores Zanzibar's landscapes, culture, and community through a travel model that connects guided experiences with meaningful impact."
+          "We host travelers, volunteers, students, and youth groups who want to experience Zanzibar through community engagement, nature, and cultural exchange."
         )}
         imageSrc={spiceImg}
         imageAlt="Spice garden in Zanzibar"
         compact
       />
 
-      <Section title={tx("Zanzibar as the Spice Island")}>
+      <Section title={tx("What is Karibu Assalam?")}>
         <SplitSection
-          title={tx("Spice Gardens")}
+          title={tx("Created by Assalam Community Foundation")}
           text={tx(
-            "Zanzibar is known as the Spice Island, and spice gardens are part of the island's identity and travel experience."
+            "Karibu Assalam is a purpose-driven eco-village in Zanzibar created by the NGO Assalam Community Foundation. By joining Karibu Assalam, you directly support local youth programs, education initiatives, and community development."
           )}
-          image={spiceImg}
-          alt="Spice garden pathway in Zanzibar"
-        />
-        <SplitSection
-          title={tx("Beaches and Underwater Life")}
-          text={tx(
-            "Zanzibar's beaches and underwater life are central to the island experience, adding ocean exploration and coastal beauty to each journey."
-          )}
-          image={beachesImg}
-          alt="Zanzibar beach and ocean scenery"
-          reverse
+          image={purposeImg}
+          alt="Travelers participating in a purpose-driven activity in Zanzibar"
           callout={tx(
-            "The Rock Restaurant is known for a tide-dependent access experience on Zanzibar's coast."
+            "The experience is built for meaningful travel: community engagement, nature, cultural exchange, and responsible hospitality."
           )}
-        />
-        <SplitSection
-          title={tx("Stone Town")}
-          text={tx(
-            "Stone Town is a UNESCO World Heritage Site and remains one of the most important cultural and historical anchors in the Zanzibar experience."
-          )}
-          image={stoneTownImg}
-          alt="Stone Town streets and architecture in Zanzibar"
         />
       </Section>
 
-      <Section title={tx("Making a Difference in Zanzibar")} className="surface-section">
-        <SplitSection
-          title={tx("Community impact through Assalam Community Foundation")}
-          text={tx(
-            "Assalam Community Foundation is the nonprofit entity mentioned in Karibu Assalam's impact work. Kindness Camp includes service-oriented projects that connect travel with community benefit."
-          )}
-          image={impactImg}
-          alt="Community-focused program activities in Zanzibar"
-        />
+      <Section title={tx("Why Karibu Assalam")} className="surface-section">
+        <div className="split">
+          <div className="split-media">
+            <img src={whyUsImg} alt="Karibu Assalam camp participants" loading="lazy" decoding="async" />
+          </div>
+          <div className="content-card">
+            <ul className="check-list cols-2">
+              {whyReasons.map((reason) => (
+                <li key={reason}>{tx(reason)}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </Section>
 
-      <Section title={tx("Why Us?")}>
-        <SplitSection
-          title={tx("Camps since 2017")}
-          text={tx(
-            "Karibu Assalam has organized camps since 2017 with a focus on diversity, leadership, workshops, and building community through shared experiences."
-          )}
-          image={whyUsImg}
-          alt="Karibu Assalam camp participants during a group session"
-          reverse
-        />
+      <Section
+        eyebrow={tx("Impact")}
+        title={tx("The Impact You Create")}
+        subtitle={tx(
+          "Every stay, camp, and volunteer experience directly supports the work of Assalam Community Foundation and helps create opportunities for local youth and families in Zanzibar."
+        )}
+      >
+        <div className="impact-feature">
+          <div className="split-media">
+            <img src={impactImg} alt="Community-focused program activities in Zanzibar" loading="lazy" decoding="async" />
+          </div>
+          <div>
+            <h3>{tx("Your participation helps support")}</h3>
+            <ul className="check-list">
+              {impactItems.map((item) => (
+                <li key={item}>{tx(item)}</li>
+              ))}
+            </ul>
+            <p>
+              {tx(
+                "Together, we are building a stronger, more connected community, where travel creates real impact."
+              )}
+            </p>
+          </div>
+        </div>
       </Section>
 
       <Section title={tx("Traveling with Purpose")} className="surface-section">
         <SplitSection
-          title={tx("Sustainable tourism and community benefit")}
+          title={tx("Hospitality connected to community benefit")}
           text={tx(
-            "Traveling with purpose means balancing guided Zanzibar experiences with sustainable tourism values and meaningful community benefit."
+            "Karibu Assalam combines guided Zanzibar experiences with volunteer opportunities, balanced daily activities, and sustainable tourism values. The goal is not only to visit, but to contribute responsibly while learning through community connection."
           )}
-          image={purposeImg}
-          alt="Travelers participating in a purpose-driven activity in Zanzibar"
+          image={spiceImg}
+          alt="Spice garden pathway in Zanzibar"
+          reverse
         />
       </Section>
     </main>

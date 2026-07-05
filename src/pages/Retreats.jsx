@@ -3,7 +3,7 @@ import Section from "../components/Section";
 import RetreatCard from "../components/RetreatCard";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
-import { retreats, COMMON_INCLUSIONS } from "../data/retreats";
+import { retreats } from "../data/retreats";
 import { useLanguage } from "../context/LanguageContext";
 import heroImg from "../../pics/our retreats/Nature Retreat.webp";
 
@@ -32,28 +32,6 @@ export default function Retreats() {
         ctaPrimary={{ to: "/booking", label: tx("Book Now") }}
       />
 
-      <Section
-        title={tx("What is included in camp packages")}
-        subtitle={tx("Camp packages include the following core services and participation elements.")}
-      >
-        <div className="grid cards-2">
-          <ul className="check-list card plain">
-            {COMMON_INCLUSIONS.map((item) => (
-              <li key={item}>{tx(item)}</li>
-            ))}
-          </ul>
-          <div className="card plain note-card">
-            <h3>{tx("Accommodations-only booking is also available")}</h3>
-            <p>
-              {tx("Guests can book accommodations at Assalam Ecolodge without attending a camp.")}
-            </p>
-            <CTAButton to="/booking" variant="secondary">
-              {tx("Contact for accommodation booking")}
-            </CTAButton>
-          </div>
-        </div>
-      </Section>
-
       <Section title={tx("Our retreats and camps")} className="surface-section">
         <div className="grid cards-3">
           {retreats.map((retreat) => (
@@ -62,6 +40,21 @@ export default function Retreats() {
         </div>
         <div className="section-actions">
           <CTAButton to="/booking">{tx("Book Now")}</CTAButton>
+        </div>
+      </Section>
+
+      <Section
+        title={tx("Package details are confirmed with the team")}
+        subtitle={tx(
+          "Each retreat, camp, and stay can have different inclusions and exclusions. Contact the Karibu Assalam team for the current open retreat details before booking."
+        )}
+      >
+        <div className="content-card note-card">
+          <h3>{tx("Accommodations-only booking is also available")}</h3>
+          <p>{tx("Guests can book accommodations at Assalam Ecolodge without attending a camp.")}</p>
+          <CTAButton to="/booking" variant="secondary">
+            {tx("Contact for accommodation booking")}
+          </CTAButton>
         </div>
       </Section>
     </main>

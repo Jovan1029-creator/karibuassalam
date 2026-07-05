@@ -8,11 +8,11 @@ import RetreatCard from "../components/RetreatCard";
 import CTAButton from "../components/CTAButton";
 import LiveNowStrip from "../components/LiveNowStrip";
 import CampusMoments from "../components/CampusMoments";
+import Testimonials from "../components/Testimonials";
 import SEO from "../components/SEO";
 import { retreats } from "../data/retreats";
-import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
-import heroPoster from "../../AssalamHero/assalam-poster.jpg";
+import heroImage from "../../AssalamHero/assalam-hero.jpg";
 
 const sensoryCards = [
   {
@@ -65,6 +65,16 @@ const homePillars = [
   },
 ];
 
+const impactSupports = [
+  "Education programs at Assalam International School",
+  "Youth leadership and girls empowerment camps",
+  "Empowerment projects for local men and women",
+  "Orphan camps for children across Zanzibar",
+  "Community development initiatives",
+  "Environmental and permaculture projects",
+  "Cultural exchange and global citizenship programs",
+];
+
 export default function Home() {
   const { t, tx } = useLanguage();
 
@@ -75,7 +85,7 @@ export default function Home() {
         description={tx(
           "Karibu Assalam offers immersive sensory travel, volunteering, and halal-friendly retreat experiences in Zanzibar from the Assalam Ecolodge base."
         )}
-        image={heroPoster}
+        image={heroImage}
       />
 
       <LandingHero />
@@ -99,6 +109,41 @@ export default function Home() {
       </Section>
 
       <CampusMoments />
+
+      <Section
+        title={tx("Our Partners")}
+        subtitle={tx("Trusted organizations and institutions featured as partners of Karibu Assalam.")}
+        className="partners-section"
+      >
+        <PartnerGrid />
+      </Section>
+
+      <Section
+        eyebrow={tx("Travel To Impact")}
+        title={tx("The Impact You Create")}
+        subtitle={tx(
+          "At Karibu Assalam, your journey becomes part of something bigger. Every stay, camp, and volunteer experience directly supports Assalam Community Foundation and helps create opportunities for local youth and families in Zanzibar."
+        )}
+        className="impact-section surface-section"
+      >
+        <div className="impact-feature">
+          <div>
+            <h3>{tx("Your participation helps support")}</h3>
+            <p>
+              {tx(
+                "Together, we are building a stronger, more connected community, where travel creates real impact."
+              )}
+            </p>
+          </div>
+          <ul className="check-list cols-2">
+            {impactSupports.map((item) => (
+              <li key={item}>{tx(item)}</li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      <Testimonials />
 
       <Section
         title={tx("Experience, Volunteer, Balance")}
@@ -131,26 +176,6 @@ export default function Home() {
       </Section>
 
       <Section
-        eyebrow={tx("Travel To Impact")}
-        title={tx("Travel with purpose through community-based programs")}
-        subtitle={tx(
-          `${SITE.nonprofitName} supports service-focused activities, including Kindness Camp projects, while sustainable tourism helps connect travel with local community benefit.`
-        )}
-        className="impact-strip"
-      >
-        <div className="impact-panel">
-          <p>
-            {tx(
-              "Karibu Assalam combines guided Zanzibar experiences with volunteer opportunities and balanced daily activities. The goal is not only to visit, but to contribute responsibly while learning through community connection."
-            )}
-          </p>
-          <CTAButton to="/about" variant="secondary">
-            {tx("Learn more about our approach")}
-          </CTAButton>
-        </div>
-      </Section>
-
-      <Section
         title={tx("A platform for volunteers and halal tourists.")}
         subtitle={tx(
           "Our travel approach is built around immersive sensory experiences, community connection, and balanced daily activity."
@@ -164,14 +189,6 @@ export default function Home() {
             </Card>
           ))}
         </div>
-      </Section>
-
-      <Section
-        title={tx("Our Partners")}
-        subtitle={tx("Trusted organizations and institutions featured as partners of Karibu Assalam.")}
-        className="partners-section"
-      >
-        <PartnerGrid />
       </Section>
     </main>
   );

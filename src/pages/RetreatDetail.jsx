@@ -89,7 +89,13 @@ export default function RetreatDetail() {
         </div>
       </Section>
 
-      <Section title={tx("What's included")} className="surface-section">
+      <Section
+        title={tx("Package details")}
+        subtitle={tx(
+          "Inclusions and exclusions can vary by package and date. Please confirm current details with the Karibu Assalam team before booking."
+        )}
+        className="surface-section"
+      >
         <ul className="check-list cols-2">
           {retreat.inclusions.map((item) => (
             <li key={item}>{tx(item)}</li>
