@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import roomsImg from "../../pics/rooms/camps-22-768x576.webp";
 import foodImg from "../../pics/rooms/food-1.webp";
 import campusImg from "../../pics/rooms/Image-2-edited-768x576.webp";
-import Card from "./Card";
+import CTAButton from "./CTAButton";
 
 const cards = [
   {
@@ -33,20 +32,25 @@ export default function EcoVillageCards() {
   const { tx } = useLanguage();
 
   return (
-    <div className="grid cards-3">
+    <div className="circle-cards">
       {cards.map((card) => (
-        <Card key={card.title} className="link-card">
-          <div className="media-frame">
-            <img src={card.image} alt={tx(card.alt)} loading="lazy" decoding="async" />
+        <article className="circle-card" key={card.title}>
+          <div className="circle-card-photo">
+            <img
+              src={card.image}
+              alt={tx(card.alt)}
+              loading="lazy"
+              decoding="async"
+              width="768"
+              height="768"
+            />
           </div>
-          <div className="card-body">
-            <h3>{tx(card.title)}</h3>
-            <p>{tx(card.text)}</p>
-            <Link className="text-link" to={card.to}>
-              {tx("Learn more")}
-            </Link>
-          </div>
-        </Card>
+          <h3>{tx(card.title)}</h3>
+          <p>{tx(card.text)}</p>
+          <CTAButton to={card.to} variant="secondary" size="sm">
+            {tx("View more")}
+          </CTAButton>
+        </article>
       ))}
     </div>
   );

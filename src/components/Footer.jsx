@@ -72,14 +72,14 @@ export default function Footer() {
               {SITE.brandName}
             </h2>
             <Link to="/" className="brand-mark">
-              <img src={SITE.logoSrc} alt={tx("Karibu Assalam logo")} />
+              <img src={SITE.logoSrc} alt={tx("Karibu Assalam logo")} width="44" height="44" />
               <span>{SITE.brandName}</span>
             </Link>
             <p className="footer-tagline">{tx(SITE.tagline)}</p>
           </section>
 
-          <nav className="footer-col" aria-label="Footer navigation">
-            <h2 className="footer-heading">{tx("Explore")}</h2>
+          <nav className="footer-col" aria-label={tx("Explore")}>
+            <p className="footer-heading">{tx("Explore")}</p>
             <ul className="footer-links">
               {NAV_LINKS.map((link) => (
                 <li key={link.to}>
@@ -89,8 +89,8 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <nav className="footer-col" aria-label="Eco-village navigation">
-            <h2 className="footer-heading">{t.nav.ecoVillage}</h2>
+          <nav className="footer-col" aria-label={t.nav.ecoVillage}>
+            <p className="footer-heading">{t.nav.ecoVillage}</p>
             <ul className="footer-links">
               {ECO_VILLAGE_LINKS.map((link) => (
                 <li key={link.to}>
@@ -100,10 +100,8 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <section className="footer-col footer-col-contact" aria-labelledby="footer-contact-heading">
-            <h2 id="footer-contact-heading" className="footer-heading">
-              {t.nav.contact}
-            </h2>
+          <section className="footer-col footer-col-contact" aria-label={t.nav.contact}>
+            <p className="footer-heading">{t.nav.contact}</p>
 
             <ul className="footer-contact-list">
               <FooterContactItem icon="phone" label={tx("Phone")}>

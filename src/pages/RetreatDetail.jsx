@@ -10,8 +10,12 @@ import { getRetreatBySlug, retreats } from "../data/retreats";
 import { buildMailtoUrl } from "../utils/contact";
 import { useLanguage } from "../context/LanguageContext";
 
-function formatPrice(value, tx) {
-  return `${tx("From")} ${value}€`;
+function formatPrice(value, language) {
+  return new Intl.NumberFormat(language, {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(value);
 }
 
 function itineraryHeading(retreat, tx) {
@@ -72,14 +76,14 @@ export default function RetreatDetail() {
         <div className="facts-strip">
           <div className="fact-item">
             <span>{tx("Price")}</span>
-            <strong>{formatPrice(retreat.priceFrom, tx)}</strong>
+            <strong>
+              {tx("From")} {formatPrice(retreat.priceFrom, language)}
+            </strong>
           </div>
           <div className="fact-item">
             <span>{tx("Duration")}</span>
             <strong>
-              {retreat.durationDays
-                ? `${retreat.durationDays}-${tx("day experience")}`
-                : tx("See sample day-by-day plan")}
+              {`${retreat.durationDays ?? retreat.itineraryDays.length} ${tx("days")}`}
             </strong>
           </div>
           <div className="fact-item">
@@ -114,7 +118,7 @@ export default function RetreatDetail() {
       <Section
         title={itineraryHeading(retreat, tx)}
         subtitle={tx(
-          "Day-by-day structure shown below uses only provided retreat facts and general program wording for unspecified days."
+          "A typical day-by-day flow. Exact activities are confirmed with the team when you book."
         )}
       >
         <Accordion
@@ -134,14 +138,15 @@ export default function RetreatDetail() {
             <p>
               {tx("Contact Karibu Assalam for booking details, availability, and next steps for")} {tx(retreat.title)}.
             </p>
-            <div className="inline-actions">
-              <WhatsAppButton payload={bookingPayload} label={tx("Send via WhatsApp")} />
-              <CTAButton href={buildMailtoUrl(bookingPayload)} variant="secondary">
+            <CTAButton to={`/booking?retreat=${retreat.slug}`} size="lg">
+              {tx("Check dates and availability")}
+            </CTAButton>
+            <div className="secondary-actions">
+              <span>{tx("Prefer to write directly?")}</span>
+              <WhatsAppButton payload={bookingPayload} label={tx("Send via WhatsApp")} asLink />
+              <a className="text-link" href={buildMailtoUrl(bookingPayload)}>
                 {tx("Send via Email")}
-              </CTAButton>
-              <CTAButton to={`/booking?retreat=${retreat.slug}`} variant="ghost">
-                {tx("Open booking form")}
-              </CTAButton>
+              </a>
             </div>
           </div>
           <div className="booking-panel-side">

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import TornEdge from "./TornEdge";
 import { Link } from "react-router-dom";
 import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
@@ -66,6 +67,7 @@ export default function LiveNowStrip() {
           </a>
         </div>
       </div>
+      <TornEdge position="bottom" color="var(--bg)" className="torn-abs torn-abs-bottom" />
     </section>
   );
 }

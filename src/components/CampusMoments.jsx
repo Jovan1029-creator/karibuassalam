@@ -3,9 +3,13 @@ import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import workshopImg from "../../pics/our stories/vassalam-activities35.png";
 import communityImg from "../../pics/our stories/vassalam-activities40.png";
+import mealsImg from "../../pics/our stories/vassalam-activities33.png";
+import educationImg from "../../pics/our stories/education-1.png";
 import coastImg from "../../pics/rooms/Image-2-edited-768x576.webp";
 import roomImg from "../../pics/rooms/camps-22-768x576.webp";
 
+// Six images fill all eight cells of the 4 x 2 mosaic: one tall, one wide, four
+// single. Adding or removing an entry means re-checking the spans.
 const moments = [
   {
     image: workshopImg,
@@ -29,6 +33,18 @@ const moments = [
     image: communityImg,
     alt: "Visitors and local children together during a community activity",
     label: "Community moments",
+    className: "",
+  },
+  {
+    image: mealsImg,
+    alt: "Guests and the kitchen team sharing a meal together",
+    label: "Shared meals",
+    className: "",
+  },
+  {
+    image: educationImg,
+    alt: "Participants working together during a hands-on workshop",
+    label: "Hands-on workshops",
     className: "",
   },
 ];
@@ -55,7 +71,14 @@ export default function CampusMoments() {
             rel="noopener noreferrer"
             aria-label={`${tx(moment.label)} - ${tx("open Instagram")}`}
           >
-            <img src={moment.image} alt={tx(moment.alt)} loading="lazy" decoding="async" />
+            <img
+              src={moment.image}
+              alt={tx(moment.alt)}
+              loading="lazy"
+              decoding="async"
+              width="768"
+              height="576"
+            />
             <span>{tx(moment.label)}</span>
           </a>
         ))}
@@ -63,7 +86,7 @@ export default function CampusMoments() {
       <div className="moments-footer">
         <p>{tx("For current photos and announcements, follow the team on Instagram.")}</p>
         <a className="btn btn-secondary" href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer">
-          {tx(`Follow ${SITE.instagramHandle}`)}
+          {tx("Follow us on Instagram")}
         </a>
       </div>
     </Section>

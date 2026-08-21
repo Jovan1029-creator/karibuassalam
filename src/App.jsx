@@ -1,8 +1,10 @@
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
+import TopBar from "./components/TopBar";
 import Navbar from "./components/Navbar";
+import SocialRail from "./components/SocialRail";
 import Footer from "./components/Footer";
-import FloatingWhatsAppHelp from "./components/FloatingWhatsAppHelp";
+import ContactDock from "./components/ContactDock";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Retreats from "./pages/Retreats";
@@ -14,6 +16,7 @@ import Campus from "./pages/Campus";
 import Rooms from "./pages/Rooms";
 import Food from "./pages/Food";
 import { useLanguage } from "./context/LanguageContext";
+import useScrollReveal from "./hooks/useScrollReveal";
 
 const Booking = lazy(() => import("./pages/Booking"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
@@ -55,12 +58,15 @@ function NotFound() {
 
 export default function App() {
   const { tx } = useLanguage();
+  const { pathname } = useLocation();
+  useScrollReveal([pathname]);
   return (
     <>
       <a className="skip-link" href="#main-content">
         {tx("Skip to main content")}
       </a>
       <ScrollToTop />
+      <TopBar />
       <Navbar />
       <Suspense fallback={<main id="main-content" className="page-shell"><section className="container page-hero compact"><p>{tx("Loading...")}</p></section></main>}>
         <Routes>
@@ -79,7 +85,8 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      <FloatingWhatsAppHelp />
+      <SocialRail />
+      <ContactDock />
       <Footer />
     </>
   );

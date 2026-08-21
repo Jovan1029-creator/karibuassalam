@@ -32,7 +32,7 @@ export default function Campus() {
           "An oceanside, multicultural campus environment designed for learning, community activities, and sustainability-focused living."
         )}
         imageSrc={campusImg}
-        imageAlt="Assalam eco-village campus gathering area"
+        imageAlt={tx("Assalam eco-village campus gathering area")}
         compact
       />
 

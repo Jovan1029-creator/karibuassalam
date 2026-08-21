@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
@@ -11,14 +11,8 @@ import {
   CONTACT_METHODS,
   GUEST_LANGUAGES,
   ROOM_TYPES,
-  PLANNING_CAPACITY,
 } from "../data/bookingOptions";
-import {
-  analyzeBookingDraft,
-  buildBookingMessage,
-  getBookingBackendMode,
-  saveBookingRequestRemote,
-} from "../utils/bookingAutomation";
+import { buildBookingMessage, saveBookingRequestRemote } from "../utils/bookingAutomation";
 import { useLanguage } from "../context/LanguageContext";
 import bookingImg from "../../pics/rooms/camps-22-768x576.webp";
 
@@ -71,18 +65,17 @@ export default function Booking() {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(null);
   const [status, setStatus] = useState("");
+  const [statusTone, setStatusTone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const backendMode = getBookingBackendMode();
+  const formRef = useRef(null);
 
   const selectedRetreat = retreats.find((retreat) => retreat.slug === form.retreatSlug);
-  const preview = useMemo(
-    () =>
-      analyzeBookingDraft({
-        ...form,
-        retreatTitle: selectedRetreat?.title,
-      }),
-    [form, selectedRetreat]
-  );
+
+  const nights = useMemo(() => {
+    if (!form.arrivalDate || !form.departureDate) return null;
+    const ms = new Date(form.departureDate) - new Date(form.arrivalDate);
+    return ms > 0 ? Math.round(ms / 86400000) : null;
+  }, [form.arrivalDate, form.departureDate]);
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -120,6 +113,7 @@ export default function Booking() {
     event.preventDefault();
     if (form.website.trim()) {
       setStatus(tx("Request received. The team will review it shortly."));
+      setStatusTone("success");
       return;
     }
 
@@ -127,11 +121,16 @@ export default function Booking() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
       setStatus(tx("Please fix the highlighted fields and try again."));
+      setStatusTone("error");
+      // Send the visitor straight to the first problem instead of making them
+      // hunt for red text.
+      formRef.current?.querySelector('[aria-invalid="true"]')?.focus();
       return;
     }
 
     setIsSubmitting(true);
-    setStatus(tx("Saving booking request..."));
+    setStatus(tx("Sending your request..."));
+    setStatusTone("");
 
     try {
       const record = await saveBookingRequestRemote({
@@ -140,15 +139,28 @@ export default function Booking() {
         source: "website-booking-form",
       });
       setSubmitted(record);
+      if (record.storageMode === "supabase") {
+        setStatus(
+          tx("Thanks — we have your request. The team replies within one day, usually on WhatsApp.")
+        );
+        setStatusTone("success");
+      } else {
+        // Anything other than a confirmed remote save means the request is not
+        // in the team's inbox. Say so and hand over a channel that works.
+        setStatus(
+          tx(
+            "We could not send your request just now. Please send it by WhatsApp or email below and the team will pick it up right away."
+          )
+        );
+        setStatusTone("error");
+      }
+    } catch {
       setStatus(
-        record.storageMode === "supabase"
-          ? tx("Booking request saved to Supabase. The team can now manage it from the dashboard.")
-          : record.storageMode === "local-fallback"
-            ? tx("Cloud sync is temporarily unavailable. Your request is prepared below. Please send it by WhatsApp or email so the team receives it.")
-          : tx("Booking request saved locally. Add Supabase keys to sync it for the whole team.")
+        tx(
+          "We could not send your request just now. Please send it by WhatsApp or email below and the team will pick it up right away."
+        )
       );
-    } catch (error) {
-      setStatus(`${tx("Booking request could not be saved.")} ${error.message || ""}`.trim());
+      setStatusTone("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -167,23 +179,21 @@ export default function Booking() {
         eyebrow={tx("Booking")}
         title={tx("Start a structured booking request")}
         subtitle={tx(
-          "Share dates, guest details, room needs, and preferred contact method so the team can reply faster and avoid lost bookings."
+          "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day."
         )}
         imageSrc={bookingImg}
-        imageAlt="Assalam Ecolodge room and campus area"
+        imageAlt={tx("Room at Assalam Ecolodge prepared for guests")}
         compact
       />
 
       <Section
         title={tx("Booking request")}
         subtitle={tx(
-          backendMode === "supabase"
-            ? "This automation layer saves each request in Supabase, triages it, drafts a reply, and prepares WhatsApp or email handoff."
-            : "This automation layer is using local storage until Supabase environment keys are configured."
+          "Share your dates and group details and the team will confirm availability and the next steps."
         )}
       >
         <div className="booking-layout">
-          <form className="booking-form" onSubmit={handleSubmit} noValidate>
+          <form className="booking-form" onSubmit={handleSubmit} ref={formRef} noValidate>
             <div className="form-grid two">
               <div className="form-field">
                 <label htmlFor="bookingType">{tx("Request type")}</label>
@@ -198,7 +208,10 @@ export default function Booking() {
 
               <div className="form-field">
                 <label htmlFor="retreatSlug">{tx("Retreat or camp")}</label>
-                <select id="retreatSlug" name="retreatSlug" value={form.retreatSlug} onChange={handleChange}>
+                <select id="retreatSlug" name="retreatSlug" value={form.retreatSlug} onChange={handleChange}
+                aria-invalid={errors.retreatSlug ? "true" : undefined}
+                aria-describedby={errors.retreatSlug ? "retreatSlug-error" : undefined}
+              >
                   <option value="">{tx("Not sure yet")}</option>
                   {retreats.map((retreat) => (
                     <option key={retreat.slug} value={retreat.slug}>
@@ -206,7 +219,7 @@ export default function Booking() {
                     </option>
                   ))}
                 </select>
-                {errors.retreatSlug && <p className="field-error">{errors.retreatSlug}</p>}
+                {errors.retreatSlug && <p className="field-error" id="retreatSlug-error">{errors.retreatSlug}</p>}
               </div>
             </div>
 
@@ -220,8 +233,10 @@ export default function Booking() {
                   min={todayString()}
                   value={form.arrivalDate}
                   onChange={handleChange}
-                />
-                {errors.arrivalDate && <p className="field-error">{errors.arrivalDate}</p>}
+                aria-invalid={errors.arrivalDate ? "true" : undefined}
+                aria-describedby={errors.arrivalDate ? "arrivalDate-error" : undefined}
+              />
+                {errors.arrivalDate && <p className="field-error" id="arrivalDate-error">{errors.arrivalDate}</p>}
               </div>
 
               <div className="form-field">
@@ -233,16 +248,21 @@ export default function Booking() {
                   min={form.arrivalDate || todayString()}
                   value={form.departureDate}
                   onChange={handleChange}
-                />
-                {errors.departureDate && <p className="field-error">{errors.departureDate}</p>}
+                aria-invalid={errors.departureDate ? "true" : undefined}
+                aria-describedby={errors.departureDate ? "departureDate-error" : undefined}
+              />
+                {errors.departureDate && <p className="field-error" id="departureDate-error">{errors.departureDate}</p>}
               </div>
             </div>
 
             <div className="form-grid three">
               <div className="form-field">
                 <label htmlFor="adults">{tx("Adults")}</label>
-                <input id="adults" name="adults" type="number" min="1" value={form.adults} onChange={handleChange} />
-                {errors.adults && <p className="field-error">{errors.adults}</p>}
+                <input id="adults" name="adults" type="number" min="1" value={form.adults} onChange={handleChange}
+                aria-invalid={errors.adults ? "true" : undefined}
+                aria-describedby={errors.adults ? "adults-error" : undefined}
+              />
+                {errors.adults && <p className="field-error" id="adults-error">{errors.adults}</p>}
               </div>
 
               <div className="form-field">
@@ -306,8 +326,11 @@ export default function Booking() {
             <div className="form-grid two">
               <div className="form-field">
                 <label htmlFor="name">{tx("Your Name")}</label>
-                <input id="name" name="name" value={form.name} onChange={handleChange} autoComplete="name" />
-                {errors.name && <p className="field-error">{errors.name}</p>}
+                <input id="name" name="name" value={form.name} onChange={handleChange} autoComplete="name"
+                aria-invalid={errors.name ? "true" : undefined}
+                aria-describedby={errors.name ? "name-error" : undefined}
+              />
+                {errors.name && <p className="field-error" id="name-error">{errors.name}</p>}
               </div>
 
               <div className="form-field">
@@ -326,14 +349,19 @@ export default function Booking() {
                   value={form.email}
                   onChange={handleChange}
                   autoComplete="email"
-                />
-                {errors.email && <p className="field-error">{errors.email}</p>}
+                aria-invalid={errors.email ? "true" : undefined}
+                aria-describedby={errors.email ? "email-error" : undefined}
+              />
+                {errors.email && <p className="field-error" id="email-error">{errors.email}</p>}
               </div>
 
               <div className="form-field">
                 <label htmlFor="phone">{tx("Phone Number")}</label>
-                <input id="phone" name="phone" value={form.phone} onChange={handleChange} autoComplete="tel" />
-                {errors.phone && <p className="field-error">{errors.phone}</p>}
+                <input id="phone" name="phone" value={form.phone} onChange={handleChange} autoComplete="tel"
+                aria-invalid={errors.phone ? "true" : undefined}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
+              />
+                {errors.phone && <p className="field-error" id="phone-error">{errors.phone}</p>}
               </div>
             </div>
 
@@ -376,63 +404,94 @@ export default function Booking() {
               <input id="website" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={handleChange} />
             </div>
 
-            <div className="inline-actions">
-              <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                {tx(isSubmitting ? "Saving..." : "Save booking request")}
-              </button>
-              <CTAButton to="/contact" variant="secondary">
-                {tx("Use direct contact instead")}
-              </CTAButton>
-            </div>
+            <button type="submit" className="btn btn-primary btn-lg" disabled={isSubmitting}>
+              {isSubmitting ? tx("Sending your request...") : tx("Send request")}
+            </button>
 
-            {status && <p className="form-status" role="status">{status}</p>}
+            <p className="secondary-actions">
+              <Link className="text-link" to="/contact">
+                {tx("Use direct contact instead")}
+              </Link>
+            </p>
+
+            {status && (
+              <p
+                className={"form-status " + (statusTone ? "is-" + statusTone : "")}
+                role="status"
+                aria-live="polite"
+              >
+                {status}
+              </p>
+            )}
           </form>
 
-          <aside className="automation-card" aria-label={tx("Automation preview")}>
-            <p className="eyebrow">{tx("Automation preview")}</p>
-            <h3>{tx("What the system prepares")}</h3>
-            <dl className="automation-metrics">
-              <div>
-                <dt>{tx("Priority")}</dt>
-                <dd>
-                  <span className={`status-pill priority-${preview.priority}`}>{tx(preview.priority)}</span>
-                </dd>
-              </div>
-              <div>
-                <dt>{tx("Estimated rooms")}</dt>
-                <dd>{preview.roomsNeeded}</dd>
-              </div>
-              <div>
-                <dt>{tx("Trip nights")}</dt>
-                <dd>{preview.nights ?? tx("Not set")}</dd>
-              </div>
-              <div>
-                <dt>{tx("Timing")}</dt>
-                <dd>{tx(preview.timing)}</dd>
-              </div>
-            </dl>
-            <div className="automation-note">
-              <strong>{tx("Next action")}</strong>
-              <p>{tx(preview.nextAction)}</p>
+          <aside className="booking-aside" aria-label={tx("What happens next")}>
+            <div className="content-card">
+              <h3>{tx("What happens next")}</h3>
+              <ol className="next-steps">
+                <li>{tx("The team checks availability for your dates.")}</li>
+                <li>{tx("You get a reply with options, pricing, and what is included.")}</li>
+                <li>
+                  {tx("A 20% deposit confirms a camp booking. Individual stays can be paid on arrival.")}
+                </li>
+              </ol>
             </div>
-            <p className="small-note">{tx(PLANNING_CAPACITY.note)}</p>
+
+            <div className="content-card">
+              <h3>{tx("Your trip so far")}</h3>
+              <dl className="trip-summary">
+                <div>
+                  <dt>{tx("Arrival")}</dt>
+                  <dd>{form.arrivalDate || tx("Not set")}</dd>
+                </div>
+                <div>
+                  <dt>{tx("Departure")}</dt>
+                  <dd>{form.departureDate || tx("Not set")}</dd>
+                </div>
+                <div>
+                  <dt>{tx("Trip nights")}</dt>
+                  <dd>{nights ?? tx("Not set")}</dd>
+                </div>
+                <div>
+                  <dt>{tx("Guests")}</dt>
+                  <dd>
+                    {(Number(form.adults) || 0) + (Number(form.children) || 0)} {tx("guest(s)")}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
+            <div className="content-card">
+              <h3>{tx("Questions in the meantime?")}</h3>
+              <div className="aside-contact">
+                <a
+                  href={`https://wa.me/${SITE.whatsAppPhone}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {tx("Message us on WhatsApp")}
+                </a>
+                <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+              </div>
+            </div>
 
             {submitted ? (
               <div className="receipt-card">
-                <p className="eyebrow">{tx("Saved")}</p>
-                <h3>{submitted.id}</h3>
-                <p>{tx(submitted.automationSummary)}</p>
+                <h3>{tx("Send it straight to the team")}</h3>
+                <p>{tx("You can also forward this request yourself:")}</p>
                 <div className="inline-actions">
-                  <a className="btn btn-primary btn-sm" href={bookingMessageUrl(submitted, "whatsapp")} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="btn btn-primary btn-sm"
+                    href={bookingMessageUrl(submitted, "whatsapp")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {tx("Send via WhatsApp")}
                   </a>
                   <a className="btn btn-secondary btn-sm" href={bookingMessageUrl(submitted, "email")}>
                     {tx("Send via Email")}
                   </a>
                 </div>
-                <Link className="text-link" to="/admin">
-                  {tx("Open admin dashboard")}
-                </Link>
               </div>
             ) : null}
           </aside>

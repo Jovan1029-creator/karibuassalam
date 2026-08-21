@@ -1,14 +1,23 @@
 import Hero from "../components/Hero";
 import Section from "../components/Section";
-import RetreatCard from "../components/RetreatCard";
+import Showcase from "../components/Showcase";
+import Wave from "../components/Wave";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import { retreats } from "../data/retreats";
 import { useLanguage } from "../context/LanguageContext";
 import heroImg from "../../pics/our retreats/Nature Retreat.webp";
 
+function formatPrice(value, language) {
+  return new Intl.NumberFormat(language, {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
 export default function Retreats() {
-  const { tx } = useLanguage();
+  const { tx, language } = useLanguage();
 
   return (
     <main id="main-content">
@@ -24,24 +33,54 @@ export default function Retreats() {
         eyebrow={tx("Retreats")}
         title={tx("Retreats & Camps at Assalam Ecolodge")}
         subtitle={tx(
-          "Karibu Assalam offers retreats and camps from Assalam Ecolodge, with the provided framing of the only eco-village in Zanzibar."
+          "Every camp runs from Assalam Ecolodge, the only eco-village in Zanzibar. Meals, accommodation, guided tours and airport transfers are included."
         )}
         imageSrc={heroImg}
-        imageAlt="Nature retreat scenery at Assalam Ecolodge"
+        imageAlt={tx("Nature retreat scenery at Assalam Ecolodge")}
         compact
-        ctaPrimary={{ to: "/booking", label: tx("Book Now") }}
+        ctaPrimary={{ to: "/booking", label: tx("Check dates and availability") }}
       />
 
-      <Section title={tx("Our retreats and camps")} className="surface-section">
-        <div className="grid cards-3">
-          {retreats.map((retreat) => (
-            <RetreatCard key={retreat.slug} retreat={retreat} />
+      <div className="wave-band">
+        <Wave position="top" color="var(--bg)" />
+
+        <div className="set-intro">
+          <p className="eyebrow">{tx("Our retreats and camps")}</p>
+          <h2>{tx("Six ways to spend a week in Zanzibar")}</h2>
+          <p className="lead">
+            {tx(
+              "Each camp keeps the same rhythm — guided days, shared meals, time with the community — and changes what sits at its centre."
+            )}
+          </p>
+        </div>
+
+        {/* Each retreat gets a full row rather than a card, alternating sides. */}
+        <div className="showcase-set">
+          {retreats.map((retreat, index) => (
+            <Showcase
+              key={retreat.slug}
+              reversed={index % 2 === 1}
+              priority={index === 0}
+              name={tx(retreat.title)}
+              promise={tx(retreat.shortPromise)}
+              facts={retreat.highlights.slice(0, 3).map((item) => tx(item))}
+              price={
+                <>
+                  {tx("From")} <strong>{formatPrice(retreat.priceFrom, language)}</strong>{" "}
+                  {"\u00B7"} {retreat.durationDays ?? retreat.itineraryDays.length} {tx("days")}
+                </>
+              }
+              image={retreat.heroImage}
+              alt={`${tx(retreat.title)} ${tx("retreat preview")}`}
+              imageWidth={768}
+              imageHeight={614}
+              cta={{ to: `/retreats/${retreat.slug}`, label: tx("View details") }}
+            />
           ))}
         </div>
-        <div className="section-actions">
-          <CTAButton to="/booking">{tx("Book Now")}</CTAButton>
-        </div>
-      </Section>
+
+        <Wave position="bottom" color="var(--bg)" />
+      </div>
 
       <Section
         title={tx("Package details are confirmed with the team")}

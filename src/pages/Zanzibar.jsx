@@ -22,7 +22,7 @@ function ZanzibarModule({ title, image, alt, children }) {
   return (
     <Card className="zanzibar-module">
       <div className="media-frame wide">
-        <img src={image} alt={alt} loading="lazy" decoding="async" />
+        <img src={image} alt={alt} loading="lazy" decoding="async" width="1024" height="512" />
       </div>
       <div className="card-body">
         <h3>{title}</h3>
@@ -51,16 +51,16 @@ export default function Zanzibar() {
           "Discover curated Zanzibar modules that combine culture, coastline, and heritage landmarks."
         )}
         imageSrc={stoneSpiceImg}
-        imageAlt="Stone Town and Spice Garden experience in Zanzibar"
+        imageAlt={tx("Stone Town and Spice Garden experience in Zanzibar")}
         compact
       />
 
       <Section title={tx("Experience Modules")} className="surface-section">
-        <div className="stack">
+        <div className="zanzibar-grid">
           <ZanzibarModule
             title={tx("Spice Garden")}
             image={stoneSpiceImg}
-            alt="Spice garden excursion scene"
+            alt={tx("Spice garden excursion scene")}
           >
             <p>
               {tx(
@@ -72,7 +72,7 @@ export default function Zanzibar() {
           <ZanzibarModule
             title={tx("East Coast Tour")}
             image={eastCoastImg}
-            alt="East Coast Tour scenery in Zanzibar"
+            alt={tx("East Coast Tour scenery in Zanzibar")}
           >
             <p>
               {tx(
@@ -84,7 +84,7 @@ export default function Zanzibar() {
           <ZanzibarModule
             title={tx("Blue Safari")}
             image={blueSafariImg}
-            alt="Blue Safari ocean excursion in Zanzibar"
+            alt={tx("Blue Safari ocean excursion in Zanzibar")}
           >
             <p>
               {tx("Blue Safari features snorkeling, marine life, and sandbank-focused ocean experiences.")}
@@ -94,7 +94,7 @@ export default function Zanzibar() {
           <ZanzibarModule
             title={tx("Swimming with Turtles")}
             image={blueSafariImg}
-            alt="Turquoise ocean scenery for Turtle Cave excursion"
+            alt={tx("Turquoise ocean scenery for Turtle Cave excursion")}
           >
             <p>
               {tx(
@@ -106,7 +106,7 @@ export default function Zanzibar() {
           <ZanzibarModule
             title={tx("Stonetown Historical Site")}
             image={historyImg}
-            alt="Historical site view in Stone Town Zanzibar"
+            alt={tx("Historical site view in Stone Town Zanzibar")}
           >
             <p>{tx("Highlights include:")}</p>
             <ul className="check-list cols-2">

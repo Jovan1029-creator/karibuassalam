@@ -40,6 +40,5 @@ export const BOOKING_STATUSES = [
 
 export const PLANNING_CAPACITY = {
   roomCapacityGuests: 5,
-  note:
-    "Planning uses the published 5-bed room capacity. Replace this with exact room inventory when the backend is connected.",
+  note: "Room estimates assume the standard 5-bed room.",
 };

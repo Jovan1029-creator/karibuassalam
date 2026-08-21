@@ -25,7 +25,7 @@ export default function Food() {
           "Daily dining at Assalam Ecolodge is built around fresh meals, hygienic preparation, and shared experiences."
         )}
         imageSrc={foodImg}
-        imageAlt="Farm-to-table meal prepared at Assalam Ecolodge"
+        imageAlt={tx("Farm-to-table meal prepared at Assalam Ecolodge")}
         compact
       />
 

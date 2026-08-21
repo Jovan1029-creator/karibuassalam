@@ -10,14 +10,14 @@ import zanzibarLogo from "../../pics/Our partners/Zanzibar_logo.png";
 import { useLanguage } from "../context/LanguageContext";
 
 const partners = [
-  { name: "Independent", logo: independentLogo, logoScale: 2.2 },
-  { name: "Universitat Munster", logo: munsterLogo },
+  { name: "Independent", logo: independentLogo },
+  { name: "Universität Münster", logo: munsterLogo },
   { name: "TEDx", logo: tedxLogo },
-  { name: "TIKA", logo: tikaLogo, logoScale: 1.16 },
-  { name: "Top", logo: topLogo, logoScale: 1.12 },
+  { name: "TIKA", logo: tikaLogo },
+  { name: "Top", logo: topLogo },
   { name: "TRT World", logo: trtLogo },
-  { name: "Turkish Airlines", logo: turkishAirlinesLogo, logoScale: 1.18 },
-  { name: "Zanzibar", logo: zanzibarLogo, logoScale: 1.15 },
+  { name: "Turkish Airlines", logo: turkishAirlinesLogo },
+  { name: "Zanzibar", logo: zanzibarLogo },
 ];
 
 export default function PartnerGrid() {
@@ -75,11 +75,11 @@ export default function PartnerGrid() {
       <figure className="partner-card" key={key}>
         <img
           src={partner.logo}
-          alt={isClone ? "" : `${tx(partner.name)} ${tx("logo")}`}
+          alt={isClone ? "" : `${partner.name} ${tx("logo")}`}
           loading="lazy"
           decoding="async"
+          height="38"
           aria-hidden={isClone ? "true" : undefined}
-          style={{ "--logo-scale": partner.logoScale ?? 1 }}
         />
       </figure>
     );

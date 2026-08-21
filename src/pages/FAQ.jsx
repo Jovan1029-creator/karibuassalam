@@ -23,7 +23,7 @@ export default function FAQ() {
         title={tx("Frequently asked questions")}
         subtitle={tx("Helpful guidance for planning your retreat, camp, or campus visit.")}
         imageSrc={faqImg}
-        imageAlt="Group activity associated with Karibu Assalam programs"
+        imageAlt={tx("Group activity associated with Karibu Assalam programs")}
         compact
       />
 

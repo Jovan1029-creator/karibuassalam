@@ -1,11 +1,10 @@
 // src\data\i18n.js
 import { phraseTranslations } from "./phraseTranslations";
 
-// src\data\i18n.js
 export const SUPPORTED_LANGUAGES = [
   { code: "en", label: "English", shortLabel: "EN" },
-  { code: "tr", label: "Turkish", shortLabel: "TR" },
-  { code: "de", label: "German", shortLabel: "DE" },
+  { code: "tr", label: "Türkçe", shortLabel: "TR" },
+  { code: "de", label: "Deutsch", shortLabel: "DE" },
 ];
 
 export const uiMessages = {
@@ -37,7 +36,7 @@ export const uiMessages = {
   tr: {
     nav: {
       home: "Ana Sayfa",
-      about: "Hakkında",
+      about: "Hakkımızda",
       retreats: "Kamplar",
       zanzibar: "Zanzibar",
       faq: "SSS",
@@ -52,10 +51,10 @@ export const uiMessages = {
     },
     common: {
       exploreRetreats: "Kampları Keşfet",
-      contactBooking: "Rezervasyon İletişimi",
-      whatsApp: "WhatsApp ile Gönder",
-      email: "E-posta ile Gönder",
-      learnMore: "Detaylar",
+      contactBooking: "Rezervasyon Ekibiyle İletişim",
+      whatsApp: "WhatsApp ile gönder",
+      email: "E-posta ile gönder",
+      learnMore: "Daha fazla",
       viewDetails: "İncele",
     },
   },
@@ -77,7 +76,7 @@ export const uiMessages = {
     },
     common: {
       exploreRetreats: "Retreats entdecken",
-      contactBooking: "Buchung kontaktieren",
+      contactBooking: "Buchungsteam kontaktieren",
       whatsApp: "Per WhatsApp senden",
       email: "Per E-Mail senden",
       learnMore: "Mehr erfahren",
@@ -113,58 +112,25 @@ const uiTextLookups = {
   de: buildUiTextLookup("de"),
 };
 
-const contactTranslations = {
-  en: {
-    "Booking Request": "Booking Request",
-    "Contact Request": "Contact Request",
-    "General inquiry": "General inquiry",
-    Hello: "Hello",
-    Intent: "Intent",
-    "Selected retreat": "Selected retreat",
-    Name: "Name",
-    Email: "Email",
-    Phone: "Phone",
-    "Message:": "Message:",
-    "Please share availability and next steps.": "Please share availability and next steps.",
-  },
-  tr: {
-    "Booking Request": "Rezervasyon Talebi",
-    "Contact Request": "Iletisim Talebi",
-    "General inquiry": "Genel soru",
-    Hello: "Merhaba",
-    Intent: "Konu",
-    "Selected retreat": "Secilen kamp",
-    Name: "Ad",
-    Email: "E-posta",
-    Phone: "Telefon",
-    "Message:": "Mesaj:",
-    "Please share availability and next steps.": "Lutfen uygunluk ve sonraki adimlari paylasin.",
-  },
-  de: {
-    "Booking Request": "Buchungsanfrage",
-    "Contact Request": "Kontaktanfrage",
-    "General inquiry": "Allgemeine Anfrage",
-    Hello: "Hallo",
-    Intent: "Anliegen",
-    "Selected retreat": "Ausgewaehltes Retreat",
-    Name: "Name",
-    Email: "E-Mail",
-    Phone: "Telefon",
-    "Message:": "Nachricht:",
-    "Please share availability and next steps.":
-      "Bitte teilen Sie Verfuegbarkeit und naechste Schritte mit.",
-  },
-};
+// In development, surface any string that reaches the UI without a translation
+// instead of silently falling back to English.
+const reportedMisses = new Set();
+
+function reportMissing(language, text) {
+  if (!import.meta.env?.DEV || language === "en") return;
+  const key = `${language}::${text}`;
+  if (reportedMisses.has(key)) return;
+  reportedMisses.add(key);
+  console.warn(`[i18n] missing ${language.toUpperCase()} translation: ${JSON.stringify(text)}`);
+}
 
 export function translateText(language, text) {
+  if (typeof text !== "string" || !text) return text;
   const lang = uiMessages[language] ? language : "en";
-  return (
-    phraseTranslations[lang]?.[text] ??
-    contactTranslations[lang]?.[text] ??
-    uiTextLookups[lang]?.[text] ??
-    phraseTranslations.en?.[text] ??
-    contactTranslations.en[text] ??
-    uiTextLookups.en[text] ??
-    text
-  );
+
+  const hit = phraseTranslations[lang]?.[text] ?? uiTextLookups[lang]?.[text];
+  if (hit !== undefined) return hit;
+
+  reportMissing(lang, text);
+  return text;
 }

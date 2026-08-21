@@ -38,7 +38,7 @@ function SplitSection({ title, text, image, alt, reverse = false, callout }) {
         {callout && <div className="callout">{callout}</div>}
       </div>
       <div className="split-media">
-        <img src={image} alt={alt} loading="lazy" decoding="async" />
+        <img src={image} alt={alt} loading="lazy" decoding="async" width="1024" height="768" />
       </div>
     </div>
   );
@@ -64,7 +64,7 @@ export default function About() {
           "We host travelers, volunteers, students, and youth groups who want to experience Zanzibar through community engagement, nature, and cultural exchange."
         )}
         imageSrc={spiceImg}
-        imageAlt="Spice garden in Zanzibar"
+        imageAlt={tx("Spice garden in Zanzibar")}
         compact
       />
 
@@ -75,7 +75,7 @@ export default function About() {
             "Karibu Assalam is a purpose-driven eco-village in Zanzibar created by the NGO Assalam Community Foundation. By joining Karibu Assalam, you directly support local youth programs, education initiatives, and community development."
           )}
           image={purposeImg}
-          alt="Travelers participating in a purpose-driven activity in Zanzibar"
+          alt={tx("Travelers participating in a purpose-driven activity in Zanzibar")}
           callout={tx(
             "The experience is built for meaningful travel: community engagement, nature, cultural exchange, and responsible hospitality."
           )}
@@ -85,7 +85,14 @@ export default function About() {
       <Section title={tx("Why Karibu Assalam")} className="surface-section">
         <div className="split">
           <div className="split-media">
-            <img src={whyUsImg} alt="Karibu Assalam camp participants" loading="lazy" decoding="async" />
+            <img
+              src={whyUsImg}
+              alt={tx("Karibu Assalam camp participants")}
+              loading="lazy"
+              decoding="async"
+              width="1024"
+              height="768"
+            />
           </div>
           <div className="content-card">
             <ul className="check-list cols-2">
@@ -106,7 +113,14 @@ export default function About() {
       >
         <div className="impact-feature">
           <div className="split-media">
-            <img src={impactImg} alt="Community-focused program activities in Zanzibar" loading="lazy" decoding="async" />
+            <img
+              src={impactImg}
+              alt={tx("Community-focused program activities in Zanzibar")}
+              loading="lazy"
+              decoding="async"
+              width="1024"
+              height="768"
+            />
           </div>
           <div>
             <h3>{tx("Your participation helps support")}</h3>
@@ -131,7 +145,7 @@ export default function About() {
             "Karibu Assalam combines guided Zanzibar experiences with volunteer opportunities, balanced daily activities, and sustainable tourism values. The goal is not only to visit, but to contribute responsibly while learning through community connection."
           )}
           image={spiceImg}
-          alt="Spice garden pathway in Zanzibar"
+          alt={tx("Spice garden pathway in Zanzibar")}
           reverse
         />
       </Section>

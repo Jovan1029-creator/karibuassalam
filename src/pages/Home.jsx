@@ -1,5 +1,6 @@
 // src\pages\Home.jsx
-import LandingHero from "../components/LandingHero";
+import HeroSlider from "../components/HeroSlider";
+import TornEdge from "../components/TornEdge";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import PartnerGrid from "../components/PartnerGrid";
@@ -12,7 +13,7 @@ import Testimonials from "../components/Testimonials";
 import SEO from "../components/SEO";
 import { retreats } from "../data/retreats";
 import { useLanguage } from "../context/LanguageContext";
-import heroImage from "../../AssalamHero/assalam-hero.jpg";
+import heroImage from "../../AssalamHero/hero-poster.webp";
 
 const sensoryCards = [
   {
@@ -88,12 +89,14 @@ export default function Home() {
         image={heroImage}
       />
 
-      <LandingHero />
+      <HeroSlider />
       <LiveNowStrip />
 
       <Section
+        id="plan-your-stay"
         eyebrow={tx("Plan Your Stay")}
         title={tx("Choose your Zanzibar experience")}
+        scriptTitle
         subtitle={tx(
           "Start with a retreat, family program, school camp, or nature-focused stay from the Assalam Ecolodge base."
         )}
@@ -112,8 +115,9 @@ export default function Home() {
 
       <Section
         title={tx("Our Partners")}
+        scriptTitle
         subtitle={tx("Trusted organizations and institutions featured as partners of Karibu Assalam.")}
-        className="partners-section"
+        className="partners-section band-sand"
       >
         <PartnerGrid />
       </Section>
@@ -121,15 +125,18 @@ export default function Home() {
       <Section
         eyebrow={tx("Travel To Impact")}
         title={tx("The Impact You Create")}
+        scriptTitle
         subtitle={tx(
           "At Karibu Assalam, your journey becomes part of something bigger. Every stay, camp, and volunteer experience directly supports Assalam Community Foundation and helps create opportunities for local youth and families in Zanzibar."
         )}
-        className="impact-section surface-section"
+        className="impact-section impact-band doorwork"
+        tornTop="var(--bg)"
+        tornBottom="var(--bg)"
       >
         <div className="impact-feature">
           <div>
             <h3>{tx("Your participation helps support")}</h3>
-            <p>
+            <p className="impact-note">
               {tx(
                 "Together, we are building a stronger, more connected community, where travel creates real impact."
               )}
@@ -147,6 +154,7 @@ export default function Home() {
 
       <Section
         title={tx("Experience, Volunteer, Balance")}
+        scriptTitle
         subtitle={tx(
           "Travel days combine guided Zanzibar experiences with community involvement and active time."
         )}
@@ -167,16 +175,18 @@ export default function Home() {
 
       <Section
         title={tx("Welcome to Our Eco-Village")}
+        scriptTitle
         subtitle={tx(
           "Explore the living spaces, dining experience, and campus environment that support each camp and retreat at Assalam Ecolodge."
         )}
-        className="surface-section"
+        className="band-mint"
       >
         <EcoVillageCards />
       </Section>
 
       <Section
         title={tx("A platform for volunteers and halal tourists.")}
+        scriptTitle
         subtitle={tx(
           "Our travel approach is built around immersive sensory experiences, community connection, and balanced daily activity."
         )}

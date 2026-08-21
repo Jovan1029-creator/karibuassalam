@@ -63,7 +63,9 @@ export default function Hero({
               aria-hidden={index === activeSlide ? undefined : "true"}
               loading={index === 0 && !compact ? "eager" : "lazy"}
               decoding="async"
-              fetchPriority={index === 0 && !compact ? "high" : "auto"}
+              width="1600"
+              height="900"
+              fetchpriority={index === 0 && !compact ? "high" : "auto"}
             />
           ))}
           <div className="hero-overlay" />

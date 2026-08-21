@@ -4,20 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f7f4ed" />
+    <title>Karibu Assalam | Halal-friendly eco-village retreats in Zanzibar</title>
     <meta
       name="description"
-      content="Karibu Assalam offers immersive halal-friendly travel and volunteer retreats in Zanzibar."
+      content="Karibu Assalam is a community-run eco-village in Zanzibar. Halal-friendly retreats, camps and volunteer stays that fund local schools, women's training and youth programmes."
     />
+
+    <!-- Static fallbacks so crawlers that do not run JavaScript — including
+         WhatsApp link previews — always see a title, description and image. -->
+    <meta property="og:site_name" content="Karibu Assalam" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Karibu Assalam | Halal-friendly eco-village retreats in Zanzibar" />
+    <meta
+      property="og:description"
+      content="A community-run eco-village in Zanzibar. Retreats, camps and volunteer stays that fund local schools, women's training and youth programmes."
+    />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Only the four weights actually used. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Manrope:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
-    <title>Karibu Assalam</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LodgingBusiness",
+        "name": "Karibu Assalam",
+        "description": "Community-run eco-village in Zanzibar offering halal-friendly retreats, camps and volunteer stays.",
+        "email": "camps@vassalam.org",
+        "telephone": "+255776138832",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Zanzibar",
+          "addressCountry": "TZ"
+        },
+        "sameAs": ["https://www.instagram.com/karibu.assalam"]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-  </html>
+</html>

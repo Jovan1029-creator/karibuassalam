@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
@@ -88,6 +88,9 @@ export default function Contact() {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
+  const [statusTone, setStatusTone] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const formRef = useRef(null);
 
   const intent = searchParams.get("intent") || "contact";
   const retreatSlug = searchParams.get("retreat") || "";
@@ -113,9 +116,12 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleOutbound(channel) {
+  async function handleSubmit(event) {
+    event.preventDefault();
+
     if (form.website.trim()) {
       setStatus(tx("Request received. Please use the visible contact channels if you need immediate support."));
+      setStatusTone("success");
       return;
     }
 
@@ -123,15 +129,54 @@ export default function Contact() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
       setStatus(tx("Please fix the highlighted fields and try again."));
+      setStatusTone("error");
+      formRef.current?.querySelector('[aria-invalid="true"]')?.focus();
       return;
     }
 
-    const url = channel === "whatsapp" ? buildWhatsAppUrl(payload) : buildMailtoUrl(payload);
-    setStatus(tx(channel === "whatsapp" ? "Opening WhatsApp..." : "Opening your email app..."));
-    if (channel === "whatsapp") {
-      window.open(url, "_blank", "noopener,noreferrer");
-    } else {
-      window.location.href = url;
+    setIsSending(true);
+    setStatus(tx("Sending..."));
+    setStatusTone("");
+
+    try {
+      // Contact enquiries go to the same place as bookings, so nothing is lost
+      // to an unconfigured mail client. Loaded on demand to keep the database
+      // client out of the main bundle.
+      const { saveBookingRequestRemote } = await import("../utils/bookingAutomation");
+      const record = await saveBookingRequestRemote({
+        bookingType: "enquiry",
+        retreatSlug,
+        retreatTitle: selectedRetreatLabel || undefined,
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+        guestLanguage: language,
+        preferredContact: "email",
+        source: "website-contact-form",
+      });
+
+      if (record.storageMode === "supabase") {
+        setStatus(tx("Thanks — we have your message. The team usually replies within one day."));
+        setStatusTone("success");
+        setForm(initialForm);
+      } else {
+        setStatus(
+          tx(
+            "We could not send your message just now. Please use WhatsApp or email below and we will get straight back to you."
+          )
+        );
+        setStatusTone("error");
+      }
+    } catch {
+      setStatus(
+        tx(
+          "We could not send your message just now. Please use WhatsApp or email below and we will get straight back to you."
+        )
+      );
+      setStatusTone("error");
+    } finally {
+      setIsSending(false);
     }
   }
 
@@ -148,10 +193,10 @@ export default function Contact() {
         eyebrow={tx("Contact")}
         title={tx("Contact and booking support")}
         subtitle={tx(
-          "Send your request through WhatsApp or email using the form below. No backend is required for this version."
+          "Tell us what you are planning and the team will reply, usually within one day."
         )}
         imageSrc={contactImg}
-        imageAlt="Traveling with purpose scene in Zanzibar"
+        imageAlt={tx("Traveling with purpose scene in Zanzibar")}
         compact
       />
 
@@ -214,11 +259,14 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="contact-form" onSubmit={(e) => e.preventDefault()} noValidate>
+          <form className="contact-form" onSubmit={handleSubmit} ref={formRef} noValidate>
             <div className="form-field">
               <label htmlFor="name">{tx("Your Name")}</label>
-              <input id="name" name="name" value={form.name} onChange={handleChange} autoComplete="name" />
-              {errors.name && <p className="field-error">{errors.name}</p>}
+              <input id="name" name="name" value={form.name} onChange={handleChange} autoComplete="name"
+                aria-invalid={errors.name ? "true" : undefined}
+                aria-describedby={errors.name ? "name-error" : undefined}
+              />
+              {errors.name && <p className="field-error" id="name-error">{errors.name}</p>}
             </div>
 
             <div className="form-field">
@@ -230,8 +278,10 @@ export default function Contact() {
                 value={form.email}
                 onChange={handleChange}
                 autoComplete="email"
+                aria-invalid={errors.email ? "true" : undefined}
+                aria-describedby={errors.email ? "email-error" : undefined}
               />
-              {errors.email && <p className="field-error">{errors.email}</p>}
+              {errors.email && <p className="field-error" id="email-error">{errors.email}</p>}
             </div>
 
             <div className="form-field">
@@ -242,8 +292,10 @@ export default function Contact() {
                 value={form.phone}
                 onChange={handleChange}
                 autoComplete="tel"
+                aria-invalid={errors.phone ? "true" : undefined}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
               />
-              {errors.phone && <p className="field-error">{errors.phone}</p>}
+              {errors.phone && <p className="field-error" id="phone-error">{errors.phone}</p>}
             </div>
 
             <div className="form-field">
@@ -259,8 +311,10 @@ export default function Contact() {
                     ? `${tx("I am interested in")} ${tx(selectedRetreatLabel)}.`
                     : tx("Tell us about your travel plans or question.")
                 }
+                aria-invalid={errors.message ? "true" : undefined}
+                aria-describedby={errors.message ? "message-error" : undefined}
               />
-              {errors.message && <p className="field-error">{errors.message}</p>}
+              {errors.message && <p className="field-error" id="message-error">{errors.message}</p>}
             </div>
 
             <div className="honeypot" aria-hidden="true">
@@ -275,16 +329,34 @@ export default function Contact() {
               />
             </div>
 
-            <div className="inline-actions">
-              <button type="button" className="btn btn-primary" onClick={() => handleOutbound("whatsapp")}>
-                {tx("Send via WhatsApp")}
-              </button>
-              <button type="button" className="btn btn-secondary" onClick={() => handleOutbound("email")}>
-                {tx("Send via Email")}
-              </button>
-            </div>
+            <button type="submit" className="btn btn-primary btn-lg" disabled={isSending}>
+              {isSending ? tx("Sending...") : tx("Send message")}
+            </button>
 
-            {status && <p className="form-status" role="status">{status}</p>}
+            {status && (
+              <p
+                className={"form-status " + (statusTone ? "is-" + statusTone : "")}
+                role="status"
+                aria-live="polite"
+              >
+                {status}
+              </p>
+            )}
+
+            <div className="secondary-actions">
+              <span>{tx("Prefer to write directly?")}</span>
+              <a
+                className="text-link"
+                href={buildWhatsAppUrl(payload)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {tx("Send via WhatsApp")}
+              </a>
+              <a className="text-link" href={buildMailtoUrl(payload)}>
+                {tx("Send via Email")}
+              </a>
+            </div>
           </form>
         </div>
       </Section>
