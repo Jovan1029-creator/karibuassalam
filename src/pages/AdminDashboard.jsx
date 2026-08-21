@@ -20,7 +20,7 @@ import {
 } from "../utils/bookingAutomation";
 import { buildBookingMessage } from "../utils/bookingAutomation";
 import { useLanguage } from "../context/LanguageContext";
-import adminImg from "../../pics/rooms/Image-2-edited-768x576.webp";
+import adminImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
 
 function formatDateTime(value) {
   if (!value) return "Not set";

@@ -2956,21 +2956,6 @@ main {
 }
 
 /* ---- organic band divider instead of a hard horizontal edge ---- */
-.wave {
-  display: block;
-  width: 100%;
-  height: clamp(28px, 4vw, 56px);
-}
-
-.wave-top {
-  margin-bottom: -1px;
-  transform: rotate(180deg);
-}
-
-.wave-bottom {
-  margin-top: -1px;
-}
-
 /* ---- editorial intro above a showcase set ---- */
 .set-intro {
   max-width: 40rem;
@@ -4382,4 +4367,70 @@ body {
 /* ---- a bolder torn sweep, closer to the reference ---- */
 .torn {
   height: clamp(34px, 5vw, 72px);
+}
+
+/* ===========================================================================
+   Torn edge sizing, in one place.
+
+   The tear is absolutely positioned over the foot of its band, so every band
+   that carries one must reserve at least its height as bottom padding. Height
+   and clearance were previously two independent numbers; they drifted apart
+   when the tear was made bolder and it started slicing through copy. Both now
+   derive from --torn-h.
+   =========================================================================== */
+:root {
+  --torn-h: clamp(34px, 5vw, 72px);
+}
+
+.torn {
+  height: var(--torn-h);
+}
+
+/* The live strip below the hero. */
+.live-now-strip {
+  padding-bottom: calc(var(--torn-h) + 0.5rem);
+}
+
+.live-now-intro,
+.live-now-item {
+  min-height: auto;
+}
+
+/* Any section carrying a tear on either side. */
+.section.has-torn {
+  padding-top: calc(var(--torn-h) + 1.75rem);
+  padding-bottom: calc(var(--torn-h) + 1.75rem);
+}
+
+/* Hero furniture has to sit clear of the tear too. */
+.hero-dots {
+  bottom: calc(var(--torn-h) + 0.6rem);
+}
+
+.hero-slider-meta {
+  bottom: calc(var(--torn-h) + 2.6rem);
+}
+
+.hero-slider-center {
+  padding-bottom: calc(var(--torn-h) + 9rem);
+}
+
+@media (max-width: 960px) {
+  .hero-slider-center {
+    padding-bottom: calc(var(--torn-h) + 11rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .hero-slider-meta {
+    bottom: calc(var(--torn-h) + 3.25rem);
+  }
+
+  .hero-dots {
+    bottom: calc(var(--torn-h) + 1rem);
+  }
+
+  .hero-slider-center {
+    padding-bottom: calc(var(--torn-h) + 12rem);
+  }
 }

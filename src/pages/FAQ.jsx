@@ -4,7 +4,7 @@ import Accordion from "../components/Accordion";
 import SEO from "../components/SEO";
 import { faqSections } from "../data/faq";
 import { useLanguage } from "../context/LanguageContext";
-import faqImg from "../../pics/aboutpic/Why Us.webp";
+import faqImg from "../../pics/aboutpic/Why Us-enhanced.webp";
 
 export default function FAQ() {
   const { tx } = useLanguage();
@@ -24,6 +24,7 @@ export default function FAQ() {
         subtitle={tx("Helpful guidance for planning your retreat, camp, or campus visit.")}
         imageSrc={faqImg}
         imageAlt={tx("Group activity associated with Karibu Assalam programs")}
+        imagePosition="50% 35%"
         compact
       />
 

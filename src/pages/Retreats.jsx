@@ -1,12 +1,12 @@
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import Showcase from "../components/Showcase";
-import Wave from "../components/Wave";
+import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import { retreats } from "../data/retreats";
 import { useLanguage } from "../context/LanguageContext";
-import heroImg from "../../pics/our retreats/Nature Retreat.webp";
+import heroImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
 
 function formatPrice(value, language) {
   return new Intl.NumberFormat(language, {
@@ -42,7 +42,7 @@ export default function Retreats() {
       />
 
       <div className="wave-band">
-        <Wave position="top" color="var(--bg)" />
+        <TornEdge position="top" color="var(--bg)" />
 
         <div className="set-intro">
           <p className="eyebrow">{tx("Our retreats and camps")}</p>
@@ -79,7 +79,7 @@ export default function Retreats() {
           ))}
         </div>
 
-        <Wave position="bottom" color="var(--bg)" />
+        <TornEdge position="bottom" color="var(--bg)" />
       </div>
 
       <Section

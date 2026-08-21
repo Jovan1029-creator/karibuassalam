@@ -28,6 +28,7 @@ export default function Hero({
   ctaSecondary,
   align = "left",
   compact = false,
+  imagePosition = "50% 50%",
 }) {
   const mediaSlides = useMemo(
     () => (slides.length ? slides : imageSrc ? [{ src: imageSrc, alt: imageAlt }] : []),
@@ -66,6 +67,7 @@ export default function Hero({
               width="1600"
               height="900"
               fetchpriority={index === 0 && !compact ? "high" : "auto"}
+              style={{ objectPosition: slide.objectPosition || imagePosition }}
             />
           ))}
           <div className="hero-overlay" />

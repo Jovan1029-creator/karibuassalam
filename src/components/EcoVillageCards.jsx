@@ -1,7 +1,7 @@
 import { useLanguage } from "../context/LanguageContext";
-import roomsImg from "../../pics/rooms/camps-22-768x576.webp";
-import foodImg from "../../pics/rooms/food-1.webp";
-import campusImg from "../../pics/rooms/Image-2-edited-768x576.webp";
+import roomsImg from "../../pics/rooms/camps-22-enhanced.webp";
+import foodImg from "../../pics/rooms/food-1-enhanced.webp";
+import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
 import CTAButton from "./CTAButton";
 
 const cards = [

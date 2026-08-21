@@ -14,7 +14,7 @@ import {
 } from "../data/bookingOptions";
 import { buildBookingMessage, saveBookingRequestRemote } from "../utils/bookingAutomation";
 import { useLanguage } from "../context/LanguageContext";
-import bookingImg from "../../pics/rooms/camps-22-768x576.webp";
+import bookingImg from "../../pics/rooms/camps-22-enhanced.webp";
 
 function todayString() {
   return new Date().toISOString().slice(0, 10);

@@ -8,7 +8,7 @@ import { SITE } from "../data/siteConfig";
 import { getRetreatBySlug } from "../data/retreats";
 import { buildMailtoUrl, buildWhatsAppUrl } from "../utils/contact";
 import { useLanguage } from "../context/LanguageContext";
-import contactImg from "../../pics/aboutpic/Traveling with Purpose.jpg";
+import contactImg from "../../AssalamHero/hero-poster.webp";
 
 const initialForm = {
   name: "",
@@ -196,7 +196,7 @@ export default function Contact() {
           "Tell us what you are planning and the team will reply, usually within one day."
         )}
         imageSrc={contactImg}
-        imageAlt={tx("Traveling with purpose scene in Zanzibar")}
+        imageAlt={tx("Aerial view of Assalam Ecolodge on the Zanzibar coast")}
         compact
       />
 

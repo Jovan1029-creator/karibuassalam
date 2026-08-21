@@ -1,10 +1,11 @@
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
+import aboutHeroImg from "../../AssalamHero/assalam-hero.webp";
 import spiceImg from "../../pics/aboutpic/Spice Gardens.webp";
 import impactImg from "../../pics/aboutpic/Making a Difference in Zanzibar.jpeg";
-import whyUsImg from "../../pics/aboutpic/Why Us.webp";
-import purposeImg from "../../pics/aboutpic/Traveling with Purpose.jpg";
+import whyUsImg from "../../pics/aboutpic/Why Us-enhanced.webp";
+import purposeImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
 import { useLanguage } from "../context/LanguageContext";
 
 const whyReasons = [
@@ -54,7 +55,7 @@ export default function About() {
         description={tx(
           "Karibu Assalam is a purpose-driven eco-village in Zanzibar created by Assalam Community Foundation, hosting travelers, volunteers, students, and youth groups."
         )}
-        image={spiceImg}
+        image={aboutHeroImg}
       />
 
       <Hero
@@ -63,8 +64,8 @@ export default function About() {
         subtitle={tx(
           "We host travelers, volunteers, students, and youth groups who want to experience Zanzibar through community engagement, nature, and cultural exchange."
         )}
-        imageSrc={spiceImg}
-        imageAlt={tx("Spice garden in Zanzibar")}
+        imageSrc={aboutHeroImg}
+        imageAlt={tx("Aerial view of the Assalam eco-village on the Zanzibar coast")}
         compact
       />
 

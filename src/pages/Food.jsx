@@ -2,7 +2,7 @@ import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
-import foodImg from "../../pics/rooms/food-1.webp";
+import foodImg from "../../pics/rooms/food-1-enhanced.webp";
 
 const features = ["Farm to Table", "Delicious", "Hygienic", "Multicultural", "Talented Chefs"];
 

@@ -1,12 +1,12 @@
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import Showcase from "../components/Showcase";
-import Wave from "../components/Wave";
+import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
-import roomsImg from "../../pics/rooms/camps-22-768x576.webp";
-import campusImg from "../../pics/rooms/Image-2-edited-768x576.webp";
+import roomsImg from "../../pics/rooms/camps-22-enhanced.webp";
+import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
 import coastImg from "../../pics/aboutpic/Zanzibar’s Beaches.webp";
 
 function AmenityIcon({ type }) {
@@ -100,7 +100,7 @@ export default function Rooms() {
       />
 
       <div className="wave-band">
-        <Wave position="top" color="var(--bg)" />
+        <TornEdge position="top" color="var(--bg)" />
 
         <div className="set-intro">
           <p className="eyebrow">{tx("Where you sleep")}</p>
@@ -155,7 +155,7 @@ export default function Rooms() {
           />
         </div>
 
-        <Wave position="bottom" color="var(--bg)" />
+        <TornEdge position="bottom" color="var(--bg)" />
       </div>
 
       <Section eyebrow={tx("Room Features")} title={tx("What is in every room")}>

@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
-import campusImg from "../../pics/rooms/Image-2-edited-768x576.webp";
+import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
 
 const features = [
   "International School",

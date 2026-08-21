@@ -1,10 +1,10 @@
 // src\data\retreats.js
-import kindnessCampImg from "../../pics/our retreats/Kindness Camp.webp";
-import ramadanCampImg from "../../pics/our retreats/Ramadan Camp.webp";
-import familyTourImg from "../../pics/our retreats/Family Tour.png";
-import culturalHeritageImg from "../../pics/our retreats/Cultural Heritage Tour.webp";
-import schoolCampImg from "../../pics/our retreats/School Camp.png";
-import natureRetreatImg from "../../pics/our retreats/Nature Retreat.webp";
+import kindnessCampImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
+import ramadanCampImg from "../../pics/our retreats/Ramadan Camp-enhanced.webp";
+import familyTourImg from "../../pics/our retreats/Family Tour-enhanced.webp";
+import culturalHeritageImg from "../../pics/our retreats/Cultural Heritage Tour-enhanced.webp";
+import schoolCampImg from "../../pics/our retreats/School Camp-enhanced.webp";
+import natureRetreatImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
 
 export const COMMON_INCLUSIONS = [
   "Accommodations",
