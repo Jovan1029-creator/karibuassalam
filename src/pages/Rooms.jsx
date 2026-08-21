@@ -7,7 +7,7 @@ import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
 import roomsImg from "../../pics/rooms/camps-22-enhanced.webp";
 import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
-import coastImg from "../../pics/aboutpic/Zanzibar’s Beaches.webp";
+import coastImg from "../../pics/aboutpic/Zanzibar’s Beaches-enhanced.webp";
 
 function AmenityIcon({ type }) {
   const common = {

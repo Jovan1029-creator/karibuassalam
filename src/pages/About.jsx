@@ -3,7 +3,7 @@ import Section from "../components/Section";
 import SEO from "../components/SEO";
 import aboutHeroImg from "../../AssalamHero/assalam-hero.webp";
 import spiceImg from "../../pics/aboutpic/Spice Gardens.webp";
-import impactImg from "../../pics/aboutpic/Making a Difference in Zanzibar.jpeg";
+import impactImg from "../../pics/aboutpic/Making a Difference in Zanzibar-enhanced.webp";
 import whyUsImg from "../../pics/aboutpic/Why Us-enhanced.webp";
 import purposeImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
 import { useLanguage } from "../context/LanguageContext";
