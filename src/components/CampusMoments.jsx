@@ -4,7 +4,7 @@ import { useLanguage } from "../context/LanguageContext";
 import workshopImg from "../../pics/our stories/vassalam-activities35.png";
 import communityImg from "../../pics/our stories/vassalam-activities40.png";
 import mealsImg from "../../pics/our stories/vassalam-activities33.png";
-import educationImg from "../../pics/our stories/education-1.png";
+import educationImg from "../../pics/our stories/education-1-enhanced.webp";
 import coastImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
 import roomImg from "../../pics/rooms/camps-22-enhanced.webp";
 
