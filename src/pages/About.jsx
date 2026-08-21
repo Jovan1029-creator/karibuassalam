@@ -65,7 +65,7 @@ export default function About() {
           "We host travelers, volunteers, students, and youth groups who want to experience Zanzibar through community engagement, nature, and cultural exchange."
         )}
         imageSrc={aboutHeroImg}
-        imageAlt={tx("Aerial view of the Assalam eco-village on the Zanzibar coast")}
+        imageAlt={tx("Assalam eco-village campus gathering area")}
         compact
       />
 

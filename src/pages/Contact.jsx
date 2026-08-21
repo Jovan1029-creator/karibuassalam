@@ -196,7 +196,7 @@ export default function Contact() {
           "Tell us what you are planning and the team will reply, usually within one day."
         )}
         imageSrc={contactImg}
-        imageAlt={tx("Aerial view of Assalam Ecolodge on the Zanzibar coast")}
+        imageAlt={tx("Assalam eco-village campus gathering area")}
         compact
       />
 
