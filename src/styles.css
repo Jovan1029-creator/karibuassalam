@@ -3902,12 +3902,12 @@ main {
 
 /* The fixed home header sits below the utility strip, then takes its place
    once the visitor scrolls. */
-.site-header--home {
+.site-header.site-header--home {
   top: var(--topbar-h);
   transition: top 220ms ease, background-color 220ms ease, border-color 220ms ease;
 }
 
-.site-header--home.is-scrolled {
+.site-header.site-header--home.is-scrolled {
   top: 0;
 }
 
