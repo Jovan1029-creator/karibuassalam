@@ -6,7 +6,7 @@ import foodImg from "../../pics/rooms/food-1-enhanced.webp";
 
 const features = ["Farm to Table", "Delicious", "Hygienic", "Multicultural", "Talented Chefs"];
 
-export default function Food() {
+export default function Restaurant() {
   const { tx } = useLanguage();
 
   return (

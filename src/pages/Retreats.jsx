@@ -41,7 +41,7 @@ export default function Retreats() {
         ctaPrimary={{ to: "/booking", label: tx("Check dates and availability") }}
       />
 
-      <div className="wave-band">
+      <div className="torn-band">
         <TornEdge position="top" color="var(--bg)" />
 
         <div className="set-intro">

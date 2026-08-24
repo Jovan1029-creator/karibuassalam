@@ -1,6 +1,6 @@
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ECO_VILLAGE_LINKS, NAV_LINKS, SITE } from "../data/siteConfig";
+import { ECO_VILLAGE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
 import CTAButton from "./CTAButton";
@@ -8,14 +8,15 @@ import useHeaderState from "../hooks/useHeaderState";
 
 const navLabelKey = {
   Home: "home",
-  About: "about",
+  "About Us": "about",
   Retreats: "retreats",
-  Zanzibar: "zanzibar",
+  Experiences: "experiences",
   FAQ: "faq",
   Contact: "contact",
   Campus: "campus",
-  Rooms: "rooms",
-  Food: "food",
+  Accommodations: "accommodations",
+  Restaurant: "restaurant",
+  Campers: "campers",
 };
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -121,15 +122,31 @@ export default function Navbar() {
                 </NavLink>
               </li>
             ))}
-            <li className="nav-dropdown">
+            {/* Opens on hover for pointers, on click for touch and keyboard. */}
+            <li
+              className="nav-dropdown"
+              onMouseEnter={() => setEcoOpen(true)}
+              onMouseLeave={() => setEcoOpen(false)}
+            >
               <button
                 type="button"
                 className={`nav-dropdown-trigger ${ecoOpen ? "is-active" : ""}`}
                 aria-expanded={ecoOpen}
                 aria-controls="eco-village-menu"
                 onClick={() => setEcoOpen((v) => !v)}
+                onFocus={() => setEcoOpen(true)}
               >
                 {t.nav.ecoVillage}
+                <svg
+                  className="nav-dropdown-chevron"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </button>
               {ecoOpen && (
                 <ul id="eco-village-menu" className="dropdown-menu">
@@ -143,6 +160,13 @@ export default function Navbar() {
                 </ul>
               )}
             </li>
+            {NAV_LINKS_TAIL.map((link) => (
+              <li key={link.to}>
+                <NavLink to={link.to} className={({ isActive }) => (isActive ? "is-active" : "")}>
+                  {t.nav[navLabelKey[link.label]] ?? link.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
 
@@ -210,6 +234,17 @@ export default function Navbar() {
                   </ul>
                 )}
               </li>
+              {NAV_LINKS_TAIL.map((link) => (
+                <li key={link.to}>
+                  <NavLink
+                    to={link.to}
+                    onClick={closeMobile}
+                    className={({ isActive }) => (isActive ? "is-active" : "")}
+                  >
+                    {t.nav[navLabelKey[link.label]] ?? link.label}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </nav>
 

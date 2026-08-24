@@ -6,15 +6,15 @@ import CTAButton from "./CTAButton";
 
 const cards = [
   {
-    title: "Rooms",
-    to: "/rooms",
+    title: "Accommodations",
+    to: "/accommodations",
     image: roomsImg,
     alt: "Eco-village room exterior and lodging area",
     text: "Comfortable eco-village accommodation with ocean or garden views and renewable energy support.",
   },
   {
-    title: "Food",
-    to: "/food",
+    title: "Restaurant",
+    to: "/restaurant",
     image: foodImg,
     alt: "Fresh meal presentation from Karibu Assalam kitchen",
     text: "Farm-to-table meals prepared by a multicultural kitchen team, including shared dinners by the beach.",
@@ -25,6 +25,13 @@ const cards = [
     image: campusImg,
     alt: "Assalam eco-village campus common space",
     text: "An oceanside campus with learning spaces, a communal area, and sustainability features.",
+  },
+  {
+    title: "Campers",
+    to: "/campers",
+    image: campusImg,
+    alt: "Camper parking inside the eco-village",
+    text: "Space inside the eco-village for travellers arriving with their own vehicle, with shared facilities.",
   },
 ];
 

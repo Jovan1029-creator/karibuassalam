@@ -74,7 +74,7 @@ const amenities = [
   { icon: "home", title: "Steps from the sea", text: "The lodge sits on the oceanfront, ten minutes’ walk from the sandy beach." },
 ];
 
-export default function Rooms() {
+export default function Accommodations() {
   const { tx } = useLanguage();
 
   return (
@@ -99,7 +99,7 @@ export default function Rooms() {
         ctaPrimary={{ to: "/booking", label: tx("Check dates and availability") }}
       />
 
-      <div className="wave-band">
+      <div className="torn-band">
         <TornEdge position="top" color="var(--bg)" />
 
         <div className="set-intro">

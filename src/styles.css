@@ -2852,28 +2852,30 @@ main {
    --------------------------------------------------------------------------- */
 .showcase-set {
   display: grid;
-  gap: clamp(3rem, 6vw, 6rem);
-  padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(1rem, 2vw, 1.5rem);
+  gap: clamp(2rem, 3.5vw, 3.25rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
 .showcase {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: clamp(1.5rem, 4vw, 4rem);
+  gap: clamp(1.5rem, 4vw, 3rem);
 }
 
 .showcase-media {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 4 / 3;
   background: var(--surface-sunken);
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .showcase.is-reversed .showcase-media {
   order: 2;
-  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
 }
 
 .showcase-media img {
@@ -2897,7 +2899,7 @@ main {
 
 /* The item's name in the serif italic — the display voice of the brand. */
 .showcase-name {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
   color: var(--accent-ocean);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(2rem, 3.6vw, 3rem);
@@ -2918,13 +2920,13 @@ main {
 }
 
 .showcase-copy p {
-  margin: 0 0 1.2rem;
+  margin: 0 0 0.9rem;
   color: var(--muted);
 }
 
 .showcase-facts {
   list-style: none;
-  margin: 0 0 1.4rem;
+  margin: 0 0 1rem;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
@@ -2944,7 +2946,7 @@ main {
 
 .showcase-price {
   display: block;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.85rem;
   color: var(--muted);
   font-size: 0.95rem;
 }
@@ -3398,7 +3400,7 @@ main {
 /* ---- circular photo cards ---- */
 .circle-cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: clamp(1.5rem, 4vw, 3rem);
 }
 
@@ -3407,7 +3409,7 @@ main {
 }
 
 .circle-card-photo {
-  width: min(17rem, 100%);
+  width: min(14rem, 100%);
   aspect-ratio: 1;
   margin: 0 auto 1.2rem;
   overflow: hidden;
@@ -3518,7 +3520,6 @@ main {
   .showcase.is-reversed .showcase-media {
     order: 0;
     aspect-ratio: 16 / 10;
-    border-radius: 0;
   }
 
   .showcase-copy {
@@ -4357,6 +4358,9 @@ body {
 /* Off the home page the rail sits on light ground, so it needs its own ink. */
 .social-rail.on-light a {
   color: var(--accent-deep);
+  background: rgba(255, 255, 255, 0.88);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   filter: none;
 }
 
@@ -4432,5 +4436,563 @@ body {
 
   .hero-slider-center {
     padding-bottom: calc(var(--torn-h) + 12rem);
+  }
+}
+
+/* ===========================================================================
+   Experiences page + shared pieces. Also restores the band background that was
+   lost when the older Wave divider was retired (it is now .torn-band).
+   =========================================================================== */
+.torn-band {
+  position: relative;
+  background: var(--surface-alt);
+}
+
+/* ---- photograph not supplied yet ---- */
+.photo-slot {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  border: 1px dashed rgba(10, 115, 123, 0.32);
+  border-radius: var(--radius-md);
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(10, 115, 123, 0.045) 0 12px,
+      transparent 12px 24px
+    ),
+    var(--surface-alt);
+  color: var(--accent-ocean);
+  text-align: center;
+}
+
+.photo-slot svg {
+  width: 1.9rem;
+  height: 1.9rem;
+  opacity: 0.7;
+}
+
+.photo-slot span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+/* ---- daily campus tour ---- */
+.campus-tour {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-bottom: clamp(1rem, 3vw, 2rem);
+}
+
+.campus-tour-media {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.campus-tour-media img,
+.campus-tour-media .photo-slot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.campus-tour-copy .showcase-facts {
+  justify-content: flex-start;
+}
+
+/* ---- workshop / tour cards ---- */
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.experience-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.experience-card-media {
+  overflow: hidden;
+  background: var(--surface-alt);
+}
+
+.experience-card-media img,
+.experience-card-media .photo-slot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+}
+
+.experience-card-media img {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.experience-card:hover .experience-card-media img {
+  transform: scale(1.05);
+}
+
+.experience-card-body {
+  padding: 1.05rem 1.15rem 1.25rem;
+}
+
+.experience-card-body h3 {
+  margin: 0 0 0.45rem;
+  color: var(--accent-green);
+  font-family: var(--script);
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.experience-card-body p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* ---- generic image + copy split ---- */
+.feature-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.feature-split-media {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.feature-split-media img,
+.feature-split-media .photo-slot {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.feature-split .showcase-facts {
+  justify-content: flex-start;
+}
+
+/* ---- volunteering ---- */
+.volunteer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.volunteer-card {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  padding: clamp(1.2rem, 2.5vw, 1.8rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.volunteer-duration {
+  justify-self: start;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(224, 165, 60, 0.16);
+  border: 1px solid rgba(138, 92, 20, 0.3);
+  color: var(--accent-gold);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.volunteer-card h3 {
+  margin: 0;
+  color: var(--accent-green);
+  font-family: var(--script);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.volunteer-card p {
+  margin: 0 0 0.4rem;
+}
+
+.volunteer-card .btn {
+  justify-self: start;
+}
+
+/* ---- special events ---- */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.event-card {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold-bright);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.event-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.event-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.event-card .text-link {
+  justify-self: start;
+}
+
+/* ---- closing call-to-action band ---- */
+.cta-band {
+  position: relative;
+  color: #fff;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(23, 162, 172, 0.42), transparent 58%),
+    radial-gradient(circle at 92% 100%, rgba(224, 165, 60, 0.26), transparent 52%),
+    var(--accent-deep);
+  padding-top: calc(var(--torn-h) + 2.5rem);
+  padding-bottom: calc(var(--torn-h) + 2.5rem);
+}
+
+.cta-band-inner {
+  max-width: 44rem;
+  text-align: center;
+}
+
+.cta-band-inner p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+}
+
+.cta-band-actions {
+  justify-content: center;
+  margin-top: 1.4rem;
+}
+
+.cta-band-reviews {
+  display: inline-block;
+  margin-top: 1.4rem;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+@media (max-width: 960px) {
+  .campus-tour,
+  .feature-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ===========================================================================
+   Dropdown hover, photo lightbox, and a height cap on the showcase rows.
+   =========================================================================== */
+
+/* ---- Eco-Village dropdown ---- */
+.nav-dropdown-chevron {
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-left: 0.2rem;
+  transition: transform 200ms ease;
+}
+
+.nav-dropdown-trigger[aria-expanded="true"] .nav-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+/* A hover bridge so the pointer can cross the gap without the menu closing. */
+.nav-dropdown::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 0.5rem;
+}
+
+.dropdown-menu {
+  animation: dropdownIn 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top center;
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dropdown-menu a {
+  position: relative;
+  transition: background-color 160ms ease, color 160ms ease, padding-left 160ms ease;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus-visible {
+  padding-left: 1rem;
+  background: rgba(10, 115, 123, 0.08);
+  color: var(--accent-ocean);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-menu {
+    animation: none;
+  }
+
+  .nav-dropdown-chevron,
+  .dropdown-menu a {
+    transition: none;
+  }
+}
+
+/* ---- mosaic tiles are buttons now ---- */
+.moment-card {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  appearance: none;
+}
+
+.moment-zoom {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: rgba(9, 22, 26, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.moment-zoom svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.moment-card:hover .moment-zoom,
+.moment-card:focus-visible .moment-zoom {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- lightbox ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(0.25rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(6, 20, 24, 0.92);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: lightboxIn 200ms ease-out;
+}
+
+@keyframes lightboxIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-figure {
+  grid-column: 2;
+  display: grid;
+  justify-items: center;
+  gap: 0.85rem;
+  margin: 0;
+  min-width: 0;
+}
+
+.lightbox-figure img {
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  border-radius: var(--radius-md);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  object-fit: contain;
+}
+
+.lightbox-figure figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+
+.lightbox-count {
+  color: rgba(255, 255, 255, 0.62);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightbox-close svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.lightbox-arrow {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.lightbox-arrow:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.lightbox-arrow svg {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.lightbox-arrow.prev {
+  grid-column: 1;
+}
+
+.lightbox-arrow.next {
+  grid-column: 3;
+}
+
+@media (max-width: 700px) {
+  .lightbox {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+  }
+
+  .lightbox-figure {
+    grid-column: 1;
+  }
+
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(9, 22, 26, 0.5);
+  }
+
+  .lightbox-arrow.prev {
+    left: 0.35rem;
+  }
+
+  .lightbox-arrow.next {
+    right: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox {
+    animation: none;
+  }
+}
+
+/* ---- showcase rows: cap the height on wide screens ----
+   The media column is roughly half the viewport, so a fixed 5/4 ratio made the
+   row as tall as the screen on a large monitor. A clamped height keeps the
+   photograph full-bleed horizontally without swallowing the fold. */
+.showcase-media {
+  height: auto;
+}
+
+@media (max-width: 960px) {
+  .showcase-media,
+  .showcase.is-reversed .showcase-media {
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 700px) {
+  .showcase-media,
+  .showcase.is-reversed .showcase-media {
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 }

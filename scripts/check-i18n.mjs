@@ -28,12 +28,16 @@ for (const f of files) {
 
 // Inline object arrays (moments, amenities, pillars, cards...) are rendered via
 // tx(item.title) and friends, so their literals need translations too.
-const KEYED = /\b(?:title|text|label|alt|promise|question|answer|shortPromise)\s*:\s*"([^"]{3,})"/g;
+const KEYED = /\b(?:title|text|label|linkLabel|duration|promise|alt|question|answer|shortPromise)\s*:\s*"([^"]{3,})"/g;
+const ARRAYS = /\b(?:facts|features|highlights|bullets|inclusions|points)\s*:\s*\[([^\]]*)\]/g;
 for (const f of files) {
   const s = fs.readFileSync(f, "utf8");
   for (const m of s.matchAll(KEYED)) {
     const v = m[1].replace(/\\"/g, '"');
     if (v.length > 2 && !/^[a-z-]+$/.test(v) && !/^https?:/.test(v)) wanted.add(v);
+  }
+  for (const m of s.matchAll(ARRAYS)) {
+    for (const q of m[1].matchAll(/"([^"]{3,})"/g)) wanted.add(q[1]);
   }
 }
 

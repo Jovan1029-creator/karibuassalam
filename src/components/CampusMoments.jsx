@@ -1,4 +1,6 @@
+import { useState } from "react";
 import Section from "./Section";
+import Lightbox from "./Lightbox";
 import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import workshopImg from "../../pics/our stories/vassalam-activities35.png";
@@ -51,6 +53,7 @@ const moments = [
 
 export default function CampusMoments() {
   const { tx } = useLanguage();
+  const [lightbox, setLightbox] = useState(null);
 
   return (
     <Section
@@ -62,14 +65,13 @@ export default function CampusMoments() {
       className="moments-section"
     >
       <div className="moments-grid">
-        {moments.map((moment) => (
-          <a
+        {moments.map((moment, i) => (
+          <button
+            type="button"
             key={moment.label}
             className={`moment-card ${moment.className}`.trim()}
-            href={SITE.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${tx(moment.label)} - ${tx("open Instagram")}`}
+            aria-label={`${tx(moment.label)} - ${tx("View photo")}`}
+            onClick={() => setLightbox(i)}
           >
             <img
               src={moment.image}
@@ -80,9 +82,24 @@ export default function CampusMoments() {
               height="576"
             />
             <span>{tx(moment.label)}</span>
-          </a>
+            <span className="moment-zoom" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" strokeLinecap="round" />
+              </svg>
+            </span>
+          </button>
         ))}
       </div>
+
+      {lightbox !== null && (
+        <Lightbox
+          items={moments}
+          index={lightbox}
+          onChange={setLightbox}
+          onClose={() => setLightbox(null)}
+        />
+      )}
       <div className="moments-footer">
         <p>{tx("For current photos and announcements, follow the team on Instagram.")}</p>
         <a className="btn btn-secondary" href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer">

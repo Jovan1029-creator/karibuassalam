@@ -1,19 +1,20 @@
 // src\components\Footer.jsx
 import { Link } from "react-router-dom";
-import { ECO_VILLAGE_LINKS, NAV_LINKS, SITE } from "../data/siteConfig";
+import { ECO_VILLAGE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
 
 const navLabelKey = {
   Home: "home",
-  About: "about",
+  "About Us": "about",
   Retreats: "retreats",
-  Zanzibar: "zanzibar",
+  Experiences: "experiences",
   FAQ: "faq",
   Contact: "contact",
   Campus: "campus",
-  Rooms: "rooms",
-  Food: "food",
+  Accommodations: "accommodations",
+  Restaurant: "restaurant",
+  Campers: "campers",
 };
 
 function FooterIcon({ type }) {
@@ -81,7 +82,7 @@ export default function Footer() {
           <nav className="footer-col" aria-label={tx("Explore")}>
             <p className="footer-heading">{tx("Explore")}</p>
             <ul className="footer-links">
-              {NAV_LINKS.map((link) => (
+              {[...NAV_LINKS, ...NAV_LINKS_TAIL].map((link) => (
                 <li key={link.to}>
                   <Link to={link.to}>{t.nav[navLabelKey[link.label]] ?? tx(link.label)}</Link>
                 </li>

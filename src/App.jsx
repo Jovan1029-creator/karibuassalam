@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import TopBar from "./components/TopBar";
 import Navbar from "./components/Navbar";
@@ -9,12 +9,13 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Retreats from "./pages/Retreats";
 import RetreatDetail from "./pages/RetreatDetail";
-import Zanzibar from "./pages/Zanzibar";
+import Experiences from "./pages/Experiences";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Campus from "./pages/Campus";
-import Rooms from "./pages/Rooms";
-import Food from "./pages/Food";
+import Accommodations from "./pages/Accommodations";
+import Restaurant from "./pages/Restaurant";
+import Campers from "./pages/Campers";
 import { useLanguage } from "./context/LanguageContext";
 import useScrollReveal from "./hooks/useScrollReveal";
 
@@ -74,14 +75,19 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/retreats" element={<Retreats />} />
           <Route path="/retreats/:slug" element={<RetreatDetail />} />
-          <Route path="/zanzibar" element={<Zanzibar />} />
+          <Route path="/experiences" element={<Experiences />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/campus" element={<Campus />} />
-          <Route path="/rooms" element={<Rooms />} />
-          <Route path="/food" element={<Food />} />
+          <Route path="/accommodations" element={<Accommodations />} />
+          <Route path="/restaurant" element={<Restaurant />} />
+          <Route path="/campers" element={<Campers />} />
+          {/* Old paths, kept so shared links and search results still land. */}
+          <Route path="/zanzibar" element={<Navigate to="/experiences" replace />} />
+          <Route path="/rooms" element={<Navigate to="/accommodations" replace />} />
+          <Route path="/food" element={<Navigate to="/restaurant" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
