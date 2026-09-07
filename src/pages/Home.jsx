@@ -65,7 +65,7 @@ const stayOptions = [
 
 function StayOption({ option, index }) {
   return (
-    <article className="stay-option" data-reveal={index % 3}>
+    <article className="stay-option">
       <div className="stay-option-media">
         <PhotoSlot
           src={option.image}

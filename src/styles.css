@@ -5076,6 +5076,11 @@ body {
   max-width: 50rem;
 }
 
+.stay-planner-section {
+  padding-top: clamp(2.25rem, 4vw, 3.75rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
 .stay-options-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
