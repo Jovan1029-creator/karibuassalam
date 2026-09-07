@@ -28,7 +28,7 @@ export default function Campers() {
   return (
     <main id="main-content">
       <SEO
-        title={tx("Campers at Assalam Ecolodge | Karibu Assalam")}
+        title={tx("Campers at Karibu Assalam Eco-Village | Karibu Assalam")}
         description={tx(
           "Space for campers inside the Karibu Assalam eco-village, with shared facilities and access to the daily programme."
         )}

@@ -16,7 +16,7 @@ export const uiMessages = {
       experiences: "Experiences",
       faq: "FAQ",
       contact: "Contact",
-      ecoVillage: "Eco-Village",
+      ecoVillage: "Eco-Resort",
       campus: "Campus",
       accommodations: "Accommodations",
       restaurant: "Restaurant",

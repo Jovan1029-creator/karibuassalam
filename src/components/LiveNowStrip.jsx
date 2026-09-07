@@ -17,10 +17,10 @@ function getLocalStatus(date) {
   );
 
   if (hour < 6) return "Quiet hours in Zanzibar";
-  if (hour < 12) return "Morning at Assalam Ecolodge";
-  if (hour < 17) return "Afternoon at Assalam Ecolodge";
+  if (hour < 12) return "Morning at Karibu Assalam Eco-Village";
+  if (hour < 17) return "Afternoon at Karibu Assalam Eco-Village";
   if (hour < 20) return "Sunset hours in Zanzibar";
-  return "Evening at Assalam Ecolodge";
+  return "Evening at Karibu Assalam Eco-Village";
 }
 
 export default function LiveNowStrip() {
@@ -42,7 +42,7 @@ export default function LiveNowStrip() {
   }, []);
 
   return (
-    <section className="live-now-strip" aria-label={tx("Assalam Ecolodge live status")}>
+    <section className="live-now-strip" aria-label={tx("Karibu Assalam Eco-Village live status")}>
       <div className="container live-now-grid">
         <div className="live-now-intro">
           <span className="live-dot" aria-hidden="true" />

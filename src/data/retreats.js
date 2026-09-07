@@ -5,6 +5,7 @@ import familyTourImg from "../../pics/our retreats/Family Tour-enhanced.webp";
 import culturalHeritageImg from "../../pics/our retreats/Cultural Heritage Tour-enhanced.webp";
 import schoolCampImg from "../../pics/our retreats/School Camp-enhanced.webp";
 import natureRetreatImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
+import { retreatPageCopy } from "./retreatContent2026";
 
 export const COMMON_INCLUSIONS = [
   "Accommodations",
@@ -20,9 +21,9 @@ function day(day, title, description) {
 
 function genericItinerary(overrides = {}) {
   const defaults = [
-    day(1, "Arrival and airport transfer", "Check in at Assalam Ecolodge and settle into the retreat schedule."),
+    day(1, "Arrival and airport transfer", "Check in at Karibu Assalam Eco-Village and settle into the retreat schedule."),
     day(2, "Community activities and workshops", "Structured activities, shared meals, and guided sessions."),
-    day(3, "Guided activities from Assalam Ecolodge base", "Seminars and activities linked to the retreat theme."),
+    day(3, "Guided activities from Karibu Assalam Eco-Village base", "Seminars and activities linked to the retreat theme."),
     day(4, "Seminars and reflection sessions", "Program sessions and group reflection."),
     day(5, "Community activities and workshops", "Themed activities and guided group time."),
     day(6, "Guided tours and shared learning", "Guided tour time with learning-focused discussion."),
@@ -41,6 +42,7 @@ export const retreats = [
     shortPromise:
       "A service-centered retreat combining community volunteering, seminars, and guided Zanzibar experiences.",
     heroImage: kindnessCampImg,
+    details: retreatPageCopy["kindness-camp"],
     inclusions: COMMON_INCLUSIONS,
     highlights: [
       "Kizimkazi Village",
@@ -50,7 +52,7 @@ export const retreats = [
       "Jozani Forest",
     ],
     itineraryDays: [
-      day(1, "Arrival and orientation", "Airport transfer, check-in, and retreat orientation at Assalam Ecolodge."),
+      day(1, "Arrival and orientation", "Airport transfer, check-in, and retreat orientation at Karibu Assalam Eco-Village."),
       day(2, "Kizimkazi Village", "Guided camp activities and community-focused time in Kizimkazi Village."),
       day(3, "Spice Garden", "A guided Spice Garden visit as part of the 7-day plan."),
       day(4, "Stone Town", "Guided exploration and program activities in Stone Town."),
@@ -65,10 +67,11 @@ export const retreats = [
     slug: "ramadan-camp",
     title: "Ramadan Camp",
     priceFrom: 900,
-    durationDays: null,
+    durationDays: 7,
     shortPromise:
       "A Ramadan camp centered on community support, zakat activities, and shared iftar in Zanzibar.",
     heroImage: ramadanCampImg,
+    details: retreatPageCopy["ramadan-camp"],
     inclusions: COMMON_INCLUSIONS,
     highlights: [
       "Food packages",
@@ -90,10 +93,11 @@ export const retreats = [
     slug: "family-tour",
     title: "Family Tour",
     priceFrom: 900,
-    durationDays: null,
+    durationDays: 7,
     shortPromise:
       "A family-oriented Zanzibar program with guided tours, shared activities, and eco-village accommodation.",
     heroImage: familyTourImg,
+    details: retreatPageCopy["family-tour"],
     inclusions: COMMON_INCLUSIONS,
     highlights: ["Prison island tour"],
     itineraryDays: genericItinerary({
@@ -106,10 +110,11 @@ export const retreats = [
     slug: "cultural-heritage-tour",
     title: "Cultural Heritage Tour",
     priceFrom: 900,
-    durationDays: null,
+    durationDays: 7,
     shortPromise:
       "A heritage-focused retreat exploring cultural sites and historical context across Zanzibar.",
     heroImage: culturalHeritageImg,
+    details: retreatPageCopy["cultural-heritage-tour"],
     inclusions: COMMON_INCLUSIONS,
     highlights: ["Dimbani Mosque", "Stone Town heritage elements"],
     itineraryDays: genericItinerary({
@@ -144,10 +149,11 @@ export const retreats = [
     shortPromise:
       "A 7-day nature retreat focused on permaculture, sustainability, and eco-village living.",
     heroImage: natureRetreatImg,
+    details: retreatPageCopy["nature-retreat"],
     inclusions: COMMON_INCLUSIONS,
     highlights: ["Permaculture", "Sustainability"],
     itineraryDays: [
-      day(1, "Arrival and eco-village introduction", "Airport transfer and orientation at Assalam Ecolodge."),
+      day(1, "Arrival and eco-village introduction", "Airport transfer and orientation at Karibu Assalam Eco-Village."),
       day(2, "Permaculture introduction", "Guided sessions introducing permaculture practices."),
       day(3, "Sustainability workshops", "Workshops focused on sustainability and community benefit."),
       day(4, "Nature-based guided activities", "Guided activities linked to the natural environment."),

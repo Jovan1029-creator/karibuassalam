@@ -1,6 +1,6 @@
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ECO_VILLAGE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, SITE } from "../data/siteConfig";
+import { ECO_VILLAGE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, RETREAT_LINKS, SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
 import CTAButton from "./CTAButton";
@@ -24,7 +24,9 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [ta
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [ecoOpen, setEcoOpen] = useState(false);
+  const [retreatOpen, setRetreatOpen] = useState(false);
   const [ecoMobileOpen, setEcoMobileOpen] = useState(false);
+  const [retreatMobileOpen, setRetreatMobileOpen] = useState(false);
   const navRef = useRef(null);
   const panelRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -35,6 +37,7 @@ export default function Navbar() {
   const closeMobile = useCallback(() => {
     setMobileOpen(false);
     setEcoMobileOpen(false);
+    setRetreatMobileOpen(false);
   }, []);
 
   useEffect(() => {
@@ -43,6 +46,7 @@ export default function Navbar() {
         if (mobileOpen) menuButtonRef.current?.focus();
         closeMobile();
         setEcoOpen(false);
+        setRetreatOpen(false);
         return;
       }
 
@@ -68,6 +72,7 @@ export default function Navbar() {
     function onPointerDown(event) {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setEcoOpen(false);
+        setRetreatOpen(false);
       }
     }
 
@@ -92,6 +97,7 @@ export default function Navbar() {
   useEffect(() => {
     closeMobile();
     setEcoOpen(false);
+    setRetreatOpen(false);
   }, [closeMobile, location.pathname]);
 
   const headerClass = [
@@ -109,19 +115,51 @@ export default function Navbar() {
           <img src={SITE.logoSrc} alt={tx("Karibu Assalam logo")} width="44" height="44" />
           <span className="brand-mark__stack">
             <span className="brand-mark__title">{SITE.brandName}</span>
-            <span className="brand-mark__subtitle">Assalam {t.nav.campus}</span>
+            <span className="brand-mark__subtitle">Eco Resort · Zanzibar</span>
           </span>
         </Link>
 
         <nav className="desktop-nav" aria-label="Primary">
           <ul>
-            {NAV_LINKS.map((link) => (
-              <li key={link.to}>
-                <NavLink to={link.to} className={({ isActive }) => (isActive ? "is-active" : "")}>
-                  {t.nav[navLabelKey[link.label]] ?? link.label}
-                </NavLink>
-              </li>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.label === "Retreats" ? (
+                <li
+                  className="nav-dropdown"
+                  key={link.to}
+                  onMouseEnter={() => setRetreatOpen(true)}
+                  onMouseLeave={() => setRetreatOpen(false)}
+                >
+                  <button
+                    type="button"
+                    className={`nav-dropdown-trigger ${retreatOpen || location.pathname.startsWith("/retreats") ? "is-active" : ""}`}
+                    aria-expanded={retreatOpen}
+                    aria-controls="retreat-menu"
+                    onClick={() => setRetreatOpen((value) => !value)}
+                    onFocus={() => setRetreatOpen(true)}
+                  >
+                    {t.nav.retreats}
+                    <svg className="nav-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                      <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                  {retreatOpen && (
+                    <ul id="retreat-menu" className="dropdown-menu retreat-dropdown-menu">
+                      {RETREAT_LINKS.map((item) => (
+                        <li key={item.to}>
+                          <Link to={item.to} onClick={() => setRetreatOpen(false)}>{item.name}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ) : (
+                <li key={link.to}>
+                  <NavLink to={link.to} className={({ isActive }) => (isActive ? "is-active" : "")}>
+                    {t.nav[navLabelKey[link.label]] ?? link.label}
+                  </NavLink>
+                </li>
+              )
+            )}
             {/* Opens on hover for pointers, on click for touch and keyboard. */}
             <li
               className="nav-dropdown"
@@ -153,7 +191,7 @@ export default function Navbar() {
                   {ECO_VILLAGE_LINKS.map((link) => (
                     <li key={link.to}>
                       <Link to={link.to} onClick={() => setEcoOpen(false)}>
-                        {t.nav[navLabelKey[link.label]] ?? link.label}
+                        {link.name ?? t.nav[navLabelKey[link.label]] ?? link.label}
                       </Link>
                     </li>
                   ))}
@@ -202,17 +240,37 @@ export default function Navbar() {
         <div className="container">
           <nav aria-label="Mobile primary">
             <ul>
-              {NAV_LINKS.map((link) => (
-                <li key={link.to}>
-                  <NavLink
-                    to={link.to}
-                    onClick={closeMobile}
-                    className={({ isActive }) => (isActive ? "is-active" : "")}
-                  >
-                    {t.nav[navLabelKey[link.label]] ?? link.label}
-                  </NavLink>
-                </li>
-              ))}
+              {NAV_LINKS.map((link) =>
+                link.label === "Retreats" ? (
+                  <li key={link.to}>
+                    <button
+                      type="button"
+                      className="mobile-submenu-trigger"
+                      aria-expanded={retreatMobileOpen}
+                      onClick={() => setRetreatMobileOpen((value) => !value)}
+                    >
+                      {t.nav.retreats}
+                    </button>
+                    {retreatMobileOpen && (
+                      <ul className="mobile-submenu">
+                        {RETREAT_LINKS.map((item) => (
+                          <li key={item.to}><NavLink to={item.to} onClick={closeMobile}>{item.name}</NavLink></li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ) : (
+                  <li key={link.to}>
+                    <NavLink
+                      to={link.to}
+                      onClick={closeMobile}
+                      className={({ isActive }) => (isActive ? "is-active" : "")}
+                    >
+                      {t.nav[navLabelKey[link.label]] ?? link.label}
+                    </NavLink>
+                  </li>
+                )
+              )}
               <li>
                 <button
                   type="button"
@@ -227,7 +285,7 @@ export default function Navbar() {
                     {ECO_VILLAGE_LINKS.map((link) => (
                       <li key={link.to}>
                         <NavLink to={link.to} onClick={closeMobile}>
-                          {t.nav[navLabelKey[link.label]] ?? link.label}
+                          {link.name ?? t.nav[navLabelKey[link.label]] ?? link.label}
                         </NavLink>
                       </li>
                     ))}

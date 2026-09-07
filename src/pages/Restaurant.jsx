@@ -12,7 +12,7 @@ export default function Restaurant() {
   return (
     <main id="main-content">
       <SEO
-        title={tx("Food at Assalam Ecolodge | Karibu Assalam")}
+        title={tx("Food at Karibu Assalam Eco-Village | Karibu Assalam")}
         description={tx(
           "Karibu Assalam food service includes farm-to-table meals, hygienic preparation, multicultural flavors, and beach dinners with sunset views."
         )}
@@ -22,10 +22,10 @@ export default function Restaurant() {
         eyebrow={tx("Eco-Village Food")}
         title={tx("Meals prepared for camp and retreat life")}
         subtitle={tx(
-          "Daily dining at Assalam Ecolodge is built around fresh meals, hygienic preparation, and shared experiences."
+          "Daily dining at Karibu Assalam Eco-Village is built around fresh meals, hygienic preparation, and shared experiences."
         )}
         imageSrc={foodImg}
-        imageAlt={tx("Farm-to-table meal prepared at Assalam Ecolodge")}
+        imageAlt={tx("Farm-to-table meal prepared at Karibu Assalam Eco-Village")}
         compact
       />
 

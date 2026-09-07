@@ -14,6 +14,7 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Campus from "./pages/Campus";
 import Accommodations from "./pages/Accommodations";
+import EcoResort from "./pages/EcoResort";
 import Restaurant from "./pages/Restaurant";
 import Campers from "./pages/Campers";
 import { useLanguage } from "./context/LanguageContext";
@@ -26,8 +27,14 @@ function ScrollToTop() {
   const location = useLocation();
 
   useEffect(() => {
+    if (location.hash) {
+      window.requestAnimationFrame(() => {
+        document.getElementById(location.hash.slice(1))?.scrollIntoView();
+      });
+      return;
+    }
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   return null;
 }
@@ -76,6 +83,7 @@ export default function App() {
           <Route path="/retreats" element={<Retreats />} />
           <Route path="/retreats/:slug" element={<RetreatDetail />} />
           <Route path="/experiences" element={<Experiences />} />
+          <Route path="/eco-resort" element={<EcoResort />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/booking" element={<Booking />} />

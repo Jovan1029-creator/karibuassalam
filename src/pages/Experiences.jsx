@@ -48,7 +48,7 @@ export default function Experiences() {
         eyebrow={tx("Experiences")}
         title={tx("Things to do from the eco-village")}
         subtitle={tx(
-          "Every day at Assalam Ecolodge has something on it — a walk around the campus, a workshop, a tour across the island, or an evening of music."
+          "Every day at Karibu Assalam Eco-Village has something on it — a walk around the campus, a workshop, a tour across the island, or an evening of music."
         )}
         imageSrc={heroImg}
         imageAlt={tx("Stone Town and Spice Garden experience in Zanzibar")}

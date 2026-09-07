@@ -46,7 +46,7 @@ for (const f of ["src/data/retreats.js", "src/data/faq.js", "src/data/bookingOpt
   const s = fs.readFileSync(path.join(PROJ, f), "utf8");
   for (const m of s.matchAll(/"((?:[^"\\]|\\.)*)"/g)) {
     const v = m[1].replace(/\\"/g, '"');
-    if (v.length > 2 && !/^\.\.\//.test(v) && !/^https?:/.test(v) && !/^[a-z-]+$/.test(v)) {
+    if (v.length > 2 && !/^\.\.?\//.test(v) && !/^https?:/.test(v) && !/^[a-z-]+$/.test(v)) {
       wanted.add(v);
     }
   }

@@ -14,13 +14,15 @@ function formatPrice(priceFrom, language) {
 
 export default function RetreatCard({ retreat }) {
   const { tx, language } = useLanguage();
+  const displayTitle = retreat.details?.heading || tx(retreat.title);
+  const displayPromise = retreat.details?.intro || tx(retreat.shortPromise);
 
   return (
     <Card className="retreat-card">
       <div className="media-frame">
         <img
           src={retreat.heroImage}
-          alt={`${tx(retreat.title)} ${tx("retreat preview")}`}
+          alt={`${displayTitle} ${tx("retreat preview")}`}
           loading="lazy"
           decoding="async"
           width="768"
@@ -36,8 +38,8 @@ export default function RetreatCard({ retreat }) {
             {retreat.durationDays ?? retreat.itineraryDays.length} {tx("days")}
           </span>
         </div>
-        <h3>{tx(retreat.title)}</h3>
-        <p>{tx(retreat.shortPromise)}</p>
+        <h3>{displayTitle}</h3>
+        <p>{displayPromise}</p>
         <Link className="text-link" to={`/retreats/${retreat.slug}`}>
           {tx("View details")}
         </Link>

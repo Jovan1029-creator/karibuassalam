@@ -182,7 +182,7 @@ export default function Booking() {
           "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day."
         )}
         imageSrc={bookingImg}
-        imageAlt={tx("Room at Assalam Ecolodge prepared for guests")}
+        imageAlt={tx("Room at Karibu Assalam Eco-Village prepared for guests")}
         compact
       />
 

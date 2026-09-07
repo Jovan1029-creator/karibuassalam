@@ -80,21 +80,21 @@ export default function Accommodations() {
   return (
     <main id="main-content">
       <SEO
-        title={tx("Rooms at Assalam Ecolodge | Karibu Assalam")}
+        title={tx("Rooms at Karibu Assalam Eco-Village | Karibu Assalam")}
         description={tx(
-          "Explore room features at Assalam Ecolodge including 25 m2 spaces, 5 bed capacity, AC, renewable energy, and ocean or garden views."
+          "Explore room features at Karibu Assalam Eco-Village including 25 m2 spaces, 5 bed capacity, AC, renewable energy, and ocean or garden views."
         )}
         image={roomsImg}
       />
 
       <Hero
         eyebrow={tx("Eco-Village Rooms")}
-        title={tx("Comfortable stays at Assalam Ecolodge")}
+        title={tx("Comfortable stays at Karibu Assalam Eco-Village")}
         subtitle={tx(
           "Rooms are designed to support camp and retreat stays with practical comfort and proximity to the sea."
         )}
         imageSrc={roomsImg}
-        imageAlt={tx("Rooms area at Assalam Ecolodge in Zanzibar")}
+        imageAlt={tx("Rooms area at Karibu Assalam Eco-Village in Zanzibar")}
         compact
         ctaPrimary={{ to: "/booking", label: tx("Check dates and availability") }}
       />
@@ -107,7 +107,7 @@ export default function Accommodations() {
           <h2>{tx("A simple room, a short walk from the Indian Ocean")}</h2>
           <p className="lead">
             {tx(
-              "There is one kind of room at Assalam Ecolodge, and it is built for the way people actually stay here: in groups, for a week at a time, spending most of the day outside."
+              "There is one kind of room at Karibu Assalam Eco-Village, and it is built for the way people actually stay here: in groups, for a week at a time, spending most of the day outside."
             )}
           </p>
         </div>
@@ -122,7 +122,7 @@ export default function Accommodations() {
             )}
             facts={[tx("25 m2"), tx("5 bed capacity"), tx("AC")]}
             image={roomsImg}
-            alt={tx("Rooms area at Assalam Ecolodge in Zanzibar")}
+            alt={tx("Rooms area at Karibu Assalam Eco-Village in Zanzibar")}
             imageWidth={768}
             imageHeight={576}
           />
@@ -136,7 +136,7 @@ export default function Accommodations() {
             )}
             facts={[tx("Ocean or Garden View"), tx("Renewable Energy")]}
             image={coastImg}
-            alt={tx("Zanzibar beach near Assalam Ecolodge")}
+            alt={tx("Zanzibar beach near Karibu Assalam Eco-Village")}
             imageWidth={768}
             imageHeight={576}
           />

@@ -1,4 +1,4 @@
-// src\data\translations\de.js
+﻿// src\data\translations\de.js
 // German copy for every English source string that passes through tx().
 // Keys are the exact English strings used in components and data files.
 
@@ -8,7 +8,7 @@ export const de = {
   "Karibu Assalam logo": "Karibu-Assalam-Logo",
   "Quick contact": "Schnellkontakt",
   "Karibu Assalam Zanzibar travel hero": "Karibu Assalam Sansibar Titelbild",
-  "Assalam Ecolodge live status": "Assalam Ecolodge Live-Status",
+  "Karibu Assalam Eco-Village live status": "Karibu Assalam Eco-Village Live-Status",
   "Partner logos": "Partnerlogos",
   logo: "Logo",
   Explore: "Entdecken",
@@ -49,14 +49,14 @@ export const de = {
   /* ---------- home ---------- */
   "Karibu Assalam | Immersive Halal Travel & Volunteer Retreats in Zanzibar":
     "Karibu Assalam | Halal-Reisen und Freiwilligen-Retreats auf Sansibar",
-  "Karibu Assalam offers immersive sensory travel, volunteering, and halal-friendly retreat experiences in Zanzibar from the Assalam Ecolodge base.":
-    "Karibu Assalam bietet von der Assalam Ecolodge aus intensive Reiseerlebnisse, Freiwilligenarbeit und halal-freundliche Retreats auf Sansibar.",
+  "Karibu Assalam offers immersive sensory travel, volunteering, and halal-friendly retreat experiences in Zanzibar from the Karibu Assalam Eco-Village base.":
+    "Karibu Assalam bietet von der Karibu Assalam Eco-Village aus intensive Reiseerlebnisse, Freiwilligenarbeit und halal-freundliche Retreats auf Sansibar.",
   "Explore Beautiful": "Entdecken Sie",
   Zanzibar: "Sansibar",
   "Zanzibar's only community-run eco-village":
     "Sansibars einziges gemeinschaftlich geführtes Öko-Dorf",
-  "Immersive halal travel, eco-village stays, and community-based retreats from Assalam Ecolodge.":
-    "Halal-Reisen, Öko-Dorf-Aufenthalte und gemeinschaftsbasierte Retreats ab der Assalam Ecolodge.",
+  "Immersive halal travel, eco-village stays, and community-based retreats from Karibu Assalam Eco-Village.":
+    "Halal-Reisen, Öko-Dorf-Aufenthalte und gemeinschaftsbasierte Retreats ab der Karibu Assalam Eco-Village.",
   "A halal-friendly eco-village in Zanzibar where your stay funds local schools, women's training and youth camps. Running since 2017.":
     "Ein halal-freundliches Öko-Dorf auf Sansibar: Ihr Aufenthalt finanziert lokale Schulen, Ausbildungsprogramme für Frauen und Jugendcamps. Seit 2017.",
   "Scroll to explore": "Weiter scrollen",
@@ -64,15 +64,15 @@ export const de = {
   "Plan Your Stay": "Aufenthalt planen",
   "Plan your stay": "Aufenthalt planen",
   "Choose your Zanzibar experience": "Wählen Sie Ihr Sansibar-Erlebnis",
-  "Start with a retreat, family program, school camp, or nature-focused stay from the Assalam Ecolodge base.":
-    "Beginnen Sie mit einem Retreat, Familienprogramm, Schulcamp oder naturnahen Aufenthalt ab der Assalam Ecolodge.",
+  "Start with a retreat, family program, school camp, or nature-focused stay from the Karibu Assalam Eco-Village base.":
+    "Beginnen Sie mit einem Retreat, Familienprogramm, Schulcamp oder naturnahen Aufenthalt ab der Karibu Assalam Eco-Village.",
 
   "Local time in Zanzibar": "Ortszeit auf Sansibar",
   "Quiet hours in Zanzibar": "Ruhige Stunden auf Sansibar",
-  "Morning at Assalam Ecolodge": "Morgen in der Assalam Ecolodge",
-  "Afternoon at Assalam Ecolodge": "Nachmittag in der Assalam Ecolodge",
+  "Morning at Karibu Assalam Eco-Village": "Morgen in der Karibu Assalam Eco-Village",
+  "Afternoon at Karibu Assalam Eco-Village": "Nachmittag in der Karibu Assalam Eco-Village",
   "Sunset hours in Zanzibar": "Sonnenuntergang auf Sansibar",
-  "Evening at Assalam Ecolodge": "Abend in der Assalam Ecolodge",
+  "Evening at Karibu Assalam Eco-Village": "Abend in der Karibu Assalam Eco-Village",
   "Booking requests are open online": "Buchungsanfragen sind online möglich",
   "Start a request": "Anfrage starten",
   "Stay connected": "Kontakt aufnehmen",
@@ -92,9 +92,9 @@ export const de = {
   "Hands-on workshops": "Praktische Workshops",
   "Children gathered around a workshop table during a Karibu Assalam activity":
     "Kinder an einem Werktisch während einer Karibu-Assalam-Aktivität",
-  "Beachfront swing and gathering area at Assalam Ecolodge":
-    "Schaukel und Treffpunkt am Strand der Assalam Ecolodge",
-  "Prepared guest room at Assalam Ecolodge": "Vorbereitetes Gästezimmer in der Assalam Ecolodge",
+  "Beachfront swing and gathering area at Karibu Assalam Eco-Village":
+    "Schaukel und Treffpunkt am Strand der Karibu Assalam Eco-Village",
+  "Prepared guest room at Karibu Assalam Eco-Village": "Vorbereitetes Gästezimmer in der Karibu Assalam Eco-Village",
   "Visitors and local children together during a community activity":
     "Gäste und Kinder aus der Umgebung bei einer gemeinsamen Aktivität",
   "Guests and the kitchen team sharing a meal together":
@@ -152,8 +152,8 @@ export const de = {
   "Community time and guided activities": "Zeit in der Gemeinschaft und geführte Aktivitäten",
 
   "Welcome to Our Eco-Village": "Willkommen in unserem Öko-Dorf",
-  "Explore the living spaces, dining experience, and campus environment that support each camp and retreat at Assalam Ecolodge.":
-    "Entdecken Sie die Wohnbereiche, das Essenserlebnis und den Campus, die jedes Camp und Retreat in der Assalam Ecolodge tragen.",
+  "Explore the living spaces, dining experience, and campus environment that support each camp and retreat at Karibu Assalam Eco-Village.":
+    "Entdecken Sie die Wohnbereiche, das Essenserlebnis und den Campus, die jedes Camp und Retreat in der Karibu Assalam Eco-Village tragen.",
   Rooms: "Zimmer",
   Food: "Essen",
   Campus: "Campus",
@@ -225,22 +225,22 @@ export const de = {
   "Spice garden pathway in Zanzibar": "Weg durch einen Gewürzgarten auf Sansibar",
 
   /* ---------- retreats ---------- */
-  "Retreats & Camps at Assalam Ecolodge | Karibu Assalam":
-    "Retreats & Camps in der Assalam Ecolodge | Karibu Assalam",
-  "Explore Karibu Assalam retreats and camps at Assalam Ecolodge with guided tours, meals, accommodations, airport transport, and seminars/activities.":
-    "Entdecken Sie die Retreats und Camps von Karibu Assalam in der Assalam Ecolodge – mit geführten Touren, Verpflegung, Unterkunft, Flughafentransfer und Seminaren.",
+  "Retreats & Camps at Karibu Assalam Eco-Village | Karibu Assalam":
+    "Retreats & Camps in der Karibu Assalam Eco-Village | Karibu Assalam",
+  "Explore Karibu Assalam retreats and camps at Karibu Assalam Eco-Village with guided tours, meals, accommodations, airport transport, and seminars/activities.":
+    "Entdecken Sie die Retreats und Camps von Karibu Assalam in der Karibu Assalam Eco-Village – mit geführten Touren, Verpflegung, Unterkunft, Flughafentransfer und Seminaren.",
   Retreats: "Retreats",
-  "Retreats & Camps at Assalam Ecolodge": "Retreats & Camps in der Assalam Ecolodge",
-  "Karibu Assalam offers retreats and camps from Assalam Ecolodge, with the provided framing of the only eco-village in Zanzibar.":
-    "Karibu Assalam veranstaltet Retreats und Camps in der Assalam Ecolodge, dem einzigen Öko-Dorf Sansibars.",
-  "Nature retreat scenery at Assalam Ecolodge": "Naturkulisse rund um die Assalam Ecolodge",
+  "Retreats & Camps at Karibu Assalam Eco-Village": "Retreats & Camps in der Karibu Assalam Eco-Village",
+  "Karibu Assalam offers retreats and camps from Karibu Assalam Eco-Village, with the provided framing of the only eco-village in Zanzibar.":
+    "Karibu Assalam veranstaltet Retreats und Camps in der Karibu Assalam Eco-Village, dem einzigen Öko-Dorf Sansibars.",
+  "Nature retreat scenery at Karibu Assalam Eco-Village": "Naturkulisse rund um die Karibu Assalam Eco-Village",
   "Our retreats and camps": "Unsere Retreats und Camps",
   "Package details are confirmed with the team": "Paketdetails klären wir gemeinsam mit Ihnen",
   "Each retreat, camp, and stay can have different inclusions and exclusions. Contact the Karibu Assalam team for the current open retreat details before booking.":
     "Die enthaltenen Leistungen unterscheiden sich je nach Retreat, Camp und Aufenthalt. Fragen Sie vor der Buchung die aktuellen Details beim Karibu-Assalam-Team an.",
   "Accommodations-only booking is also available": "Buchung nur der Unterkunft ist ebenfalls möglich",
-  "Guests can book accommodations at Assalam Ecolodge without attending a camp.":
-    "Gäste können in der Assalam Ecolodge übernachten, auch ohne an einem Camp teilzunehmen.",
+  "Guests can book accommodations at Karibu Assalam Eco-Village without attending a camp.":
+    "Gäste können in der Karibu Assalam Eco-Village übernachten, auch ohne an einem Camp teilzunehmen.",
   "Contact for accommodation booking": "Anfrage für reine Übernachtung",
   "Retreat Detail": "Retreat im Detail",
   "Retreat not found": "Retreat nicht gefunden",
@@ -248,8 +248,8 @@ export const de = {
   "Back to Retreats": "Zurück zu den Retreats",
   "retreat preview": "Retreat-Vorschau",
   "Karibu Assalam Retreats": "Karibu Assalam Retreats",
-  "at Assalam Ecolodge includes accommodations, meals, activities, airport transportation, and guided tours with Karibu Assalam.":
-    "in der Assalam Ecolodge umfasst Unterkunft, Verpflegung, Aktivitäten, Flughafentransfer und geführte Touren mit Karibu Assalam.",
+  "at Karibu Assalam Eco-Village includes accommodations, meals, activities, airport transportation, and guided tours with Karibu Assalam.":
+    "in der Karibu Assalam Eco-Village umfasst Unterkunft, Verpflegung, Aktivitäten, Flughafentransfer und geführte Touren mit Karibu Assalam.",
   "Package details": "Leistungen",
   "Inclusions and exclusions can vary by package and date. Please confirm current details with the Karibu Assalam team before booking.":
     "Enthaltene und nicht enthaltene Leistungen können je nach Paket und Termin variieren. Bitte bestätigen Sie die aktuellen Details vor der Buchung mit dem Team.",
@@ -315,13 +315,13 @@ export const de = {
   Sustainability: "Nachhaltigkeit",
 
   "Arrival and airport transfer": "Ankunft und Flughafentransfer",
-  "Check in at Assalam Ecolodge and settle into the retreat schedule.":
-    "Check-in in der Assalam Ecolodge und Ankommen im Programm.",
+  "Check in at Karibu Assalam Eco-Village and settle into the retreat schedule.":
+    "Check-in in der Karibu Assalam Eco-Village und Ankommen im Programm.",
   "Community activities and workshops": "Gemeinschaftsaktivitäten und Workshops",
   "Structured activities, shared meals, and guided sessions.":
     "Geplante Aktivitäten, gemeinsame Mahlzeiten und begleitete Einheiten.",
-  "Guided activities from Assalam Ecolodge base":
-    "Geführte Aktivitäten ab der Assalam Ecolodge",
+  "Guided activities from Karibu Assalam Eco-Village base":
+    "Geführte Aktivitäten ab der Karibu Assalam Eco-Village",
   "Seminars and activities linked to the retreat theme.":
     "Seminare und Aktivitäten passend zum Thema des Retreats.",
   "Seminars and reflection sessions": "Seminare und Reflexionsrunden",
@@ -333,8 +333,8 @@ export const de = {
   "Departure and airport transfer": "Abreise und Flughafentransfer",
   "Closing session and airport transportation.": "Abschlussrunde und Flughafentransfer.",
   "Arrival and orientation": "Ankunft und Orientierung",
-  "Airport transfer, check-in, and retreat orientation at Assalam Ecolodge.":
-    "Flughafentransfer, Check-in und Einführung in der Assalam Ecolodge.",
+  "Airport transfer, check-in, and retreat orientation at Karibu Assalam Eco-Village.":
+    "Flughafentransfer, Check-in und Einführung in der Karibu Assalam Eco-Village.",
   "Guided camp activities and community-focused time in Kizimkazi Village.":
     "Begleitete Camp-Aktivitäten und Zeit mit der Gemeinde im Dorf Kizimkazi.",
   "A guided Spice Garden visit as part of the 7-day plan.":
@@ -373,8 +373,8 @@ export const de = {
   "Workshops and learning sessions with instructors.":
     "Workshops und Lerneinheiten mit Fachleitung.",
   "Arrival and eco-village introduction": "Ankunft und Einführung ins Öko-Dorf",
-  "Airport transfer and orientation at Assalam Ecolodge.":
-    "Flughafentransfer und Orientierung in der Assalam Ecolodge.",
+  "Airport transfer and orientation at Karibu Assalam Eco-Village.":
+    "Flughafentransfer und Orientierung in der Karibu Assalam Eco-Village.",
   "Permaculture introduction": "Einführung in die Permakultur",
   "Guided sessions introducing permaculture practices.":
     "Begleitete Einheiten zu Permakultur-Praktiken.",
@@ -448,14 +448,14 @@ export const de = {
   "Its oceanside setting supports community-based learning, shared meals, and daily activities in a multicultural environment.":
     "Die Lage am Meer unterstützt gemeinschaftliches Lernen, gemeinsame Mahlzeiten und den Alltag in einem multikulturellen Umfeld.",
 
-  "Rooms at Assalam Ecolodge | Karibu Assalam": "Zimmer in der Assalam Ecolodge | Karibu Assalam",
-  "Explore room features at Assalam Ecolodge including 25 m2 spaces, 5 bed capacity, AC, renewable energy, and ocean or garden views.":
-    "Die Zimmer der Assalam Ecolodge: 25 m², bis zu 5 Betten, Klimaanlage, erneuerbare Energie sowie Meer- oder Gartenblick.",
+  "Rooms at Karibu Assalam Eco-Village | Karibu Assalam": "Zimmer in der Karibu Assalam Eco-Village | Karibu Assalam",
+  "Explore room features at Karibu Assalam Eco-Village including 25 m2 spaces, 5 bed capacity, AC, renewable energy, and ocean or garden views.":
+    "Die Zimmer der Karibu Assalam Eco-Village: 25 m², bis zu 5 Betten, Klimaanlage, erneuerbare Energie sowie Meer- oder Gartenblick.",
   "Eco-Village Rooms": "Zimmer im Öko-Dorf",
-  "Comfortable stays at Assalam Ecolodge": "Komfortabel wohnen in der Assalam Ecolodge",
+  "Comfortable stays at Karibu Assalam Eco-Village": "Komfortabel wohnen in der Karibu Assalam Eco-Village",
   "Rooms are designed to support camp and retreat stays with practical comfort and proximity to the sea.":
     "Die Zimmer sind auf Camp- und Retreat-Aufenthalte ausgelegt: praktisch, komfortabel und nah am Meer.",
-  "Rooms area at Assalam Ecolodge in Zanzibar": "Zimmerbereich der Assalam Ecolodge auf Sansibar",
+  "Rooms area at Karibu Assalam Eco-Village in Zanzibar": "Zimmerbereich der Karibu Assalam Eco-Village auf Sansibar",
   "Room Features": "Ausstattung der Zimmer",
   "Room Description": "Beschreibung",
   "25 m2": "25 m²",
@@ -468,15 +468,15 @@ export const de = {
     "Der Blick geht auf das Meer oder in den Garten; die Unterkunft wird mit erneuerbarer Energie versorgt.",
   "Assalam eco-village room and campus view": "Zimmer und Campusblick im Assalam Öko-Dorf",
 
-  "Food at Assalam Ecolodge | Karibu Assalam": "Essen in der Assalam Ecolodge | Karibu Assalam",
+  "Food at Karibu Assalam Eco-Village | Karibu Assalam": "Essen in der Karibu Assalam Eco-Village | Karibu Assalam",
   "Karibu Assalam food service includes farm-to-table meals, hygienic preparation, multicultural flavors, and beach dinners with sunset views.":
     "Die Küche von Karibu Assalam bietet frische Gerichte vom Feld auf den Tisch, hygienische Zubereitung, multikulturelle Aromen und Abendessen am Strand.",
   "Eco-Village Food": "Küche im Öko-Dorf",
   "Meals prepared for camp and retreat life": "Essen für den Camp- und Retreat-Alltag",
-  "Daily dining at Assalam Ecolodge is built around fresh meals, hygienic preparation, and shared experiences.":
-    "Das tägliche Essen in der Assalam Ecolodge steht für frische Zutaten, hygienische Zubereitung und gemeinsame Mahlzeiten.",
-  "Farm-to-table meal prepared at Assalam Ecolodge":
-    "Frisch zubereitetes Gericht in der Assalam Ecolodge",
+  "Daily dining at Karibu Assalam Eco-Village is built around fresh meals, hygienic preparation, and shared experiences.":
+    "Das tägliche Essen in der Karibu Assalam Eco-Village steht für frische Zutaten, hygienische Zubereitung und gemeinsame Mahlzeiten.",
+  "Farm-to-table meal prepared at Karibu Assalam Eco-Village":
+    "Frisch zubereitetes Gericht in der Karibu Assalam Eco-Village",
   "Kitchen & Dining Features": "Küche und Verpflegung",
   "Dining Experience": "Das Essenserlebnis",
   "Farm to Table": "Vom Feld auf den Tisch",
@@ -596,8 +596,8 @@ export const de = {
   "Start a structured booking request": "Ihre Buchungsanfrage",
   "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day.":
     "Nennen Sie uns Ihre Termine und wer mitreist. Unser Team bestätigt Verfügbarkeit und nächste Schritte meist innerhalb eines Tages.",
-  "Room at Assalam Ecolodge prepared for guests":
-    "Vorbereitetes Zimmer in der Assalam Ecolodge",
+  "Room at Karibu Assalam Eco-Village prepared for guests":
+    "Vorbereitetes Zimmer in der Karibu Assalam Eco-Village",
   "Booking request": "Buchungsanfrage",
   "Share your dates and group details and the team will confirm availability and the next steps.":
     "Teilen Sie uns Termine und Gruppengröße mit – wir bestätigen Verfügbarkeit und nächste Schritte.",
@@ -751,7 +751,7 @@ export const de = {
   "Backend mode": "Datenquelle",
   "Check dates and availability": "Termine und Verfügbarkeit anfragen",
   "Close menu": "Menü schließen",
-  "Every camp runs from Assalam Ecolodge, the only eco-village in Zanzibar. Meals, accommodation, guided tours and airport transfers are included.": "Alle Camps finden in der Assalam Ecolodge statt, dem einzigen Öko-Dorf Sansibars. Verpflegung, Unterkunft, geführte Touren und Flughafentransfer sind enthalten.",
+  "Every camp runs from Karibu Assalam Eco-Village, the only eco-village in Zanzibar. Meals, accommodation, guided tours and airport transfers are included.": "Alle Camps finden in der Karibu Assalam Eco-Village statt, dem einzigen Öko-Dorf Sansibars. Verpflegung, Unterkunft, geführte Touren und Flughafentransfer sind enthalten.",
   "Local fallback": "Lokale Sicherung",
   "Send it straight to the team": "Direkt an das Team senden",
   "Signed in. Booking requests loaded from Supabase.": "Angemeldet. Buchungsanfragen geladen.",
@@ -804,14 +804,14 @@ export const de = {
   "The lodge sits on the oceanfront, ten minutes’ walk from the sandy beach.": "Die Lodge liegt direkt am Meer, zehn Gehminuten vom Sandstrand.",
   "The room": "Das Zimmer",
   "The view": "Die Aussicht",
-  "There is one kind of room at Assalam Ecolodge, and it is built for the way people actually stay here: in groups, for a week at a time, spending most of the day outside.": "In der Assalam Ecolodge gibt es einen Zimmertyp, und er ist auf die tatsächliche Art des Aufenthalts ausgelegt: in Gruppen, jeweils eine Woche, den Großteil des Tages draußen.",
+  "There is one kind of room at Karibu Assalam Eco-Village, and it is built for the way people actually stay here: in groups, for a week at a time, spending most of the day outside.": "In der Karibu Assalam Eco-Village gibt es einen Zimmertyp, und er ist auf die tatsächliche Art des Aufenthalts ausgelegt: in Gruppen, jeweils eine Woche, den Großteil des Tages draußen.",
   "Up to 5 beds": "Bis zu 5 Betten",
   "What is in every room": "Was in jedem Zimmer ist",
   "Where you sleep": "Wo Sie schlafen",
-  "Zanzibar beach near Assalam Ecolodge": "Strand auf Sansibar nahe der Assalam Ecolodge",
+  "Zanzibar beach near Karibu Assalam Eco-Village": "Strand auf Sansibar nahe der Karibu Assalam Eco-Village",
 
   /* ---------- hero slider and dock ---------- */
-  "Assalam Ecolodge, Zanzibar": "Assalam Ecolodge, Sansibar",
+  "Karibu Assalam Eco-Village, Zanzibar": "Karibu Assalam Eco-Village, Sansibar",
   "Choose a retreat": "Retreat wählen",
   "More info": "Mehr erfahren",
   "Need help with your booking?": "Brauchen Sie Hilfe bei Ihrer Buchung?",
@@ -838,7 +838,7 @@ export const de = {
   "Book an experience": "Erlebnis buchen",
   "Camper parking inside the eco-village": "Stellplatz im Öko-Dorf",
   "Campers are welcome at the daily campus tour, the workshops and the shared meals.": "Wohnmobilgäste sind beim täglichen Rundgang, bei den Workshops und den gemeinsamen Mahlzeiten willkommen.",
-  "Campers at Assalam Ecolodge | Karibu Assalam": "Wohnmobile in der Assalam Ecolodge | Karibu Assalam",
+  "Campers at Karibu Assalam Eco-Village | Karibu Assalam": "Wohnmobile in der Karibu Assalam Eco-Village | Karibu Assalam",
   "Camps and retreats": "Camps und Retreats",
   "City Tour": "Stadtrundgang",
   "Cook Zanzibari dishes with the kitchen team — spices from the garden, recipes from the neighbourhood, and the meal is lunch.": "Kochen Sie sansibarische Gerichte mit dem Küchenteam — Gewürze aus dem Garten, Rezepte aus der Nachbarschaft, und das Ergebnis ist das Mittagessen.",
@@ -849,7 +849,7 @@ export const de = {
   "Details are confirmed with the team when you enquire — space is limited and depends on what else is running that week.": "Die Details klärt das Team bei Ihrer Anfrage — der Platz ist begrenzt und hängt vom Programm der jeweiligen Woche ab.",
   "Drum workshop": "Trommel-Workshop",
   "Eco print workshop": "Eco-Print-Workshop",
-  "Every day at Assalam Ecolodge has something on it — a walk around the campus, a workshop, a tour across the island, or an evening of music.": "Jeder Tag in der Assalam Ecolodge hat ein Programm — ein Rundgang über den Campus, ein Workshop, eine Tour über die Insel oder ein Abend mit Musik.",
+  "Every day at Karibu Assalam Eco-Village has something on it — a walk around the campus, a workshop, a tour across the island, or an evening of music.": "Jeder Tag in der Karibu Assalam Eco-Village hat ein Programm — ein Rundgang über den Campus, ein Workshop, eine Tour über die Insel oder ein Abend mit Musik.",
   "Experiences in Zanzibar | Karibu Assalam": "Erlebnisse auf Sansibar | Karibu Assalam",
   "Festivals, music and the programmes that bring people to the village from across the island and beyond.": "Festivals, Musik und Programme, die Menschen von der ganzen Insel und darüber hinaus ins Dorf bringen.",
   "Give your time": "Zeit schenken",
@@ -914,4 +914,18 @@ export const de = {
 
   "Close": "Schließen",
   "View photo": "Foto ansehen",
+  "Assalam Community Foundation community programme in Zanzibar": "Assalam Community Foundation community programme in Zanzibar",
+  "Beachfront swing and gathering area at Karibu Assalam Eco-Village": "Beachfront swing and gathering area at Karibu Assalam Eco-Village",
+  "Book your retreat": "Book your retreat",
+  "Community education and volunteering at Assalam Community Foundation": "Community education and volunteering at Assalam Community Foundation",
+  "Find Your Stay": "Find Your Stay",
+  "Guests taking part in a Karibu Assalam retreat": "Guests taking part in a Karibu Assalam retreat",
+  "Historic Stone Town in Zanzibar": "Historic Stone Town in Zanzibar",
+  "Image placeholder for the halal spa and pool": "Image placeholder for the halal spa and pool",
+  "Karibu Assalam Eco-Village accommodation in Kizimkazi": "Karibu Assalam Eco-Village accommodation in Kizimkazi",
+  "More details": "More details",
+  "Nature and sustainable living at Karibu Assalam": "Nature and sustainable living at Karibu Assalam",
+  "Prepared guest room at Karibu Assalam Eco-Village": "Prepared guest room at Karibu Assalam Eco-Village",
+  "Visitors connecting during a Karibu Assalam community retreat": "Visitors connecting during a Karibu Assalam community retreat",
 };
+

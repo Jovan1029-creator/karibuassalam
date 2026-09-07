@@ -3,37 +3,37 @@ import Section from "./Section";
 import Lightbox from "./Lightbox";
 import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
-import workshopImg from "../../pics/our stories/vassalam-activities35.png";
-import communityImg from "../../pics/our stories/vassalam-activities40.png";
-import mealsImg from "../../pics/our stories/vassalam-activities33.png";
 import educationImg from "../../pics/our stories/education-1-enhanced.webp";
 import coastImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
 import roomImg from "../../pics/rooms/camps-22-enhanced.webp";
+import mealsImg from "../../pics/rooms/food-1-enhanced.webp";
+import kindnessImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
+import natureImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
 
 // Six images fill all eight cells of the 4 x 2 mosaic: one tall, one wide, four
 // single. Adding or removing an entry means re-checking the spans.
 const moments = [
   {
-    image: workshopImg,
-    alt: "Children gathered around a workshop table during a Karibu Assalam activity",
+    image: educationImg,
+    alt: "Participants working together during a hands-on workshop",
     label: "Learning together",
     className: "moment-card-tall",
   },
   {
     image: coastImg,
-    alt: "Beachfront swing and gathering area at Assalam Ecolodge",
+    alt: "Beachfront swing and gathering area at Karibu Assalam Eco-Village",
     label: "Eco-village by the coast",
     className: "moment-card-wide",
   },
   {
     image: roomImg,
-    alt: "Prepared guest room at Assalam Ecolodge",
+    alt: "Prepared guest room at Karibu Assalam Eco-Village",
     label: "Rooms prepared for guests",
     className: "",
   },
   {
-    image: communityImg,
-    alt: "Visitors and local children together during a community activity",
+    image: kindnessImg,
+    alt: "Visitors connecting during a Karibu Assalam community retreat",
     label: "Community moments",
     className: "",
   },
@@ -44,9 +44,9 @@ const moments = [
     className: "",
   },
   {
-    image: educationImg,
-    alt: "Participants working together during a hands-on workshop",
-    label: "Hands-on workshops",
+    image: natureImg,
+    alt: "Nature and sustainable living at Karibu Assalam",
+    label: "Nature and sustainability",
     className: "",
   },
 ];
@@ -57,11 +57,9 @@ export default function CampusMoments() {
 
   return (
     <Section
-      eyebrow={tx("Life at Assalam")}
-      title={tx("A glimpse of camp life")}
-      subtitle={tx(
-        "See the spaces, workshops, and shared moments behind each stay. Open Instagram for the latest updates from the team."
-      )}
+      eyebrow="Gallery"
+      title="Life at Karibu Assalam"
+      subtitle="A glimpse of the spaces, shared meals, workshops and community experiences that shape a stay."
       className="moments-section"
     >
       <div className="moments-grid">
