@@ -42,7 +42,6 @@ const slides = [
       },
       {
         heading: "Travel with purpose - stay, relax, learn, and make an impact",
-        copy: "A different way to experience Zanzibar: Stay in a community-led eco-village, discover local culture, learn about sustainable living and support meaningful projects in Kizimkazi.",
         image: purposeImg,
         ctaText: "Join us",
         to: "/contact",
@@ -153,13 +152,6 @@ export default function HeroSlider() {
 
       <div className="hero-slider-scrim" aria-hidden="true" />
 
-      <button type="button" className="hero-arrow prev" aria-label="Previous slide" onClick={() => go(index - 1)}>
-        <Arrow direction="prev" />
-      </button>
-      <button type="button" className="hero-arrow next" aria-label="Next slide" onClick={() => go(index + 1)}>
-        <Arrow direction="next" />
-      </button>
-
       {active.layout === "trio" ? (
         <div className="container hero-trio" aria-live="polite">
           <h1 className="visually-hidden">Stay, connect and travel with purpose at Karibu Assalam</h1>
@@ -168,7 +160,6 @@ export default function HeroSlider() {
               <img src={panel.image} alt="" width="640" height="480" />
               <div>
                 <h2>{panel.heading}</h2>
-                {panel.copy && <p>{panel.copy}</p>}
                 <Link className="btn btn-primary" to={panel.to}>{panel.ctaText}</Link>
               </div>
             </article>
@@ -185,18 +176,25 @@ export default function HeroSlider() {
         </div>
       )}
 
-      <div className="hero-dots" role="tablist" aria-label="Choose a slide">
-        {slides.map((slide, slideIndex) => (
-          <button
-            key={slide.id}
-            type="button"
-            role="tab"
-            className={`hero-dot ${slideIndex === index ? "is-active" : ""}`}
-            aria-selected={slideIndex === index}
-            aria-label={`Slide ${slideIndex + 1}: ${slide.heading || "Stay, connect and travel with purpose"}`}
-            onClick={() => go(slideIndex)}
-          />
-        ))}
+      <div className="hero-controls" role="group" aria-label="Slideshow controls">
+        <button type="button" className="hero-arrow prev" aria-label="Previous slide" onClick={() => go(index - 1)}>
+          <Arrow direction="prev" />
+        </button>
+        <div className="hero-dots" role="group" aria-label="Choose a slide">
+          {slides.map((slide, slideIndex) => (
+            <button
+              key={slide.id}
+              type="button"
+              className={`hero-dot ${slideIndex === index ? "is-active" : ""}`}
+              aria-pressed={slideIndex === index}
+              aria-label={`Slide ${slideIndex + 1}: ${slide.heading || "Stay, connect and travel with purpose"}`}
+              onClick={() => go(slideIndex)}
+            />
+          ))}
+        </div>
+        <button type="button" className="hero-arrow next" aria-label="Next slide" onClick={() => go(index + 1)}>
+          <Arrow direction="next" />
+        </button>
       </div>
 
       <TornEdge position="bottom" color="var(--bg)" />

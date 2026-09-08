@@ -16,7 +16,6 @@ import Campus from "./pages/Campus";
 import Accommodations from "./pages/Accommodations";
 import EcoResort from "./pages/EcoResort";
 import Restaurant from "./pages/Restaurant";
-import Campers from "./pages/Campers";
 import { useLanguage } from "./context/LanguageContext";
 import useScrollReveal from "./hooks/useScrollReveal";
 
@@ -91,8 +90,8 @@ export default function App() {
           <Route path="/campus" element={<Campus />} />
           <Route path="/accommodations" element={<Accommodations />} />
           <Route path="/restaurant" element={<Restaurant />} />
-          <Route path="/campers" element={<Campers />} />
           {/* Old paths, kept so shared links and search results still land. */}
+          <Route path="/campers" element={<Navigate to="/eco-resort" replace />} />
           <Route path="/zanzibar" element={<Navigate to="/experiences" replace />} />
           <Route path="/rooms" element={<Navigate to="/accommodations" replace />} />
           <Route path="/food" element={<Navigate to="/restaurant" replace />} />

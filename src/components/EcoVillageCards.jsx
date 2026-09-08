@@ -26,13 +26,6 @@ const cards = [
     alt: "Assalam eco-village campus common space",
     text: "An oceanside campus with learning spaces, a communal area, and sustainability features.",
   },
-  {
-    title: "Campers",
-    to: "/campers",
-    image: campusImg,
-    alt: "Camper parking inside the eco-village",
-    text: "Space inside the eco-village for travellers arriving with their own vehicle, with shared facilities.",
-  },
 ];
 
 export default function EcoVillageCards() {

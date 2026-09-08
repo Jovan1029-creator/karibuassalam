@@ -14,7 +14,6 @@ const navLabelKey = {
   Campus: "campus",
   Accommodations: "accommodations",
   Restaurant: "restaurant",
-  Campers: "campers",
 };
 
 function FooterIcon({ type }) {

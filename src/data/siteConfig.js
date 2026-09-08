@@ -36,7 +36,6 @@ export const ECO_VILLAGE_LINKS = [
   { label: "Campus", to: "/campus" },
   { label: "Accommodations", to: "/accommodations" },
   { label: "Restaurant", to: "/restaurant" },
-  { label: "Campers", to: "/campers" },
 ];
 
 export const RETREAT_LINKS = [

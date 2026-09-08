@@ -42,6 +42,17 @@
   /* Handwriting display face, used for section names only. */
   --script: Caveat, "Segoe Script", "Bradley Hand", cursive;
   --arabic-display: "El Messiri", "Cormorant Garamond", Georgia, serif;
+  /* Shared fluid type scale: clamp(minimum, rem + viewport growth, maximum).
+     Roles stay consistent across pages and stop growing on wide screens. */
+  --font-body: Manrope, ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --text-small: 0.875rem;
+  --text-body: 1rem;
+  --text-lead: clamp(1rem, 0.94rem + 0.3vw, 1.2rem);
+  --text-h3: clamp(1.125rem, 1.07rem + 0.24vw, 1.3rem);
+  --text-h2: clamp(1.75rem, 1.45rem + 1.3vw, 2.5rem);
+  --text-h1: clamp(2.25rem, 1.8rem + 2vw, 3.75rem);
+  --text-hero: clamp(2.25rem, 1.5rem + 3.2vw, 4.5rem);
 }
 
 *,
@@ -59,7 +70,8 @@ body {
   background: radial-gradient(circle at 10% 0%, #eef7f5 0, transparent 42%),
     radial-gradient(circle at 100% 10%, #f4ecd7 0, transparent 35%), var(--bg);
   color: var(--ink);
-  font-family: Manrope, ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
   line-height: 1.55;
 }
 
@@ -93,33 +105,33 @@ h4 {
 
 h1,
 h2 {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-heading);
   font-weight: 600;
 }
 
 h3,
 h4 {
-  font-family: Manrope, ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   letter-spacing: -0.005em;
   line-height: 1.25;
 }
 
 h1 {
-  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-size: var(--text-h1);
 }
 
 h2 {
-  font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+  font-size: var(--text-h2);
 }
 
 /* Kept clear of the h2 range so a card title can never match a section title. */
 h3 {
-  font-size: clamp(1.1rem, 1.2vw, 1.28rem);
+  font-size: var(--text-h3);
 }
 
 h4 {
-  font-size: 1rem;
+  font-size: var(--text-body);
 }
 
 ul {
@@ -1807,7 +1819,7 @@ main {
 
 .contact-layout {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: var(--space-5);
   align-items: start;
 }
@@ -1841,9 +1853,9 @@ main {
   align-items: center;
   gap: 0.75rem;
   padding: 0.72rem 0.78rem;
-  border: 1px solid rgba(14, 109, 115, 0.14);
-  border-radius: 0.95rem;
-  background: linear-gradient(180deg, rgba(238, 245, 242, 0.62), rgba(255, 255, 255, 0.86));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
 }
 
 .direct-contact-icon {
@@ -1894,32 +1906,6 @@ main {
   text-decoration: underline;
 }
 
-.contact-card-actions {
-  padding-top: 0.1rem;
-}
-
-.contact-booking-link {
-  max-width: 100%;
-  flex-wrap: wrap;
-  text-align: center;
-  white-space: normal;
-}
-
-.btn-icon {
-  width: 1.05rem;
-  height: 1.05rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-}
-
-.btn-icon svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
 .map-card h3 {
   margin-bottom: 0.7rem;
 }
@@ -1927,10 +1913,12 @@ main {
 .map-frame {
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 0.95rem;
+  max-height: 20rem;
+  margin-bottom: var(--space-2);
   overflow: hidden;
-  border: 1px solid rgba(79, 102, 112, 0.16);
-  background: #eef5f2;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
 }
 
 .map-frame iframe {
@@ -1938,6 +1926,26 @@ main {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.location-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+.contact-layout > *,
+.contact-stack > * {
+  min-width: 0;
+}
+
+.contact-layout .content-card,
+.contact-layout .contact-form {
+  padding: clamp(1.125rem, 0.9rem + 1vw, 1.75rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .contact-form {
@@ -4973,31 +4981,32 @@ body {
    =========================================================================== */
 
 .hero-slider-2026 {
-  min-height: max(44rem, 100svh);
+  min-height: min(100svh, 58rem);
 }
 
 .hero-slider-2026 .hero-slider-scrim {
   background:
-    linear-gradient(90deg, rgba(4, 24, 28, 0.76), rgba(4, 24, 28, 0.2) 66%),
+    linear-gradient(90deg, rgba(4, 24, 28, 0.35), rgba(4, 24, 28, 0.48) 50%, rgba(4, 24, 28, 0.35)),
     linear-gradient(180deg, rgba(4, 18, 22, 0.48), rgba(4, 18, 22, 0.18) 38%, rgba(4, 18, 22, 0.8));
 }
 
 .hero-slider-center-2026 {
-  justify-items: start;
+  justify-items: center;
   width: min(1120px, calc(100% - 2rem));
   max-width: 1120px;
   margin-inline: auto;
-  padding: calc(var(--header-h) + var(--topbar-h) + 4rem) 5rem calc(var(--torn-h) + 7rem) 0;
-  text-align: left;
+  padding: calc(var(--header-h) + var(--topbar-h) + 3rem) 2rem calc(var(--torn-h) + 6rem);
+  text-align: center;
 }
 
 .hero-slider-center-2026 .hero-script {
-  max-width: 15ch;
+  max-width: 24ch;
   margin-bottom: 1rem;
   font-family: var(--arabic-display);
-  font-size: clamp(3rem, 6.4vw, 5.8rem);
+  font-size: var(--text-hero);
   font-weight: 600;
-  line-height: 0.94;
+  line-height: 1.12;
+  text-wrap: balance;
 }
 
 .hero-kicker {
@@ -5013,9 +5022,63 @@ body {
   max-width: 42rem;
   margin: 0 0 1.5rem;
   color: rgba(255, 255, 255, 0.92);
-  font-size: clamp(1rem, 1.7vw, 1.22rem);
+  font-size: var(--text-lead);
   line-height: 1.65;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
+  text-wrap: pretty;
+}
+
+/* One control row, clear of headings, buttons and the decorative edge. */
+.hero-controls {
+  position: absolute;
+  inset-inline: 0;
+  bottom: calc(var(--torn-h) + 0.75rem);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.hero-controls .hero-arrow,
+.hero-controls .hero-dots {
+  position: static;
+  transform: none;
+}
+
+.hero-controls .hero-arrow {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(4, 24, 28, 0.35);
+}
+
+.hero-controls .hero-dots {
+  gap: 0;
+}
+
+.hero-controls .hero-dot {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 2.75rem;
+  border-radius: 4px;
+  background: transparent;
+  transform: none;
+}
+
+.hero-controls .hero-dot::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.hero-controls .hero-dot.is-active::before {
+  background: white;
+  transform: scale(1.3);
 }
 
 .hero-trio {
@@ -5023,6 +5086,7 @@ body {
   z-index: 3;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: 1rem;
   padding-top: calc(var(--header-h) + var(--topbar-h) + 3rem);
   padding-bottom: calc(var(--torn-h) + 5rem);
@@ -5031,7 +5095,7 @@ body {
 .hero-trio-card {
   display: grid;
   grid-template-rows: 10rem 1fr;
-  min-height: 25rem;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: var(--radius-md);
@@ -5050,25 +5114,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 1.25rem;
   padding: 1.15rem;
 }
 
 .hero-trio-card h2 {
-  margin-bottom: 0.65rem;
+  margin: 0;
   font-family: var(--arabic-display);
-  font-size: 1.08rem;
+  font-size: var(--text-h3);
   line-height: 1.3;
-}
-
-.hero-trio-card p {
-  margin-bottom: 1rem;
-  font-size: 0.86rem;
-  line-height: 1.5;
 }
 
 .hero-trio-card .btn {
   margin-top: auto;
-  font-size: 0.86rem;
+  font-size: var(--text-small);
 }
 
 .stay-planner-section .section-header,
@@ -5318,11 +5377,18 @@ body {
   width: 100%;
 }
 
-@media (max-width: 960px) {
-  .hero-slider-2026.has-trio {
-    min-height: 64rem;
-  }
+/* Dropdowns have a white surface even while the header overlays the hero. */
+.site-header--home:not(.is-scrolled) .desktop-nav .dropdown-menu a {
+  color: var(--ink);
+  text-shadow: none;
+}
 
+.site-header--home:not(.is-scrolled) .desktop-nav .dropdown-menu a:is(:hover, :focus-visible, .is-active) {
+  color: var(--accent-ocean);
+  background: var(--surface-alt);
+}
+
+@media (max-width: 960px) {
   .hero-trio {
     grid-template-columns: 1fr;
     max-width: 42rem;
@@ -5350,25 +5416,18 @@ body {
 }
 
 @media (max-width: 700px) {
-  .hero-slider-2026 {
-    min-height: 48rem;
-  }
-
-  .hero-slider-2026.has-trio {
-    min-height: 76rem;
-  }
-
   .hero-slider-center-2026 {
-    padding: calc(var(--header-h) + var(--topbar-h) + 3rem) 3.25rem calc(var(--torn-h) + 7rem) 1rem;
+    padding: calc(var(--header-h) + var(--topbar-h) + 2rem) 0.5rem calc(var(--torn-h) + 5rem);
   }
 
-  .hero-slider-center-2026 .hero-script {
-    font-size: clamp(2.55rem, 12vw, 4rem);
+  .hero-slider-center-2026 .hero-slider-actions {
+    width: min(100%, 23rem);
+    flex-direction: column;
   }
 
   .hero-trio {
-    padding-inline: 2.75rem;
-    padding-bottom: calc(var(--torn-h) + 4.5rem);
+    padding-inline: 0.5rem;
+    padding-bottom: calc(var(--torn-h) + 5rem);
   }
 
   .hero-trio-card {
@@ -5378,14 +5437,6 @@ body {
 
   .hero-trio-card > div {
     padding: 0.9rem;
-  }
-
-  .hero-trio-card h2 {
-    font-size: 0.96rem;
-  }
-
-  .hero-trio-card p {
-    font-size: 0.78rem;
   }
 
   .stay-options-grid,

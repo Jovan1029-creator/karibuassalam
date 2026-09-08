@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
-import CTAButton from "../components/CTAButton";
 import { SITE } from "../data/siteConfig";
 import { getRetreatBySlug } from "../data/retreats";
 import { buildMailtoUrl, buildWhatsAppUrl } from "../utils/contact";
@@ -45,16 +44,6 @@ function ContactIcon({ type }) {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="3" y="5" width="18" height="14" rx="2" />
         <path d="m3 7 9 6 9-6" />
-      </svg>
-    );
-  }
-
-  if (type === "form") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M9 3h6l1 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3l1-2Z" />
-        <path d="M9 12h6" />
-        <path d="M9 16h4" />
       </svg>
     );
   }
@@ -235,27 +224,30 @@ export default function Contact() {
                   {tx("Booking intent detected for")} <strong>{tx(selectedRetreatLabel)}</strong>.
                 </p>
               ) : null}
-              <div className="inline-actions contact-card-actions">
-                <CTAButton to="/booking" variant="secondary" size="sm" className="contact-booking-link">
-                  <span className="btn-icon" aria-hidden="true">
-                    <ContactIcon type="form" />
-                  </span>
-                  <span>{tx("Open structured booking form")}</span>
-                </CTAButton>
-              </div>
             </div>
 
             <div className="content-card map-card">
               <h3>Assalam Community Foundation</h3>
+              <p>{tx("Kizimkazi, Zanzibar")}</p>
               <div className="map-frame">
                 <iframe
-                  title="Assalam Community Foundation location map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.576621766117!2d39.46254778063581!3d-6.448364657866362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185d05fc3956b703%3A0x27f750fc3ab0e896!2sAssalam%20Community%20Foundation!5e0!3m2!1sen!2stz!4v1771861462061!5m2!1sen!2stz"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Assalam Community Foundation"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.5766451875434!2d39.46334111155818!3d-6.448361663029205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185d05fc3956b703%3A0x27f750fc3ab0e896!2sAssalam%20Community%20Foundation!5e0!3m2!1sen!2stz!4v1788855665424!5m2!1sen!2stz"
+                  width="600"
+                  height="450"
                   allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
                 />
               </div>
+              <a
+                className="text-link location-link"
+                href="https://www.google.com/maps/search/?api=1&query=Assalam+Community+Foundation+Kizimkazi+Zanzibar"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {tx("Open in Google Maps")} <span aria-hidden="true"> ↗</span>
+              </a>
             </div>
           </div>
 

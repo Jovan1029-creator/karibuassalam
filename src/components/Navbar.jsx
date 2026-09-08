@@ -16,7 +16,6 @@ const navLabelKey = {
   Campus: "campus",
   Accommodations: "accommodations",
   Restaurant: "restaurant",
-  Campers: "campers",
 };
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';

@@ -3,6 +3,8 @@
 // Keys are the exact English strings used in components and data files.
 
 export const de = {
+  "Kizimkazi, Zanzibar": "Kizimkazi, Sansibar",
+  "Open in Google Maps": "In Google Maps öffnen",
   /* ---------- navigation, shell, generic ---------- */
   "Skip to main content": "Zum Hauptinhalt springen",
   "Karibu Assalam logo": "Karibu-Assalam-Logo",
