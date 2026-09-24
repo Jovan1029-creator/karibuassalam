@@ -30,7 +30,7 @@ const stayOptions = [
     to: "/retreats",
   },
   {
-    heading: "Zanzibar Experiences & Karibu Assalam Tours",
+    heading: "Karibu Assalam Tours",
     image: experiencesImg,
     alt: "Historic Stone Town in Zanzibar",
     copy: "Visit our campus and join our Karibu Assalam Tour with a campus tour, including a visit of our permaculture farm and our school, and learn more about Zanzibar’s culture in workshops making your own hammam soap or ngoma (drum).",

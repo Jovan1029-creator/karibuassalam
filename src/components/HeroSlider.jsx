@@ -16,7 +16,7 @@ const slides = [
   {
     id: "welcome",
     image: aerialImg,
-    heading: "Welcome to Karibu Assalam Eco Resort in Kizimkazi, Zanzibar",
+    heading: "Welcome to Karibu Assalam Eco Resort",
     copy: "Discover our halal eco village on Zanzibar beach combining sustainable living, local culture, meaningful community experiences and peaceful retreats.",
     actions: [
       { ctaText: "Book Your Experience", to: "/contact", primary: true },
@@ -29,19 +29,19 @@ const slides = [
     layout: "trio",
     panels: [
       {
-        heading: "Stay in Kizimkazi, Zanzibar - discover our halal eco resort on the beach",
+        heading: "Stay in our eco village on the beach",
         image: stayImg,
         ctaText: "Book Your Stay",
         to: "/eco-resort",
       },
       {
-        heading: "Connect with the community - Camps & retreats",
+        heading: "Connect with community",
         image: communityImg,
         ctaText: "Explore Camps & Retreats",
         to: "/retreats",
       },
       {
-        heading: "Travel with purpose - stay, relax, learn, and make an impact",
+        heading: "Travel with purpose",
         image: purposeImg,
         ctaText: "Join us",
         to: "/contact",
@@ -58,7 +58,8 @@ const slides = [
   {
     id: "experiences",
     image: experienceImg,
-    heading: "Experiences",
+    heading: "Zanzibar Experiences",
+    copy: "A different way to experience Zanzibar: explore the island and discover local culture on our trips and excursions, support meaningful projects in Kizimkazi, learn skills in a workshop or attend one of our cultural events.",
     actions: [{ ctaText: "Find Your Trip", to: "/experiences", primary: true }],
   },
   {
