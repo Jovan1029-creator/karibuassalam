@@ -226,7 +226,7 @@ export default function Navbar() {
                   {ECO_VILLAGE_LINKS.map((link) => (
                     <li key={link.to}>
                       <Link to={link.to} onClick={() => setEcoOpen(false)}>
-                        {link.name ?? t.nav[navLabelKey[link.label]] ?? link.label}
+                        {link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? link.label}
                       </Link>
                     </li>
                   ))}
@@ -338,7 +338,7 @@ export default function Navbar() {
                     {ECO_VILLAGE_LINKS.map((link) => (
                       <li key={link.to}>
                         <NavLink to={link.to} onClick={closeMobile}>
-                          {link.name ?? t.nav[navLabelKey[link.label]] ?? link.label}
+                          {link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? link.label}
                         </NavLink>
                       </li>
                     ))}

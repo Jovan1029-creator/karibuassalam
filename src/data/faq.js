@@ -7,7 +7,11 @@ export const faqSections = [
       {
         question: "What is the cancellation policy?",
         answer:
-          "Camp and retreat bookings require a 20% deposit. Individual stays can be paid on arrival.",
+          "The team will confirm cancellation terms and any deposit before you book. Contact us if your plans change.",
+      },
+      {
+        question: "Can I arrange a private group retreat?",
+        answer: "Tell the team your group size, dates and interests. They will discuss the options and confirm availability with you.",
       },
       {
         question: "How can I make a reservation?",
@@ -25,6 +29,10 @@ export const faqSections = [
     id: "travel-support",
     title: "Travel Support",
     items: [
+      {
+        question: "How do I get there?",
+        answer: "Karibu Assalam is in Kizimkazi, Zanzibar. Ask the team about arranging an airport transfer when you book.",
+      },
       {
         question: "Do you offer airport transfers?",
         answer: "Yes, transfers can be arranged upon request.",
@@ -45,8 +53,24 @@ export const faqSections = [
     title: "Stay, Meals & Facilities",
     items: [
       {
+        question: "Is Karibu Assalam a hotel?",
+        answer: "Karibu Assalam is a community-led eco-village with accommodation, shared meals and experiences. It is not a conventional resort stay.",
+      },
+      {
+        question: "Where exactly are you located?",
+        answer: "The eco-village is beside the Indian Ocean in Kizimkazi, on the south coast of Zanzibar.",
+      },
+      {
         question: "Is breakfast and dinner included in the stay?",
-        answer: "Yes, complimentary breakfast and dinner are included.",
+        answer: "Meal inclusions depend on your booking. Camps and retreats include daily meals; the team will confirm what is included with an individual stay.",
+      },
+      {
+        question: "Is the food halal?",
+        answer: "Yes. Camp and retreat meals are halal, and vegetarian options are available.",
+      },
+      {
+        question: "Are there prayer facilities?",
+        answer: "Yes. There is a mosque on the eco-village campus.",
       },
       {
         question: "Is Wi-Fi available at the property?",
@@ -61,6 +85,10 @@ export const faqSections = [
         answer: "Yes, families are welcome.",
       },
       {
+        question: "Is it suitable for children?",
+        answer: "Families can explore the Family Camp, and school groups can ask about School Camp. Contact the team to discuss your children's ages and needs.",
+      },
+      {
         question: "Do you offer vegetarian or special meals?",
         answer:
           "Yes, vegetarian options are available on our menu. Gluten-free meals are not currently offered.",
@@ -69,6 +97,10 @@ export const faqSections = [
         question: "Is the property close to the beach?",
         answer:
           "Yes, the property is right on the oceanfront and also just a 10-minute walk from the sandy beach.",
+      },
+      {
+        question: "What is included in the price?",
+        answer: "Inclusions depend on the stay or programme. Each retreat page lists its package details; ask the team to confirm the full price and inclusions before booking.",
       },
       {
         question: "Do you provide laundry service?",
@@ -80,6 +112,10 @@ export const faqSections = [
     id: "preparation",
     title: "Preparation",
     items: [
+      {
+        question: "Can I volunteer?",
+        answer: "Yes. The foundation discusses short-term and long-term opportunities based on your skills and dates. Contact the team to start a conversation.",
+      },
       {
         question: "What should I pack?",
         answer:

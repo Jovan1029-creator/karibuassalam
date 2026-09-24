@@ -83,7 +83,7 @@ export default function Footer() {
             <ul className="footer-links">
               {[...NAV_LINKS, ...NAV_LINKS_TAIL].map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to}>{t.nav[navLabelKey[link.label]] ?? tx(link.label)}</Link>
+                  <Link to={link.to}>{link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? tx(link.label)}</Link>
                 </li>
               ))}
             </ul>
@@ -94,7 +94,7 @@ export default function Footer() {
             <ul className="footer-links">
               {ECO_VILLAGE_LINKS.map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to}>{t.nav[navLabelKey[link.label]] ?? tx(link.label)}</Link>
+                  <Link to={link.to}>{link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? tx(link.label)}</Link>
                 </li>
               ))}
             </ul>

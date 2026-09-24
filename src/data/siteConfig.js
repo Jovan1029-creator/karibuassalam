@@ -36,6 +36,9 @@ export const ECO_VILLAGE_LINKS = [
   { label: "Campus", to: "/campus" },
   { label: "Accommodations", to: "/accommodations" },
   { label: "Restaurant", to: "/restaurant" },
+  { name: "Kanga Africa", to: "/eco-resort#kanga-africa" },
+  { name: "Hamammni", to: "/eco-resort#hamammni" },
+  { name: "Arts & Culture Centre", to: "/eco-resort#arts-culture" },
 ];
 
 export const RETREAT_LINKS = [

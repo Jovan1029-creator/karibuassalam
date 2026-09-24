@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import EcoVillageCards from "../components/EcoVillageCards";
@@ -30,6 +31,50 @@ export default function EcoResort() {
         subtitle="Stay in our eco village right on Kizimkazi beach in accommodation with views of the Indian Ocean."
       >
         <EcoVillageCards />
+      </Section>
+
+      <Section
+        title="How we live sustainably"
+        subtitle="The eco-village brings learning, community and everyday sustainability together on one oceanside campus."
+        className="surface-section"
+      >
+        <div className="eco-proof-grid">
+          <article>
+            <h3>Permaculture gardens</h3>
+            <p>See the gardens on a campus tour and learn how growing food is part of daily life here.</p>
+          </article>
+          <article>
+            <h3>Solar and water systems</h3>
+            <p>The campus tour introduces the systems used across the eco-village.</p>
+          </article>
+          <article>
+            <h3>Shared learning spaces</h3>
+            <p>Visit the school, kitchen and workshop spaces where the wider community meets.</p>
+          </article>
+        </div>
+      </Section>
+
+      <Section
+        title="Discover more of the eco-village"
+        subtitle="Meet the people and projects connected to a stay at Karibu Assalam."
+      >
+        <div className="eco-discover-grid">
+          <article id="kanga-africa" className="eco-discover-card">
+            <h3>Kanga Africa</h3>
+            <p>Visit Assalam Kanga Village and learn about community life in Kizimkazi on the Karibu Assalam Tour.</p>
+            <Link className="text-link" to="/experiences/tours/campus-village-tour">Explore the tour</Link>
+          </article>
+          <article id="hamammni" className="eco-discover-card">
+            <h3>Hamammni</h3>
+            <p>Make your own soap with the women's cooperative using coconut oil and local botanicals.</p>
+            <Link className="text-link" to="/experiences/workshops/soap-making">Explore the workshop</Link>
+          </article>
+          <article id="arts-culture" className="eco-discover-card">
+            <h3>Arts & Culture Centre</h3>
+            <p>Discover performances, music and cultural events connected to the campus.</p>
+            <Link className="text-link" to="/experiences#special-events">Explore special events</Link>
+          </article>
+        </div>
       </Section>
 
       <Section id="spa" className="surface-section">
