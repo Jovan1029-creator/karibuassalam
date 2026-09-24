@@ -197,7 +197,7 @@ export default function Experiences() {
                 <li key={fact}>{tx(fact)}</li>
               ))}
             </ul>
-            <CTAButton to="/booking">{tx("Ask about safari")}</CTAButton>
+            <CTAButton to="/experiences/safari">{tx("More details")}</CTAButton>
           </div>
         </div>
       </Section>
@@ -224,6 +224,9 @@ export default function Experiences() {
               </CTAButton>
             </article>
           ))}
+        </div>
+        <div className="section-actions">
+          <Link className="text-link" to="/experiences/volunteer">More about volunteering</Link>
         </div>
       </Section>
 
@@ -258,6 +261,9 @@ export default function Experiences() {
               )}
             </article>
           ))}
+        </div>
+        <div className="section-actions">
+          <Link className="text-link" to="/experiences/events">Explore special events</Link>
         </div>
       </Section>
 

@@ -3,6 +3,8 @@
 // Keys are the exact English strings used in components and data files.
 
 export const de = {
+  "Ask the team": "Fragen Sie das Team",
+  "Safari from Zanzibar": "Safari ab Sansibar",
   "All Experiences": "Alle Erlebnisse",
   "Campus & Village Tour": "Campus- und Dorftour",
   "Zanzibar Excursions": "Sansibar-Ausflüge",

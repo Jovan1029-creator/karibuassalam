@@ -72,7 +72,7 @@ export default function EcoResort() {
           <article id="arts-culture" className="eco-discover-card">
             <h3>Arts & Culture Centre</h3>
             <p>Discover performances, music and cultural events connected to the campus.</p>
-            <Link className="text-link" to="/experiences#special-events">Explore special events</Link>
+            <Link className="text-link" to="/experiences/events">Explore special events</Link>
           </article>
         </div>
       </Section>

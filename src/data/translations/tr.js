@@ -3,6 +3,8 @@
 // Keys are the exact English strings used in components and data files.
 
 export const tr = {
+  "Ask the team": "Ekibe sorun",
+  "Safari from Zanzibar": "Zanzibar çıkışlı safari",
   "All Experiences": "Tüm deneyimler",
   "Campus & Village Tour": "Kampüs ve Köy Turu",
   "Zanzibar Excursions": "Zanzibar gezileri",
