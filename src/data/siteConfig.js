@@ -48,6 +48,16 @@ export const RETREAT_LINKS = [
   { name: "The Nature Retreat", to: "/retreats/nature-retreat" },
 ];
 
+export const EXPERIENCE_LINKS = [
+  { name: "All Experiences", to: "/experiences" },
+  { name: "Campus & Village Tour", to: "/experiences#campus-village" },
+  { name: "Zanzibar Excursions", to: "/experiences#zanzibar-excursions" },
+  { name: "Workshops", to: "/experiences#workshops" },
+  { name: "Special Events", to: "/experiences#special-events" },
+  { name: "Volunteer on Zanzibar", to: "/experiences#volunteer" },
+  { name: "Safari", to: "/experiences#safari" },
+];
+
 // Everything after the Eco-Village dropdown, before the Book Now button.
 export const NAV_LINKS_TAIL = [
   { label: "FAQ", to: "/faq" },

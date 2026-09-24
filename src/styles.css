@@ -5362,6 +5362,13 @@ body {
   transform: translateX(-50%);
 }
 
+.experience-dropdown-menu {
+  left: 50%;
+  right: auto;
+  min-width: 17rem;
+  transform: translateX(-50%);
+}
+
 /* The primary navigation uses a horizontal flex row; submenus must explicitly
    opt back into a vertical list or the parent selector lays them sideways. */
 .desktop-nav .dropdown-menu {

@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import PhotoSlot from "../components/PhotoSlot";
 import SEO from "../components/SEO";
-import { SITE } from "../data/siteConfig";
+import { EXPERIENCE_LINKS, SITE } from "../data/siteConfig";
 import {
   campusTour,
   safari,
@@ -33,6 +33,7 @@ const tourImages = {
 
 export default function Experiences() {
   const { tx } = useLanguage();
+  const navigate = useNavigate();
 
   return (
     <main id="main-content">
@@ -56,8 +57,22 @@ export default function Experiences() {
         ctaPrimary={{ to: "/booking", label: tx("Book an experience") }}
       />
 
+      <Section className="retreat-jump-section" containerClassName="retreat-jump-inner">
+        <label htmlFor="experience-jump">{tx("Find your experience")}</label>
+        <select
+          id="experience-jump"
+          defaultValue=""
+          onChange={(event) => event.target.value && navigate(event.target.value)}
+        >
+          <option value="" disabled>{tx("Choose an experience")}</option>
+          {EXPERIENCE_LINKS.slice(1).map((item) => (
+            <option value={item.to} key={item.to}>{item.name}</option>
+          ))}
+        </select>
+      </Section>
+
       {/* ---------------- daily campus tour ---------------- */}
-      <div className="torn-band">
+      <div id="campus-village" className="torn-band">
         <TornEdge position="top" color="var(--bg)" />
 
         <div className="set-intro">
@@ -96,6 +111,7 @@ export default function Experiences() {
 
       {/* ---------------- workshops ---------------- */}
       <Section
+        id="workshops"
         scriptTitle
         eyebrow={tx("Hands on")}
         title={tx("Workshops")}
@@ -123,6 +139,7 @@ export default function Experiences() {
 
       {/* ---------------- Zanzibar tours ---------------- */}
       <Section
+        id="zanzibar-excursions"
         scriptTitle
         eyebrow={tx("Across the island")}
         title={tx("Zanzibar tours")}
@@ -157,7 +174,7 @@ export default function Experiences() {
       </Section>
 
       {/* ---------------- safari ---------------- */}
-      <Section scriptTitle eyebrow={tx("Beyond the island")} title={tx(safari.title)}>
+      <Section id="safari" scriptTitle eyebrow={tx("Beyond the island")} title={tx(safari.title)}>
         <div className="feature-split">
           <div className="feature-split-media">
             <PhotoSlot label={tx("Safari")} alt={tx("Safari in mainland Tanzania")} ratio="16 / 10" />
@@ -177,6 +194,7 @@ export default function Experiences() {
 
       {/* ---------------- volunteering ---------------- */}
       <Section
+        id="volunteer"
         scriptTitle
         eyebrow={tx("Give your time")}
         title={tx("Volunteering")}
@@ -201,6 +219,7 @@ export default function Experiences() {
 
       {/* ---------------- special events ---------------- */}
       <Section
+        id="special-events"
         scriptTitle
         eyebrow={tx("Through the year")}
         title={tx("Special events")}

@@ -1,6 +1,6 @@
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ECO_VILLAGE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, RETREAT_LINKS, SITE } from "../data/siteConfig";
+import { ECO_VILLAGE_LINKS, EXPERIENCE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, RETREAT_LINKS, SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
 import CTAButton from "./CTAButton";
@@ -24,8 +24,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [ecoOpen, setEcoOpen] = useState(false);
   const [retreatOpen, setRetreatOpen] = useState(false);
+  const [experienceOpen, setExperienceOpen] = useState(false);
   const [ecoMobileOpen, setEcoMobileOpen] = useState(false);
   const [retreatMobileOpen, setRetreatMobileOpen] = useState(false);
+  const [experienceMobileOpen, setExperienceMobileOpen] = useState(false);
   const navRef = useRef(null);
   const panelRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -37,6 +39,7 @@ export default function Navbar() {
     setMobileOpen(false);
     setEcoMobileOpen(false);
     setRetreatMobileOpen(false);
+    setExperienceMobileOpen(false);
   }, []);
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export default function Navbar() {
         closeMobile();
         setEcoOpen(false);
         setRetreatOpen(false);
+        setExperienceOpen(false);
         return;
       }
 
@@ -72,6 +76,7 @@ export default function Navbar() {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setEcoOpen(false);
         setRetreatOpen(false);
+        setExperienceOpen(false);
       }
     }
 
@@ -97,6 +102,7 @@ export default function Navbar() {
     closeMobile();
     setEcoOpen(false);
     setRetreatOpen(false);
+    setExperienceOpen(false);
   }, [closeMobile, location.pathname]);
 
   const headerClass = [
@@ -146,6 +152,36 @@ export default function Navbar() {
                       {RETREAT_LINKS.map((item) => (
                         <li key={item.to}>
                           <Link to={item.to} onClick={() => setRetreatOpen(false)}>{item.name}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ) : link.label === "Experiences" ? (
+                <li
+                  className="nav-dropdown"
+                  key={link.to}
+                  onMouseEnter={() => setExperienceOpen(true)}
+                  onMouseLeave={() => setExperienceOpen(false)}
+                >
+                  <button
+                    type="button"
+                    className={`nav-dropdown-trigger ${experienceOpen || location.pathname.startsWith("/experiences") ? "is-active" : ""}`}
+                    aria-expanded={experienceOpen}
+                    aria-controls="experience-menu"
+                    onClick={() => setExperienceOpen((value) => !value)}
+                    onFocus={() => setExperienceOpen(true)}
+                  >
+                    {t.nav.experiences}
+                    <svg className="nav-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                      <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                  {experienceOpen && (
+                    <ul id="experience-menu" className="dropdown-menu experience-dropdown-menu">
+                      {EXPERIENCE_LINKS.map((item) => (
+                        <li key={item.to}>
+                          <Link to={item.to} onClick={() => setExperienceOpen(false)}>{item.name}</Link>
                         </li>
                       ))}
                     </ul>
@@ -253,6 +289,24 @@ export default function Navbar() {
                     {retreatMobileOpen && (
                       <ul className="mobile-submenu">
                         {RETREAT_LINKS.map((item) => (
+                          <li key={item.to}><NavLink to={item.to} onClick={closeMobile}>{item.name}</NavLink></li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ) : link.label === "Experiences" ? (
+                  <li key={link.to}>
+                    <button
+                      type="button"
+                      className="mobile-submenu-trigger"
+                      aria-expanded={experienceMobileOpen}
+                      onClick={() => setExperienceMobileOpen((value) => !value)}
+                    >
+                      {t.nav.experiences}
+                    </button>
+                    {experienceMobileOpen && (
+                      <ul className="mobile-submenu">
+                        {EXPERIENCE_LINKS.map((item) => (
                           <li key={item.to}><NavLink to={item.to} onClick={closeMobile}>{item.name}</NavLink></li>
                         ))}
                       </ul>
