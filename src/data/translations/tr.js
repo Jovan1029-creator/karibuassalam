@@ -3,6 +3,11 @@
 // Keys are the exact English strings used in components and data files.
 
 export const tr = {
+  "All Experiences": "Tüm deneyimler",
+  "Campus & Village Tour": "Kampüs ve Köy Turu",
+  "Zanzibar Excursions": "Zanzibar gezileri",
+  "Special Events": "Özel etkinlikler",
+  "Volunteer on Zanzibar": "Zanzibar'da gönüllü olun",
   "Are there prayer facilities?": "Namaz için bir alan var mı?",
   "Can I arrange a private group retreat?": "Özel bir grup inzivası düzenleyebilir miyim?",
   "Can I volunteer?": "Gönüllü olabilir miyim?",

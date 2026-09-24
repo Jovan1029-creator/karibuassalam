@@ -66,7 +66,7 @@ export default function Experiences() {
         >
           <option value="" disabled>{tx("Choose an experience")}</option>
           {EXPERIENCE_LINKS.slice(1).map((item) => (
-            <option value={item.to} key={item.to}>{item.name}</option>
+            <option value={item.to} key={item.to}>{tx(item.name)}</option>
           ))}
         </select>
       </Section>

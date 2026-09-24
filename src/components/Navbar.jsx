@@ -181,7 +181,7 @@ export default function Navbar() {
                     <ul id="experience-menu" className="dropdown-menu experience-dropdown-menu">
                       {EXPERIENCE_LINKS.map((item) => (
                         <li key={item.to}>
-                          <Link to={item.to} onClick={() => setExperienceOpen(false)}>{item.name}</Link>
+                          <Link to={item.to} onClick={() => setExperienceOpen(false)}>{tx(item.name)}</Link>
                         </li>
                       ))}
                     </ul>
@@ -289,7 +289,7 @@ export default function Navbar() {
                     {retreatMobileOpen && (
                       <ul className="mobile-submenu">
                         {RETREAT_LINKS.map((item) => (
-                          <li key={item.to}><NavLink to={item.to} onClick={closeMobile}>{item.name}</NavLink></li>
+                          <li key={item.to}><NavLink to={item.to} onClick={closeMobile}>{tx(item.name)}</NavLink></li>
                         ))}
                       </ul>
                     )}

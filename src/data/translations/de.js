@@ -3,6 +3,11 @@
 // Keys are the exact English strings used in components and data files.
 
 export const de = {
+  "All Experiences": "Alle Erlebnisse",
+  "Campus & Village Tour": "Campus- und Dorftour",
+  "Zanzibar Excursions": "Sansibar-Ausflüge",
+  "Special Events": "Besondere Veranstaltungen",
+  "Volunteer on Zanzibar": "Freiwilligenarbeit auf Sansibar",
   "Are there prayer facilities?": "Gibt es Gebetsmöglichkeiten?",
   "Can I arrange a private group retreat?": "Kann ich ein privates Gruppen-Retreat organisieren?",
   "Can I volunteer?": "Kann ich mich ehrenamtlich engagieren?",
