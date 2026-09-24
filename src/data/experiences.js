@@ -15,7 +15,7 @@ export const campusTour = {
 export const workshops = [
   {
     slug: "soap-making",
-    title: "Soap making",
+    title: "Hamammni soaps",
     text:
       "Make your own soap with the women's cooperative, using coconut oil and local botanicals. You take your bars home with you.",
   },

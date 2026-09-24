@@ -106,6 +106,14 @@ export default function Experiences() {
           </div>
         </div>
 
+        <div className="container campus-tour-detail">
+          <div>
+            <h3>Karibu Assalam Tour: campus & village</h3>
+            <p>Spend six hours visiting Assalam Kanga Village and exploring the school, gardens, cave and mosque at the eco-village.</p>
+          </div>
+          <Link className="btn btn-primary" to="/experiences/tours/campus-village-tour">More details</Link>
+        </div>
+
         <TornEdge position="bottom" color="var(--bg)" />
       </div>
 
@@ -128,6 +136,7 @@ export default function Experiences() {
               <div className="experience-card-body">
                 <h3>{tx(item.title)}</h3>
                 <p>{tx(item.text)}</p>
+                <Link className="text-link" to={`/experiences/workshops/${item.slug}`}>{tx("More details")}</Link>
               </div>
             </article>
           ))}
@@ -164,6 +173,7 @@ export default function Experiences() {
               <div className="experience-card-body">
                 <h3>{tx(item.title)}</h3>
                 <p>{tx(item.text)}</p>
+                <Link className="text-link" to={`/experiences/tours/${item.slug}`}>{tx("More details")}</Link>
               </div>
             </article>
           ))}

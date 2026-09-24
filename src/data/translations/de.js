@@ -3,6 +3,17 @@
 // Keys are the exact English strings used in components and data files.
 
 export const de = {
+  "2–3 hours": "2–3 Stunden",
+  "6 hours": "6 Stunden",
+  "Ask about this experience": "Dieses Erlebnis anfragen",
+  "Eco-print workshop": "Ökodruck-Workshop",
+  "Full day": "Ganztägig",
+  "Half day": "Halbtägig",
+  "Hamammni soaps": "Hamammni-Seifen",
+  "Hamammni soap-making workshop": "Hamammni-Seifenworkshop",
+  "Karibu Assalam Tour": "Karibu-Assalam-Tour",
+  "Ngoma drum workshop": "Ngoma-Trommelworkshop",
+  "Swahili cooking class": "Swahili-Kochkurs",
   "Find your experience": "Finden Sie Ihr Erlebnis",
   "Choose an experience": "Wählen Sie ein Erlebnis",
   "Kizimkazi, Zanzibar": "Kizimkazi, Sansibar",

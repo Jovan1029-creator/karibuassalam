@@ -10,6 +10,7 @@ import About from "./pages/About";
 import Retreats from "./pages/Retreats";
 import RetreatDetail from "./pages/RetreatDetail";
 import Experiences from "./pages/Experiences";
+import ExperienceDetail from "./pages/ExperienceDetail";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Campus from "./pages/Campus";
@@ -82,6 +83,7 @@ export default function App() {
           <Route path="/retreats" element={<Retreats />} />
           <Route path="/retreats/:slug" element={<RetreatDetail />} />
           <Route path="/experiences" element={<Experiences />} />
+          <Route path="/experiences/:type/:slug" element={<ExperienceDetail />} />
           <Route path="/eco-resort" element={<EcoResort />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />

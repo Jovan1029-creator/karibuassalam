@@ -3,6 +3,17 @@
 // Keys are the exact English strings used in components and data files.
 
 export const tr = {
+  "2–3 hours": "2–3 saat",
+  "6 hours": "6 saat",
+  "Ask about this experience": "Bu deneyim hakkında bilgi alın",
+  "Eco-print workshop": "Eko baskı atölyesi",
+  "Full day": "Tam gün",
+  "Half day": "Yarım gün",
+  "Hamammni soaps": "Hamammni sabunları",
+  "Hamammni soap-making workshop": "Hamammni sabun yapımı atölyesi",
+  "Karibu Assalam Tour": "Karibu Assalam Turu",
+  "Ngoma drum workshop": "Ngoma davul atölyesi",
+  "Swahili cooking class": "Svahili yemek atölyesi",
   "Find your experience": "Deneyiminizi seçin",
   "Choose an experience": "Bir deneyim seçin",
   "Kizimkazi, Zanzibar": "Kizimkazi, Zanzibar",
