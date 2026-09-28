@@ -5,7 +5,7 @@ import PhotoSlot from "../components/PhotoSlot";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { getExperienceDetail } from "../data/experienceDetails";
-import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
+import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
 
 export default function ExperienceDetail() {
   const { type, slug } = useParams();
@@ -53,8 +53,8 @@ export default function ExperienceDetail() {
       <Section title="What is included" className="surface-section">
         <div className="retreat-feature-split">
           <PhotoSlot
-            src={experience.image}
-            alt={experience.image ? experience.title : `Photo of ${experience.title} coming soon`}
+            src={experience.detailPhoto?.src || experience.image}
+            alt={experience.detailPhoto?.alt || (experience.image ? experience.title : `Photo of ${experience.title} coming soon`)}
             label="PLACEHOLDER"
             ratio="4 / 3"
             width={900}

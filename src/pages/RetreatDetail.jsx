@@ -6,8 +6,8 @@ import RetreatCard from "../components/RetreatCard";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import { getRetreatBySlug, retreats } from "../data/retreats";
-import roomImg from "../../pics/rooms/camps-22-enhanced.webp";
-import foodImg from "../../pics/rooms/food-1-enhanced.webp";
+import roomImg from "../../pics/site-marketing/eco-village-room-interior.webp";
+import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
 
 function StandardRetreatPage({ retreat }) {
   return (

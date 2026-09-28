@@ -1,8 +1,12 @@
 // src\data\experiences.js
 //
-// The Experiences page groups everything a guest can do that is not the stay
-// itself. Images are intentionally omitted where none has been supplied yet —
-// the page renders a labelled placeholder in their place.
+// Shared photos keep the overview and dedicated category pages consistent.
+import craftImg from "../../pics/site-marketing/community-craft-workshop.webp";
+import schoolImg from "../../pics/site-marketing/school-campus.webp";
+import caveMusicImg from "../../pics/site-marketing/cave-sufi-performance.webp";
+import sawaImg from "../../pics/site-marketing/sawa-music-room.webp";
+import ramadanImg from "../../pics/site-marketing/ramadan-community-evening.webp";
+import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
 
 export const campusTour = {
   title: "Daily campus tour",
@@ -77,6 +81,7 @@ export const safari = {
 export const volunteering = [
   {
     slug: "short-term",
+    photo: { src: craftImg, alt: "Visitors and community members making crafts together" },
     title: "Short-term volunteering",
     duration: "Under 3 months",
     text:
@@ -84,6 +89,7 @@ export const volunteering = [
   },
   {
     slug: "long-term",
+    photo: { src: schoolImg, alt: "The school building at Assalam Eco-Village" },
     title: "Long-term volunteering",
     duration: "3 months and over",
     text:
@@ -94,6 +100,7 @@ export const volunteering = [
 export const specialEvents = [
   {
     slug: "sufi-festival",
+    photo: { src: caveMusicImg, alt: "Sufi musicians performing in the campus cave", position: "50% 32%" },
     title: "Zanzibar Sufi Festival",
     text:
       "An annual festival of Sufi music, poetry and gathering, hosted with Assalam. It has its own site with the programme and dates.",
@@ -102,6 +109,7 @@ export const specialEvents = [
   },
   {
     slug: "sawa-ensemble",
+    photo: { src: sawaImg, alt: "Music practice in the Sawa Ensemble room" },
     title: "Sawa Ensemble",
     text:
       "The music ensemble that grew out of the campus, performing coastal and devotional repertoire. Follow them for performance dates.",
@@ -110,6 +118,7 @@ export const specialEvents = [
   },
   {
     slug: "camps-retreats",
+    photo: { src: ramadanImg, alt: "Community gathering during Ramadan at Assalam Kanga Village" },
     title: "Camps and retreats",
     text:
       "The scheduled programmes that run through the year — kindness camps, Ramadan camps, school camps and nature retreats.",
@@ -118,6 +127,7 @@ export const specialEvents = [
   },
   {
     slug: "stay-updated",
+    photo: { src: amphitheatreImg, alt: "The open-air amphitheatre at Karibu Assalam" },
     title: "Stay updated",
     text:
       "Dates are announced as they are confirmed. Follow along or ask the team to let you know when something is opening.",

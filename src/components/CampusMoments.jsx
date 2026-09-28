@@ -4,11 +4,11 @@ import Lightbox from "./Lightbox";
 import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import educationImg from "../../pics/our stories/education-1-enhanced.webp";
-import coastImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
-import roomImg from "../../pics/rooms/camps-22-enhanced.webp";
+import coastImg from "../../pics/site-marketing/ocean-jetty.webp";
+import roomImg from "../../pics/site-marketing/eco-village-room-interior.webp";
 import mealsImg from "../../pics/rooms/food-1-enhanced.webp";
 import kindnessImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
-import natureImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
+import natureImg from "../../pics/site-marketing/permaculture-campus-tour.webp";
 
 // Six images fill all eight cells of the 4 x 2 mosaic: one tall, one wide, four
 // single. Adding or removing an entry means re-checking the spans.
@@ -21,7 +21,7 @@ const moments = [
   },
   {
     image: coastImg,
-    alt: "Beachfront swing and gathering area at Karibu Assalam Eco-Village",
+    alt: "Ocean-facing jetty at Karibu Assalam Eco-Village",
     label: "Eco-village by the coast",
     className: "moment-card-wide",
   },
@@ -45,7 +45,7 @@ const moments = [
   },
   {
     image: natureImg,
-    alt: "Nature and sustainable living at Karibu Assalam",
+    alt: "Visitors exploring the permaculture area at Assalam",
     label: "Nature and sustainability",
     className: "",
   },

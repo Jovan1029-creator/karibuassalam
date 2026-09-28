@@ -1,4 +1,11 @@
-import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
+import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
+import soapWorkshopImg from "../../pics/site-marketing/hamammni-soap-workshop.webp";
+import drummingWorkshopImg from "../../pics/site-marketing/ngoma-drumming-workshop.webp";
+import drumMakingImg from "../../pics/site-marketing/ngoma-drum-making.webp";
+import soapMakingImg from "../../pics/site-marketing/hamammni-soap-making-closeup.webp";
+import kitchenImg from "../../pics/site-marketing/swahili-kitchen.webp";
+import mealImg from "../../pics/site-marketing/fresh-shared-meal.webp";
+import caveImg from "../../pics/site-marketing/campus-cave.webp";
 import coastImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
 import spiceImg from "../../pics/aboutpic/Spice Gardens.webp";
 import townImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
@@ -15,6 +22,7 @@ export const experienceDetails = [
     title: "Karibu Assalam Tour",
     intro: "Visit Assalam Kanga Village in Kizimkazi, then explore the school, permaculture gardens, cave and mosque at Karibu Assalam Eco-Village.",
     image: campusImg,
+    detailPhoto: { src: caveImg, alt: "Walkway over the natural cave at Assalam Eco-Village" },
     duration: "6 hours",
     days: "Tuesday, Thursday and Saturday",
     start: "10:00 am",
@@ -85,6 +93,8 @@ export const experienceDetails = [
     slug: "soap-making",
     title: "Hamammni soap-making workshop",
     intro: "Make your own soap with the women's cooperative, using coconut oil and local botanicals. Take your bars home with you.",
+    image: soapWorkshopImg,
+    detailPhoto: { src: soapMakingImg, alt: "Handmade soaps being prepared in the Hamammni workshop" },
     duration: "2–3 hours",
     days: "Any day, subject to availability",
     start: "Morning or afternoon",
@@ -97,6 +107,8 @@ export const experienceDetails = [
     slug: "drumming",
     title: "Ngoma drum workshop",
     intro: "Learn Swahili coastal rhythms with local musicians. No experience is needed.",
+    image: drummingWorkshopImg,
+    detailPhoto: { src: drumMakingImg, alt: "Workshop participants painting their handmade drums" },
     duration: "2–3 hours",
     days: "Any day, subject to availability",
     start: "Morning or afternoon",
@@ -120,6 +132,8 @@ export const experienceDetails = [
     type: "workshops",
     slug: "cooking",
     title: "Swahili cooking class",
+    image: kitchenImg,
+    detailPhoto: { src: mealImg, alt: "A freshly prepared meal served in the eco-village kitchen" },
     intro: "Cook Zanzibari dishes with the kitchen team, using spices from the garden and recipes from the neighbourhood.",
     duration: "2–3 hours",
     days: "Any day, subject to availability",

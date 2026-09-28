@@ -2,7 +2,8 @@ import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
-import foodImg from "../../pics/rooms/food-1-enhanced.webp";
+import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
+import diningImg from "../../pics/site-marketing/oceanfront-dining.webp";
 
 const features = ["Farm to Table", "Delicious", "Hygienic", "Multicultural", "Talented Chefs"];
 
@@ -38,17 +39,27 @@ export default function Restaurant() {
       </Section>
 
       <Section title={tx("Dining Experience")} className="surface-section">
-        <div className="content-card">
-          <p>
-            {tx(
-              "Camp and retreat guests are served three meals daily, prepared by talented chefs in a hygienic kitchen environment with multicultural food influences."
-            )}
-          </p>
-          <p>
-            {tx(
-              "Dining also includes beach dinners with sunset views, creating a shared mealtime experience alongside the program schedule."
-            )}
-          </p>
+        <div className="retreat-feature-split">
+          <img
+            src={diningImg}
+            alt={tx("Guests sharing a meal on the oceanfront dining terrace")}
+            width="1600"
+            height="1066"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="content-card">
+            <p>
+              {tx(
+                "Camp and retreat guests are served three meals daily, prepared by talented chefs in a hygienic kitchen environment with multicultural food influences."
+              )}
+            </p>
+            <p>
+              {tx(
+                "Dining also includes beach dinners with sunset views, creating a shared mealtime experience alongside the program schedule."
+              )}
+            </p>
+          </div>
         </div>
       </Section>
     </main>

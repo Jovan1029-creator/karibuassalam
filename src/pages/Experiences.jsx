@@ -4,6 +4,7 @@ import Section from "../components/Section";
 import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import PhotoSlot from "../components/PhotoSlot";
+import PhotoCardMedia from "../components/PhotoCardMedia";
 import SEO from "../components/SEO";
 import { EXPERIENCE_LINKS, SITE } from "../data/siteConfig";
 import {
@@ -20,10 +21,19 @@ import spiceImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
 import coastImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
 import safariImg from "../../pics/zanzibarpics/Blue Safari.jpg";
 import townImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
-import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
+import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
+import soapWorkshopImg from "../../pics/site-marketing/hamammni-soap-workshop.webp";
+import drummingWorkshopImg from "../../pics/site-marketing/ngoma-drumming-workshop.webp";
+import kitchenImg from "../../pics/site-marketing/swahili-kitchen.webp";
 
-// Tour cards reuse the photography we already have; anything without a picture
-// yet renders a placeholder instead.
+// Use supplied photographs only where they depict the actual experience;
+// workshops without a matching photo retain a labelled placeholder.
+const workshopImages = {
+  "soap-making": soapWorkshopImg,
+  drumming: drummingWorkshopImg,
+  cooking: kitchenImg,
+};
+
 const tourImages = {
   "spice-tour": spiceImg,
   "city-tour": townImg,
@@ -85,7 +95,7 @@ export default function Experiences() {
           <div className="campus-tour-media">
             <PhotoSlot
               src={campusImg}
-              alt={tx("Assalam eco-village campus gathering area")}
+              alt={tx("Aerial view of Karibu Assalam Eco-Village on the coast")}
               width={768}
               height={576}
             />
@@ -131,7 +141,14 @@ export default function Experiences() {
           {workshops.map((item) => (
             <article className="experience-card" key={item.slug}>
               <div className="experience-card-media">
-                <PhotoSlot label={tx(item.title)} alt={tx(item.title)} ratio="4 / 3" />
+                <PhotoSlot
+                  src={workshopImages[item.slug]}
+                  label={tx(item.title)}
+                  alt={tx(item.title)}
+                  ratio="4 / 3"
+                  width={1024}
+                  height={768}
+                />
               </div>
               <div className="experience-card-body">
                 <h3>{tx(item.title)}</h3>
@@ -216,6 +233,7 @@ export default function Experiences() {
         <div className="volunteer-grid">
           {volunteering.map((item) => (
             <article className="volunteer-card" key={item.slug}>
+              <PhotoCardMedia photo={item.photo} />
               <span className="volunteer-duration">{tx(item.duration)}</span>
               <h3>{tx(item.title)}</h3>
               <p>{tx(item.text)}</p>
@@ -243,6 +261,7 @@ export default function Experiences() {
         <div className="event-grid">
           {specialEvents.map((item) => (
             <article className="event-card" key={item.slug}>
+              <PhotoCardMedia photo={item.photo} />
               <h3>{tx(item.title)}</h3>
               <p>{tx(item.text)}</p>
               {item.external ? (

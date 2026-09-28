@@ -2,11 +2,15 @@ import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import EcoVillageCards from "../components/EcoVillageCards";
-import PhotoSlot from "../components/PhotoSlot";
+import PhotoCardMedia from "../components/PhotoCardMedia";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import heroImg from "../../AssalamHero/assalam-hero.webp";
-import roomImg from "../../pics/rooms/camps-22-enhanced.webp";
+import roomImg from "../../pics/site-marketing/eco-village-room-interior.webp";
+import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
+import tailoringImg from "../../pics/site-marketing/kanga-tailoring-workshop.webp";
+import soapImg from "../../pics/site-marketing/hamammni-soap-making-closeup.webp";
+import musicImg from "../../pics/site-marketing/sawa-music-room.webp";
 
 export default function EcoResort() {
   return (
@@ -60,16 +64,19 @@ export default function EcoResort() {
       >
         <div className="eco-discover-grid">
           <article id="kanga-africa" className="eco-discover-card">
+            <PhotoCardMedia photo={{ src: tailoringImg, alt: "Textile craft at the Kanga tailoring workshop" }} />
             <h3>Kanga Africa</h3>
             <p>Visit Assalam Kanga Village and learn about community life in Kizimkazi on the Karibu Assalam Tour.</p>
             <Link className="text-link" to="/experiences/tours/campus-village-tour">Explore the tour</Link>
           </article>
           <article id="hamammni" className="eco-discover-card">
+            <PhotoCardMedia photo={{ src: soapImg, alt: "Handmade soaps being prepared in the Hamammni workshop" }} />
             <h3>Hamammni</h3>
             <p>Make your own soap with the women's cooperative using coconut oil and local botanicals.</p>
             <Link className="text-link" to="/experiences/workshops/soap-making">Explore the workshop</Link>
           </article>
           <article id="arts-culture" className="eco-discover-card">
+            <PhotoCardMedia photo={{ src: musicImg, alt: "Music practice in the Sawa Ensemble room" }} />
             <h3>Arts & Culture Centre</h3>
             <p>Discover performances, music and cultural events connected to the campus.</p>
             <Link className="text-link" to="/experiences/events">Explore special events</Link>
@@ -79,10 +86,13 @@ export default function EcoResort() {
 
       <Section id="spa" className="surface-section">
         <div className="retreat-feature-split eco-spa-split">
-          <PhotoSlot
-            label="PLACEHOLDER"
-            alt="Image placeholder for the Karibu Assalam halal spa and private pool"
-            ratio="4 / 3"
+          <img
+            src={spaImg}
+            alt="Private pool and sun loungers at Karibu Assalam"
+            width="1600"
+            height="1066"
+            loading="lazy"
+            decoding="async"
           />
           <div>
             <p className="eyebrow">Halal spa & pool</p>

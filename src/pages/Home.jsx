@@ -8,8 +8,9 @@ import { SITE } from "../data/siteConfig";
 import heroImage from "../../AssalamHero/hero-poster.webp";
 import ecoVillageImg from "../../pics/rooms/camps-22-enhanced.webp";
 import retreatsImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
-import experiencesImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
-import volunteerImg from "../../pics/our stories/education-1-enhanced.webp";
+import experiencesImg from "../../pics/site-marketing/permaculture-campus-tour.webp";
+import volunteerImg from "../../pics/site-marketing/community-craft-workshop.webp";
+import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
 import aboutImg from "../../pics/aboutpic/Why Us-enhanced.webp";
 
 const stayOptions = [
@@ -32,15 +33,15 @@ const stayOptions = [
   {
     heading: "Karibu Assalam Tours",
     image: experiencesImg,
-    alt: "Historic Stone Town in Zanzibar",
+    alt: "Visitors exploring the permaculture area at Assalam",
     copy: "Visit our campus and join our Karibu Assalam Tour with a campus tour, including a visit of our permaculture farm and our school, and learn more about Zanzibar’s culture in workshops making your own hammam soap or ngoma (drum).",
     ctaText: "Find your tour",
     to: "/experiences",
   },
   {
     heading: "Halal spa & pool",
-    image: null,
-    alt: "Image placeholder for the halal spa and pool",
+    image: spaImg,
+    alt: "Private pool and sun loungers at Karibu Assalam",
     copy: "Watch the waves while enjoying the private pool or relaxing with a private massage in Zanzibar’s only halal spa and wellness area suitable for small groups or families wishing to experience peace and tranquility in a secluded and muslim-friendly way. Perfect for a girls day out, too.",
     ctaText: "Book your spa",
     to: "/eco-resort#spa",
@@ -48,7 +49,7 @@ const stayOptions = [
   {
     heading: "Volunteer in Zanzibar",
     image: volunteerImg,
-    alt: "Community education and volunteering at Assalam Community Foundation",
+    alt: "Visitors and community members making crafts together",
     copy: "Join an existing volunteer programme for a few weeks - support our teachers in the school, engage in practical experience in our permaculture garden, support our operations, fundraise for Qurban and Ramadan donations or apply for long-term volunteering opportunities.",
     ctaText: "Apply here",
     to: "/contact",

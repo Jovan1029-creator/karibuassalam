@@ -5,9 +5,9 @@ import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
-import roomsImg from "../../pics/rooms/camps-22-enhanced.webp";
-import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
-import coastImg from "../../pics/aboutpic/Zanzibar’s Beaches-enhanced.webp";
+import roomsImg from "../../pics/site-marketing/eco-village-room-interior.webp";
+import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
+import coastImg from "../../pics/site-marketing/ocean-jetty.webp";
 
 function AmenityIcon({ type }) {
   const common = {
@@ -94,7 +94,7 @@ export default function Accommodations() {
           "Rooms are designed to support camp and retreat stays with practical comfort and proximity to the sea."
         )}
         imageSrc={roomsImg}
-        imageAlt={tx("Rooms area at Karibu Assalam Eco-Village in Zanzibar")}
+        imageAlt={tx("Guest room with mosquito-netted beds at Karibu Assalam Eco-Village")}
         compact
         ctaPrimary={{ to: "/booking", label: tx("Check dates and availability") }}
       />
@@ -122,7 +122,7 @@ export default function Accommodations() {
             )}
             facts={[tx("25 m2"), tx("5 bed capacity"), tx("AC")]}
             image={roomsImg}
-            alt={tx("Rooms area at Karibu Assalam Eco-Village in Zanzibar")}
+            alt={tx("Guest room with mosquito-netted beds at Karibu Assalam Eco-Village")}
             imageWidth={768}
             imageHeight={576}
           />
@@ -136,7 +136,7 @@ export default function Accommodations() {
             )}
             facts={[tx("Ocean or Garden View"), tx("Renewable Energy")]}
             image={coastImg}
-            alt={tx("Zanzibar beach near Karibu Assalam Eco-Village")}
+            alt={tx("Ocean-facing jetty at Karibu Assalam Eco-Village")}
             imageWidth={768}
             imageHeight={576}
           />
@@ -148,7 +148,7 @@ export default function Accommodations() {
               "Its oceanside setting supports community-based learning, shared meals, and daily activities in a multicultural environment."
             )}
             image={campusImg}
-            alt={tx("Assalam eco-village room and campus view")}
+            alt={tx("Aerial view of Karibu Assalam Eco-Village on the coast")}
             imageWidth={768}
             imageHeight={576}
             cta={{ to: "/campus", label: tx("See the campus"), variant: "secondary" }}

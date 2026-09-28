@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import CTAButton from "../components/CTAButton";
 import Hero from "../components/Hero";
 import PhotoSlot from "../components/PhotoSlot";
+import PhotoCardMedia from "../components/PhotoCardMedia";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { SITE } from "../data/siteConfig";
@@ -10,10 +11,12 @@ import heroImg from "../../AssalamHero/assalam-hero.webp";
 
 const categoryCopy = {
   events: {
+    photo: specialEvents.find((item) => item.slug === "sawa-ensemble").photo,
     title: "Special events",
     subtitle: "Sawa Ensemble, Zanzibar Sufi Festival and the camps and retreats that bring people together at Karibu Assalam.",
   },
   volunteer: {
+    photo: volunteering[0].photo,
     title: "Volunteer on Zanzibar",
     subtitle: "Join the Assalam Foundation's work in education, permaculture, workshops and community events.",
   },
@@ -39,13 +42,13 @@ export default function ExperienceCategory() {
 
   return (
     <main id="main-content" className="experience-category-page">
-      <SEO title={`${copy.title} | Karibu Assalam`} description={copy.subtitle} image={heroImg} />
+      <SEO title={`${copy.title} | Karibu Assalam`} description={copy.subtitle} image={copy.photo?.src || heroImg} />
       <Hero
         eyebrow="Experiences"
         title={copy.title}
         subtitle={copy.subtitle}
-        imageSrc={heroImg}
-        imageAlt="Karibu Assalam Eco-Village beside the Indian Ocean"
+        imageSrc={copy.photo?.src || heroImg}
+        imageAlt={copy.photo?.alt || "Karibu Assalam Eco-Village beside the Indian Ocean"}
         compact
         ctaPrimary={{ to: "/contact", label: "Ask the team" }}
       />
@@ -55,6 +58,7 @@ export default function ExperienceCategory() {
           <div className="event-grid">
             {specialEvents.map((item) => (
               <article className="event-card" key={item.slug}>
+                <PhotoCardMedia photo={item.photo} />
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
                 {item.external ? (
@@ -73,6 +77,7 @@ export default function ExperienceCategory() {
           <div className="volunteer-grid">
             {volunteering.map((item) => (
               <article className="volunteer-card" key={item.slug}>
+                <PhotoCardMedia photo={item.photo} />
                 <span className="volunteer-duration">{item.duration}</span>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
