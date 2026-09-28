@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import TornEdge from "./TornEdge";
 import { SITE } from "../data/siteConfig";
 import aerialImg from "../../AssalamHero/assalam-hero.webp";
-import stayImg from "../../pics/rooms/camps-22-enhanced.webp";
-import communityImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
 import purposeImg from "../../pics/aboutpic/Making a Difference in Zanzibar-enhanced.webp";
 import experienceImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import retreatImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
@@ -21,31 +19,6 @@ const slides = [
     actions: [
       { ctaText: "Book Your Experience", to: "/contact", primary: true },
       { ctaText: "Explore Karibu Assalam", to: "/eco-resort" },
-    ],
-  },
-  {
-    id: "three-ways",
-    image: campusImg,
-    layout: "trio",
-    panels: [
-      {
-        heading: "Stay in our eco village on the beach",
-        image: stayImg,
-        ctaText: "Book Your Stay",
-        to: "/eco-resort",
-      },
-      {
-        heading: "Connect with community",
-        image: communityImg,
-        ctaText: "Explore Camps & Retreats",
-        to: "/retreats",
-      },
-      {
-        heading: "Travel with purpose",
-        image: purposeImg,
-        ctaText: "Join us",
-        to: "/contact",
-      },
     ],
   },
   {
@@ -125,7 +98,7 @@ export default function HeroSlider() {
 
   return (
     <section
-      className={`hero-slider hero-slider-2026 ${active.layout === "trio" ? "has-trio" : ""}`}
+      className="hero-slider hero-slider-2026"
       aria-roledescription="carousel"
       aria-label="Karibu Assalam Eco Resort highlights"
       onMouseEnter={() => setPaused(true)}
@@ -154,29 +127,14 @@ export default function HeroSlider() {
 
       <div className="hero-slider-scrim" aria-hidden="true" />
 
-      {active.layout === "trio" ? (
-        <div className="container hero-trio" aria-live="polite">
-          <h1 className="visually-hidden">Stay, connect and travel with purpose at Karibu Assalam</h1>
-          {active.panels.map((panel) => (
-            <article className="hero-trio-card" key={panel.heading}>
-              <img src={panel.image} alt="" width="640" height="480" />
-              <div>
-                <h2>{panel.heading}</h2>
-                <Link className="btn btn-primary" to={panel.to}>{panel.ctaText}</Link>
-              </div>
-            </article>
-          ))}
+      <div className="container hero-slider-center hero-slider-center-2026" aria-live="polite">
+        <p className="hero-kicker">Kizimkazi · Zanzibar</p>
+        <h1 className="hero-script">{active.heading}</h1>
+        {active.copy && <p className="hero-slide-copy">{active.copy}</p>}
+        <div className="hero-slider-actions">
+          {active.actions.map((action) => <HeroAction action={action} key={action.ctaText} />)}
         </div>
-      ) : (
-        <div className="container hero-slider-center hero-slider-center-2026" aria-live="polite">
-          <p className="hero-kicker">Kizimkazi · Zanzibar</p>
-          <h1 className="hero-script">{active.heading}</h1>
-          {active.copy && <p className="hero-slide-copy">{active.copy}</p>}
-          <div className="hero-slider-actions">
-            {active.actions.map((action) => <HeroAction action={action} key={action.ctaText} />)}
-          </div>
-        </div>
-      )}
+      </div>
 
       <div className="hero-controls" role="group" aria-label="Slideshow controls">
         <button type="button" className="hero-arrow prev" aria-label="Previous slide" onClick={() => go(index - 1)}>
@@ -189,7 +147,7 @@ export default function HeroSlider() {
               type="button"
               className={`hero-dot ${slideIndex === index ? "is-active" : ""}`}
               aria-pressed={slideIndex === index}
-              aria-label={`Slide ${slideIndex + 1}: ${slide.heading || "Stay, connect and travel with purpose"}`}
+              aria-label={`Slide ${slideIndex + 1}: ${slide.heading}`}
               onClick={() => go(slideIndex)}
             />
           ))}
