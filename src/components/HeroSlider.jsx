@@ -66,6 +66,7 @@ const slides = [
     id: "retreats",
     image: retreatImg,
     heading: "Retreats & Camps",
+    copy: "Connect with local communities through Kindness Camp, family and Ramadan camps, and retreats inspired by Zanzibar's culture and nature.",
     actions: [{ ctaText: "Reserve your spot", to: "/contact", primary: true }],
   },
   {

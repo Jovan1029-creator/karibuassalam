@@ -20,6 +20,14 @@ const navLabelKey = {
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
+function DropdownChevron() {
+  return (
+    <svg className="nav-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [ecoOpen, setEcoOpen] = useState(false);
@@ -99,6 +107,15 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 961px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) closeMobile();
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, [closeMobile]);
+
+  useEffect(() => {
     closeMobile();
     setEcoOpen(false);
     setRetreatOpen(false);
@@ -139,19 +156,17 @@ export default function Navbar() {
                     className={`nav-dropdown-trigger ${retreatOpen || location.pathname.startsWith("/retreats") ? "is-active" : ""}`}
                     aria-expanded={retreatOpen}
                     aria-controls="retreat-menu"
-                    onClick={() => setRetreatOpen((value) => !value)}
-                    onFocus={() => setRetreatOpen(true)}
+                    onClick={() => setRetreatOpen(true)}
                   >
                     {t.nav.retreats}
-                    <svg className="nav-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-                      <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    <DropdownChevron />
                   </button>
                   {retreatOpen && (
                     <ul id="retreat-menu" className="dropdown-menu retreat-dropdown-menu">
+                      <li className="dropdown-menu-heading" role="presentation">{t.nav.retreats}</li>
                       {RETREAT_LINKS.map((item) => (
                         <li key={item.to}>
-                          <Link to={item.to} onClick={() => setRetreatOpen(false)}>{item.name}</Link>
+                          <Link to={item.to} onClick={() => setRetreatOpen(false)}>{tx(item.name)}</Link>
                         </li>
                       ))}
                     </ul>
@@ -169,16 +184,14 @@ export default function Navbar() {
                     className={`nav-dropdown-trigger ${experienceOpen || location.pathname.startsWith("/experiences") ? "is-active" : ""}`}
                     aria-expanded={experienceOpen}
                     aria-controls="experience-menu"
-                    onClick={() => setExperienceOpen((value) => !value)}
-                    onFocus={() => setExperienceOpen(true)}
+                    onClick={() => setExperienceOpen(true)}
                   >
                     {t.nav.experiences}
-                    <svg className="nav-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-                      <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    <DropdownChevron />
                   </button>
                   {experienceOpen && (
                     <ul id="experience-menu" className="dropdown-menu experience-dropdown-menu">
+                      <li className="dropdown-menu-heading" role="presentation">{t.nav.experiences}</li>
                       {EXPERIENCE_LINKS.map((item) => (
                         <li key={item.to}>
                           <Link to={item.to} onClick={() => setExperienceOpen(false)}>{tx(item.name)}</Link>
@@ -206,23 +219,14 @@ export default function Navbar() {
                 className={`nav-dropdown-trigger ${ecoOpen ? "is-active" : ""}`}
                 aria-expanded={ecoOpen}
                 aria-controls="eco-village-menu"
-                onClick={() => setEcoOpen((v) => !v)}
-                onFocus={() => setEcoOpen(true)}
+                onClick={() => setEcoOpen(true)}
               >
                 {t.nav.ecoVillage}
-                <svg
-                  className="nav-dropdown-chevron"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  aria-hidden="true"
-                >
-                  <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <DropdownChevron />
               </button>
               {ecoOpen && (
                 <ul id="eco-village-menu" className="dropdown-menu">
+                  <li className="dropdown-menu-heading" role="presentation">{t.nav.ecoVillage}</li>
                   {ECO_VILLAGE_LINKS.map((link) => (
                     <li key={link.to}>
                       <Link to={link.to} onClick={() => setEcoOpen(false)}>
@@ -285,6 +289,7 @@ export default function Navbar() {
                       onClick={() => setRetreatMobileOpen((value) => !value)}
                     >
                       {t.nav.retreats}
+                      <DropdownChevron />
                     </button>
                     {retreatMobileOpen && (
                       <ul className="mobile-submenu">
@@ -303,11 +308,12 @@ export default function Navbar() {
                       onClick={() => setExperienceMobileOpen((value) => !value)}
                     >
                       {t.nav.experiences}
+                      <DropdownChevron />
                     </button>
                     {experienceMobileOpen && (
                       <ul className="mobile-submenu">
                         {EXPERIENCE_LINKS.map((item) => (
-                          <li key={item.to}><NavLink to={item.to} onClick={closeMobile}>{item.name}</NavLink></li>
+                          <li key={item.to}><NavLink to={item.to} onClick={closeMobile}>{tx(item.name)}</NavLink></li>
                         ))}
                       </ul>
                     )}
@@ -332,6 +338,7 @@ export default function Navbar() {
                   onClick={() => setEcoMobileOpen((v) => !v)}
                 >
                   {t.nav.ecoVillage}
+                  <DropdownChevron />
                 </button>
                 {ecoMobileOpen && (
                   <ul className="mobile-submenu">
