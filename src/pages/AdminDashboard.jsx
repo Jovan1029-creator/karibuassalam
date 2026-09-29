@@ -22,11 +22,11 @@ import { buildBookingMessage } from "../utils/bookingAutomation";
 import { useLanguage } from "../context/LanguageContext";
 import adminImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
 
-function formatDateTime(value) {
-  if (!value) return "Not set";
+function formatDateTime(value, language, tx) {
+  if (!value) return tx("Not set");
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleString(undefined, {
+  return date.toLocaleString(language, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -35,20 +35,20 @@ function formatDateTime(value) {
   });
 }
 
-function formatDate(value) {
-  if (!value) return "Not set";
+function formatDate(value, language, tx) {
+  if (!value) return tx("Not set");
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString(language, {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
 }
 
-function formatSyncTime(value) {
-  if (!value) return "Waiting for first sync";
-  return value.toLocaleTimeString(undefined, {
+function formatSyncTime(value, language, tx) {
+  if (!value) return tx("Waiting for first sync");
+  return value.toLocaleTimeString(language, {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
@@ -67,7 +67,7 @@ function outboundUrl(record, channel) {
 }
 
 export default function AdminDashboard() {
-  const { tx } = useLanguage();
+  const { tx, language } = useLanguage();
   const backendMode = getBookingBackendMode();
   const [records, setRecords] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
           nextRecords.some((record) => record.id === current) ? current : nextRecords[0]?.id || ""
         );
       } catch (error) {
-        if (active) setNotice(`${tx("Could not load booking requests.")} ${error.message || ""}`.trim());
+        if (active) setNotice({ message: "Could not load booking requests.", detail: error.message || "" });
       } finally {
         if (active) setIsLoading(false);
       }
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
       active = false;
       unsubscribe();
     };
-  }, [backendMode, tx]);
+  }, [backendMode]);
 
   async function refresh({ silent = false } = {}) {
     if (!silent) setIsLoading(true);
@@ -153,7 +153,7 @@ export default function AdminDashboard() {
       );
       return nextRecords;
     } catch (error) {
-      setNotice(`${tx("Could not load booking requests.")} ${error.message || ""}`.trim());
+      setNotice({ message: "Could not load booking requests.", detail: error.message || "" });
       return records;
     } finally {
       if (!silent) setIsLoading(false);
@@ -189,9 +189,9 @@ export default function AdminDashboard() {
     try {
       const next = await updateBookingStatusRemote(selectedRecord.id, event.target.value);
       setRecords(next);
-      setNotice(tx("Booking status updated."));
+      setNotice({ message: "Booking status updated." });
     } catch (error) {
-      setNotice(`${tx("Booking status could not be updated.")} ${error.message || ""}`.trim());
+      setNotice({ message: "Booking status could not be updated.", detail: error.message || "" });
     }
   }
 
@@ -200,23 +200,23 @@ export default function AdminDashboard() {
       const record = await createSampleBookingRemote();
       await refresh();
       setSelectedId(record.id);
-      setNotice(tx("Sample inquiry added for testing the automation dashboard."));
+      setNotice({ message: "Sample inquiry added for testing the automation dashboard." });
     } catch (error) {
-      setNotice(`${tx("Sample inquiry could not be added.")} ${error.message || ""}`.trim());
+      setNotice({ message: "Sample inquiry could not be added.", detail: error.message || "" });
     }
   }
 
   async function handleDelete() {
     if (!selectedRecord) return;
-    const confirmed = window.confirm("Delete this booking request?");
+    const confirmed = window.confirm(tx("Delete this booking request?"));
     if (!confirmed) return;
     try {
       const next = await deleteBookingRequestRemote(selectedRecord.id);
       setRecords(next);
       setSelectedId(next[0]?.id || "");
-      setNotice(tx("Booking request removed."));
+      setNotice({ message: "Booking request removed." });
     } catch (error) {
-      setNotice(`${tx("Booking request could not be removed.")} ${error.message || ""}`.trim());
+      setNotice({ message: "Booking request could not be removed.", detail: error.message || "" });
     }
   }
 
@@ -228,9 +228,9 @@ export default function AdminDashboard() {
       const data = await signInStaff(authForm.email, authForm.password);
       setSession(data.session);
       await refresh();
-      setNotice(tx("Signed in. Booking requests loaded from Supabase."));
+      setNotice({ message: "Signed in. Booking requests loaded from Supabase." });
     } catch (error) {
-      setNotice(`${tx("Staff sign in failed.")} ${error.message || ""}`.trim());
+      setNotice({ message: "Staff sign in failed.", detail: error.message || "" });
     } finally {
       setIsSigningIn(false);
     }
@@ -242,9 +242,9 @@ export default function AdminDashboard() {
       setSession(null);
       setRecords([]);
       setSelectedId("");
-      setNotice(tx("Signed out."));
+      setNotice({ message: "Signed out." });
     } catch (error) {
-      setNotice(`${tx("Sign out failed.")} ${error.message || ""}`.trim());
+      setNotice({ message: "Sign out failed.", detail: error.message || "" });
     }
   }
 
@@ -252,9 +252,9 @@ export default function AdminDashboard() {
     if (!selectedRecord?.replyDraft) return;
     try {
       await navigator.clipboard.writeText(selectedRecord.replyDraft);
-      setNotice(tx("Reply draft copied."));
+      setNotice({ message: "Reply draft copied." });
     } catch {
-      setNotice(tx("Copy failed. You can still select the draft manually."));
+      setNotice({ message: "Copy failed. You can still select the draft manually." });
     }
   }
 
@@ -295,12 +295,12 @@ export default function AdminDashboard() {
             <span className="admin-sync-status">
               <span className={`sync-dot ${liveSyncState === "SUBSCRIBED" ? "" : "is-connecting"}`} aria-hidden="true" />
               {tx(liveSyncState === "SUBSCRIBED" ? "Live inbox connected" : "Connecting live inbox")}
-              <small>{tx("Last sync")}: {formatSyncTime(lastSyncedAt)}</small>
+              <small>{tx("Last sync")}: {formatSyncTime(lastSyncedAt, language, tx)}</small>
             </span>
           ) : null}
         </div>
 
-        {notice ? <p className="form-status" role="status">{notice}</p> : null}
+        {notice ? <p className="form-status" role="status">{tx(notice.message)} {notice.detail}</p> : null}
 
         {backendMode === "supabase" && !session ? (
           <form className="admin-login" onSubmit={handleSignIn}>
@@ -408,9 +408,9 @@ export default function AdminDashboard() {
                     <strong>{record.name || tx("Unnamed guest")}</strong>
                     <span className={`status-pill priority-${record.priority}`}>{tx(record.priority)}</span>
                   </span>
-                  <span>{record.retreatTitle || tx(record.bookingType)}</span>
+                  <span>{tx(record.retreatTitle || record.bookingType)}</span>
                   <span className="booking-row-meta">
-                    {formatDate(record.arrivalDate)} - {record.guests} {tx("guest(s)")} - {tx(getStatusLabel(record.status))}
+                    {formatDate(record.arrivalDate, language, tx)} - {record.guests} {tx("guest(s)")} - {tx(getStatusLabel(record.status))}
                   </span>
                 </button>
               ))
@@ -432,7 +432,12 @@ export default function AdminDashboard() {
                   <div>
                     <p className="eyebrow">{selectedRecord.id}</p>
                     <h3>{selectedRecord.name || tx("Unnamed guest")}</h3>
-                    <p>{selectedRecord.automationSummary}</p>
+                    <p>{tx("{name} · {request} · {count} guest(s) · Arrival: {date}", {
+                      name: selectedRecord.name || tx("Unnamed guest"),
+                      request: tx(selectedRecord.retreatTitle || selectedRecord.bookingType),
+                      count: selectedRecord.guests,
+                      date: formatDate(selectedRecord.arrivalDate, language, tx),
+                    })}</p>
                   </div>
                   <span className={`status-pill priority-${selectedRecord.priority}`}>{tx(selectedRecord.priority)}</span>
                 </div>
@@ -450,15 +455,15 @@ export default function AdminDashboard() {
                   </div>
                   <div>
                     <span>{tx("Created")}</span>
-                    <strong>{formatDateTime(selectedRecord.createdAt)}</strong>
+                    <strong>{formatDateTime(selectedRecord.createdAt, language, tx)}</strong>
                   </div>
                   <div>
                     <span>{tx("Arrival")}</span>
-                    <strong>{formatDate(selectedRecord.arrivalDate)}</strong>
+                    <strong>{formatDate(selectedRecord.arrivalDate, language, tx)}</strong>
                   </div>
                   <div>
                     <span>{tx("Departure")}</span>
-                    <strong>{formatDate(selectedRecord.departureDate)}</strong>
+                    <strong>{formatDate(selectedRecord.departureDate, language, tx)}</strong>
                   </div>
                   <div>
                     <span>{tx("Guests")}</span>
@@ -480,7 +485,7 @@ export default function AdminDashboard() {
 
                 <div className="automation-note">
                   <strong>{tx("Suggested next action")}</strong>
-                  <p>{selectedRecord.nextAction}</p>
+                  <p>{tx(selectedRecord.nextAction)}</p>
                 </div>
 
                 <div className="detail-columns">
@@ -498,9 +503,9 @@ export default function AdminDashboard() {
                   <section>
                     <h3>{tx("Operations notes")}</h3>
                     <ul className="plain-list">
-                      <li><strong>{tx("Timing")}:</strong> {selectedRecord.timing}</li>
+                      <li><strong>{tx("Timing")}:</strong> {tx(selectedRecord.timing)}</li>
                       <li><strong>{tx("Trip nights")}:</strong> {selectedRecord.nights ?? tx("Not set")}</li>
-                      <li><strong>{tx("Room planning")}:</strong> {PLANNING_CAPACITY.note}</li>
+                      <li><strong>{tx("Room planning")}:</strong> {tx(PLANNING_CAPACITY.note)}</li>
                     </ul>
                   </section>
                 </div>

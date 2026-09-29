@@ -137,11 +137,11 @@ export default function Navbar() {
           <img src={SITE.logoSrc} alt={tx("Karibu Assalam logo")} width="44" height="44" />
           <span className="brand-mark__stack">
             <span className="brand-mark__title">{SITE.brandName}</span>
-            <span className="brand-mark__subtitle">Eco Resort · Zanzibar</span>
+                <span className="brand-mark__subtitle">{tx("Eco Resort · Zanzibar")}</span>
           </span>
         </Link>
 
-        <nav className="desktop-nav" aria-label="Primary">
+        <nav className="desktop-nav" aria-label={tx("Primary")}>
           <ul>
             {NAV_LINKS.map((link) =>
               link.label === "Retreats" ? (
@@ -277,7 +277,7 @@ export default function Navbar() {
         hidden={!mobileOpen}
       >
         <div className="container">
-          <nav aria-label="Mobile primary">
+          <nav aria-label={tx("Mobile primary")}>
             <ul>
               {NAV_LINKS.map((link) =>
                 link.label === "Retreats" ? (

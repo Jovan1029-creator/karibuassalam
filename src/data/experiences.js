@@ -5,7 +5,7 @@ import craftImg from "../../pics/site-marketing/community-craft-workshop.webp";
 import schoolImg from "../../pics/site-marketing/school-campus.webp";
 import caveMusicImg from "../../pics/site-marketing/cave-sufi-performance.webp";
 import sawaImg from "../../pics/site-marketing/sawa-music-room.webp";
-import ramadanImg from "../../pics/site-marketing/ramadan-community-evening.webp";
+import stoneTownImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
 
 export const campusTour = {
@@ -117,21 +117,21 @@ export const specialEvents = [
     external: "sawaEnsembleUrl",
   },
   {
-    slug: "camps-retreats",
-    photo: { src: ramadanImg, alt: "Community gathering during Ramadan at Assalam Kanga Village" },
-    title: "Camps and retreats",
+    slug: "stone-town-cafe",
+    photo: { src: stoneTownImg, alt: "Historic Stone Town in Zanzibar" },
+    title: "Visit us in Stone Town",
     text:
-      "The scheduled programmes that run through the year — kindness camps, Ramadan camps, school camps and nature retreats.",
-    linkLabel: "See the retreats",
-    to: "/retreats",
+      "Coffee, breakfast and a pause at The Spice Route Cafe on Soko Muhogo Street.",
+    linkLabel: "Discover the cafe",
+    to: "/restaurant#spice-route-cafe",
   },
   {
     slug: "stay-updated",
     photo: { src: amphitheatreImg, alt: "The open-air amphitheatre at Karibu Assalam" },
-    title: "Stay updated",
+    title: "Follow Us",
     text:
-      "Dates are announced as they are confirmed. Follow along or ask the team to let you know when something is opening.",
-    linkLabel: "Ask about dates",
-    to: "/booking",
+      "Follow Karibu Assalam on Instagram for community stories, upcoming events and moments from the eco-village.",
+    linkLabel: "Follow on Instagram",
+    external: "instagramUrl",
   },
 ];

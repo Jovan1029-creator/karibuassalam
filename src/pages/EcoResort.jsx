@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
@@ -13,6 +14,7 @@ import soapImg from "../../pics/site-marketing/hamammni-soap-making-closeup.webp
 import musicImg from "../../pics/site-marketing/sawa-music-room.webp";
 
 export default function EcoResort() {
+  const { tx } = useLanguage();
   return (
     <main id="main-content">
       <SEO
@@ -44,16 +46,16 @@ export default function EcoResort() {
       >
         <div className="eco-proof-grid">
           <article>
-            <h3>Permaculture gardens</h3>
-            <p>See the gardens on a campus tour and learn how growing food is part of daily life here.</p>
+            <h3>{tx("Permaculture gardens")}</h3>
+            <p>{tx("See the gardens on a campus tour and learn how growing food is part of daily life here.")}</p>
           </article>
           <article>
-            <h3>Solar and water systems</h3>
-            <p>The campus tour introduces the systems used across the eco-village.</p>
+            <h3>{tx("Solar and water systems")}</h3>
+            <p>{tx("The campus tour introduces the systems used across the eco-village.")}</p>
           </article>
           <article>
-            <h3>Shared learning spaces</h3>
-            <p>Visit the school, kitchen and workshop spaces where the wider community meets.</p>
+            <h3>{tx("Shared learning spaces")}</h3>
+            <p>{tx("Visit the school, kitchen and workshop spaces where the wider community meets.")}</p>
           </article>
         </div>
       </Section>
@@ -65,21 +67,21 @@ export default function EcoResort() {
         <div className="eco-discover-grid">
           <article id="kanga-africa" className="eco-discover-card">
             <PhotoCardMedia photo={{ src: tailoringImg, alt: "Textile craft at the Kanga tailoring workshop" }} />
-            <h3>Kanga Africa</h3>
-            <p>Visit Assalam Kanga Village and learn about community life in Kizimkazi on the Karibu Assalam Tour.</p>
-            <Link className="text-link" to="/experiences/tours/campus-village-tour">Explore the tour</Link>
+            <h3>{tx("Kanga Africa")}</h3>
+            <p>{tx("Visit Assalam Kanga Village and learn about community life in Kizimkazi on the Karibu Assalam Tour.")}</p>
+            <Link className="text-link" to="/experiences/tours/campus-village-tour">{tx("Explore the tour")}</Link>
           </article>
           <article id="hamammni" className="eco-discover-card">
             <PhotoCardMedia photo={{ src: soapImg, alt: "Handmade soaps being prepared in the Hamammni workshop" }} />
-            <h3>Hamammni</h3>
-            <p>Make your own soap with the women's cooperative using coconut oil and local botanicals.</p>
-            <Link className="text-link" to="/experiences/workshops/soap-making">Explore the workshop</Link>
+            <h3>{tx("Hamammni")}</h3>
+            <p>{tx("Make your own soap with the women's cooperative using coconut oil and local botanicals.")}</p>
+            <Link className="text-link" to="/experiences/workshops/soap-making">{tx("Explore the workshop")}</Link>
           </article>
           <article id="arts-culture" className="eco-discover-card">
             <PhotoCardMedia photo={{ src: musicImg, alt: "Music practice in the Sawa Ensemble room" }} />
-            <h3>Arts & Culture Centre</h3>
-            <p>Discover performances, music and cultural events connected to the campus.</p>
-            <Link className="text-link" to="/experiences/events">Explore special events</Link>
+            <h3>{tx("Arts & Culture Centre")}</h3>
+            <p>{tx("Discover performances, music and cultural events connected to the campus.")}</p>
+            <Link className="text-link" to="/experiences/events">{tx("Explore special events")}</Link>
           </article>
         </div>
       </Section>
@@ -88,31 +90,27 @@ export default function EcoResort() {
         <div className="retreat-feature-split eco-spa-split">
           <img
             src={spaImg}
-            alt="Private pool and sun loungers at Karibu Assalam"
+            alt={tx("Private pool and sun loungers at Karibu Assalam")}
             width="1600"
             height="1066"
             loading="lazy"
             decoding="async"
           />
           <div>
-            <p className="eyebrow">Halal spa & pool</p>
-            <h2>Peace, privacy and ocean views</h2>
-            <p>
-              Watch the waves while enjoying the private pool or relaxing with a private massage in Zanzibar’s only halal spa and wellness area suitable for small groups or families wishing to experience peace and tranquility in a secluded and muslim-friendly way. Perfect for a girls day out, too.
-            </p>
-            <CTAButton to="/contact">Book your spa</CTAButton>
+            <p className="eyebrow">{tx("Halal spa & pool")}</p>
+            <h2>{tx("Peace, privacy and ocean views")}</h2>
+            <p>{tx("Watch the waves while enjoying the private pool or relaxing with a private massage in Zanzibar’s only halal spa and wellness area suitable for small groups or families wishing to experience peace and tranquility in a secluded and muslim-friendly way. Perfect for a girls day out, too.")}</p>
+            <CTAButton to="/contact">{tx("Book your spa")}</CTAButton>
           </div>
         </div>
       </Section>
 
       <Section title="Stay within a living community" className="eco-resort-closing">
         <div className="retreat-feature-split is-reversed">
-          <img src={roomImg} alt="Guest accommodation at Karibu Assalam Eco-Village" width="900" height="675" loading="lazy" />
+          <img src={roomImg} alt={tx("Guest accommodation at Karibu Assalam Eco-Village")} width="900" height="675" loading="lazy" />
           <div>
-            <p>
-              Karibu Assalam Eco Resort is for you if you want a stay within a living community and an authentic Zanzibar experience, with nature and sustainability in mind. We offer meaningful halal experiences and accommodation while you travel slow, engage with locals and learn while you create your own memories.
-            </p>
-            <CTAButton to="/booking" size="lg">Book Your Stay</CTAButton>
+            <p>{tx("Karibu Assalam Eco Resort is for you if you want a stay within a living community and an authentic Zanzibar experience, with nature and sustainability in mind. We offer meaningful halal experiences and accommodation while you travel slow, engage with locals and learn while you create your own memories.")}</p>
+            <CTAButton to="/booking" size="lg">{tx("Book Your Stay")}</CTAButton>
           </div>
         </div>
       </Section>

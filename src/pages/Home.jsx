@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 import HeroSlider from "../components/HeroSlider";
 import Section from "../components/Section";
 import CampusMoments from "../components/CampusMoments";
@@ -65,6 +66,7 @@ const stayOptions = [
 ];
 
 function StayOption({ option, index }) {
+  const { tx } = useLanguage();
   return (
     <article className="stay-option">
       <div className="stay-option-media">
@@ -79,15 +81,15 @@ function StayOption({ option, index }) {
       </div>
       <div className="stay-option-body">
         <p className="stay-option-number">0{index + 1}</p>
-        <h3>{option.heading}</h3>
-        <p>{option.copy}</p>
+        <h3>{tx(option.heading)}</h3>
+        <p>{tx(option.copy)}</p>
         {option.href ? (
           <a className="text-link" href={option.href} target="_blank" rel="noopener noreferrer">
-            View details → {option.ctaText}
+            {tx("View details")} → {tx(option.ctaText)}
           </a>
         ) : (
           <Link className="text-link" to={option.to}>
-            View details → {option.ctaText}
+            {tx("View details")} → {tx(option.ctaText)}
           </Link>
         )}
       </div>
@@ -96,6 +98,7 @@ function StayOption({ option, index }) {
 }
 
 export default function Home() {
+  const { tx } = useLanguage();
   return (
     <main id="main-content" className="home-page">
       <SEO
@@ -128,15 +131,15 @@ export default function Home() {
       >
         <div className="fit-check-grid">
           <article className="fit-check is-for-you">
-            <span>For you</span>
+            <span>{tx("For you")}</span>
             <p>
-              Karibu Assalam Eco Resort is for you if you want a stay within a living community and an authentic Zanzibar experience, with nature and sustainability in mind. We offer meaningful halal experiences and accommodation while you travel slow, engage with locals and learn while you create your own memories.
+              {tx("Karibu Assalam Eco Resort is for you if you want a stay within a living community and an authentic Zanzibar experience, with nature and sustainability in mind. We offer meaningful halal experiences and accommodation while you travel slow, engage with locals and learn while you create your own memories.")}
             </p>
           </article>
           <article className="fit-check is-not-for-you">
-            <span>Good to know</span>
+            <span>{tx("Good to know")}</span>
             <p>
-              Karibu Assalam Eco Resort may not be for you if you want a conventional luxury resort, large buffet restaurants, nightlife or completely private/resort-style experiences.
+              {tx("Karibu Assalam Eco Resort may not be for you if you want a conventional luxury resort, large buffet restaurants, nightlife or completely private/resort-style experiences.")}
             </p>
           </article>
         </div>

@@ -1,4 +1,5 @@
 import CTAButton from "./CTAButton";
+import { useLanguage } from "../context/LanguageContext";
 
 /**
  * One alternating row: a full-bleed photograph on one side, centred copy on the
@@ -19,12 +20,13 @@ export default function Showcase({
   imageHeight = 819,
   priority = false,
 }) {
+  const { tx } = useLanguage();
   return (
     <article className={`showcase ${reversed ? "is-reversed" : ""}`.trim()}>
       <div className="showcase-media">
         <img
           src={image}
-          alt={alt}
+          alt={tx(alt)}
           width={imageWidth}
           height={imageHeight}
           loading={priority ? "eager" : "lazy"}
@@ -34,14 +36,14 @@ export default function Showcase({
       </div>
 
       <div className="showcase-copy">
-        <h3 className="showcase-name">{name}</h3>
-        {promise && <p className="showcase-promise">{promise}</p>}
-        {text && <p>{text}</p>}
+        <h3 className="showcase-name">{tx(name)}</h3>
+        {promise && <p className="showcase-promise">{tx(promise)}</p>}
+        {text && <p>{tx(text)}</p>}
 
         {facts.length > 0 && (
           <ul className="showcase-facts">
             {facts.map((fact) => (
-              <li key={fact}>{fact}</li>
+              <li key={fact}>{tx(fact)}</li>
             ))}
           </ul>
         )}

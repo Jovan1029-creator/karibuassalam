@@ -86,6 +86,7 @@ export default function Footer() {
                   <Link to={link.to}>{link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? tx(link.label)}</Link>
                 </li>
               ))}
+              <li><Link to="/restaurant#spice-route-cafe" target="_blank" rel="noopener noreferrer">{tx("Visit us in Stone Town")}<span aria-hidden="true"> ↗</span></Link></li>
             </ul>
           </nav>
 
@@ -118,7 +119,7 @@ export default function Footer() {
                   href={SITE.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Follow Karibu Assalam on Instagram"
+                  aria-label={tx("Follow Karibu Assalam on Instagram")}
                 >
                   {SITE.instagramHandle}
                 </a>

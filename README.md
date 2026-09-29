@@ -65,6 +65,11 @@ If submissions fail with `ENOTFOUND` or `ERR_NAME_NOT_RESOLVED`, check that the 
   - `SITE.whatsAppPhone` (used for `wa.me`)
   - `SITE.phoneDisplay` / `SITE.phoneTel` (display + click-to-call)
 - Email address is configured in `src/data/siteConfig.js` as `SITE.email`
+- The Spice Route Cafe's Tripadvisor details live in `SPICE_ROUTE_CAFE` in the same file.
+  - Its rating belongs to the Stone Town cafe, not the Kizimkazi eco-resort.
+  - It is a dated, manually checked snapshot, not a live feed. Recheck the linked listing and update `rating`, `reviewCount`, and `checkedAt` together.
+  - The cafe appears in the Experiences cards and at `/restaurant#spice-route-cafe`. Tripadvisor, Instagram, and these card links open in new tabs.
+  - Leave the resort's separate `SITE.tripAdvisorUrl` empty until its own verified listing is supplied.
 - Contact URL builders live in `src/utils/contact.js`
 - Future backend integration point:
   - Replace `sendEmailApiStub()` in `src/utils/contact.js` with a real API call

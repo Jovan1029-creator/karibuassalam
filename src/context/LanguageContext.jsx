@@ -7,17 +7,18 @@ const STORAGE_KEY = "karibuassalam-lang";
 
 function getInitialLanguage() {
   if (typeof window === "undefined") return "en";
-  const stored = window.localStorage.getItem(STORAGE_KEY);
+  let stored;
+  try { stored = window.localStorage.getItem(STORAGE_KEY); } catch { /* Storage is optional. */ }
   if (stored && uiMessages[stored]) return stored;
   const browser = window.navigator.language?.slice(0, 2).toLowerCase();
   return uiMessages[browser] ? browser : "en";
 }
 
-export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState(getInitialLanguage);
+export function LanguageProvider({ children, initialLanguage }) {
+  const [language, setLanguage] = useState(() => initialLanguage || getInitialLanguage());
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, language);
+    try { window.localStorage.setItem(STORAGE_KEY, language); } catch { /* Keep switching available. */ }
     document.documentElement.lang = language;
   }, [language]);
 
@@ -27,7 +28,7 @@ export function LanguageProvider({ children }) {
       setLanguage,
       languages: SUPPORTED_LANGUAGES,
       t: uiMessages[language] ?? uiMessages.en,
-      tx: (text) => translateText(language, text),
+      tx: (text, values) => translateText(language, text, values),
     }),
     [language]
   );

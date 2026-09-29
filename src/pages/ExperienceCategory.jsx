@@ -1,11 +1,12 @@
 import { Link, useParams } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 import CTAButton from "../components/CTAButton";
 import Hero from "../components/Hero";
 import PhotoSlot from "../components/PhotoSlot";
 import PhotoCardMedia from "../components/PhotoCardMedia";
+import EventCard from "../components/EventCard";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
-import { SITE } from "../data/siteConfig";
 import { safari, specialEvents, volunteering } from "../data/experiences";
 import heroImg from "../../AssalamHero/assalam-hero.webp";
 
@@ -13,7 +14,7 @@ const categoryCopy = {
   events: {
     photo: specialEvents.find((item) => item.slug === "sawa-ensemble").photo,
     title: "Special events",
-    subtitle: "Sawa Ensemble, Zanzibar Sufi Festival and the camps and retreats that bring people together at Karibu Assalam.",
+    subtitle: "Discover Sawa Ensemble, Zanzibar Sufi Festival, our Stone Town cafe and the latest community updates.",
   },
   volunteer: {
     photo: volunteering[0].photo,
@@ -27,6 +28,7 @@ const categoryCopy = {
 };
 
 export default function ExperienceCategory() {
+  const { tx } = useLanguage();
   const { category } = useParams();
   const copy = categoryCopy[category];
 
@@ -42,7 +44,7 @@ export default function ExperienceCategory() {
 
   return (
     <main id="main-content" className="experience-category-page">
-      <SEO title={`${copy.title} | Karibu Assalam`} description={copy.subtitle} image={copy.photo?.src || heroImg} />
+      <SEO title={`${tx(copy.title)} | Karibu Assalam`} description={copy.subtitle} image={copy.photo?.src || heroImg} />
       <Hero
         eyebrow="Experiences"
         title={copy.title}
@@ -57,16 +59,7 @@ export default function ExperienceCategory() {
         <Section title="Come together at Karibu Assalam" subtitle="Programmes and event dates are confirmed as they are announced.">
           <div className="event-grid">
             {specialEvents.map((item) => (
-              <article className="event-card" key={item.slug}>
-                <PhotoCardMedia photo={item.photo} />
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-                {item.external ? (
-                  <a className="text-link" href={SITE[item.external]} target="_blank" rel="noopener noreferrer">{item.linkLabel}</a>
-                ) : (
-                  <Link className="text-link" to={item.to}>{item.linkLabel}</Link>
-                )}
-              </article>
+              <EventCard item={item} key={item.slug} />
             ))}
           </div>
         </Section>
@@ -78,9 +71,9 @@ export default function ExperienceCategory() {
             {volunteering.map((item) => (
               <article className="volunteer-card" key={item.slug}>
                 <PhotoCardMedia photo={item.photo} />
-                <span className="volunteer-duration">{item.duration}</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <span className="volunteer-duration">{tx(item.duration)}</span>
+                <h3>{tx(item.title)}</h3>
+                <p>{tx(item.text)}</p>
                 <CTAButton to="/contact" variant="secondary" size="sm">Apply to volunteer</CTAButton>
               </article>
             ))}
@@ -95,9 +88,9 @@ export default function ExperienceCategory() {
               <PhotoSlot label="PLACEHOLDER" alt="Safari photograph coming soon" ratio="16 / 10" />
             </div>
             <div>
-              <p>{safari.text}</p>
-              <p>Ask the team about Lake Manyara, Tarangire, Ngorongoro Crater or the Serengeti, as well as other routes and hikes in Tanzania.</p>
-              <p>Each trip is arranged around your preferences and the season. There are no fixed packages or published prices.</p>
+              <p>{tx(safari.text)}</p>
+              <p>{tx("Ask the team about Lake Manyara, Tarangire, Ngorongoro Crater or the Serengeti, as well as other routes and hikes in Tanzania.")}</p>
+              <p>{tx("Each trip is arranged around your preferences and the season. There are no fixed packages or published prices.")}</p>
               <CTAButton to="/contact">Find your safari</CTAButton>
             </div>
           </div>
@@ -105,7 +98,7 @@ export default function ExperienceCategory() {
       )}
 
       <Section className="surface-section" title="Explore more at Karibu Assalam">
-        <Link className="text-link" to="/experiences">View all experiences</Link>
+        <Link className="text-link" to="/experiences">{tx("View all experiences")}</Link>
       </Section>
     </main>
   );

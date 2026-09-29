@@ -23,9 +23,11 @@ function absolute(url) {
   }
 }
 
-export default function SEO({ title, description, image, type = "website" }) {
+export default function SEO({ title: sourceTitle, description: sourceDescription, image, type = "website" }) {
   const { pathname } = useLocation();
-  const { language } = useLanguage();
+  const { language, tx } = useLanguage();
+  const title = tx(sourceTitle);
+  const description = tx(sourceDescription);
 
   useEffect(() => {
     const canonical = absolute(pathname);

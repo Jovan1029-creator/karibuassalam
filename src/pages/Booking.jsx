@@ -62,6 +62,7 @@ export default function Booking() {
   const { tx, language } = useLanguage();
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState(() => initialFormFromParams(searchParams, language));
+  // Keep source message keys in state so existing feedback follows language changes.
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(null);
   const [deliveryFailed, setDeliveryFailed] = useState(false);
@@ -93,23 +94,23 @@ export default function Booking() {
 
   function validate() {
     const nextErrors = {};
-    if (!form.name.trim()) nextErrors.name = tx("Your Name is required.");
+    if (!form.name.trim()) nextErrors.name = "Your Name is required.";
     if (!form.email.trim()) {
-      nextErrors.email = tx("Your Email is required.");
+      nextErrors.email = "Your Email is required.";
     } else if (!validEmail(form.email)) {
-      nextErrors.email = tx("Please enter a valid email address.");
+      nextErrors.email = "Please enter a valid email address.";
     }
-    if (!form.phone.trim()) nextErrors.phone = tx("Phone Number is required.");
-    if (!form.arrivalDate) nextErrors.arrivalDate = tx("Please choose an arrival date.");
+    if (!form.phone.trim()) nextErrors.phone = "Phone Number is required.";
+    if (!form.arrivalDate) nextErrors.arrivalDate = "Please choose an arrival date.";
     if (
       form.arrivalDate &&
       form.departureDate &&
       new Date(form.departureDate) < new Date(form.arrivalDate)
     ) {
-      nextErrors.departureDate = tx("Departure must be after arrival.");
+      nextErrors.departureDate = "Departure must be after arrival.";
     }
     if (Number.parseInt(form.adults, 10) < 1) {
-      nextErrors.adults = tx("At least one adult is required.");
+      nextErrors.adults = "At least one adult is required.";
     }
     return nextErrors;
   }
@@ -120,7 +121,7 @@ export default function Booking() {
     setDeliveryFailed(false);
     setSubmitted(null);
     if (form.website.trim()) {
-      setStatus(tx("Request received. The team will review it shortly."));
+      setStatus("Request received. The team will review it shortly.");
       setStatusTone("success");
       return;
     }
@@ -128,7 +129,7 @@ export default function Booking() {
     const nextErrors = validate();
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      setStatus(tx("Please fix the highlighted fields and try again."));
+      setStatus("Please fix the highlighted fields and try again.");
       setStatusTone("error");
       // Send the visitor straight to the first problem instead of making them
       // hunt for red text.
@@ -137,7 +138,7 @@ export default function Booking() {
     }
 
     setIsSubmitting(true);
-    setStatus(tx("Sending your request..."));
+    setStatus("Sending your request...");
     setStatusTone("");
 
     try {
@@ -149,25 +150,21 @@ export default function Booking() {
       setSubmitted(record);
       if (record.storageMode === "supabase") {
         setStatus(
-          tx("Thanks — we have your request. The team replies within one day, usually on WhatsApp.")
+          "Thanks — we have your request. The team replies within one day, usually on WhatsApp."
         );
         setStatusTone("success");
       } else {
         // Anything other than a confirmed remote save means the request is not
         // in the team's inbox. Say so and hand over a channel that works.
         setStatus(
-          tx(
-            "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
-          )
+          "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
         );
         setStatusTone("error");
         setDeliveryFailed(true);
       }
     } catch {
       setStatus(
-        tx(
-          "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
-        )
+        "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
       );
       setStatusTone("error");
       setDeliveryFailed(true);
@@ -229,7 +226,7 @@ export default function Booking() {
                     </option>
                   ))}
                 </select>
-                {errors.retreatSlug && <p className="field-error" id="retreatSlug-error">{errors.retreatSlug}</p>}
+                {errors.retreatSlug && <p className="field-error" id="retreatSlug-error">{tx(errors.retreatSlug)}</p>}
               </div>
             </div>
 
@@ -246,7 +243,7 @@ export default function Booking() {
                 aria-invalid={errors.arrivalDate ? "true" : undefined}
                 aria-describedby={errors.arrivalDate ? "arrivalDate-error" : undefined}
               />
-                {errors.arrivalDate && <p className="field-error" id="arrivalDate-error">{errors.arrivalDate}</p>}
+                {errors.arrivalDate && <p className="field-error" id="arrivalDate-error">{tx(errors.arrivalDate)}</p>}
               </div>
 
               <div className="form-field">
@@ -261,7 +258,7 @@ export default function Booking() {
                 aria-invalid={errors.departureDate ? "true" : undefined}
                 aria-describedby={errors.departureDate ? "departureDate-error" : undefined}
               />
-                {errors.departureDate && <p className="field-error" id="departureDate-error">{errors.departureDate}</p>}
+                {errors.departureDate && <p className="field-error" id="departureDate-error">{tx(errors.departureDate)}</p>}
               </div>
             </div>
 
@@ -272,7 +269,7 @@ export default function Booking() {
                 aria-invalid={errors.adults ? "true" : undefined}
                 aria-describedby={errors.adults ? "adults-error" : undefined}
               />
-                {errors.adults && <p className="field-error" id="adults-error">{errors.adults}</p>}
+                {errors.adults && <p className="field-error" id="adults-error">{tx(errors.adults)}</p>}
               </div>
 
               <div className="form-field">
@@ -340,7 +337,7 @@ export default function Booking() {
                 aria-invalid={errors.name ? "true" : undefined}
                 aria-describedby={errors.name ? "name-error" : undefined}
               />
-                {errors.name && <p className="field-error" id="name-error">{errors.name}</p>}
+                {errors.name && <p className="field-error" id="name-error">{tx(errors.name)}</p>}
               </div>
 
               <div className="form-field">
@@ -362,7 +359,7 @@ export default function Booking() {
                 aria-invalid={errors.email ? "true" : undefined}
                 aria-describedby={errors.email ? "email-error" : undefined}
               />
-                {errors.email && <p className="field-error" id="email-error">{errors.email}</p>}
+                {errors.email && <p className="field-error" id="email-error">{tx(errors.email)}</p>}
               </div>
 
               <div className="form-field">
@@ -371,7 +368,7 @@ export default function Booking() {
                 aria-invalid={errors.phone ? "true" : undefined}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
               />
-                {errors.phone && <p className="field-error" id="phone-error">{errors.phone}</p>}
+                {errors.phone && <p className="field-error" id="phone-error">{tx(errors.phone)}</p>}
               </div>
             </div>
 
@@ -430,7 +427,7 @@ export default function Booking() {
                 role={statusTone === "error" ? "alert" : "status"}
                 aria-live="polite"
               >
-                {status}
+                {tx(status)}
               </p>
             )}
             {deliveryFailed && (

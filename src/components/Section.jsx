@@ -1,5 +1,6 @@
 import TornEdge from "./TornEdge";
 import Ornament from "./Ornament";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Section({
   id,
@@ -13,6 +14,7 @@ export default function Section({
   containerClassName = "",
   children,
 }) {
+  const { tx } = useLanguage();
   return (
     <section
       id={id}
@@ -25,16 +27,16 @@ export default function Section({
         {(eyebrow || title || subtitle) &&
           (scriptTitle ? (
             <header className="section-header is-script">
-              {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-              {title && <h2 className="script-heading">{title}</h2>}
+              {eyebrow && <p className="eyebrow">{tx(eyebrow)}</p>}
+              {title && <h2 className="script-heading">{tx(title)}</h2>}
               <Ornament />
-              {subtitle && <p className="section-lead">{subtitle}</p>}
+              {subtitle && <p className="section-lead">{tx(subtitle)}</p>}
             </header>
           ) : (
             <header className="section-header">
-              {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-              {title && <h2>{title}</h2>}
-              {subtitle && <p className="lead">{subtitle}</p>}
+              {eyebrow && <p className="eyebrow">{tx(eyebrow)}</p>}
+              {title && <h2>{tx(title)}</h2>}
+              {subtitle && <p className="lead">{tx(subtitle)}</p>}
             </header>
           ))}
         {children}

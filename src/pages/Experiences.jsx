@@ -5,6 +5,7 @@ import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import PhotoSlot from "../components/PhotoSlot";
 import PhotoCardMedia from "../components/PhotoCardMedia";
+import EventCard from "../components/EventCard";
 import SEO from "../components/SEO";
 import { EXPERIENCE_LINKS, SITE } from "../data/siteConfig";
 import {
@@ -118,10 +119,10 @@ export default function Experiences() {
 
         <div className="container campus-tour-detail">
           <div>
-            <h3>Karibu Assalam Tour: campus & village</h3>
-            <p>Spend six hours visiting Assalam Kanga Village and exploring the school, gardens, cave and mosque at the eco-village.</p>
+            <h3>{tx("Karibu Assalam Tour: campus & village")}</h3>
+            <p>{tx("Spend six hours visiting Assalam Kanga Village and exploring the school, gardens, cave and mosque at the eco-village.")}</p>
           </div>
-          <Link className="btn btn-primary" to="/experiences/tours/campus-village-tour">More details</Link>
+          <Link className="btn btn-primary" to="/experiences/tours/campus-village-tour">{tx("More details")}</Link>
         </div>
 
         <TornEdge position="bottom" color="var(--bg)" />
@@ -244,7 +245,7 @@ export default function Experiences() {
           ))}
         </div>
         <div className="section-actions">
-          <Link className="text-link" to="/experiences/volunteer">More about volunteering</Link>
+          <Link className="text-link" to="/experiences/volunteer">{tx("More about volunteering")}</Link>
         </div>
       </Section>
 
@@ -260,29 +261,11 @@ export default function Experiences() {
       >
         <div className="event-grid">
           {specialEvents.map((item) => (
-            <article className="event-card" key={item.slug}>
-              <PhotoCardMedia photo={item.photo} />
-              <h3>{tx(item.title)}</h3>
-              <p>{tx(item.text)}</p>
-              {item.external ? (
-                <a
-                  className="text-link"
-                  href={SITE[item.external]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {tx(item.linkLabel)}
-                </a>
-              ) : (
-                <Link className="text-link" to={item.to}>
-                  {tx(item.linkLabel)}
-                </Link>
-              )}
-            </article>
+            <EventCard item={item} key={item.slug} />
           ))}
         </div>
         <div className="section-actions">
-          <Link className="text-link" to="/experiences/events">Explore special events</Link>
+          <Link className="text-link" to="/experiences/events">{tx("Explore special events")}</Link>
         </div>
       </Section>
 

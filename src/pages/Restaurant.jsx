@@ -1,6 +1,9 @@
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
+import CafeRating from "../components/CafeRating";
+import CTAButton from "../components/CTAButton";
+import { SPICE_ROUTE_CAFE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
 import diningImg from "../../pics/site-marketing/oceanfront-dining.webp";
@@ -60,6 +63,20 @@ export default function Restaurant() {
               )}
             </p>
           </div>
+        </div>
+      </Section>
+
+      <Section id="spice-route-cafe" eyebrow="Beyond the eco-village" title="Visit us in Stone Town" className="band-mint">
+        <div className="cafe-feature">
+          <div className="cafe-feature-copy">
+            <h3>{SPICE_ROUTE_CAFE.name}</h3>
+            <p>{tx("Make time for coffee, breakfast and Zanzibar flavours at The Spice Route Cafe on Soko Muhogo Street in Stone Town.")}</p>
+            <p className="cafe-location-note">{tx("This cafe is in Stone Town, separate from our eco-village in Kizimkazi.")}</p>
+            <CTAButton href={SPICE_ROUTE_CAFE.tripAdvisorUrl} newTab variant="secondary">
+              View the cafe on Tripadvisor
+            </CTAButton>
+          </div>
+          <CafeRating />
         </div>
       </Section>
     </main>

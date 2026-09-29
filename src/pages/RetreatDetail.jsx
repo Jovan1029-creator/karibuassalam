@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import Accordion from "../components/Accordion";
@@ -10,23 +11,24 @@ import roomImg from "../../pics/site-marketing/eco-village-room-interior.webp";
 import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
 
 function StandardRetreatPage({ retreat }) {
+  const { tx } = useLanguage();
   return (
     <>
       <Section>
         <div className="facts-strip">
-          <div className="fact-item"><span>Price</span><strong>From EUR {retreat.priceFrom}</strong></div>
-          <div className="fact-item"><span>Duration</span><strong>{retreat.durationDays || retreat.itineraryDays.length} days</strong></div>
-          <div className="fact-item"><span>Base</span><strong>Karibu Assalam Eco-Village</strong></div>
+          <div className="fact-item"><span>{tx("Price")}</span><strong>{tx("From")} EUR {retreat.priceFrom}</strong></div>
+          <div className="fact-item"><span>{tx("Duration")}</span><strong>{tx("{count} days", { count: retreat.durationDays || retreat.itineraryDays.length })}</strong></div>
+          <div className="fact-item"><span>{tx("Base")}</span><strong>{tx("Karibu Assalam Eco-Village")}</strong></div>
         </div>
       </Section>
       <Section title="Package details" className="surface-section">
         <ul className="check-list cols-2">
-          {retreat.inclusions.map((item) => <li key={item}>{item}</li>)}
+          {retreat.inclusions.map((item) => <li key={item}>{tx(item)}</li>)}
         </ul>
       </Section>
       <Section title="Highlights">
         <ul className="check-list cols-2">
-          {retreat.highlights.map((item) => <li key={item}>{item}</li>)}
+          {retreat.highlights.map((item) => <li key={item}>{tx(item)}</li>)}
         </ul>
       </Section>
       <Section title="7-Day Itinerary">
@@ -37,6 +39,7 @@ function StandardRetreatPage({ retreat }) {
 }
 
 export default function RetreatDetail() {
+  const { tx } = useLanguage();
   const { slug } = useParams();
   const retreat = getRetreatBySlug(slug);
 
@@ -57,7 +60,7 @@ export default function RetreatDetail() {
   return (
     <main id="main-content" className="retreat-detail-2026">
       <SEO
-        title={`${displayName} | Karibu Assalam Retreats`}
+        title={`${tx(displayName)} | ${tx("Karibu Assalam Retreats")}`}
         description={copy?.intro || retreat.shortPromise}
         image={retreat.heroImage}
       />
@@ -67,7 +70,7 @@ export default function RetreatDetail() {
         title={displayName}
         subtitle={copy?.intro || retreat.shortPromise}
         imageSrc={retreat.heroImage}
-        imageAlt={`${displayName} at Karibu Assalam in Zanzibar`}
+        imageAlt={tx("{name} at Karibu Assalam in Zanzibar", { name: tx(displayName) })}
         ctaPrimary={{ to: "/contact", label: copy?.bookingCta || "Book your spot" }}
       />
 
@@ -75,9 +78,9 @@ export default function RetreatDetail() {
         <>
           <Section className="retreat-facts-section">
             <div className="facts-strip retreat-facts-strip">
-              <div className="fact-item"><span>Location</span><strong>{copy.locationText}</strong></div>
-              <div className="fact-item"><span>Duration</span><strong>{copy.durationText}</strong></div>
-              <div className="fact-item"><span>Price</span><strong>{copy.priceText}</strong></div>
+              <div className="fact-item"><span>{tx("Location")}</span><strong>{tx(copy.locationText)}</strong></div>
+              <div className="fact-item"><span>{tx("Duration")}</span><strong>{tx(copy.durationText)}</strong></div>
+              <div className="fact-item"><span>{tx("Price")}</span><strong>{copy.priceText}</strong></div>
             </div>
           </Section>
 
@@ -87,9 +90,9 @@ export default function RetreatDetail() {
             className="surface-section"
           >
             <ul className="check-list cols-2 retreat-inclusions">
-              {copy.includedItems.map((item) => <li key={item}>{item}</li>)}
+              {copy.includedItems.map((item) => <li key={item}>{tx(item)}</li>)}
             </ul>
-            <p className="not-included-note">{copy.notIncluded}</p>
+            <p className="not-included-note">{tx(copy.notIncluded)}</p>
           </Section>
 
           <Section
@@ -109,13 +112,13 @@ export default function RetreatDetail() {
 
           <Section className="surface-section retreat-stay-section">
             <div className="retreat-feature-split">
-              <img src={roomImg} alt="Comfortable room at Karibu Assalam Eco-Village" width="900" height="675" loading="lazy" />
+              <img src={roomImg} alt={tx("Comfortable room at Karibu Assalam Eco-Village")} width="900" height="675" loading="lazy" />
               <div>
-                <p className="eyebrow">Accommodation</p>
-                <h2>{copy.stayHeading}</h2>
-                <p>{copy.stayCopy}</p>
+                <p className="eyebrow">{tx("Accommodation")}</p>
+                <h2>{tx(copy.stayHeading)}</h2>
+                <p>{tx(copy.stayCopy)}</p>
                 <ul className="check-list">
-                  {copy.stayFeatures.map((item) => <li key={item}>{item}</li>)}
+                  {copy.stayFeatures.map((item) => <li key={item}>{tx(item)}</li>)}
                 </ul>
               </div>
             </div>
@@ -123,12 +126,12 @@ export default function RetreatDetail() {
 
           <Section className="retreat-food-section">
             <div className="retreat-feature-split is-reversed">
-              <img src={foodImg} alt="Shared halal meal at Karibu Assalam" width="900" height="675" loading="lazy" />
+              <img src={foodImg} alt={tx("Shared halal meal at Karibu Assalam")} width="900" height="675" loading="lazy" />
               <div>
-                <p className="eyebrow">Food</p>
-                <h2>{copy.foodHeading}</h2>
-                <p className="retreat-food-tags">{copy.foodTags}</p>
-                {copy.foodCopy.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                <p className="eyebrow">{tx("Food")}</p>
+                <h2>{tx(copy.foodHeading)}</h2>
+                <p className="retreat-food-tags">{tx(copy.foodTags)}</p>
+                {copy.foodCopy.map((paragraph) => <p key={paragraph}>{tx(paragraph)}</p>)}
               </div>
             </div>
           </Section>
@@ -136,13 +139,13 @@ export default function RetreatDetail() {
           <Section eyebrow="Booking" title={copy.bookingCta} className="retreat-booking-section">
             <div className="booking-panel retreat-booking-panel">
               <div className="booking-panel-main">
-                <p>{copy.bookingCopy}</p>
+                <p>{tx(copy.bookingCopy)}</p>
                 <CTAButton to="/contact" size="lg">{copy.bookingCta}</CTAButton>
               </div>
               <div className="booking-panel-side">
-                <h3>Need help choosing?</h3>
-                <p>Tell the Karibu Assalam team who is travelling and the dates you are considering.</p>
-                <Link className="text-link" to="/contact">Contact the team</Link>
+                <h3>{tx("Need help choosing?")}</h3>
+                <p>{tx("Tell the Karibu Assalam team who is travelling and the dates you are considering.")}</p>
+                <Link className="text-link" to="/contact">{tx("Contact the team")}</Link>
               </div>
             </div>
           </Section>
@@ -156,7 +159,7 @@ export default function RetreatDetail() {
           {related.map((item) => <RetreatCard key={item.slug} retreat={item} />)}
         </div>
         <div className="section-actions">
-          <Link className="text-link" to="/retreats">View all retreats & camps</Link>
+          <Link className="text-link" to="/retreats">{tx("View all retreats & camps")}</Link>
         </div>
       </Section>
     </main>

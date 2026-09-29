@@ -24,16 +24,16 @@ function getLocalStatus(date) {
 }
 
 export default function LiveNowStrip() {
-  const { tx } = useLanguage();
+  const { tx, language } = useLanguage();
   const [now, setNow] = useState(() => new Date());
   const localTime = useMemo(
     () =>
-      new Intl.DateTimeFormat(undefined, {
+      new Intl.DateTimeFormat(language, {
         hour: "2-digit",
         minute: "2-digit",
         timeZone: ZANZIBAR_TIME_ZONE,
       }).format(now),
-    [now]
+    [now, language]
   );
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function LiveNowStrip() {
           <span className="live-dot" aria-hidden="true" />
           <div>
             <p className="live-now-kicker">{tx("Local time in Zanzibar")}</p>
-            <strong>{localTime} EAT</strong>
+            <strong>{localTime} {tx("EAT")}</strong>
             <span>{tx(getLocalStatus(now))}</span>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Accordion({
   items,
@@ -6,6 +7,7 @@ export default function Accordion({
   defaultOpenIds = [],
   className = "",
 }) {
+  const { tx } = useLanguage();
   const baseId = useId();
   const [openIds, setOpenIds] = useState(defaultOpenIds);
 
@@ -37,7 +39,7 @@ export default function Accordion({
                 aria-controls={panelId}
                 onClick={() => toggle(itemId)}
               >
-                <span>{item.title || item.question}</span>
+                <span>{tx(item.title || item.question)}</span>
                 <span className="accordion-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                     <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -52,8 +54,8 @@ export default function Accordion({
               className="accordion-panel"
               hidden={!isOpen}
             >
-              {item.description && <p>{item.description}</p>}
-              {item.answer && <p>{item.answer}</p>}
+              {item.description && <p>{tx(item.description)}</p>}
+              {item.answer && <p>{tx(item.answer)}</p>}
             </div>
           </div>
         );

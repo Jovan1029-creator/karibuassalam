@@ -17,16 +17,16 @@ const initialForm = {
   website: "",
 };
 
-function validate(form, tx) {
+function validate(form) {
   const errors = {};
-  if (!form.name.trim()) errors.name = tx("Your Name is required.");
+  if (!form.name.trim()) errors.name = "Your Name is required.";
   if (!form.email.trim()) {
-    errors.email = tx("Your Email is required.");
+    errors.email = "Your Email is required.";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-    errors.email = tx("Please enter a valid email address.");
+    errors.email = "Please enter a valid email address.";
   }
-  if (!form.phone.trim()) errors.phone = tx("Phone Number is required.");
-  if (!form.message.trim()) errors.message = tx("Message is required.");
+  if (!form.phone.trim()) errors.phone = "Phone Number is required.";
+  if (!form.message.trim()) errors.message = "Message is required.";
   return errors;
 }
 
@@ -75,6 +75,7 @@ export default function Contact() {
   const { tx, language } = useLanguage();
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState(initialForm);
+  // Translate feedback at render time, including errors already on screen.
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
   const [statusTone, setStatusTone] = useState("");
@@ -110,22 +111,22 @@ export default function Contact() {
     if (isSending) return;
 
     if (form.website.trim()) {
-      setStatus(tx("Request received. Please use the visible contact channels if you need immediate support."));
+      setStatus("Request received. Please use the visible contact channels if you need immediate support.");
       setStatusTone("success");
       return;
     }
 
-    const nextErrors = validate(form, tx);
+    const nextErrors = validate(form);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      setStatus(tx("Please fix the highlighted fields and try again."));
+      setStatus("Please fix the highlighted fields and try again.");
       setStatusTone("error");
       formRef.current?.querySelector('[aria-invalid="true"]')?.focus();
       return;
     }
 
     setIsSending(true);
-    setStatus(tx("Sending..."));
+    setStatus("Sending...");
     setStatusTone("");
 
     try {
@@ -147,22 +148,18 @@ export default function Contact() {
       });
 
       if (record.storageMode === "supabase") {
-        setStatus(tx("Thanks — we have your message. The team usually replies within one day."));
+        setStatus("Thanks — we have your message. The team usually replies within one day.");
         setStatusTone("success");
         setForm(initialForm);
       } else {
         setStatus(
-          tx(
-            "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
-          )
+          "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
         );
         setStatusTone("error");
       }
     } catch {
       setStatus(
-        tx(
-          "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
-        )
+        "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
       );
       setStatusTone("error");
     } finally {
@@ -214,9 +211,9 @@ export default function Contact() {
                     href={SITE.instagramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Follow Karibu Assalam on Instagram"
+                    aria-label={tx("Follow Karibu Assalam on Instagram")}
                   >
-                    Instagram ({SITE.instagramHandle})
+                    {tx("Instagram")} ({SITE.instagramHandle})
                   </a>
                 </DirectContactItem>
               </ul>
@@ -233,7 +230,7 @@ export default function Contact() {
               <div className="map-frame">
                 <iframe
                   title="Assalam Community Foundation"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.5766451875434!2d39.46334111155818!3d-6.448361663029205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185d05fc3956b703%3A0x27f750fc3ab0e896!2sAssalam%20Community%20Foundation!5e0!3m2!1sen!2stz!4v1788855665424!5m2!1sen!2stz"
+                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.5766451875434!2d39.46334111155818!3d-6.448361663029205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185d05fc3956b703%3A0x27f750fc3ab0e896!2sAssalam%20Community%20Foundation!5e0!3m2!1s${language}!2stz!4v1788855665424!5m2!1s${language}!2stz`}
                   width="600"
                   height="450"
                   allowFullScreen
@@ -259,7 +256,7 @@ export default function Contact() {
                 aria-invalid={errors.name ? "true" : undefined}
                 aria-describedby={errors.name ? "name-error" : undefined}
               />
-              {errors.name && <p className="field-error" id="name-error">{errors.name}</p>}
+              {errors.name && <p className="field-error" id="name-error">{tx(errors.name)}</p>}
             </div>
 
             <div className="form-field">
@@ -274,7 +271,7 @@ export default function Contact() {
                 aria-invalid={errors.email ? "true" : undefined}
                 aria-describedby={errors.email ? "email-error" : undefined}
               />
-              {errors.email && <p className="field-error" id="email-error">{errors.email}</p>}
+              {errors.email && <p className="field-error" id="email-error">{tx(errors.email)}</p>}
             </div>
 
             <div className="form-field">
@@ -288,7 +285,7 @@ export default function Contact() {
                 aria-invalid={errors.phone ? "true" : undefined}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
               />
-              {errors.phone && <p className="field-error" id="phone-error">{errors.phone}</p>}
+              {errors.phone && <p className="field-error" id="phone-error">{tx(errors.phone)}</p>}
             </div>
 
             <div className="form-field">
@@ -307,7 +304,7 @@ export default function Contact() {
                 aria-invalid={errors.message ? "true" : undefined}
                 aria-describedby={errors.message ? "message-error" : undefined}
               />
-              {errors.message && <p className="field-error" id="message-error">{errors.message}</p>}
+              {errors.message && <p className="field-error" id="message-error">{tx(errors.message)}</p>}
             </div>
 
             <div className="honeypot" aria-hidden="true">
@@ -332,7 +329,7 @@ export default function Contact() {
                 role={statusTone === "error" ? "alert" : "status"}
                 aria-live="polite"
               >
-                {status}
+                {tx(status)}
               </p>
             )}
 

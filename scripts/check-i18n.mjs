@@ -1,85 +1,36 @@
-// Static sweep: every literal tx("...") argument plus every string in the data
-// files must exist in both dictionaries.
-import fs from "node:fs";
-import path from "node:path";
+import { collectCatalog } from './i18n-catalog.mjs';
+import { phraseTranslations } from '../src/data/phraseTranslations.js';
+import { uiMessages } from '../src/data/i18n.js';
+import { languageNeutral } from '../src/data/languageNeutral.js';
+import { contentRows } from '../src/data/translations/siteContent.js';
+import assert from 'node:assert/strict';
 
-const PROJ = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/(\w:)/, "$1"));
-const SRC = path.join(PROJ, "src");
-
-const files = [];
-(function walk(d) {
-  for (const e of fs.readdirSync(d, { withFileTypes: true })) {
-    const p = path.join(d, e.name);
-    if (e.isDirectory()) walk(p);
-    else if (/\.(jsx|js)$/.test(e.name) && !p.includes("translations")) files.push(p);
-  }
-})(SRC);
-
-const wanted = new Set();
-const re = /tx\(\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\$]|\\.)*`)/g;
-for (const f of files) {
-  const s = fs.readFileSync(f, "utf8");
-  for (const m of s.matchAll(re)) {
-    const raw = m[1];
-    if (raw.startsWith("`")) continue; // template literals are dynamic
-    wanted.add(raw.slice(1, -1).replace(/\\"/g, '"').replace(/\\'/g, "'"));
-  }
+// Only genuine names, codes and language-neutral units may remain unchanged.
+export const unchanged = languageNeutral;
+const seenRows = new Map();
+for (const row of contentRows) {
+  assert.equal(row.length, 3, 'Each phrase needs English, Turkish and German.');
+  assert.ok(row.every(value => typeof value === 'string' && value.trim()), `Empty translation: ${row[0]}`);
+  if (seenRows.has(row[0])) assert.deepEqual(row, seenRows.get(row[0]), `Conflicting translations: ${row[0]}`);
+  seenRows.set(row[0], row);
+  const slots = value => [...value.matchAll(/\{(\w+)\}/g)].map(match => match[1]).sort();
+  for (const localized of row.slice(1)) assert.deepEqual(slots(localized), slots(row[0]), `Missing interpolation value: ${row[0]}`);
 }
-
-// Inline object arrays (moments, amenities, pillars, cards...) are rendered via
-// tx(item.title) and friends, so their literals need translations too.
-const KEYED = /\b(?:title|text|label|linkLabel|duration|promise|alt|question|answer|shortPromise)\s*:\s*"([^"]{3,})"/g;
-const ARRAYS = /\b(?:facts|features|highlights|bullets|inclusions|points)\s*:\s*\[([^\]]*)\]/g;
-for (const f of files) {
-  const s = fs.readFileSync(f, "utf8");
-  for (const m of s.matchAll(KEYED)) {
-    const v = m[1].replace(/\\"/g, '"');
-    if (v.length > 2 && !/^[a-z-]+$/.test(v) && !/^https?:/.test(v)) wanted.add(v);
+function uiPairs(base, localized, result={}) {
+  for (const [key,value] of Object.entries(base)) {
+    if (typeof value === 'string') result[value] = localized[key];
+    else uiPairs(value, localized[key], result);
   }
-  for (const m of s.matchAll(ARRAYS)) {
-    for (const q of m[1].matchAll(/"([^"]{3,})"/g)) wanted.add(q[1]);
-  }
+  return result;
 }
-
-// Strings from the data files all flow through tx() at render time.
-for (const f of ["src/data/retreats.js", "src/data/faq.js", "src/data/bookingOptions.js"]) {
-  const s = fs.readFileSync(path.join(PROJ, f), "utf8");
-  for (const m of s.matchAll(/"((?:[^"\\]|\\.)*)"/g)) {
-    const v = m[1].replace(/\\"/g, '"');
-    if (v.length > 2 && !/^\.\.?\//.test(v) && !/^https?:/.test(v) && !/^[a-z-]+$/.test(v)) {
-      wanted.add(v);
-    }
-  }
+const { wanted } = collectCatalog();
+let gaps = 0;
+for (const lang of ['tr','de']) {
+  const dict = {...uiPairs(uiMessages.en, uiMessages[lang]), ...phraseTranslations[lang]};
+  const missing = [...wanted].filter(([text]) => !unchanged.has(text) && (!dict[text] || dict[text] === text));
+  console.log(`\n${lang.toUpperCase()} untranslated: ${missing.length}`);
+  for (const [text,file] of missing) console.log(JSON.stringify(text) + '  [' + file + ']');
+  gaps += missing.length;
 }
-
-const dicts = {};
-for (const lang of ["tr", "de"]) {
-  const text = fs.readFileSync(path.join(SRC, `data/translations/${lang}.js`), "utf8");
-  const keys = new Set();
-  // quoted keys
-  for (const m of text.matchAll(/^\s{2}"((?:[^"\\]|\\.)*)":/gm)) keys.add(m[1].replace(/\\"/g, '"'));
-  // bare identifier keys
-  for (const m of text.matchAll(/^\s{2}([A-Za-z_$][\w$]*):/gm)) keys.add(m[1]);
-  dicts[lang] = keys;
-}
-
-// UI message keys are handled by the separate uiMessages lookup.
-const uiText = fs.readFileSync(path.join(SRC, "data/i18n.js"), "utf8");
-const uiKeys = new Set([...uiText.matchAll(/:\s*"([^"]+)"/g)].map((m) => m[1]));
-
-let bad = 0;
-for (const lang of ["tr", "de"]) {
-  const missing = [...wanted].filter((k) => !dicts[lang].has(k) && !uiKeys.has(k)).sort();
-  console.log(`\n${lang.toUpperCase()} missing: ${missing.length}`);
-  missing.forEach((k) => console.log("   " + JSON.stringify(k)));
-  bad += missing.length;
-}
-
-// Keys present in one dictionary but not the other.
-const onlyTr = [...dicts.tr].filter((k) => !dicts.de.has(k));
-const onlyDe = [...dicts.de].filter((k) => !dicts.tr.has(k));
-if (onlyTr.length) console.log("\nonly in tr:", onlyTr);
-if (onlyDe.length) console.log("only in de:", onlyDe);
-
-console.log(`\nchecked ${wanted.size} strings; ${bad} gaps`);
-process.exit(bad ? 1 : 0);
+console.log(`\nChecked ${wanted.size} visible strings; ${gaps} gaps`);
+process.exitCode = gaps ? 1 : 0;

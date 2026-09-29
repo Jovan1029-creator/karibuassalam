@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import CTAButton from "./CTAButton";
+import { useLanguage } from "../context/LanguageContext";
 
 function CarouselIcon({ paused }) {
   if (paused) {
@@ -30,6 +31,7 @@ export default function Hero({
   compact = false,
   imagePosition = "50% 50%",
 }) {
+  const { tx } = useLanguage();
   const mediaSlides = useMemo(
     () => (slides.length ? slides : imageSrc ? [{ src: imageSrc, alt: imageAlt }] : []),
     [imageAlt, imageSrc, slides]
@@ -60,7 +62,7 @@ export default function Hero({
               key={slide.src}
               className={`hero-slide ${index === activeSlide ? "is-active" : ""}`}
               src={slide.src}
-              alt={index === activeSlide ? slide.alt || imageAlt : ""}
+              alt={index === activeSlide ? tx(slide.alt || imageAlt) : ""}
               aria-hidden={index === activeSlide ? undefined : "true"}
               loading={index === 0 && !compact ? "eager" : "lazy"}
               decoding="async"
@@ -75,9 +77,9 @@ export default function Hero({
       ) : null}
       <div className="container hero-content">
         <div className="hero-panel">
-          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          <h1>{title}</h1>
-          {subtitle && <p className="lead">{subtitle}</p>}
+          {eyebrow && <p className="eyebrow">{tx(eyebrow)}</p>}
+          <h1>{tx(title)}</h1>
+          {subtitle && <p className="lead">{tx(subtitle)}</p>}
           {(ctaPrimary || ctaSecondary) && (
             <div className="inline-actions">
               {ctaPrimary && <CTAButton {...ctaPrimary}>{ctaPrimary.label}</CTAButton>}
@@ -92,25 +94,25 @@ export default function Hero({
             <button
               type="button"
               className="hero-carousel-toggle"
-              aria-label={paused ? "Play image carousel" : "Pause image carousel"}
-              title={paused ? "Play image carousel" : "Pause image carousel"}
+              aria-label={tx(paused ? "Play image carousel" : "Pause image carousel")}
+              title={tx(paused ? "Play image carousel" : "Pause image carousel")}
               onClick={() => setPaused((current) => !current)}
             >
               <CarouselIcon paused={paused} />
             </button>
-            <div className="hero-carousel-dots" aria-label="Choose hero image">
+            <div className="hero-carousel-dots" aria-label={tx("Choose hero image")}>
               {mediaSlides.map((slide, index) => (
                 <button
                   type="button"
                   key={slide.src}
                   className={`hero-carousel-dot ${index === activeSlide ? "is-active" : ""}`}
-                  aria-label={`Show image ${index + 1}: ${slide.label || slide.alt}`}
+                  aria-label={tx("Show image {number}: {label}", { number: index + 1, label: tx(slide.label || slide.alt) })}
                   aria-current={index === activeSlide ? "true" : undefined}
                   onClick={() => setActiveSlide(index)}
                 />
               ))}
             </div>
-            <span className="hero-carousel-label">{mediaSlides[activeSlide]?.label}</span>
+            <span className="hero-carousel-label">{tx(mediaSlides[activeSlide]?.label)}</span>
           </div>
         </div>
       ) : null}

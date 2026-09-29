@@ -14,8 +14,8 @@ function formatPrice(priceFrom, language) {
 
 export default function RetreatCard({ retreat }) {
   const { tx, language } = useLanguage();
-  const displayTitle = retreat.details?.heading || tx(retreat.title);
-  const displayPromise = retreat.details?.intro || tx(retreat.shortPromise);
+  const displayTitle = tx(retreat.details?.heading || retreat.title);
+  const displayPromise = tx(retreat.details?.intro || retreat.shortPromise);
 
   return (
     <Card className="retreat-card">

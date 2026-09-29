@@ -8,7 +8,8 @@
     "build": "node scripts/check-i18n.mjs && vite build && node scripts/build-worker.mjs",
     "preview": "vite preview",
     "check:i18n": "node scripts/check-i18n.mjs",
-    "test:booking": "node scripts/test-booking-delivery.mjs"
+    "test:booking": "node scripts/test-booking-delivery.mjs",
+    "test:i18n": "node scripts/check-i18n.mjs && node scripts/test-i18n.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.1",

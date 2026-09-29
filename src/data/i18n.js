@@ -1,5 +1,6 @@
 // src\data\i18n.js
-import { phraseTranslations } from "./phraseTranslations";
+import { phraseTranslations } from "./phraseTranslations.js";
+import { languageNeutral } from "./languageNeutral.js";
 
 export const SUPPORTED_LANGUAGES = [
   { code: "en", label: "English", shortLabel: "EN" },
@@ -115,6 +116,15 @@ const uiTextLookups = {
 // In development, surface any string that reaches the UI without a translation
 // instead of silently falling back to English.
 const reportedMisses = new Set();
+const translatedValues = Object.fromEntries(['tr', 'de'].map(language => [
+  language, new Set([...Object.values(phraseTranslations[language]), ...Object.values(uiTextLookups[language])]),
+]));
+const translatedTemplates = Object.fromEntries(['tr', 'de'].map(language => [
+  language, [...translatedValues[language]].filter(value => /\{\w+\}/.test(value)).map(value =>
+    new RegExp('^' + value.split(/(\{\w+\})/).map(part => /^\{\w+\}$/.test(part)
+      ? '.+?' : part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('') + '$')
+  ),
+]));
 
 function reportMissing(language, text) {
   if (!import.meta.env?.DEV || language === "en") return;
@@ -124,13 +134,21 @@ function reportMissing(language, text) {
   console.warn(`[i18n] missing ${language.toUpperCase()} translation: ${JSON.stringify(text)}`);
 }
 
-export function translateText(language, text) {
+export function translateText(language, text, values = {}) {
   if (typeof text !== "string" || !text) return text;
   const lang = uiMessages[language] ? language : "en";
 
   const hit = phraseTranslations[lang]?.[text] ?? uiTextLookups[lang]?.[text];
-  if (hit !== undefined) return hit;
+  const interpolate = (value) => value.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
+  if (hit !== undefined) return interpolate(hit);
+
+  // Shared components also accept copy already translated by their caller.
+  if (lang === 'en' || translatedValues[lang]?.has(text) || languageNeutral.has(text)
+    || !/[A-Za-z]/.test(text) || translatedTemplates[lang]?.some(pattern => pattern.test(text))) return interpolate(text);
+
+  // Page-specific metadata combines a translated title with the brand name.
+  if (text.includes(' | ')) return text.split(' | ').map(part => translateText(lang, part, values)).join(' | ');
 
   reportMissing(lang, text);
-  return text;
+  return interpolate(text);
 }

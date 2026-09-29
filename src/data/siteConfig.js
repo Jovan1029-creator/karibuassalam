@@ -5,9 +5,9 @@ export const SITE = {
   brandName: "Karibu Assalam",
   nonprofitName: "Assalam Community Foundation",
   tagline: "Hospitality + community + sustainability + culture + purpose",
-  phoneDisplay: "+255-776-138-832",
-  phoneTel: "+255776138832",
-  whatsAppPhone: "255776138832",
+  phoneDisplay: "+255 771 000 800",
+  phoneTel: "+255771000800",
+  whatsAppPhone: "255771000800",
   email: "camps@vassalam.org",
   instagramUrl: "https://www.instagram.com/karibu.assalam",
   instagramHandle: "@karibu.assalam",
@@ -19,9 +19,19 @@ export const SITE = {
   sawaEnsembleHandle: "@sawa.ensemble",
   foundationUrl: "https://vassalam.org",
 
-  // Left empty until the real listing URL is supplied — the reviews link only
-  // renders when this has a value, so the site never ships a dead link.
+  // The resort has no verified listing yet. Do not reuse the Stone Town cafe's
+  // rating here: it belongs to a separate venue.
   tripAdvisorUrl: "",
+};
+
+// Manually verified listing snapshot, not a live Tripadvisor feed.
+// Refresh rating, reviewCount and checkedAt together after checking the source.
+export const SPICE_ROUTE_CAFE = {
+  name: "The Spice Route Cafe",
+  tripAdvisorUrl: "https://www.tripadvisor.com/Restaurant_Review-g8055401-d13625574-Reviews-The_Spice_Route_Cafe-Zanzibar_City_Zanzibar_Island_Zanzibar_Archipelago.html",
+  rating: 4.8,
+  reviewCount: 33,
+  checkedAt: "2026-09-29",
 };
 
 export const NAV_LINKS = [

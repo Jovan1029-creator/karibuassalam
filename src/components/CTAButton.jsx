@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function CTAButton({
   to,
@@ -10,12 +11,13 @@ export default function CTAButton({
   className = "",
   ...rest
 }) {
+  const { tx } = useLanguage();
   const classes = `btn btn-${variant} btn-${size} ${className}`.trim();
 
   if (to) {
     return (
       <Link className={classes} to={to} {...rest}>
-        {children}
+        {tx(children)}
       </Link>
     );
   }
@@ -28,7 +30,7 @@ export default function CTAButton({
       rel={newTab ? "noopener noreferrer" : undefined}
       {...rest}
     >
-      {children}
+      {tx(children)}
     </a>
   );
 }

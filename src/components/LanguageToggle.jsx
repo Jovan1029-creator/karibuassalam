@@ -1,7 +1,7 @@
 import { useLanguage } from "../context/LanguageContext";
 
 export default function LanguageToggle({ compact = false }) {
-  const { language, setLanguage, languages, t } = useLanguage();
+  const { language, setLanguage, languages, t, tx } = useLanguage();
 
   return (
     <fieldset className={`lang-toggle ${compact ? "compact" : ""}`}>
@@ -13,7 +13,7 @@ export default function LanguageToggle({ compact = false }) {
           className={language === lang.code ? "is-active" : ""}
           aria-pressed={language === lang.code}
           onClick={() => setLanguage(lang.code)}
-          title={lang.label}
+          title={tx(lang.label)}
         >
           {lang.shortLabel}
         </button>

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import Showcase from "../components/Showcase";
@@ -9,6 +10,7 @@ import { retreats } from "../data/retreats";
 import heroImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
 
 export default function Retreats() {
+  const { tx } = useLanguage();
   const navigate = useNavigate();
 
   return (
@@ -30,16 +32,16 @@ export default function Retreats() {
       />
 
       <Section className="retreat-jump-section" containerClassName="retreat-jump-inner">
-        <label htmlFor="retreat-jump">Find your camp or retreat</label>
+        <label htmlFor="retreat-jump">{tx("Find your camp or retreat")}</label>
         <select
           id="retreat-jump"
           defaultValue=""
           onChange={(event) => event.target.value && navigate(`/retreats/${event.target.value}`)}
         >
-          <option value="" disabled>Choose a retreat</option>
+          <option value="" disabled>{tx("Choose a retreat")}</option>
           {retreats.map((retreat) => (
             <option value={retreat.slug} key={retreat.slug}>
-              {retreat.details?.heading || retreat.title}
+              {tx(retreat.details?.heading || retreat.title)}
             </option>
           ))}
         </select>
@@ -48,10 +50,10 @@ export default function Retreats() {
       <div className="torn-band retreat-showcase-band">
         <TornEdge position="top" color="var(--bg)" />
         <div className="set-intro">
-          <p className="eyebrow">Retreats & Camps at Karibu Assalam</p>
-          <h2>Stay, learn, connect and experience Zanzibar differently</h2>
+          <p className="eyebrow">{tx("Retreats & Camps at Karibu Assalam")}</p>
+          <h2>{tx("Stay, learn, connect and experience Zanzibar differently")}</h2>
           <p className="lead">
-            Choose the camp that fits the way you want to travel. Each programme keeps community, culture and meaningful experiences at its heart.
+            {tx("Choose the camp that fits the way you want to travel. Each programme keeps community, culture and meaningful experiences at its heart.")}
           </p>
         </div>
 
@@ -67,11 +69,11 @@ export default function Retreats() {
               price={
                 <>
                   <strong>{retreat.details?.priceText || `EUR ${retreat.priceFrom}`}</strong>{" "}
-                  {"·"} {retreat.details?.durationText || `${retreat.durationDays || retreat.itineraryDays.length} days`}
+                  {"·"} {retreat.details?.durationText ? tx(retreat.details.durationText) : tx("{count} days", { count: retreat.durationDays || retreat.itineraryDays.length })}
                 </>
               }
               image={retreat.heroImage}
-              alt={`${retreat.details?.heading || retreat.title} retreat preview`}
+              alt={tx("{name} retreat preview", { name: tx(retreat.details?.heading || retreat.title) })}
               imageWidth={768}
               imageHeight={614}
               cta={{ to: `/retreats/${retreat.slug}`, label: "More details" }}

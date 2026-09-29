@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TornEdge from "./TornEdge";
+import { useLanguage } from "../context/LanguageContext";
 import { SITE } from "../data/siteConfig";
 import aerialImg from "../../AssalamHero/assalam-hero.webp";
 import purposeImg from "../../pics/aboutpic/Making a Difference in Zanzibar-enhanced.webp";
@@ -67,18 +68,20 @@ function Arrow({ direction }) {
 }
 
 function HeroAction({ action }) {
+  const { tx } = useLanguage();
   const className = `btn ${action.primary ? "btn-primary" : "btn-outline"} btn-lg`;
   if (action.href) {
     return (
       <a className={className} href={action.href} target="_blank" rel="noopener noreferrer">
-        {action.ctaText}
+        {tx(action.ctaText)}
       </a>
     );
   }
-  return <Link className={className} to={action.to}>{action.ctaText}</Link>;
+  return <Link className={className} to={action.to}>{tx(action.ctaText)}</Link>;
 }
 
 export default function HeroSlider() {
+  const { tx } = useLanguage();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const active = slides[index];
@@ -99,8 +102,8 @@ export default function HeroSlider() {
   return (
     <section
       className="hero-slider hero-slider-2026"
-      aria-roledescription="carousel"
-      aria-label="Karibu Assalam Eco Resort highlights"
+      aria-roledescription={tx("carousel")}
+      aria-label={tx("Karibu Assalam Eco Resort highlights")}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -128,31 +131,31 @@ export default function HeroSlider() {
       <div className="hero-slider-scrim" aria-hidden="true" />
 
       <div className="container hero-slider-center hero-slider-center-2026" aria-live="polite">
-        <p className="hero-kicker">Kizimkazi · Zanzibar</p>
-        <h1 className="hero-script">{active.heading}</h1>
-        {active.copy && <p className="hero-slide-copy">{active.copy}</p>}
+        <p className="hero-kicker">{tx("Kizimkazi · Zanzibar")}</p>
+        <h1 className="hero-script">{tx(active.heading)}</h1>
+        {active.copy && <p className="hero-slide-copy">{tx(active.copy)}</p>}
         <div className="hero-slider-actions">
           {active.actions.map((action) => <HeroAction action={action} key={action.ctaText} />)}
         </div>
       </div>
 
-      <div className="hero-controls" role="group" aria-label="Slideshow controls">
-        <button type="button" className="hero-arrow prev" aria-label="Previous slide" onClick={() => go(index - 1)}>
+      <div className="hero-controls" role="group" aria-label={tx("Slideshow controls")}>
+        <button type="button" className="hero-arrow prev" aria-label={tx("Previous slide")} onClick={() => go(index - 1)}>
           <Arrow direction="prev" />
         </button>
-        <div className="hero-dots" role="group" aria-label="Choose a slide">
+        <div className="hero-dots" role="group" aria-label={tx("Choose a slide")}>
           {slides.map((slide, slideIndex) => (
             <button
               key={slide.id}
               type="button"
               className={`hero-dot ${slideIndex === index ? "is-active" : ""}`}
               aria-pressed={slideIndex === index}
-              aria-label={`Slide ${slideIndex + 1}: ${slide.heading}`}
+              aria-label={tx("Slide {number}: {label}", { number: slideIndex + 1, label: tx(slide.heading) })}
               onClick={() => go(slideIndex)}
             />
           ))}
         </div>
-        <button type="button" className="hero-arrow next" aria-label="Next slide" onClick={() => go(index + 1)}>
+        <button type="button" className="hero-arrow next" aria-label={tx("Next slide")} onClick={() => go(index + 1)}>
           <Arrow direction="next" />
         </button>
       </div>
