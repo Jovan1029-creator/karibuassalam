@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { statSync } from 'node:fs';
 import { createServer } from 'vite';
 import { translateText } from '../src/data/i18n.js';
 
@@ -31,6 +32,43 @@ function visibleStrings(html) {
 try {
   const { routes, renderPage } = await server.ssrLoadModule('/scripts/i18n-render-fixture.jsx');
   const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
+  const { safariOverviewPhoto, safariPlanningPhoto, safariGalleryPhotos } = await server.ssrLoadModule('/src/data/safariPhotos.js');
+  const safariPhotos = [safariOverviewPhoto, safariPlanningPhoto, ...safariGalleryPhotos];
+  assert.equal(new Set(safariPhotos.map(photo => photo.src)).size, 5, 'Use all five distinct supplied safari photographs');
+  for (const photo of safariPhotos) {
+    assert.match(photo.src, /^\/pics\/safari\/[a-z-]+\.(jpeg|png)$/);
+    assert.ok(statSync(new URL(`..${photo.src}`, import.meta.url)).size > 0, 'Safari images must exist on disk');
+  }
+  function checkSafariPhotos(markup, route, language) {
+    if (!['/experiences', '/experiences/safari', '/experiences/tours/blue-safari'].includes(route)) return;
+    const images = [...markup.matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
+    if (route === '/experiences/tours/blue-safari') {
+      assert.ok(!images.some(tag => tag.includes('/pics/safari/')), 'Keep mainland safari photographs out of Blue Safari');
+      return;
+    }
+    const expected = route === '/experiences' ? [safariOverviewPhoto] : safariPhotos;
+    const visible = visibleStrings(markup);
+    for (const photo of expected) {
+      const tag = images.find(image => image.includes(`src="${photo.src}"`));
+      assert.ok(tag, `${route}: render ${photo.src}`);
+      assert.ok(visible.has(translateText(language, photo.alt)), `${route}: localize safari alt text (${language})`);
+      if (route === '/experiences' || photo !== safariOverviewPhoto) {
+        assert.ok(tag.includes('loading="lazy"'), 'Load below-the-fold safari images lazily');
+        assert.ok(tag.includes(`width="${photo.width}"`) && tag.includes(`height="${photo.height}"`), 'Preserve original photo dimensions');
+      }
+    }
+    if (route === '/experiences') {
+      const safariSection = markup.match(/<section id="safari"[\s\S]*?<\/section>/)?.[0];
+      assert.ok(safariSection?.includes(safariOverviewPhoto.src), 'Replace the mainland safari overview placeholder');
+      assert.ok(!safariSection.includes('photo-slot'), 'No mainland safari placeholder remains');
+      assert.ok(images.some(tag => decodeURIComponent(tag.match(/src="([^"]+)"/)?.[1] || '').includes('Blue Safari.jpg')), 'Preserve the existing Blue Safari ocean image');
+    } else {
+      assert.ok(!markup.includes('photo-slot'), 'The dedicated safari page uses real photos throughout');
+      assert.equal((markup.match(/class="safari-gallery-item"/g) || []).length, 3, 'Keep the three-portrait gallery');
+      for (const photo of safariGalleryPhotos) assert.ok(visible.has(translateText(language, photo.label)), 'Localize every gallery caption');
+      assert.ok(visible.has(translateText(language, 'Moments on safari')), 'Localize the gallery heading');
+    }
+  }
   assert.notEqual(SITE.tripAdvisorUrl, SPICE_ROUTE_CAFE.tripAdvisorUrl, 'Cafe reviews must not be attributed to the resort');
   assert.equal(ECO_VILLAGE_LINKS.at(-1).name, 'What’s happening?', 'The monthly programme is last in the Eco-Resort menu');
   assert.equal(ECO_VILLAGE_LINKS.at(-1).to, '/whats-happening');
@@ -74,12 +112,14 @@ try {
     const englishMarkup = await renderPage(route, 'en');
     checkCafeLinks(englishMarkup, route, 'en');
     checkCampusProgramme(englishMarkup, route, 'en');
+    checkSafariPhotos(englishMarkup, route, 'en');
     const english = visibleStrings(englishMarkup);
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
       const markup = await renderPage(route, language);
       checkCafeLinks(markup, route, language);
       checkCampusProgramme(markup, route, language);
+      checkSafariPhotos(markup, route, language);
       const localized = visibleStrings(markup);
       if (route.startsWith('/contact')) {
         assert.ok(markup.includes(`!1s${language}!2stz`), 'The map embed should request the selected language');
@@ -102,6 +142,7 @@ try {
   console.log(`Translation tests passed: ${routes.length} routes × 3 languages, visible text and accessibility labels, interpolation, brand preservation.`);
   console.log('Cafe checks passed: correct venue attribution, third/fourth cards, review count, section anchor and safe new-tab links.');
   console.log('Campus programme checks passed: menu position, singular Accommodation, October edition, pending state and later heading in all languages.');
+  console.log('Safari checks passed: all five supplied photos, no mainland placeholders, localized captions/alt text, lazy loading and separate Blue Safari imagery.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

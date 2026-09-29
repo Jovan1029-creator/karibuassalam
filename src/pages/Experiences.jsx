@@ -17,6 +17,7 @@ import {
   workshops,
 } from "../data/experiences";
 import { useLanguage } from "../context/LanguageContext";
+import { safariOverviewPhoto } from "../data/safariPhotos";
 import heroImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
 import spiceImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
 import coastImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
@@ -205,7 +206,7 @@ export default function Experiences() {
       <Section id="safari" scriptTitle eyebrow={tx("Beyond the island")} title={tx(safari.title)}>
         <div className="feature-split">
           <div className="feature-split-media">
-            <PhotoSlot label={tx("Safari")} alt={tx("Safari in mainland Tanzania")} ratio="16 / 10" />
+            <PhotoSlot {...safariOverviewPhoto} className="safari-overview-photo" />
           </div>
           <div>
             <p className="showcase-promise">{tx(safari.promise)}</p>

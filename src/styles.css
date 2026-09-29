@@ -4751,6 +4751,62 @@ body {
   justify-content: flex-start;
 }
 
+/* Mainland safari: compact overview, with uncropped portraits in the gallery. */
+.feature-split-media .safari-overview-photo {
+  height: auto;
+  aspect-ratio: 4 / 3;
+}
+
+.safari-planning .feature-split-media img {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-position: 50% 50%;
+}
+
+.safari-gallery-section {
+  padding-top: 0;
+}
+
+.safari-gallery-section .section-header {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.safari-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  align-items: start;
+}
+
+.safari-gallery-item {
+  min-width: 0;
+  margin: 0;
+}
+
+.safari-gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+}
+
+.safari-gallery-item figcaption {
+  padding-top: 0.8rem;
+  text-align: center;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .safari-gallery {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 25rem;
+    margin-inline: auto;
+    gap: 1.5rem;
+  }
+}
+
 /* ---- volunteering ---- */
 .content-card-photo {
   display: block;

@@ -8,6 +8,7 @@ import EventCard from "../components/EventCard";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { safari, specialEvents, volunteering } from "../data/experiences";
+import { safariOverviewPhoto, safariPlanningPhoto, safariGalleryPhotos } from "../data/safariPhotos";
 import heroImg from "../../AssalamHero/assalam-hero.webp";
 
 const categoryCopy = {
@@ -22,6 +23,7 @@ const categoryCopy = {
     subtitle: "Join the Assalam Foundation's work in education, permaculture, workshops and community events.",
   },
   safari: {
+    photo: safariOverviewPhoto,
     title: "Safari from Zanzibar",
     subtitle: "Plan a mainland Tanzania safari with the Karibu Assalam team as part of your Zanzibar journey.",
   },
@@ -51,6 +53,7 @@ export default function ExperienceCategory() {
         subtitle={copy.subtitle}
         imageSrc={copy.photo?.src || heroImg}
         imageAlt={copy.photo?.alt || "Karibu Assalam Eco-Village beside the Indian Ocean"}
+        imagePosition={copy.photo?.position}
         compact
         ctaPrimary={{ to: "/contact", label: "Ask the team" }}
       />
@@ -82,19 +85,31 @@ export default function ExperienceCategory() {
       )}
 
       {category === "safari" && (
-        <Section title="A safari planned around you" subtitle={safari.promise}>
-          <div className="feature-split">
-            <div className="feature-split-media">
-              <PhotoSlot label="PLACEHOLDER" alt="Safari photograph coming soon" ratio="16 / 10" />
+        <>
+          <Section className="safari-planning" title="A safari planned around you" subtitle={safari.promise}>
+            <div className="feature-split">
+              <div className="feature-split-media">
+                <PhotoSlot {...safariPlanningPhoto} />
+              </div>
+              <div>
+                <p>{tx(safari.text)}</p>
+                <p>{tx("Ask the team about Lake Manyara, Tarangire, Ngorongoro Crater or the Serengeti, as well as other routes and hikes in Tanzania.")}</p>
+                <p>{tx("Each trip is arranged around your preferences and the season. There are no fixed packages or published prices.")}</p>
+                <CTAButton to="/contact">Find your safari</CTAButton>
+              </div>
             </div>
-            <div>
-              <p>{tx(safari.text)}</p>
-              <p>{tx("Ask the team about Lake Manyara, Tarangire, Ngorongoro Crater or the Serengeti, as well as other routes and hikes in Tanzania.")}</p>
-              <p>{tx("Each trip is arranged around your preferences and the season. There are no fixed packages or published prices.")}</p>
-              <CTAButton to="/contact">Find your safari</CTAButton>
+          </Section>
+          <Section id="safari-gallery" title="Moments on safari" subtitle="A closer look at the wildlife and the journey." className="safari-gallery-section">
+            <div className="safari-gallery">
+              {safariGalleryPhotos.map((photo) => (
+                <figure className="safari-gallery-item" key={photo.src}>
+                  <PhotoSlot {...photo} />
+                  <figcaption>{tx(photo.label)}</figcaption>
+                </figure>
+              ))}
             </div>
-          </div>
-        </Section>
+          </Section>
+        </>
       )}
 
       <Section className="surface-section" title="Explore more at Karibu Assalam">
