@@ -29,6 +29,12 @@ Rerun `supabase/schema.sql` after pulling schema updates. It is idempotent and e
 
 Without those variables, `/booking` and `/admin` use browser local storage as a fallback.
 
+Local fallback is an unsent draft, not confirmation that the team received a request. If the database cannot be reached, the booking form keeps the guest's details and shows prefilled WhatsApp and email links next to the error. It also preserves the handoff when browser storage is blocked or full.
+
+Run `npm run test:booking` to check confirmed delivery, network failure, a rejected insert, and unavailable browser storage using a stubbed transport. These checks do not create real bookings.
+
+If submissions fail with `ENOTFOUND` or `ERR_NAME_NOT_RESOLVED`, check that the Supabase project is active and its project URL matches the environment configuration. A frontend change cannot restore an unavailable Supabase project. After updating environment variables, restart the local Vite server; deployed builds need to be rebuilt with the corrected configuration.
+
 ## Content Editing Guide
 
 - Retreat content model: `src/data/retreats.js`
@@ -43,7 +49,7 @@ Without those variables, `/booking` and `/admin` use browser local storage as a 
 
 ## Booking Integrations
 
-- Structured booking form:
+- Booking form:
   - Public route: `/booking`
   - Saves booking requests to Supabase when configured
   - Falls back transparently to browser local storage when Supabase is missing or unreachable

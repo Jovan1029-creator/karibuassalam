@@ -3,6 +3,10 @@
 // Keys are the exact English strings used in components and data files.
 
 export const tr = {
+  "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team.": "Talebiniz gönderilmedi. Bilgileriniz hâlâ burada. Aşağıdaki WhatsApp veya e-posta seçenekleriyle doğrudan ekibe gönderebilirsiniz.",
+  "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team.": "Mesajınız gönderilmedi. Bilgileriniz hâlâ burada. Aşağıdaki WhatsApp veya e-posta seçenekleriyle doğrudan ekibe gönderebilirsiniz.",
+  "Your details are included. Review the message, then send it.": "Bilgileriniz mesaja eklendi. Mesajı kontrol edip gönderin.",
+  "Try again": "Tekrar deneyin",
   "A freshly prepared meal served in the eco-village kitchen": "Eko-köy mutfağında servis edilen taze hazırlanmış bir yemek",
   "A gathering inside the mosque at Assalam Eco-Village": "Assalam Eko-Köyü'ndeki camide bir buluşma",
   "Campus mosque": "Kampüs camisi",
@@ -625,7 +629,7 @@ export const tr = {
   "Share your travel plans and the team can guide you on booking, camp details, or campus visit requests.":
     "Seyahat planınızı paylaşın; ekibimiz rezervasyon, kamp detayları veya kampüs ziyareti konusunda size yol göstersin.",
   "Direct contact": "Doğrudan iletişim",
-  "Open structured booking form": "Ayrıntılı rezervasyon formunu aç",
+  "Open booking form": "Rezervasyon formunu aç",
   "Booking intent detected for": "Şu kamp için rezervasyon talebi:",
   "I am interested in": "Şununla ilgileniyorum:",
   "Your Name": "Adınız",
@@ -654,10 +658,10 @@ export const tr = {
   /* ---------- booking ---------- */
   "Book Karibu Assalam | Retreats, Rooms, and Campus Visits":
     "Karibu Assalam Rezervasyon | Kamplar, Odalar ve Kampüs Ziyaretleri",
-  "Send a structured Karibu Assalam booking request for retreats, accommodation, campus visits, airport pickup, and guest support.":
-    "Kamplar, konaklama, kampüs ziyaretleri, havalimanı karşılaması ve misafir desteği için ayrıntılı bir Karibu Assalam rezervasyon talebi gönderin.",
+  "Send a Karibu Assalam booking request for retreats, accommodation, campus visits, airport pickup, and guest support.":
+    "Kamplar, konaklama, kampüs ziyaretleri, havalimanı karşılaması ve misafir desteği için bir Karibu Assalam rezervasyon talebi gönderin.",
   Booking: "Rezervasyon",
-  "Start a structured booking request": "Rezervasyon talebinizi oluşturun",
+  "Start a booking request": "Rezervasyon talebinizi oluşturun",
   "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day.":
     "Tarihlerinizi ve kimlerin geleceğini yazın. Ekibimiz uygunluğu ve sonraki adımları genellikle bir gün içinde teyit eder.",
   "Room at Karibu Assalam Eco-Village prepared for guests":

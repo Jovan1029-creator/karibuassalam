@@ -3,6 +3,10 @@
 // Keys are the exact English strings used in components and data files.
 
 export const de = {
+  "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team.": "Ihre Anfrage wurde nicht gesendet. Ihre Angaben sind noch vorhanden. Senden Sie sie über WhatsApp oder E-Mail unten direkt an das Team.",
+  "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team.": "Ihre Nachricht wurde nicht gesendet. Ihre Angaben sind noch vorhanden. Senden Sie sie über WhatsApp oder E-Mail unten direkt an das Team.",
+  "Your details are included. Review the message, then send it.": "Ihre Angaben sind enthalten. Prüfen Sie die Nachricht und senden Sie sie ab.",
+  "Try again": "Erneut versuchen",
   "A freshly prepared meal served in the eco-village kitchen": "Eine frisch zubereitete Mahlzeit aus der Küche des Ökodorfs",
   "A gathering inside the mosque at Assalam Eco-Village": "Eine Zusammenkunft in der Moschee des Assalam-Ökodorfs",
   "Campus mosque": "Moschee auf dem Campus",
@@ -628,7 +632,7 @@ export const de = {
   "Share your travel plans and the team can guide you on booking, camp details, or campus visit requests.":
     "Teilen Sie uns Ihre Reisepläne mit – wir beraten Sie zu Buchung, Camp-Details oder einem Campusbesuch.",
   "Direct contact": "Direkter Kontakt",
-  "Open structured booking form": "Ausführliches Buchungsformular öffnen",
+  "Open booking form": "Buchungsformular öffnen",
   "Booking intent detected for": "Buchungsanfrage für",
   "I am interested in": "Ich interessiere mich für",
   "Your Name": "Ihr Name",
@@ -657,10 +661,10 @@ export const de = {
   /* ---------- booking ---------- */
   "Book Karibu Assalam | Retreats, Rooms, and Campus Visits":
     "Buchen bei Karibu Assalam | Retreats, Zimmer und Campusbesuche",
-  "Send a structured Karibu Assalam booking request for retreats, accommodation, campus visits, airport pickup, and guest support.":
+  "Send a Karibu Assalam booking request for retreats, accommodation, campus visits, airport pickup, and guest support.":
     "Senden Sie eine Buchungsanfrage für Retreats, Unterkunft, Campusbesuche, Flughafenabholung und weitere Wünsche.",
   Booking: "Buchung",
-  "Start a structured booking request": "Ihre Buchungsanfrage",
+  "Start a booking request": "Ihre Buchungsanfrage",
   "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day.":
     "Nennen Sie uns Ihre Termine und wer mitreist. Unser Team bestätigt Verfügbarkeit und nächste Schritte meist innerhalb eines Tages.",
   "Room at Karibu Assalam Eco-Village prepared for guests":

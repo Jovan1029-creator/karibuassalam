@@ -52,7 +52,7 @@ function bookingMessageUrl(record, channel) {
   if (channel === "email") {
     const subject = record.retreatTitle
       ? `Booking Request - ${record.retreatTitle}`
-      : `Booking Request - ${record.id}`;
+      : record.id ? `Booking Request - ${record.id}` : "Booking Request";
     return `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
   }
   return `https://wa.me/${SITE.whatsAppPhone}?text=${encodeURIComponent(message)}`;
@@ -64,12 +64,14 @@ export default function Booking() {
   const [form, setForm] = useState(() => initialFormFromParams(searchParams, language));
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(null);
+  const [deliveryFailed, setDeliveryFailed] = useState(false);
   const [status, setStatus] = useState("");
   const [statusTone, setStatusTone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
 
   const selectedRetreat = retreats.find((retreat) => retreat.slug === form.retreatSlug);
+  const directRequest = submitted || { ...form, retreatTitle: selectedRetreat?.title };
 
   const nights = useMemo(() => {
     if (!form.arrivalDate || !form.departureDate) return null;
@@ -80,6 +82,9 @@ export default function Booking() {
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
     setSubmitted(null);
+    setDeliveryFailed(false);
+    setStatus("");
+    setStatusTone("");
     setForm((current) => ({
       ...current,
       [name]: type === "checkbox" ? checked : value,
@@ -111,6 +116,9 @@ export default function Booking() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (isSubmitting) return;
+    setDeliveryFailed(false);
+    setSubmitted(null);
     if (form.website.trim()) {
       setStatus(tx("Request received. The team will review it shortly."));
       setStatusTone("success");
@@ -149,18 +157,20 @@ export default function Booking() {
         // in the team's inbox. Say so and hand over a channel that works.
         setStatus(
           tx(
-            "We could not send your request just now. Please send it by WhatsApp or email below and the team will pick it up right away."
+            "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
           )
         );
         setStatusTone("error");
+        setDeliveryFailed(true);
       }
     } catch {
       setStatus(
         tx(
-          "We could not send your request just now. Please send it by WhatsApp or email below and the team will pick it up right away."
+          "Your request has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
         )
       );
       setStatusTone("error");
+      setDeliveryFailed(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -171,13 +181,13 @@ export default function Booking() {
       <SEO
         title={tx("Book Karibu Assalam | Retreats, Rooms, and Campus Visits")}
         description={tx(
-          "Send a structured Karibu Assalam booking request for retreats, accommodation, campus visits, airport pickup, and guest support."
+          "Send a Karibu Assalam booking request for retreats, accommodation, campus visits, airport pickup, and guest support."
         )}
         image={bookingImg}
       />
       <Hero
         eyebrow={tx("Booking")}
-        title={tx("Start a structured booking request")}
+        title={tx("Start a booking request")}
         subtitle={tx(
           "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day."
         )}
@@ -405,7 +415,7 @@ export default function Booking() {
             </div>
 
             <button type="submit" className="btn btn-primary btn-lg" disabled={isSubmitting}>
-              {isSubmitting ? tx("Sending your request...") : tx("Send request")}
+              {isSubmitting ? tx("Sending your request...") : deliveryFailed ? tx("Try again") : tx("Send request")}
             </button>
 
             <p className="secondary-actions">
@@ -417,11 +427,30 @@ export default function Booking() {
             {status && (
               <p
                 className={"form-status " + (statusTone ? "is-" + statusTone : "")}
-                role="status"
+                role={statusTone === "error" ? "alert" : "status"}
                 aria-live="polite"
               >
                 {status}
               </p>
+            )}
+            {deliveryFailed && (
+              <div className="booking-handoff">
+                <h3>{tx("Send it straight to the team")}</h3>
+                <p>{tx("Your details are included. Review the message, then send it.")}</p>
+                <div className="inline-actions">
+                  <a
+                    className="btn btn-primary btn-sm"
+                    href={bookingMessageUrl(directRequest, "whatsapp")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {tx("Send via WhatsApp")}
+                  </a>
+                  <a className="btn btn-secondary btn-sm" href={bookingMessageUrl(directRequest, "email")}>
+                    {tx("Send via Email")}
+                  </a>
+                </div>
+              </div>
             )}
           </form>
 
@@ -475,25 +504,6 @@ export default function Booking() {
               </div>
             </div>
 
-            {submitted ? (
-              <div className="receipt-card">
-                <h3>{tx("Send it straight to the team")}</h3>
-                <p>{tx("You can also forward this request yourself:")}</p>
-                <div className="inline-actions">
-                  <a
-                    className="btn btn-primary btn-sm"
-                    href={bookingMessageUrl(submitted, "whatsapp")}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {tx("Send via WhatsApp")}
-                  </a>
-                  <a className="btn btn-secondary btn-sm" href={bookingMessageUrl(submitted, "email")}>
-                    {tx("Send via Email")}
-                  </a>
-                </div>
-              </div>
-            ) : null}
           </aside>
         </div>
       </Section>

@@ -306,7 +306,13 @@ function saveLocalFallback(record, storageMode = "local", syncError = "") {
     syncError,
   };
   const records = readBookingRequests();
-  writeBookingRequests([localRecord, ...records]);
+  try {
+    writeBookingRequests([localRecord, ...records]);
+  } catch {
+    // Private browsing or a full storage quota must not prevent the form from
+    // handing the unsent request back to the guest for direct contact.
+    return { ...localRecord, storageMode: "memory-fallback" };
+  }
   return localRecord;
 }
 

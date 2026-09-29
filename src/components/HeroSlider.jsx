@@ -120,7 +120,7 @@ export default function HeroSlider() {
             height="1080"
             loading={slideIndex === 0 ? "eager" : "lazy"}
             decoding="async"
-            fetchPriority={slideIndex === 0 ? "high" : "auto"}
+            fetchpriority={slideIndex === 0 ? "high" : "auto"}
           />
         </div>
       ))}

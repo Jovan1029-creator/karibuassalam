@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CTAButton from "../components/CTAButton";
 import Hero from "../components/Hero";
 import PhotoSlot from "../components/PhotoSlot";
@@ -69,15 +69,17 @@ export default function ExperienceDetail() {
         </div>
       </Section>
 
-      <Section title="Make it your own">
-        <ul className="check-list cols-2">
+      <Section title="Make it your own" className="closing-section">
+        <ul className="check-list experience-options">
           {experience.options.map((item) => <li key={item}>{item}</li>)}
         </ul>
         {experience.bring && <p><strong>What to bring:</strong> {experience.bring}</p>}
         <p><strong>Languages:</strong> {experience.languages}</p>
         <div className="section-actions">
           <CTAButton to="/contact" size="lg">Book this experience</CTAButton>
-          <Link className="text-link" to={related}>Explore more {category.toLowerCase()}</Link>
+          <CTAButton to={related} variant="secondary" size="lg">
+            Explore more {category.toLowerCase()}
+          </CTAButton>
         </div>
       </Section>
     </main>

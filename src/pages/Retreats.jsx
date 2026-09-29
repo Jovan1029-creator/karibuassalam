@@ -84,6 +84,7 @@ export default function Retreats() {
       <Section
         title="Ready to find your retreat?"
         subtitle="Tell us which programme interests you and the dates you are considering. The Karibu Assalam team will confirm availability and the next steps."
+        className="closing-section"
       >
         <div className="section-actions">
           <CTAButton to="/contact" size="lg">Book your retreat</CTAButton>

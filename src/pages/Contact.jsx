@@ -107,6 +107,7 @@ export default function Contact() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (isSending) return;
 
     if (form.website.trim()) {
       setStatus(tx("Request received. Please use the visible contact channels if you need immediate support."));
@@ -152,7 +153,7 @@ export default function Contact() {
       } else {
         setStatus(
           tx(
-            "We could not send your message just now. Please use WhatsApp or email below and we will get straight back to you."
+            "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
           )
         );
         setStatusTone("error");
@@ -160,7 +161,7 @@ export default function Contact() {
     } catch {
       setStatus(
         tx(
-          "We could not send your message just now. Please use WhatsApp or email below and we will get straight back to you."
+          "Your message has not been sent. Your details are still here. Use WhatsApp or email below to send them directly to the team."
         )
       );
       setStatusTone("error");
@@ -328,7 +329,7 @@ export default function Contact() {
             {status && (
               <p
                 className={"form-status " + (statusTone ? "is-" + statusTone : "")}
-                role="status"
+                role={statusTone === "error" ? "alert" : "status"}
                 aria-live="polite"
               >
                 {status}
