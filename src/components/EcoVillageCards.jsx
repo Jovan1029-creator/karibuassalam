@@ -6,7 +6,7 @@ import CTAButton from "./CTAButton";
 
 const cards = [
   {
-    title: "Accommodations",
+    title: "Accommodation",
     to: "/accommodations",
     image: roomsImg,
     alt: "Eco-village room exterior and lodging area",

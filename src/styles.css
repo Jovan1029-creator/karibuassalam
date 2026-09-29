@@ -5579,6 +5579,76 @@ body {
   width: 100%;
 }
 
+/* Keep the monthly programme distinct at the bottom of the Eco-Resort menu. */
+.dropdown-menu-feature {
+  border-top: 1px solid var(--border);
+  margin-top: 0.3rem;
+  padding-top: 0.3rem;
+}
+
+.dropdown-menu .dropdown-menu-feature a,
+.mobile-submenu .dropdown-menu-feature a {
+  color: var(--accent-ocean);
+  background: var(--surface-alt);
+}
+
+/* The monthly noticeboard uses the existing type scale and compact spacing. */
+.happenings-shell {
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.happenings-intro {
+  max-width: 52rem;
+  margin: 0 auto clamp(1.5rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+.happenings-intro .eyebrow { margin-bottom: 0.75rem; }
+.happenings-intro h1 { margin-bottom: 0; text-wrap: balance; }
+
+.happenings-month {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.happenings-photo { min-width: 0; }
+.happenings-photo img { width: 100%; height: 100%; object-fit: cover; }
+.happenings-programme { min-width: 0; align-self: center; padding: clamp(1.5rem, 4vw, 2.5rem); }
+.happenings-programme .eyebrow { margin-bottom: 0.5rem; }
+.happenings-programme h2 { margin-bottom: 1rem; }
+.happenings-status { display: flex; align-items: center; gap: 0.5rem; color: var(--accent-clove); font-size: var(--text-small); font-weight: 600; }
+.happenings-status > span { flex: 0 0 0.45rem; height: 0.45rem; border-radius: 50%; background: currentColor; }
+.happenings-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.85rem 1.25rem; margin-top: 1.25rem; }
+
+.happenings-later {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.happenings-later h2 { margin: 0; font-size: clamp(1.75rem, 3vw, 2.25rem); text-wrap: balance; }
+
+@media (max-width: 720px) {
+  .happenings-month { grid-template-columns: minmax(0, 1fr); }
+  .happenings-photo img { height: auto; aspect-ratio: 16 / 9; }
+  .happenings-programme { padding: 1.5rem; }
+  .happenings-later { justify-content: center; text-align: center; }
+}
+
+@media (max-width: 420px) {
+  .happenings-actions { flex-direction: column; align-items: stretch; text-align: center; }
+}
+
 /* Dropdowns have a white surface even while the header overlays the hero. */
 .site-header--home:not(.is-scrolled) .desktop-nav .dropdown-menu a {
   color: var(--ink);

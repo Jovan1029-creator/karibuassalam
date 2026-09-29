@@ -44,11 +44,12 @@ export const NAV_LINKS = [
 export const ECO_VILLAGE_LINKS = [
   { name: "Eco-Resort Overview", to: "/eco-resort" },
   { label: "Campus", to: "/campus" },
-  { label: "Accommodations", to: "/accommodations" },
+  { label: "Accommodation", to: "/accommodations" },
   { label: "Restaurant", to: "/restaurant" },
   { name: "Kanga Africa", to: "/eco-resort#kanga-africa" },
   { name: "Hamammni", to: "/eco-resort#hamammni" },
   { name: "Arts & Culture Centre", to: "/eco-resort#arts-culture" },
+  { name: "What’s happening?", to: "/whats-happening", highlight: true },
 ];
 
 export const RETREAT_LINKS = [

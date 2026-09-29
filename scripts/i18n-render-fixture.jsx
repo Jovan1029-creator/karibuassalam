@@ -9,7 +9,7 @@ import { experienceDetails } from '../src/data/experienceDetails';
 
 export const routes = [
   '/', '/about', '/retreats', '/experiences', '/eco-resort', '/faq', '/contact',
-  '/contact?retreat=kindness-camp', '/booking', '/admin', '/campus', '/accommodations', '/restaurant',
+  '/contact?retreat=kindness-camp', '/booking', '/admin', '/campus', '/accommodations', '/restaurant', '/whats-happening',
   ...retreats.map(item => `/retreats/${item.slug}`),
   ...experienceDetails.map(item => `/experiences/${item.type}/${item.slug}`),
   ...['events', 'volunteer', 'safari'].map(category => `/experiences/${category}`),

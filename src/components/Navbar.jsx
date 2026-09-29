@@ -14,7 +14,7 @@ const navLabelKey = {
   FAQ: "faq",
   Contact: "contact",
   Campus: "campus",
-  Accommodations: "accommodations",
+  Accommodation: "accommodations",
   Restaurant: "restaurant",
 };
 
@@ -42,6 +42,7 @@ export default function Navbar() {
   const { t, tx } = useLanguage();
   const location = useLocation();
   const { isHome, scrolled } = useHeaderState();
+  const isEcoPage = ECO_VILLAGE_LINKS.some((link) => link.to.split("#")[0] === location.pathname);
 
   const closeMobile = useCallback(() => {
     setMobileOpen(false);
@@ -216,7 +217,7 @@ export default function Navbar() {
             >
               <button
                 type="button"
-                className={`nav-dropdown-trigger ${ecoOpen ? "is-active" : ""}`}
+                className={`nav-dropdown-trigger ${ecoOpen || isEcoPage ? "is-active" : ""}`}
                 aria-expanded={ecoOpen}
                 aria-controls="eco-village-menu"
                 onClick={() => setEcoOpen(true)}
@@ -228,7 +229,7 @@ export default function Navbar() {
                 <ul id="eco-village-menu" className="dropdown-menu">
                   <li className="dropdown-menu-heading" role="presentation">{t.nav.ecoVillage}</li>
                   {ECO_VILLAGE_LINKS.map((link) => (
-                    <li key={link.to}>
+                    <li key={link.to} className={link.highlight ? "dropdown-menu-feature" : undefined}>
                       <Link to={link.to} onClick={() => setEcoOpen(false)}>
                         {link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? link.label}
                       </Link>
@@ -343,7 +344,7 @@ export default function Navbar() {
                 {ecoMobileOpen && (
                   <ul className="mobile-submenu">
                     {ECO_VILLAGE_LINKS.map((link) => (
-                      <li key={link.to}>
+                      <li key={link.to} className={link.highlight ? "dropdown-menu-feature" : undefined}>
                         <NavLink to={link.to} onClick={closeMobile}>
                           {link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? link.label}
                         </NavLink>

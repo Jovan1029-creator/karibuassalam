@@ -12,7 +12,7 @@ const navLabelKey = {
   FAQ: "faq",
   Contact: "contact",
   Campus: "campus",
-  Accommodations: "accommodations",
+  Accommodation: "accommodations",
   Restaurant: "restaurant",
 };
 

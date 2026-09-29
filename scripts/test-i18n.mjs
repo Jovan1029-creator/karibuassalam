@@ -30,8 +30,21 @@ function visibleStrings(html) {
 }
 try {
   const { routes, renderPage } = await server.ssrLoadModule('/scripts/i18n-render-fixture.jsx');
-  const { SITE, SPICE_ROUTE_CAFE } = await server.ssrLoadModule('/src/data/siteConfig.js');
+  const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
   assert.notEqual(SITE.tripAdvisorUrl, SPICE_ROUTE_CAFE.tripAdvisorUrl, 'Cafe reviews must not be attributed to the resort');
+  assert.equal(ECO_VILLAGE_LINKS.at(-1).name, 'What’s happening?', 'The monthly programme is last in the Eco-Resort menu');
+  assert.equal(ECO_VILLAGE_LINKS.at(-1).to, '/whats-happening');
+  assert.equal(ECO_VILLAGE_LINKS.find(link => link.to === '/accommodations').label, 'Accommodation');
+  function checkCampusProgramme(markup, route, language) {
+    if (route !== '/whats-happening') return;
+    const visible = visibleStrings(markup);
+    for (const phrase of ['What is happening on campus this month?', 'October 2026', 'Programme coming soon', 'What is happening later?']) {
+      assert.ok(visible.has(translateText(language, phrase)), `Campus programme missing: ${phrase} (${language})`);
+    }
+    assert.match(markup, /datetime="2026-10"/i, 'Keep the explicitly requested October edition');
+    assert.ok(markup.indexOf('id="happenings-later-title"') > markup.indexOf('id="programme-month"'), 'Later heading follows the monthly programme');
+    assert.ok(markup.includes('href="/contact"'), 'Programme enquiries have a working destination');
+  }
   function checkCafeLinks(markup, route, language) {
     for (const [anchor] of markup.matchAll(/<a\b[^>]*>/g)) {
       const href = anchor.match(/href="([^"]*)"/)?.[1];
@@ -60,10 +73,13 @@ try {
   for (const route of routes) {
     const englishMarkup = await renderPage(route, 'en');
     checkCafeLinks(englishMarkup, route, 'en');
+    checkCampusProgramme(englishMarkup, route, 'en');
     const english = visibleStrings(englishMarkup);
+    assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
       const markup = await renderPage(route, language);
       checkCafeLinks(markup, route, language);
+      checkCampusProgramme(markup, route, language);
       const localized = visibleStrings(markup);
       if (route.startsWith('/contact')) {
         assert.ok(markup.includes(`!1s${language}!2stz`), 'The map embed should request the selected language');
@@ -85,6 +101,7 @@ try {
   }
   console.log(`Translation tests passed: ${routes.length} routes × 3 languages, visible text and accessibility labels, interpolation, brand preservation.`);
   console.log('Cafe checks passed: correct venue attribution, third/fourth cards, review count, section anchor and safe new-tab links.');
+  console.log('Campus programme checks passed: menu position, singular Accommodation, October edition, pending state and later heading in all languages.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

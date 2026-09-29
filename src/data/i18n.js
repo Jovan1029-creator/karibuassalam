@@ -19,7 +19,7 @@ export const uiMessages = {
       contact: "Contact",
       ecoVillage: "Eco-Resort",
       campus: "Campus",
-      accommodations: "Accommodations",
+      accommodations: "Accommodation",
       restaurant: "Restaurant",
       bookNow: "Book Now",
       menu: "Menu",

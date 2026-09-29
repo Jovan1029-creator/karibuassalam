@@ -8,7 +8,7 @@ import natureRetreatImg from "../../pics/our retreats/Nature Retreat-enhanced.we
 import { retreatPageCopy } from "./retreatContent2026";
 
 export const COMMON_INCLUSIONS = [
-  "Accommodations",
+  "Accommodation",
   "Three daily meals",
   "Participation in seminars/activities",
   "Airport transportation",
