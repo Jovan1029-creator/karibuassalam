@@ -64,7 +64,7 @@ export const RETREAT_LINKS = [
 
 export const EXPERIENCE_LINKS = [
   { name: "All Experiences", to: "/experiences" },
-  { name: "Campus & Village Tour", to: "/experiences/tours/campus-village-tour" },
+  { name: "Karibu Assalam Tour", to: "/experiences/tours/campus-village-tour" },
   { name: "Zanzibar Excursions", to: "/experiences#zanzibar-excursions" },
   { name: "Workshops", to: "/experiences#workshops" },
   { name: "Special Events", to: "/experiences/events" },

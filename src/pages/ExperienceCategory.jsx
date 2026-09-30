@@ -8,8 +8,9 @@ import EventCard from "../components/EventCard";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { safari, specialEvents, volunteering } from "../data/experiences";
-import { safariOverviewPhoto, safariPlanningPhoto, safariGalleryPhotos } from "../data/safariPhotos";
+import { safariHeroPhoto, safariPlanningPhoto, safariGalleryPhotos } from "../data/safariPhotos";
 import heroImg from "../../AssalamHero/assalam-hero.webp";
+import campusVisitImg from "../../pics/site-marketing/permaculture-campus-tour.webp";
 
 const categoryCopy = {
   events: {
@@ -23,7 +24,7 @@ const categoryCopy = {
     subtitle: "Join the Assalam Foundation's work in education, permaculture, workshops and community events.",
   },
   safari: {
-    photo: safariOverviewPhoto,
+    photo: safariHeroPhoto,
     title: "Safari from Zanzibar",
     subtitle: "Plan a mainland Tanzania safari with the Karibu Assalam team as part of your Zanzibar journey.",
   },
@@ -112,9 +113,29 @@ export default function ExperienceCategory() {
         </>
       )}
 
-      <Section className="surface-section" title="Explore more at Karibu Assalam">
-        <Link className="text-link" to="/experiences">{tx("View all experiences")}</Link>
-      </Section>
+      {category === "safari" ? (
+        <Section id="explore-more" className="surface-section experience-explore-more">
+          <div className="feature-split">
+            <div className="feature-split-media">
+              <PhotoSlot src={campusVisitImg} alt="Visitors exploring the permaculture area at Assalam" width={1600} height={1066} />
+            </div>
+            <div className="experience-explore-copy">
+              <p className="eyebrow">{tx("Back on Zanzibar")}</p>
+              <h2>{tx("Explore more at Karibu Assalam")}</h2>
+              <p>{tx("Make time for more of Zanzibar before or after your safari. Visit our Kizimkazi campus, meet the community and explore the island through hands-on workshops and guided excursions.")}</p>
+              <p>{tx("Join the Karibu Assalam Tour, try soap-making or drumming, or discover Stone Town and the spice gardens. Our team can help you choose experiences around your stay.")}</p>
+              <div className="inline-actions">
+                <CTAButton to="/experiences">View all experiences</CTAButton>
+                <CTAButton to="/contact" variant="secondary">Plan your visit</CTAButton>
+              </div>
+            </div>
+          </div>
+        </Section>
+      ) : (
+        <Section className="surface-section" title="Explore more at Karibu Assalam">
+          <Link className="text-link" to="/experiences">{tx("View all experiences")}</Link>
+        </Section>
+      )}
     </main>
   );
 }

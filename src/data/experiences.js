@@ -9,11 +9,11 @@ import stoneTownImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp
 import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
 
 export const campusTour = {
-  title: "Daily campus tour",
-  promise: "A free guided walk through the eco-village, every day.",
+  title: "Daily Karibu Assalam Tour",
+  promise: "Visit us in Kizimkazi and support our work",
   text:
-    "A member of the team walks you through the campus: the school, the permaculture garden, the solar and water systems, the kitchen and the workshop spaces. It is the quickest way to understand how the village actually works.",
-  facts: ["Runs daily", "About 45 minutes", "Free for guests"],
+    "If you only have a few hours, this half-day tour combines a village visit with a tour of our campus, including a tailored hands-on experience. Meet us at Assalam Ecovillage and let our team first take you to Assalam kanga village in Kizimkazi to meet the local community and learn about Kizimkazi life before you return for a tour of our eco-village, including the school, permaculture gardens and the arts & culture centre. Part of the tour includes a workshop - make hammam soap, design your own drum or learn about eco-printing, and if you would like to personalise your visit, come and check out our cave or take a break in our mosque.",
+  facts: ["Permaculture", "Snacks", "Workshop"],
 };
 
 export const workshops = [

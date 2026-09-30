@@ -50,6 +50,7 @@ export default function ExperienceDetail() {
           <div className="fact-item"><span>{tx("Start")}</span><strong>{tx(experience.start)}</strong></div>
           <div className="fact-item"><span>{tx("Price")}</span><strong>{tx(experience.price || "Ask the team")}</strong></div>
         </div>
+        {experience.description && <p className="experience-detail-description">{tx(experience.description)}</p>}
       </Section>
 
       <Section title="What is included" className="surface-section">

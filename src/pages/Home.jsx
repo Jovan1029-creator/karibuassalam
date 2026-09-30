@@ -32,12 +32,12 @@ const stayOptions = [
     to: "/retreats",
   },
   {
-    heading: "Karibu Assalam Tours",
+    heading: "Karibu Assalam Tour",
     image: experiencesImg,
     alt: "Visitors exploring the permaculture area at Assalam",
     copy: "Visit our campus and join our Karibu Assalam Tour with a campus tour, including a visit of our permaculture farm and our school, and learn more about Zanzibar’s culture in workshops making your own hammam soap or ngoma (drum).",
     ctaText: "Find your tour",
-    to: "/experiences",
+    to: "/experiences/tours/campus-village-tour",
   },
   {
     heading: "Halal spa & pool",

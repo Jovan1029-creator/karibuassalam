@@ -52,7 +52,7 @@ export default function Experiences() {
       <SEO
         title={tx("Experiences in Zanzibar | Karibu Assalam")}
         description={tx(
-          "Daily campus tours, hands-on workshops, Zanzibar tours, safari, volunteering and special events at Karibu Assalam."
+          "The daily Karibu Assalam Tour, hands-on workshops, Zanzibar tours, safari, volunteering and special events."
         )}
         image={heroImg}
       />
@@ -88,7 +88,7 @@ export default function Experiences() {
         <TornEdge position="top" color="var(--bg)" />
 
         <div className="set-intro">
-          <p className="eyebrow">{tx("Start here")}</p>
+          <p className="eyebrow">{tx("Visit our campus")}</p>
           <h2 className="script-heading">{tx(campusTour.title)}</h2>
           <p className="section-lead">{tx(campusTour.promise)}</p>
         </div>
@@ -110,20 +110,10 @@ export default function Experiences() {
               ))}
             </ul>
             <div className="inline-actions">
-              <CTAButton to="/booking">{tx("Book an experience")}</CTAButton>
-              <Link className="text-link" to="/campus">
-                {tx("See the campus")}
-              </Link>
+              <CTAButton to="/experiences/tours/campus-village-tour" variant="secondary">More details</CTAButton>
+              <CTAButton to="/contact">Book your tour</CTAButton>
             </div>
           </div>
-        </div>
-
-        <div className="container campus-tour-detail">
-          <div>
-            <h3>{tx("Karibu Assalam Tour: campus & village")}</h3>
-            <p>{tx("Spend six hours visiting Assalam Kanga Village and exploring the school, gardens, cave and mosque at the eco-village.")}</p>
-          </div>
-          <Link className="btn btn-primary" to="/experiences/tours/campus-village-tour">{tx("More details")}</Link>
         </div>
 
         <TornEdge position="bottom" color="var(--bg)" />

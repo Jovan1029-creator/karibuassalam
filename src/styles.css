@@ -39,21 +39,18 @@
   --space-8: 4rem;
   --header-h: 5.5rem;
   --topbar-h: 2.4rem;
-  /* Handwriting display face, used for section names only. */
-  --script: Caveat, "Segoe Script", "Bradley Hand", cursive;
-  --arabic-display: "El Messiri", "Cormorant Garamond", Georgia, serif;
-  /* PEACE Villages-inspired type roles: Inter for reading and interface text,
-     Cormorant Garamond for editorial headings. El Messiri remains a restrained
-     accent in the rotating landing hero. Fluid sizes stop growing on wide screens. */
+  /* Peace Villages' verified font roles: Inter for body/interface text and
+     Cormorant Garamond 600 for editorial headings. One responsive scale across
+     pages; no additional handwriting or Arabic-style display families. */
   --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
   --font-heading: "Cormorant Garamond", Georgia, serif;
   --text-small: 0.875rem;
   --text-body: 1rem;
-  --text-lead: clamp(1rem, 0.94rem + 0.3vw, 1.2rem);
-  --text-h3: clamp(1.125rem, 1.07rem + 0.24vw, 1.3rem);
-  --text-h2: clamp(2rem, 1.55rem + 2.3vw, 3.1rem);
+  --text-lead: clamp(1.05rem, 1.4vw, 1.3rem);
+  --text-h3: clamp(1.35rem, 1.2rem + 0.65vw, 1.75rem);
+  --text-h2: clamp(2.25rem, 1.5rem + 2.5vw, 4rem);
   --text-h1: clamp(2.5rem, 2rem + 2.7vw, 4.5rem);
-  --text-hero: clamp(2.25rem, 1.5rem + 3.2vw, 4.5rem);
+  --text-hero: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
 }
 
 *,
@@ -92,8 +89,7 @@ p {
   line-height: 1.7;
 }
 
-/* Editorial titles use the serif. Interface headings such as FAQ questions and
-   footer labels stay in the sans so navigation and controls remain easy to scan. */
+/* Editorial h1-h3 titles use the serif; controls and small UI labels use Inter. */
 h1,
 h2,
 h3,
@@ -105,17 +101,22 @@ h4 {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--font-heading);
   font-weight: 600;
 }
 
-h3,
 h4 {
   font-family: var(--font-body);
   font-weight: 700;
   letter-spacing: -0.005em;
   line-height: 1.25;
+}
+
+h3 {
+  letter-spacing: -0.025em;
+  line-height: 1.15;
 }
 
 h1 {
@@ -212,14 +213,15 @@ select {
 .eyebrow {
   margin: 0 0 var(--space-2);
   color: var(--accent-ocean);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   font-weight: 700;
 }
 
 .lead {
-  font-size: 1.05rem;
+  font-size: var(--text-lead);
+  line-height: 1.65;
   color: var(--muted);
 }
 
@@ -1692,7 +1694,7 @@ main {
   content: "\201C";
   margin-right: 0.1em;
   color: var(--accent-gold);
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-heading);
   font-size: 1.5em;
   line-height: 0;
   vertical-align: -0.15em;
@@ -3012,8 +3014,8 @@ main {
 .showcase-name {
   margin: 0 0 0.5rem;
   color: var(--accent-ocean);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
   font-style: italic;
   font-weight: 600;
   line-height: 1;
@@ -3131,10 +3133,10 @@ main {
 .script-heading {
   margin: 0 0 0.6rem;
   color: var(--accent-green);
-  font-family: var(--script);
-  font-weight: 700;
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  line-height: 0.95;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--text-h2);
+  line-height: 1.02;
   text-align: center;
   text-wrap: balance;
 }
@@ -3147,7 +3149,8 @@ main {
   max-width: 46rem;
   margin: 0 auto 2.5rem;
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: var(--text-lead);
+  line-height: 1.65;
   text-align: center;
 }
 
@@ -3278,9 +3281,9 @@ main {
 .hero-script {
   margin: 0 0 1.4rem;
   color: #fff;
-  font-family: var(--script);
-  font-weight: 700;
-  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--text-hero);
   line-height: 1;
   text-shadow: 0 6px 34px rgba(0, 0, 0, 0.45);
 }
@@ -3542,10 +3545,10 @@ main {
 .circle-card h3 {
   margin: 0 0 0.5rem;
   color: var(--accent-green);
-  font-family: var(--script);
-  font-size: clamp(1.8rem, 2.6vw, 2.4rem);
-  font-weight: 700;
-  line-height: 1;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: 1.15;
 }
 
 .circle-card p {
@@ -4679,32 +4682,12 @@ body {
   align-self: flex-start;
 }
 
-.campus-tour-detail {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-}
-
-.campus-tour-detail h3 { margin-bottom: 0.35rem; }
-.campus-tour-detail p { margin-bottom: 0; }
-.campus-tour-detail .btn { flex: 0 0 auto; }
-
 .experience-detail-facts .facts-strip {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 @media (max-width: 960px) {
   .experience-detail-facts .facts-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 700px) {
-  .campus-tour-detail { align-items: stretch; flex-direction: column; }
 }
 
 @media (max-width: 480px) {
@@ -4714,10 +4697,10 @@ body {
 .experience-card-body h3 {
   margin: 0 0 0.45rem;
   color: var(--accent-green);
-  font-family: var(--script);
-  font-size: 1.65rem;
-  font-weight: 700;
-  line-height: 1;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: 1.15;
 }
 
 .experience-card-body p {
@@ -4755,6 +4738,31 @@ body {
 .feature-split-media .safari-overview-photo {
   height: auto;
   aspect-ratio: 4 / 3;
+  object-position: 50% 65%;
+}
+
+.experience-explore-more .feature-split-media img {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-position: 55% 50%;
+}
+
+.experience-explore-copy {
+  min-width: 0;
+  max-width: 38rem;
+}
+
+.experience-explore-copy h2 {
+  text-wrap: balance;
+}
+
+.experience-explore-copy .inline-actions {
+  margin-top: var(--space-5);
+}
+
+.experience-detail-description {
+  max-width: 75ch;
+  margin: var(--space-6) auto 0;
 }
 
 .safari-planning .feature-split-media img {
@@ -4849,10 +4857,10 @@ body {
 .volunteer-card h3 {
   margin: 0;
   color: var(--accent-green);
-  font-family: var(--script);
-  font-size: 1.9rem;
-  font-weight: 700;
-  line-height: 1;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: 1.15;
 }
 
 .volunteer-card p {
@@ -4885,7 +4893,7 @@ body {
 
 .event-card h3 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--text-h3);
 }
 
 .event-card p {
@@ -5253,7 +5261,7 @@ body {
 .hero-slider-center-2026 .hero-script {
   max-width: 24ch;
   margin-bottom: 1rem;
-  font-family: var(--arabic-display);
+  font-family: var(--font-heading);
   font-size: var(--text-hero);
   font-weight: 600;
   line-height: 1.12;

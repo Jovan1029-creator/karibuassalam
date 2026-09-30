@@ -10,6 +10,7 @@ import coastImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
 import spiceImg from "../../pics/aboutpic/Spice Gardens.webp";
 import townImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import seaImg from "../../pics/zanzibarpics/Blue Safari.jpg";
+import { campusTour } from "./experiences";
 
 // The brief leaves most prices as $XX. Those are confirmed by the team on enquiry.
 const tourLanguages = "English, Turkish and Swahili; German and Italian on request";
@@ -20,15 +21,16 @@ export const experienceDetails = [
     type: "tours",
     slug: "campus-village-tour",
     title: "Karibu Assalam Tour",
-    intro: "Visit Assalam Kanga Village in Kizimkazi, then explore the school, permaculture gardens, cave and mosque at Karibu Assalam Eco-Village.",
+    intro: campusTour.promise,
+    description: campusTour.text,
     image: campusImg,
     detailPhoto: { src: caveImg, alt: "Walkway over the natural cave at Assalam Eco-Village" },
-    duration: "6 hours",
-    days: "Tuesday, Thursday and Saturday",
+    duration: "Half day",
+    days: "Runs daily",
     start: "10:00 am",
     price: "$40 per person",
-    included: ["Kanga Village visit", "Assalam Eco-Village and school tour", "Permaculture gardens, cave and mosque"],
-    options: ["Add lunch with a sea view", "Ask about a musical performance in the cave", "Ask about a private afternoon in the ladies-only spa"],
+    included: ["Kanga Village visit", "Assalam Eco-Village and school tour", "Permaculture gardens and the arts & culture centre", "Snacks", "A tailored workshop: hammam soap, drum design or eco-printing"],
+    options: ["Visit the cave or take a break in the mosque", "Add lunch with a sea view", "Ask about a private afternoon in the ladies-only spa"],
     bring: "Please wear clothing that covers shoulders and knees on site.",
     languages: tourLanguages,
   },
