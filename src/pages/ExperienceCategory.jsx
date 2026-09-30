@@ -94,7 +94,7 @@ export default function ExperienceCategory() {
               </div>
               <div>
                 <p>{tx(safari.text)}</p>
-                <p>{tx("Ask the team about Lake Manyara, Tarangire, Ngorongoro Crater or the Serengeti, as well as other routes and hikes in Tanzania.")}</p>
+                <p>{tx("Ask the team about a trip to Mikumi national park as well as other routes and hikes in Tanzania.")}</p>
                 <p>{tx("Each trip is arranged around your preferences and the season. There are no fixed packages or published prices.")}</p>
                 <CTAButton to="/contact">Find your safari</CTAButton>
               </div>

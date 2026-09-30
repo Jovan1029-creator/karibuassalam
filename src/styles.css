@@ -5457,6 +5457,17 @@ body {
 .eco-discover-card h3 { margin: 0; }
 .eco-discover-card .text-link { margin-top: auto; }
 
+.campus-spaces-grid .photo-slot.content-card-photo {
+  display: grid;
+}
+
+/* Centre a single last campus card while retaining the existing card sizes. */
+@media (min-width: 961px) {
+  .campus-spaces-grid > :last-child:nth-child(3n + 1) {
+    grid-column: 2;
+  }
+}
+
 @media (max-width: 960px) {
   .eco-proof-grid,
   .eco-discover-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

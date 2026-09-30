@@ -162,6 +162,8 @@ try {
       assert.ok(images.some(tag => decodeURIComponent(tag.match(/src="([^"]+)"/)?.[1] || '').includes('Blue Safari.jpg')), 'Preserve the existing Blue Safari ocean image');
     } else {
       assert.ok(!markup.includes('photo-slot'), 'The dedicated safari page uses real photos throughout');
+      assert.ok(visible.has(translateText(language, 'Ask the team about a trip to Mikumi national park as well as other routes and hikes in Tanzania.')), 'Use the requested Mikumi enquiry sentence in all languages');
+      assert.doesNotMatch(markup, /Lake Manyara|Manyara-See|Manyara Gölü|Ngorongoro|Serengeti/, 'Remove the superseded park list from the safari page');
       assert.equal((markup.match(/class="safari-gallery-item"/g) || []).length, 3, 'Keep the three-portrait gallery');
       for (const photo of safariGalleryPhotos) assert.ok(visible.has(translateText(language, photo.label)), 'Localize every gallery caption');
       assert.ok(visible.has(translateText(language, 'Moments on safari')), 'Localize the gallery heading');
@@ -229,6 +231,28 @@ try {
     assert.ok(markup.indexOf('id="happenings-later-title"') > markup.indexOf('id="programme-month"'), 'Later heading follows the monthly programme');
     assert.ok(markup.includes('href="/contact"'), 'Programme enquiries have a working destination');
   }
+  function checkCampusSpaces(markup, route, language) {
+    if (route !== '/campus') return;
+    const section = markup.match(/<section id="campus-spaces"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(section && visibleStrings(section).has(translateText(language, 'Around the campus')), 'Use the updated campus heading');
+    const cards = [...section.matchAll(/<article class="eco-discover-card">([\s\S]*?)<\/article>/g)].map(match => match[1]);
+    const titles = ['International School', 'Open-air amphitheatre', 'Campus mosque', 'Jetty & beach', 'Istanbul restaurant', 'Permaculture garden', 'Halal Spa & Pool', 'Boutique', 'Arts & Cultural Centre', 'Vocational Training Workshop'];
+    assert.equal(cards.length, titles.length, 'Keep the original three campus spaces and add all seven requested spaces');
+    cards.forEach((card, index) => {
+      assert.ok(visibleStrings(card).has(translateText(language, titles[index])), `Translate the campus space: ${titles[index]}`);
+      if ([7, 9].includes(index)) {
+        assert.ok(visibleStrings(card).has(translateText(language, 'PLACEHOLDER')), 'Clearly label unverified venue photos');
+        assert.ok(card.includes('role="img"') && card.includes('aspect-ratio:3 / 2'), 'Keep accessible placeholders at the same ratio as other card photos');
+        assert.ok(!card.includes('<img'), 'Do not publish damaged source previews');
+      } else {
+        const image = card.match(/<img\b[^>]*>/)?.[0];
+        assert.ok(image?.includes('loading="lazy"'), 'Campus photos load lazily');
+        const src = image.match(/src="([^"]+)"/)?.[1];
+        assert.ok(src?.startsWith('/pics/site-marketing/'), 'Use the selected website assets, not the ignored raw source folder');
+        assert.ok(statSync(new URL(`..${src}`, import.meta.url)).size > 0, 'Campus image assets exist');
+      }
+    });
+  }
   function checkCafeLinks(markup, route, language) {
     for (const [anchor] of markup.matchAll(/<a\b[^>]*>/g)) {
       const href = anchor.match(/href="([^"]*)"/)?.[1];
@@ -258,6 +282,7 @@ try {
     const englishMarkup = await renderPage(route, 'en');
     checkCafeLinks(englishMarkup, route, 'en');
     checkCampusProgramme(englishMarkup, route, 'en');
+    checkCampusSpaces(englishMarkup, route, 'en');
     checkSafariPhotos(englishMarkup, route, 'en');
     checkCampusTour(englishMarkup, route, 'en');
     checkCampusUpdates(englishMarkup, route, 'en');
@@ -267,6 +292,7 @@ try {
       const markup = await renderPage(route, language);
       checkCafeLinks(markup, route, language);
       checkCampusProgramme(markup, route, language);
+      checkCampusSpaces(markup, route, language);
       checkSafariPhotos(markup, route, language);
       checkCampusTour(markup, route, language);
       checkCampusUpdates(markup, route, language);
@@ -295,6 +321,7 @@ try {
   console.log('Safari checks passed: all five supplied photos, no mainland placeholders, localized captions/alt text, lazy loading and separate Blue Safari imagery.');
   console.log('Tour and typography checks passed: one paid daily half-day tour, supplied copy, correct CTAs, expanded Explore more and Peace Villages font roles.');
   console.log('Campus updates passed: six clean homepage actions, expanded card 01, three tour additions, five supplied photos and complete seven-day School Camp in all languages.');
+  console.log('Campus spaces and safari checks passed: all ten space cards, explicit photo placeholders, localized labels and exact Mikumi enquiry copy.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

@@ -5,7 +5,7 @@ export const languageNeutral = new Set([
   'Kanga Africa', 'Hamammni', 'Sawa Ensemble', 'Zanzibar Sufi Festival',
   'Stone Town', 'The Rock in Michamvi', 'Mtende Beach', 'Paje Beach',
   'Kindness Camp', 'Ramadan Camp', 'Blue Safari', 'Supabase',
-  'Safari', 'Campus', 'Restaurant', 'Workshops', 'Retreats', 'FAQ',
+  'Safari', 'Campus', 'Restaurant', 'Workshops', 'Retreats', 'FAQ', 'Boutique',
   'Instagram', 'WhatsApp', 'Wi-Fi', 'WiFi', 'EUR', 'EUR 750', 'EUR 900',
   'Kizimkazi, Zanzibar', 'Kizimkazi · Zanzibar', 'Zanzibar', 'Zanzibar:',
   'EN', 'TR', 'DE', 'Türkçe', 'Deutsch', 'Tripadvisor',

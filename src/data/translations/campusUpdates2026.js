@@ -5,6 +5,18 @@ const day = (index, key, tr, de) => [school.schedule[index][key], tr, de];
 const section = (index, key, tr, de) => [school.schedule[index].sections[0][key], tr, de];
 
 export const campusUpdates2026 = [
+  ["Around the campus", "Kampüs çevresinde", "Rund um den Campus"],
+  ["Jetty & beach", "İskele ve plaj", "Steg und Strand"],
+  ["Istanbul restaurant", "İstanbul restoranı", "Istanbul-Restaurant"],
+  ["Permaculture garden", "Permakültür bahçesi", "Permakulturgarten"],
+  ["Halal Spa & Pool", "Helal spa ve havuz", "Halal-Spa und Pool"],
+  ["Boutique", "Butik", "Boutique"],
+  ["Arts & Cultural Centre", "Sanat ve Kültür Merkezi", "Kunst- und Kulturzentrum"],
+  ["Vocational Training Workshop", "Mesleki Eğitim Atölyesi", "Berufsbildungswerkstatt"],
+  ["A thatched jetty beside the beach at Karibu Assalam", "Karibu Assalam'da plajın yanındaki saz çatılı iskele", "Ein Steg mit Strohdach neben dem Strand bei Karibu Assalam"],
+  ["Guests sharing a table overlooking the Indian Ocean", "Hint Okyanusu manzaralı bir masada oturan misafirler", "Gäste an einem gemeinsamen Tisch mit Blick auf den Indischen Ozean"],
+  ["Boutique photograph coming soon", "Butik fotoğrafı yakında eklenecek", "Ein Foto der Boutique folgt in Kürze"],
+  ["Vocational training workshop photograph coming soon", "Mesleki eğitim atölyesinin fotoğrafı yakında eklenecek", "Ein Foto der Berufsbildungswerkstatt folgt in Kürze"],
   ["Stay in our eco village right on Kizimkazi beach in accommodation with views of the Indian Ocean. Slow down by the sea, enjoy Swahili flavours and discover life on our community-led campus. Explore the permaculture gardens, join a hands-on workshop or make time to connect with the people and culture of Zanzibar.",
     "Hint Okyanusu manzaralı konaklama seçenekleriyle, Kizimkazi sahilinin hemen kıyısındaki eko-köyümüzde kalın. Deniz kenarında yavaşlayın, Svahili lezzetlerinin tadını çıkarın ve topluluk öncülüğündeki kampüsümüzde yaşamı keşfedin. Permakültür bahçelerini gezin, uygulamalı bir atölyeye katılın ya da Zanzibar'ın insanları ve kültürüyle bağ kurmaya zaman ayırın.",
     "Übernachten Sie in unserem Öko-Dorf direkt am Strand von Kizimkazi mit Blick auf den Indischen Ozean. Kommen Sie am Meer zur Ruhe, genießen Sie Swahili-Aromen und entdecken Sie das Leben auf unserem gemeinschaftlich geführten Campus. Erkunden Sie die Permakulturgärten, nehmen Sie an einem praktischen Workshop teil oder lernen Sie die Menschen und die Kultur Sansibars kennen."],

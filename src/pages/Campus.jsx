@@ -6,14 +6,27 @@ import { useLanguage } from "../context/LanguageContext";
 import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
 import permacultureImg from "../../pics/site-marketing/permaculture-campus-tour.webp";
 import PhotoCardMedia from "../components/PhotoCardMedia";
+import PhotoSlot from "../components/PhotoSlot";
 import schoolImg from "../../pics/site-marketing/school-campus.webp";
 import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
 import mosqueImg from "../../pics/site-marketing/campus-mosque.webp";
+import jettyImg from "../../pics/site-marketing/ocean-jetty.webp";
+import restaurantImg from "../../pics/site-marketing/oceanfront-dining.webp";
+import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
+import artsImg from "../../pics/site-marketing/sawa-music-room.webp";
 
 const campusSpaces = [
   { title: "International School", src: schoolImg, alt: "The school building at Assalam Eco-Village" },
   { title: "Open-air amphitheatre", src: amphitheatreImg, alt: "The open-air amphitheatre at Karibu Assalam" },
   { title: "Campus mosque", src: mosqueImg, alt: "A gathering inside the mosque at Assalam Eco-Village" },
+  { title: "Jetty & beach", src: jettyImg, alt: "A thatched jetty beside the beach at Karibu Assalam" },
+  { title: "Istanbul restaurant", src: restaurantImg, alt: "Guests sharing a table overlooking the Indian Ocean" },
+  { title: "Permaculture garden", src: permacultureImg, alt: "Visitors exploring the permaculture area at Assalam" },
+  { title: "Halal Spa & Pool", src: spaImg, alt: "Private pool and sun loungers at Karibu Assalam" },
+  // Keep explicit placeholders until clean, verified venue photos are available.
+  { title: "Boutique", alt: "Boutique photograph coming soon" },
+  { title: "Arts & Cultural Centre", src: artsImg, alt: "Music practice in the Sawa Ensemble room" },
+  { title: "Vocational Training Workshop", alt: "Vocational training workshop photograph coming soon" },
 ];
 
 const features = [
@@ -80,11 +93,15 @@ export default function Campus() {
           </div>
         </div>
       </Section>
-      <Section title={tx("Spaces around the campus")}>
-        <div className="eco-discover-grid">
+      <Section id="campus-spaces" title="Around the campus">
+        <div className="eco-discover-grid campus-spaces-grid">
           {campusSpaces.map((space) => (
             <article className="eco-discover-card" key={space.title}>
-              <PhotoCardMedia photo={space} />
+              {space.src ? (
+                <PhotoCardMedia photo={space} />
+              ) : (
+                <PhotoSlot alt={space.alt} label="PLACEHOLDER" ratio="3 / 2" className="content-card-photo" />
+              )}
               <h3>{tx(space.title)}</h3>
             </article>
           ))}

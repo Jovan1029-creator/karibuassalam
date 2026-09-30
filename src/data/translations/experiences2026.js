@@ -107,7 +107,7 @@ export const experiences2026 = [
   ["A closer look at the wildlife and the journey.", "Yaban hayatına ve yolculuğa yakından bir bakış.", "Ein näherer Blick auf die Tierwelt und die Reise."],
   ["PLACEHOLDER", "FOTOĞRAF YERİ", "BILDPLATZHALTER"],
   ["Safari photograph coming soon", "Safari fotoğrafı yakında eklenecek", "Safari-Foto folgt in Kürze"],
-  ["Ask the team about Lake Manyara, Tarangire, Ngorongoro Crater or the Serengeti, as well as other routes and hikes in Tanzania.", "Manyara Gölü, Tarangire, Ngorongoro Krateri, Serengeti ve Tanzanya'daki diğer rotalar ve yürüyüşler hakkında ekibe danışın.", "Fragen Sie das Team nach dem Manyara-See, Tarangire, dem Ngorongoro-Krater, der Serengeti sowie weiteren Routen und Wanderungen in Tansania."],
+  ["Ask the team about a trip to Mikumi national park as well as other routes and hikes in Tanzania.", "Mikumi Milli Parkı'na bir gezi ve Tanzanya'daki diğer rotalar ile yürüyüşler hakkında ekibe danışın.", "Fragen Sie das Team nach einem Ausflug in den Mikumi-Nationalpark sowie nach weiteren Routen und Wanderungen in Tansania."],
   ["Each trip is arranged around your preferences and the season. There are no fixed packages or published prices.", "Her gezi tercihlerinize ve mevsime göre düzenlenir. Sabit paketler veya yayımlanmış fiyatlar yoktur.", "Jede Reise wird nach Ihren Wünschen und der Jahreszeit geplant. Es gibt keine festen Pakete oder veröffentlichten Preise."],
   ["Find your safari", "Safarinizi seçin", "Ihre Safari finden"],
   ["Explore more at Karibu Assalam", "Karibu Assalam'da daha fazlasını keşfedin", "Mehr bei Karibu Assalam entdecken"],
