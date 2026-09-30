@@ -55,6 +55,12 @@ export default function Accordion({
               hidden={!isOpen}
             >
               {item.description && <p>{tx(item.description)}</p>}
+              {item.sections?.map((section, sectionIndex) => (
+                <div className="accordion-section" key={`${itemId}-section-${sectionIndex}`}>
+                  {section.heading && <h4>{tx(section.heading)}</h4>}
+                  <p>{tx(section.copy)}</p>
+                </div>
+              ))}
               {item.answer && <p>{tx(item.answer)}</p>}
             </div>
           </div>

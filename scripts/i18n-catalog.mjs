@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { parseSync } from 'rolldown/utils';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
-const contentKeys = new Set('title text label linkLabel duration promise alt question answer shortPromise subtitle heading copy intro locationText durationText priceText inclusionHeading notIncluded itineraryIntro stayHeading stayCopy foodHeading foodTags bookingCopy bookingCta ctaText days start price bring languages description imageAlt facts features highlights bullets inclusions points includedItems stayFeatures foodCopy options included'.split(' '));
+const contentKeys = new Set('title text label linkLabel duration promise alt question answer shortPromise subtitle heading copy intro locationText durationText priceText inclusionHeading notIncluded itineraryHeading itineraryIntro stayHeading stayCopy foodHeading foodTags bookingCopy bookingCta ctaText days start price bring languages description imageAlt facts features highlights bullets inclusions points includedItems stayFeatures foodCopy options included'.split(' '));
 const attributes = new Set('title subtitle eyebrow alt imageAlt aria-label aria-roledescription placeholder description label'.split(' '));
 const files = [];
 function walkDirectory(dir) {

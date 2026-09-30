@@ -6,6 +6,7 @@ import Accordion from "../components/Accordion";
 import RetreatCard from "../components/RetreatCard";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
+import PhotoSlot from "../components/PhotoSlot";
 import { getRetreatBySlug, retreats } from "../data/retreats";
 import roomImg from "../../pics/site-marketing/eco-village-room-interior.webp";
 import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
@@ -89,15 +90,18 @@ export default function RetreatDetail() {
             title={copy.inclusionHeading}
             className="surface-section"
           >
-            <ul className="check-list cols-2 retreat-inclusions">
-              {copy.includedItems.map((item) => <li key={item}>{tx(item)}</li>)}
-            </ul>
-            <p className="not-included-note">{tx(copy.notIncluded)}</p>
+            <div className={retreat.inclusionPhoto ? "retreat-feature-split" : undefined}>
+              {retreat.inclusionPhoto && <PhotoSlot {...retreat.inclusionPhoto} />}
+              <ul className={`check-list retreat-inclusions${retreat.inclusionPhoto ? "" : " cols-2"}`}>
+                {copy.includedItems.map((item) => <li key={item}>{tx(item)}</li>)}
+              </ul>
+            </div>
+            {copy.notIncluded && <p className="not-included-note">{tx(copy.notIncluded)}</p>}
           </Section>
 
           <Section
             eyebrow="7-Day Itinerary"
-            title="What your days will look like"
+            title={copy.itineraryHeading || "What your days will look like"}
             subtitle={copy.itineraryIntro}
           >
             <Accordion
@@ -105,12 +109,26 @@ export default function RetreatDetail() {
                 id: item.id,
                 title: item.heading,
                 description: item.copy,
+                sections: item.sections,
               }))}
               defaultOpenIds={[copy.schedule[0].id]}
             />
           </Section>
 
-          <Section className="surface-section retreat-stay-section">
+          {retreat.gallery?.length > 0 && (
+            <Section title="Hands-on learning" className="surface-section retreat-gallery-section">
+              <div className="retreat-photo-gallery">
+                {retreat.gallery.map((photo) => (
+                  <figure key={photo.src}>
+                    <PhotoSlot {...photo} />
+                    <figcaption>{tx(photo.label)}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {copy.stayHeading && <Section className="surface-section retreat-stay-section">
             <div className="retreat-feature-split">
               <img src={roomImg} alt={tx("Comfortable room at Karibu Assalam Eco-Village")} width="900" height="675" loading="lazy" />
               <div>
@@ -122,9 +140,9 @@ export default function RetreatDetail() {
                 </ul>
               </div>
             </div>
-          </Section>
+          </Section>}
 
-          <Section className="retreat-food-section">
+          {copy.foodHeading && <Section className="retreat-food-section">
             <div className="retreat-feature-split is-reversed">
               <img src={foodImg} alt={tx("Shared halal meal at Karibu Assalam")} width="900" height="675" loading="lazy" />
               <div>
@@ -134,7 +152,7 @@ export default function RetreatDetail() {
                 {copy.foodCopy.map((paragraph) => <p key={paragraph}>{tx(paragraph)}</p>)}
               </div>
             </div>
-          </Section>
+          </Section>}
 
           <Section eyebrow="Booking" title={copy.bookingCta} className="retreat-booking-section">
             <div className="booking-panel retreat-booking-panel">

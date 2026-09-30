@@ -73,12 +73,21 @@ export default function ExperienceDetail() {
         </div>
       </Section>
 
-      <Section title="Make it your own" className="closing-section">
-        <ul className="check-list experience-options">
-          {experience.options.map((item) => <li key={item}>{tx(item)}</li>)}
-        </ul>
-        {experience.bring && <p><strong>{tx("What to bring:")}</strong> {tx(experience.bring)}</p>}
-        <p><strong>{tx("Languages:")}</strong> {tx(experience.languages)}</p>
+      <Section
+        id="make-it-your-own"
+        title="Make it your own"
+        className={experience.optionsPhoto ? "experience-customize-section" : "closing-section"}
+      >
+        <div className={experience.optionsPhoto ? "retreat-feature-split experience-customize-layout" : undefined}>
+          <div>
+            <ul className="check-list experience-options">
+              {experience.options.map((item) => <li key={item}>{tx(item)}</li>)}
+            </ul>
+            {experience.bring && <p><strong>{tx("What to bring:")}</strong> {tx(experience.bring)}</p>}
+            <p><strong>{tx("Languages:")}</strong> {tx(experience.languages)}</p>
+          </div>
+          {experience.optionsPhoto && <PhotoSlot {...experience.optionsPhoto} />}
+        </div>
         <div className="section-actions">
           <CTAButton to="/contact" size="lg">Book this experience</CTAButton>
           <CTAButton to={related} variant="secondary" size="lg">

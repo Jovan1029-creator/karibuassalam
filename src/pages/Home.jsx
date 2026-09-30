@@ -19,7 +19,7 @@ const stayOptions = [
     heading: "Eco-Village",
     image: ecoVillageImg,
     alt: "Karibu Assalam Eco-Village accommodation in Kizimkazi",
-    copy: "Stay in our eco village right on Kizimkazi beach in accommodation with views of the Indian Ocean.",
+    copy: "Stay in our eco village right on Kizimkazi beach in accommodation with views of the Indian Ocean. Slow down by the sea, enjoy Swahili flavours and discover life on our community-led campus. Explore the permaculture gardens, join a hands-on workshop or make time to connect with the people and culture of Zanzibar.",
     ctaText: "Find your stay",
     to: "/eco-resort",
   },
@@ -85,11 +85,11 @@ function StayOption({ option, index }) {
         <p>{tx(option.copy)}</p>
         {option.href ? (
           <a className="text-link" href={option.href} target="_blank" rel="noopener noreferrer">
-            {tx("View details")} → {tx(option.ctaText)}
+            {tx(option.ctaText)}
           </a>
         ) : (
           <Link className="text-link" to={option.to}>
-            {tx("View details")} → {tx(option.ctaText)}
+            {tx(option.ctaText)}
           </Link>
         )}
       </div>

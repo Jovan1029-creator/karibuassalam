@@ -1,6 +1,6 @@
 import React from 'react';
 import { PassThrough } from 'node:stream';
-import { renderToPipeableStream } from 'react-dom/server';
+import { renderToPipeableStream, renderToString } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../src/App';
 import { LanguageProvider } from '../src/context/LanguageContext';
@@ -18,15 +18,23 @@ export const routes = [
 
 export function renderPage(route, language) {
   return new Promise((resolve, reject) => {
-    let html = '';
-    const output = new PassThrough();
-    output.on('data', chunk => { html += chunk; });
-    output.on('end', () => resolve(html));
-    output.on('error', reject);
-    const stream = renderToPipeableStream(
+    const page = (
       <LanguageProvider initialLanguage={language}>
         <MemoryRouter initialEntries={[route]}><App /></MemoryRouter>
-      </LanguageProvider>,
+      </LanguageProvider>
+    );
+    // First resolve lazy pages. React 18's streaming encoder can flush a padding
+    // NUL when a multibyte character does not fit the last byte of its buffer.
+    // This is a client-rendered site, so inspect a fresh non-streaming render of
+    // the resolved tree instead of asserting against those streaming artifacts.
+    const output = new PassThrough();
+    output.resume();
+    output.on('end', () => {
+      try { resolve(renderToString(page)); } catch (error) { reject(error); }
+    });
+    output.on('error', reject);
+    const stream = renderToPipeableStream(
+      page,
       { onAllReady() { stream.pipe(output); }, onError: reject },
     );
   });

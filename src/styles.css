@@ -1913,6 +1913,15 @@ main {
   margin-bottom: 0;
 }
 
+.accordion-section {
+  margin-top: 1rem;
+}
+
+.accordion-section h4 {
+  margin: 0 0 0.5rem;
+  font: 700 1rem/1.5 var(--font-body);
+}
+
 .contact-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -5591,6 +5600,47 @@ body {
   margin-top: 1.25rem;
 }
 
+.experience-customize-section .section-header,
+.retreat-gallery-section .section-header {
+  max-width: none;
+  text-align: center;
+}
+
+.experience-customize-layout .experience-options {
+  margin: 0 0 var(--space-5);
+  text-align: left;
+}
+
+.experience-customize-layout > div > p:last-child {
+  margin-bottom: 0;
+}
+
+.retreat-photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.retreat-photo-gallery figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.retreat-photo-gallery img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.retreat-photo-gallery figcaption {
+  padding-top: var(--space-3);
+  text-align: center;
+  font-weight: 600;
+}
+
 .retreat-food-tags {
   color: var(--accent-ocean);
   font-weight: 800;
@@ -5750,8 +5800,17 @@ body {
   }
 
   .stay-options-grid,
-  .fit-check-grid {
+  .fit-check-grid,
+  .retreat-photo-gallery {
     grid-template-columns: 1fr;
+  }
+
+  .experience-customize-section .section-actions {
+    flex-direction: column;
+  }
+
+  .experience-customize-section .section-actions > .btn {
+    width: min(100%, 22rem);
   }
 
   .retreat-jump-inner {

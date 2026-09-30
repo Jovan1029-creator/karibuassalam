@@ -36,6 +36,81 @@ try {
   const { campusTour, safari } = await server.ssrLoadModule('/src/data/experiences.js');
   const { getExperienceDetail } = await server.ssrLoadModule('/src/data/experienceDetails.js');
   const campusDetail = getExperienceDetail('tours', 'campus-village-tour');
+  const { getRetreatBySlug } = await server.ssrLoadModule('/src/data/retreats.js');
+  const { campusVisitPhoto, campusCourtyardPhoto, schoolCampPhotos } = await server.ssrLoadModule('/src/data/campusPhotos.js');
+  const school = getRetreatBySlug('school-camp');
+  const campusPhotos = [campusVisitPhoto, campusCourtyardPhoto, ...schoolCampPhotos];
+  assert.equal(new Set(campusPhotos.map(photo => photo.src)).size, 5, 'Use all five new campus photographs');
+  for (const photo of campusPhotos) {
+    assert.match(photo.src, /^\/pics\/new\/[a-z-]+\.jpeg$/, 'Keep descriptive names and original JPEG format');
+    assert.ok(statSync(new URL(`..${photo.src}`, import.meta.url)).size > 0, 'Every campus image must exist');
+  }
+  assert.deepEqual(campusDetail.options, [
+    'add a lunch',
+    'add a cooking lesson on campus or in the kanga village',
+    'extend the day with our Eco-print workshop or a private spa experience',
+  ], 'Keep the three requested optional additions verbatim');
+  assert.equal(school.durationDays, 7);
+  assert.equal(school.priceFrom, 750, 'Keep the existing school camp price');
+  assert.equal(school.details.includedItems.length, 8, 'Keep every supplied inclusion');
+  assert.deepEqual(school.details.schedule.map(item => item.id), Array.from({length: 7}, (_, index) => `day-${index + 1}`));
+  assert.equal(school.details.schedule[4].sections[0].heading, 'African Bracelet: Wear a Story', 'Keep both supplied Day 5 workshops');
+  assert.match(school.details.schedule[4].copy, /eco print workshop/);
+  assert.match(school.details.schedule[4].sections[0].copy, /ngoma/);
+  function checkCampusUpdates(markup, route, language) {
+    if (route === '/') {
+      const cards = [...markup.matchAll(/<article class="stay-option">([\s\S]*?)<\/article>/g)].map(match => match[1]);
+      assert.equal(cards.length, 6, 'Preserve all six homepage options');
+      const actions = [
+        ['Find your stay', '/eco-resort'], ['Find your retreat', '/retreats'],
+        ['Find your tour', '/experiences/tours/campus-village-tour'], ['Book your spa', '/eco-resort#spa'],
+        ['Apply here', '/contact'], ['Learn more', SITE.foundationUrl],
+      ];
+      cards.forEach((card, index) => {
+        const anchor = card.match(/<a\b([^>]*)>([\s\S]*?)<\/a>/);
+        assert.equal(decode(anchor?.[2] || ''), translateText(language, actions[index][0]), 'Remove View details and arrow from each homepage action');
+        assert.ok(anchor[1].includes(`href="${actions[index][1]}"`), 'Preserve the card destination');
+      });
+      assert.ok(visibleStrings(cards[0]).has(translateText(language, 'Stay in our eco village right on Kizimkazi beach in accommodation with views of the Indian Ocean. Slow down by the sea, enjoy Swahili flavours and discover life on our community-led campus. Explore the permaculture gardens, join a hands-on workshop or make time to connect with the people and culture of Zanzibar.')), 'Card 01 has expanded, localized copy');
+    }
+    const expectedPhotos = route === '/retreats/school-camp'
+      ? [campusCourtyardPhoto, ...schoolCampPhotos]
+      : route === '/experiences/tours/campus-village-tour' ? [campusVisitPhoto] : [];
+    const images = [...markup.matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
+    for (const photo of expectedPhotos) {
+      const tag = images.find(image => image.includes(`src="${photo.src}"`));
+      assert.ok(tag, `${route}: show ${photo.src}`);
+      assert.ok(tag.includes('loading="lazy"'), 'New below-the-fold photos should load lazily');
+      assert.ok(tag.includes(`width="${photo.width}"`) && tag.includes(`height="${photo.height}"`), 'Preserve source dimensions');
+      assert.ok(visibleStrings(tag).has(translateText(language, photo.alt)), 'Translate new photo alt text');
+    }
+    if (route === '/experiences/tours/campus-village-tour') {
+      const section = markup.match(/<section id="make-it-your-own"[\s\S]*?<\/section>/)?.[0];
+      assert.ok(section?.includes('experience-customize-layout'), 'Use a scoped photo-and-list layout');
+      const checklist = section.match(/<ul class="check-list experience-options">([\s\S]*?)<\/ul>/)?.[1];
+      assert.ok(checklist, 'Use the same vertical check-list as the inclusions');
+      assert.equal((checklist.match(/<li>/g) || []).length, 3);
+      for (const option of campusDetail.options) assert.ok(visibleStrings(checklist).has(translateText(language, option)));
+      assert.ok(section.includes(campusVisitPhoto.src), 'Keep the campus photo alongside the optional additions');
+      for (const href of ['/contact', '/experiences#zanzibar-excursions']) assert.ok(section.includes(`href="${href}"`));
+    }
+    if (route === '/retreats/school-camp') {
+      const visible = visibleStrings(markup);
+      const expectedCopy = [school.details.intro, school.details.inclusionHeading, school.details.itineraryHeading,
+        school.details.itineraryIntro, school.details.bookingCopy, school.details.bookingCta, ...school.details.includedItems,
+        ...school.details.schedule.flatMap(item => [item.heading, item.copy, ...(item.sections || []).flatMap(part => [part.heading, part.copy].filter(Boolean))]),
+        ...schoolCampPhotos.map(photo => photo.label)];
+      for (const phrase of expectedCopy) {
+        const translated = translateText(language, phrase);
+        const actual = [...visible].find(value => value.startsWith(translated.slice(0, 25)));
+        assert.ok(visible.has(translated), `School Camp includes ${phrase} (${language})\nExpected: ${translated}\nActual: ${actual}`);
+      }
+      assert.equal((markup.match(/class="accordion-item"/g) || []).length, 7, 'Seven itinerary days, without duplicate Day 5 panels');
+      assert.match(markup, /id="day-1-button"[^>]*aria-expanded="true"/, 'Show the arrival day by default');
+      assert.ok(markup.includes('href="/contact"'), 'School Camp booking leads to contact');
+      assert.ok(!markup.includes('photo-slot'), 'Use supplied images instead of empty placeholders');
+    }
+  }
   assert.equal(campusDetail.intro, 'Visit our eco village in Kizimkazi, take a tour of our campus by the beach and join a workshop');
   assert.deepEqual(campusDetail.included, [
     'a visit Kanga Village in Kizimkazi',
@@ -185,6 +260,7 @@ try {
     checkCampusProgramme(englishMarkup, route, 'en');
     checkSafariPhotos(englishMarkup, route, 'en');
     checkCampusTour(englishMarkup, route, 'en');
+    checkCampusUpdates(englishMarkup, route, 'en');
     const english = visibleStrings(englishMarkup);
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
@@ -193,6 +269,7 @@ try {
       checkCampusProgramme(markup, route, language);
       checkSafariPhotos(markup, route, language);
       checkCampusTour(markup, route, language);
+      checkCampusUpdates(markup, route, language);
       const localized = visibleStrings(markup);
       if (route.startsWith('/contact')) {
         assert.ok(markup.includes(`!1s${language}!2stz`), 'The map embed should request the selected language');
@@ -217,6 +294,7 @@ try {
   console.log('Campus programme checks passed: menu position, singular Accommodation, October edition, pending state and later heading in all languages.');
   console.log('Safari checks passed: all five supplied photos, no mainland placeholders, localized captions/alt text, lazy loading and separate Blue Safari imagery.');
   console.log('Tour and typography checks passed: one paid daily half-day tour, supplied copy, correct CTAs, expanded Explore more and Peace Villages font roles.');
+  console.log('Campus updates passed: six clean homepage actions, expanded card 01, three tour additions, five supplied photos and complete seven-day School Camp in all languages.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

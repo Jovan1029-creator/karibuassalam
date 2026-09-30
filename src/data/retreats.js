@@ -6,6 +6,8 @@ import culturalHeritageImg from "../../pics/our retreats/Cultural Heritage Tour-
 import schoolCampImg from "../../pics/our retreats/School Camp-enhanced.webp";
 import natureRetreatImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
 import { retreatPageCopy } from "./retreatContent2026";
+import { schoolCampCopy } from "./schoolCampContent2026";
+import { campusCourtyardPhoto, schoolCampPhotos } from "./campusPhotos";
 
 export const COMMON_INCLUSIONS = [
   "Accommodation",
@@ -128,17 +130,18 @@ export const retreats = [
     slug: "school-camp",
     title: "School Camp",
     priceFrom: 750,
-    durationDays: null,
-    shortPromise:
-      "A structured school camp with hands-on learning, instructor guidance, and a clear daily flow.",
+    durationDays: 7,
+    shortPromise: schoolCampCopy.intro,
     heroImage: schoolCampImg,
-    inclusions: COMMON_INCLUSIONS,
-    highlights: ["Hands-on learning", "Instructors", "Typical Day flow"],
-    itineraryDays: genericItinerary({
-      2: day(2, "Typical Day flow", "Instructor-led sessions follow a clear daily learning rhythm."),
-      3: day(3, "Hands-on learning", "Practical learning activities guided by instructors."),
-      4: day(4, "Instructor sessions", "Workshops and learning sessions with instructors."),
-    }),
+    details: schoolCampCopy,
+    inclusionPhoto: campusCourtyardPhoto,
+    gallery: schoolCampPhotos,
+    inclusions: schoolCampCopy.includedItems,
+    highlights: ["Hands-on learning", "Permaculture practicals", "Cultural and community experiences"],
+    itineraryDays: schoolCampCopy.schedule.map((item, index) => ({
+      ...day(index + 1, item.heading, item.copy),
+      sections: item.sections,
+    })),
     manualPdfUrl: "https://karibuassalam.com/wp-content/uploads/2024/11/School-Camps.pdf",
   },
   {

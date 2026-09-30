@@ -6,7 +6,7 @@ export const languageNeutral = new Set([
   'Stone Town', 'The Rock in Michamvi', 'Mtende Beach', 'Paje Beach',
   'Kindness Camp', 'Ramadan Camp', 'Blue Safari', 'Supabase',
   'Safari', 'Campus', 'Restaurant', 'Workshops', 'Retreats', 'FAQ',
-  'Instagram', 'WhatsApp', 'Wi-Fi', 'WiFi', 'EUR', 'EUR 900',
+  'Instagram', 'WhatsApp', 'Wi-Fi', 'WiFi', 'EUR', 'EUR 750', 'EUR 900',
   'Kizimkazi, Zanzibar', 'Kizimkazi · Zanzibar', 'Zanzibar', 'Zanzibar:',
   'EN', 'TR', 'DE', 'Türkçe', 'Deutsch', 'Tripadvisor',
 ]);

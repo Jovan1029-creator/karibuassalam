@@ -11,6 +11,7 @@ import spiceImg from "../../pics/aboutpic/Spice Gardens.webp";
 import townImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import seaImg from "../../pics/zanzibarpics/Blue Safari.jpg";
 import { campusTour } from "./experiences";
+import { campusVisitPhoto } from "./campusPhotos";
 
 // The brief leaves most prices as $XX. Those are confirmed by the team on enquiry.
 const tourLanguages = "English, Turkish and Swahili; German and Italian on request";
@@ -36,7 +37,12 @@ export const experienceDetails = [
       "learn how to play ‘ngoma’, the local drum",
       "make your own hamamni soap",
     ],
-    options: ["Visit the cave or take a break in the mosque", "Add lunch with a sea view", "Ask about a private afternoon in the ladies-only spa"],
+    options: [
+      "add a lunch",
+      "add a cooking lesson on campus or in the kanga village",
+      "extend the day with our Eco-print workshop or a private spa experience",
+    ],
+    optionsPhoto: campusVisitPhoto,
     bring: "Please wear clothing that covers shoulders and knees on site.",
     languages: tourLanguages,
   },
