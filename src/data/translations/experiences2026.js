@@ -1,4 +1,12 @@
 export const experiences2026 = [
+  ["One day", "Bir gün", "Ein Tag"],
+  ["One-day safari trips to the mainland parks can be arranged around your stay. Because routes, seasons and prices change, the team plans each one with you directly rather than selling a fixed package.", "Konaklamanıza göre anakaradaki milli parklara bir günlük safari gezileri düzenlenebilir. Rotalar, mevsimler ve fiyatlar değiştiği için ekip sabit bir paket satmak yerine her geziyi doğrudan sizinle planlar.", "Eintägige Safaris zu den Nationalparks auf dem Festland können passend zu Ihrem Aufenthalt organisiert werden. Da sich Routen, Jahreszeiten und Preise ändern, plant das Team jede Reise direkt mit Ihnen, statt ein festes Paket anzubieten."],
+  ["Visit our eco village in Kizimkazi, take a tour of our campus by the beach and join a workshop", "Kizimkazi'deki eko-köyümüzü ziyaret edin, sahil kenarındaki kampüsümüzü gezin ve bir atölyeye katılın", "Besuchen Sie unser Öko-Dorf in Kizimkazi, erkunden Sie unseren Campus am Strand und nehmen Sie an einem Workshop teil"],
+  ["a visit Kanga Village in Kizimkazi", "Kizimkazi'deki Kanga Köyü'nü ziyaret", "ein Besuch im Kanga Village in Kizimkazi"],
+  ["a tour of the eco-village campus, incl school, permaculture gardens", "okul ve permakültür bahçeleri dahil eko-köy kampüsünde bir tur", "eine Führung durch den Öko-Dorf-Campus mit Schule und Permakulturgärten"],
+  ["coffee/tea and snacks on the jetty", "iskelede kahve/çay ve atıştırmalıklar", "Kaffee/Tee und Snacks auf dem Steg"],
+  ["learn how to play ‘ngoma’, the local drum", "yerel davul ‘ngoma’ çalmayı öğrenin", "die lokale Trommel ‘Ngoma’ spielen lernen"],
+  ["make your own hamamni soap", "kendi hamamni sabununuzu yapın", "Ihre eigene Hamamni-Seife herstellen"],
   ["Visit our campus", "Kampüsümüzü ziyaret edin", "Besuchen Sie unseren Campus"],
   ["Daily Karibu Assalam Tour", "Günlük Karibu Assalam Turu", "Tägliche Karibu Assalam Tour"],
   ["Visit us in Kizimkazi and support our work", "Kizimkazi'de bizi ziyaret edin ve çalışmalarımızı destekleyin", "Besuchen Sie uns in Kizimkazi und unterstützen Sie unsere Arbeit"],

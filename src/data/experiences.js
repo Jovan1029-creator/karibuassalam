@@ -74,8 +74,8 @@ export const safari = {
   title: "Safari",
   promise: "Mainland Tanzania, arranged from Zanzibar.",
   text:
-    "Multi-day safari trips to the mainland parks can be arranged around your stay. Because routes, seasons and prices change, the team plans each one with you directly rather than selling a fixed package.",
-  facts: ["Arranged on request", "Multi-day", "Planned with the team"],
+    "One-day safari trips to the mainland parks can be arranged around your stay. Because routes, seasons and prices change, the team plans each one with you directly rather than selling a fixed package.",
+  facts: ["Arranged on request", "One day", "Planned with the team"],
 };
 
 export const volunteering = [

@@ -33,9 +33,18 @@ try {
   const { routes, renderPage } = await server.ssrLoadModule('/scripts/i18n-render-fixture.jsx');
   const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
   const { safariHeroPhoto, safariOverviewPhoto, safariPlanningPhoto, safariGalleryPhotos } = await server.ssrLoadModule('/src/data/safariPhotos.js');
-  const { campusTour } = await server.ssrLoadModule('/src/data/experiences.js');
+  const { campusTour, safari } = await server.ssrLoadModule('/src/data/experiences.js');
   const { getExperienceDetail } = await server.ssrLoadModule('/src/data/experienceDetails.js');
   const campusDetail = getExperienceDetail('tours', 'campus-village-tour');
+  assert.equal(campusDetail.intro, 'Visit our eco village in Kizimkazi, take a tour of our campus by the beach and join a workshop');
+  assert.deepEqual(campusDetail.included, [
+    'a visit Kanga Village in Kizimkazi',
+    'a tour of the eco-village campus, incl school, permaculture gardens',
+    'coffee/tea and snacks on the jetty',
+    'learn how to play ‘ngoma’, the local drum',
+    'make your own hamamni soap',
+  ], 'Preserve the five requested tour inclusions');
+  assert.deepEqual(safari.facts, ['Arranged on request', 'One day', 'Planned with the team']);
   assert.equal(campusDetail.description, campusTour.text, 'One shared description for the campus tour');
   assert.equal(campusDetail.duration, 'Half day');
   assert.equal(campusDetail.days, 'Runs daily');
@@ -58,6 +67,9 @@ try {
     }
     const expected = route === '/experiences' ? [safariOverviewPhoto] : safariPhotos;
     const visible = visibleStrings(markup);
+    assert.ok(visible.has(translateText(language, safari.text)), 'Show the one-day safari description on both safari surfaces');
+    assert.ok(!visible.has(translateText(language, 'Multi-day')), 'Remove the old multi-day badge');
+    assert.ok(!visible.has(translateText(language, 'Multi-day safari trips to the mainland parks can be arranged around your stay. Because routes, seasons and prices change, the team plans each one with you directly rather than selling a fixed package.')), 'Remove contradictory multi-day safari copy');
     for (const photo of expected) {
       const tag = images.find(image => image.includes(`src="${photo.src}"`));
       assert.ok(tag, `${route}: render ${photo.src}`);
@@ -71,6 +83,7 @@ try {
       const safariSection = markup.match(/<section id="safari"[\s\S]*?<\/section>/)?.[0];
       assert.ok(safariSection?.includes(safariOverviewPhoto.src), 'Replace the mainland safari overview placeholder');
       assert.ok(!safariSection.includes('photo-slot'), 'No mainland safari placeholder remains');
+      assert.ok(visibleStrings(safariSection).has(translateText(language, 'One day')), 'Show the requested One day badge');
       assert.ok(images.some(tag => decodeURIComponent(tag.match(/src="([^"]+)"/)?.[1] || '').includes('Blue Safari.jpg')), 'Preserve the existing Blue Safari ocean image');
     } else {
       assert.ok(!markup.includes('photo-slot'), 'The dedicated safari page uses real photos throughout');
@@ -84,6 +97,13 @@ try {
     }
   }
   function checkCampusTour(markup, route, language) {
+    const detailRoute = route.match(/^\/experiences\/(tours|workshops)\/([^/]+)$/);
+    const bookingNote = 'Group and private options are available. Ask the team to confirm dates and the final price before booking.';
+    if (detailRoute && detailRoute[2] !== 'campus-village-tour' && getExperienceDetail(detailRoute[1], detailRoute[2])) {
+      const otherVisible = visibleStrings(markup);
+      assert.ok(otherVisible.has(translateText(language, bookingNote)), 'Keep booking notes on other experience pages');
+      assert.ok(otherVisible.has(translateText(language, 'Plan your experience')), 'Only remove the marked heading on the campus tour page');
+    }
     if (!['/experiences', '/experiences/tours/campus-village-tour'].includes(route)) return;
     const visible = visibleStrings(markup);
     assert.ok(visible.has(translateText(language, campusTour.text)), 'Preserve the supplied tour description in all languages');
@@ -102,6 +122,13 @@ try {
       }
       for (const fact of campusTour.facts) assert.ok(visible.has(translateText(language, fact)));
     } else {
+      assert.ok(visible.has(translateText(language, campusDetail.intro)), 'Use the new tour introduction');
+      assert.ok(!visible.has(translateText(language, 'Plan your experience')), 'Remove the crossed-out planning heading');
+      assert.ok(!visible.has(translateText(language, bookingNote)), 'Remove the crossed-out group/private booking paragraph');
+      const hero = markup.match(/<section class="hero [\s\S]*?<\/section>/)?.[0];
+      assert.ok(hero && visibleStrings(hero).has(translateText(language, 'Book this experience')), 'Hero offers booking, not an enquiry label');
+      assert.ok(hero.includes('href="/contact"'), 'Tour booking still leads to Contact');
+      assert.ok(!visible.has(translateText(language, 'Tuesday, Thursday and Saturday')), 'Do not restore the crossed-out old schedule');
       for (const fact of [campusDetail.days, campusDetail.duration, campusDetail.price, ...campusDetail.included]) {
         assert.ok(visible.has(translateText(language, fact)), `Tour detail includes ${fact}`);
       }

@@ -24,6 +24,7 @@ export default function ExperienceDetail() {
   }
 
   const category = type === "workshops" ? "Workshops" : "Zanzibar excursions";
+  const isCampusTour = type === "tours" && slug === "campus-village-tour";
   const related = (type === "workshops" ? "/experiences#workshops" : "/experiences#zanzibar-excursions");
 
   return (
@@ -40,10 +41,10 @@ export default function ExperienceDetail() {
         imageSrc={experience.image || campusImg}
         imageAlt={experience.image ? tx("{name} in Zanzibar", { name: tx(experience.title) }) : tx("Karibu Assalam Eco-Village campus")}
         compact
-        ctaPrimary={{ to: "/contact", label: "Ask about this experience" }}
+        ctaPrimary={{ to: "/contact", label: isCampusTour ? "Book this experience" : "Ask about this experience" }}
       />
 
-      <Section title="Plan your experience" className="experience-detail-facts">
+      <Section title={isCampusTour ? undefined : "Plan your experience"} className="experience-detail-facts">
         <div className="facts-strip">
           <div className="fact-item"><span>{tx("Duration")}</span><strong>{tx(experience.duration)}</strong></div>
           <div className="fact-item"><span>{tx("When")}</span><strong>{tx(experience.days)}</strong></div>
@@ -67,7 +68,7 @@ export default function ExperienceDetail() {
             <ul className="check-list">
               {experience.included.map((item) => <li key={item}>{tx(item)}</li>)}
             </ul>
-            <p>{tx("Group and private options are available. Ask the team to confirm dates and the final price before booking.")}</p>
+            {!isCampusTour && <p>{tx("Group and private options are available. Ask the team to confirm dates and the final price before booking.")}</p>}
           </div>
         </div>
       </Section>
