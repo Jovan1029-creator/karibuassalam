@@ -6,6 +6,7 @@ import CafeRating from "./CafeRating";
 
 export default function EventCard({ item }) {
   const { tx } = useLanguage();
+  const externalUrl = item.href || (item.external ? SITE[item.external] : null);
   return (
     <article className="event-card">
       <PhotoCardMedia photo={item.photo} />
@@ -13,8 +14,8 @@ export default function EventCard({ item }) {
       <p>{tx(item.text)}</p>
       {item.slug === "stone-town-cafe" && <CafeRating compact />}
       <div className="event-card-action">
-        {item.external ? (
-          <a className="text-link" href={SITE[item.external]} target="_blank" rel="noopener noreferrer">
+        {externalUrl ? (
+          <a className="text-link" href={externalUrl} target="_blank" rel="noopener noreferrer">
             {tx(item.linkLabel)}<span aria-hidden="true"> ↗</span>
           </a>
         ) : (

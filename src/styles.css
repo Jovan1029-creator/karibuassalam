@@ -4769,6 +4769,10 @@ body {
   margin-top: var(--space-5);
 }
 
+.dining-features {
+  margin-bottom: var(--space-6);
+}
+
 .experience-detail-description {
   max-width: 75ch;
   margin: var(--space-6) auto 0;

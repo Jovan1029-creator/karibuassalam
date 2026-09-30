@@ -68,8 +68,7 @@ export default function EcoResort() {
           <article id="kanga-africa" className="eco-discover-card">
             <PhotoCardMedia photo={{ src: tailoringImg, alt: "Textile craft at the Kanga tailoring workshop" }} />
             <h3>{tx("Kanga Africa")}</h3>
-            <p>{tx("Visit Assalam Kanga Village and learn about community life in Kizimkazi on the Karibu Assalam Tour.")}</p>
-            <Link className="text-link" to="/experiences/tours/campus-village-tour">{tx("Explore the tour")}</Link>
+            <p>{tx("Our campus has a tailoring workshop creating unique textiles and souvenirs. Explore our boutique and support our local women tailors by choosing a special souvenir to take home.")}</p>
           </article>
           <article id="hamammni" className="eco-discover-card">
             <PhotoCardMedia photo={{ src: soapImg, alt: "Handmade soaps being prepared in the Hamammni workshop" }} />

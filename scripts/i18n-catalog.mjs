@@ -38,7 +38,7 @@ export function collectCatalog() {
       if (node.type === 'Property') relevant = contentKeys.has(node.key.name || node.key.value)
         || (relevant && node.key.name === 'message');
       if (node.type === 'VariableDeclarator' && (/Languages$/.test(node.id?.name || '')
-        || ['timing', 'nextAction', 'category'].includes(node.id?.name))) relevant = true;
+        || ['timing', 'nextAction', 'category', 'features'].includes(node.id?.name))) relevant = true;
       if (node.type === 'AssignmentExpression' && ['errors', 'nextErrors'].includes(node.left?.object?.name)) {
         walk(node.right, true, node);
         return;

@@ -266,9 +266,17 @@ try {
       assert.equal(cards.length, 4, 'Keep the four-card structure');
       assert.ok(decode(cards[2]).includes(translateText(language, 'Visit us in Stone Town')), 'Third card: Stone Town');
       assert.ok(cards[2].includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'Cafe card links to its actual review listing');
-      assert.ok(decode(cards[3]).includes(translateText(language, 'Follow Us')), 'Fourth card: Follow Us');
+      assert.ok(decode(cards[3]).includes(translateText(language, 'Follow us')), 'Fourth card: Follow us');
       assert.ok(cards[3].includes(SITE.instagramUrl), 'Follow Us links to Karibu Assalam Instagram');
       assert.ok(!cards[3].includes('href="/booking"'), 'Follow Us must not lead to a booking form');
+      assert.ok(visibleStrings(cards[2]).has(translateText(language, 'You can find us in Stone Town as well - our Spice Route Cafe offers yummy drinks & food in the heart of the historic city and our Spice Route Museum takes you on a story telling journey all about spice trade in Zanzibar.')), 'Use the supplied Stone Town cafe and museum copy');
+      assert.ok(visibleStrings(cards[3]).has(translateText(language, 'We are on Instagram and Tripadvisor - follow us and learn more about our camps & retreats, volunteer experiences, life in our eco-village as well as special events.')), 'Use the supplied Follow us copy');
+      for (const [index, label, href] of [[2, 'Find out more', SPICE_ROUTE_CAFE.tripAdvisorUrl], [3, 'Follow us', SITE.instagramUrl]]) {
+        const action = cards[index].match(/<div class="event-card-action">\s*<a\b([^>]*)>([\s\S]*?)<\/a>/);
+        assert.ok(action?.[1].includes(`href="${href}"`), `${label} leads directly to the requested external page`);
+        assert.ok(decode(action[2]).includes(translateText(language, label)), 'Use the requested localized button label');
+        assert.ok(action[1].includes('target="_blank"') && action[1].includes('rel="noopener noreferrer"'), 'Open the card action safely in a new tab');
+      }
     }
     if (['/experiences', '/experiences/events', '/restaurant'].includes(route)) {
       assert.ok(markup.includes('The Spice Route Cafe'), 'The rated venue must be identified');
@@ -276,6 +284,45 @@ try {
     }
     if (route === '/restaurant') assert.ok(markup.includes('id="spice-route-cafe"'), 'Stone Town links have a real destination');
     if (route === '/') assert.ok(!markup.includes('class="cafe-rating'), 'Do not present cafe ratings as homepage resort ratings');
+  }
+  function checkHospitalityUpdates(markup, route, language) {
+    if (['/experiences/events', '/experiences/volunteer'].includes(route)) {
+      const section = markup.match(/<section id="explore-more"[\s\S]*?<\/section>/)?.[0];
+      assert.ok(section?.includes('permaculture-campus-tour.webp'), 'Fill the sparse Explore more section with a campus photograph');
+      assert.ok(section.includes('loading="lazy"'), 'Lazy-load the supporting image');
+      const copy = route.endsWith('/events')
+        ? 'Make a day of your visit to Karibu Assalam. Alongside music and community events, explore our beachfront campus, discover the permaculture gardens and take part in a hands-on workshop.'
+        : "Get to know the people and places around your volunteering experience. Visit our Kizimkazi campus, learn a new skill in a workshop and discover more of Zanzibar's culture through our guided excursions.";
+      assert.ok(visibleStrings(section).has(translateText(language, copy)), 'Show meaningful, category-specific copy in all languages');
+      assert.ok(visibleStrings(section).has(translateText(language, 'Join the Karibu Assalam Tour, try soap-making or drumming, or discover Stone Town and the spice gardens. Our team can help you choose experiences around your stay.')));
+      for (const href of ['/experiences', '/contact']) assert.ok(section.includes(`href="${href}"`), 'Keep discovery and planning destinations');
+    }
+    if (route === '/restaurant') {
+      const section = markup.match(/<section id="dining-experience"[\s\S]*?<\/section>/)?.[0];
+      assert.ok(section, 'Keep the restaurant page simple with one dining section');
+      const visible = visibleStrings(markup);
+      for (const phrase of ['Dining Experience', 'Farm to Table', 'Delicious', 'Swahili and international cuisine', 'Talented Chefs',
+        'Camp and retreat guests are served three meals daily, prepared by talented chefs and featuring Swahili and international cuisine.',
+        'Dining also includes beach dinners with sunset views, creating a shared mealtime experience alongside the program schedule.',
+        'Karibu Assalam offers more than just food: If you would like to learn how to cook Swahili cuisine, join us for a cooking lesson. During Ramadan, we welcome you to join an iftar in our kanga village.']) {
+        assert.ok(visible.has(translateText(language, phrase)), `Restaurant includes requested copy: ${phrase} (${language})`);
+      }
+      for (const old of ['Hygienic', 'Multicultural', 'Kitchen & Dining Features']) {
+        assert.ok(!visible.has(translateText(language, old)), 'Remove the superseded restaurant labels');
+      }
+      assert.equal((section.match(/class="pill"/g) || []).length, 4, 'Keep four simple dining features');
+      assert.equal([...markup.matchAll(/<h2\b[^>]*>([^<]*)<\/h2>/g)].filter(match => decode(match[1]) === translateText(language, 'Dining Experience')).length, 1, 'Do not repeat the dining heading');
+      const image = section.match(/<img\b[^>]*>/)?.[0];
+      assert.ok(image?.includes('/pics/rooms/food-1-enhanced.webp'), 'Use the selected food photograph, not the old terrace photo');
+      assert.ok(image.includes('loading="lazy"') && image.includes('width="1672"') && image.includes('height="941"'));
+      assert.ok(visibleStrings(image).has(translateText(language, 'A fresh meal with fruit, bread and vegetables served in a woven tray')));
+    }
+    if (route === '/eco-resort') {
+      const card = markup.match(/<article id="kanga-africa"[\s\S]*?<\/article>/)?.[0];
+      assert.ok(card && visibleStrings(card).has(translateText(language, 'Our campus has a tailoring workshop creating unique textiles and souvenirs. Explore our boutique and support our local women tailors by choosing a special souvenir to take home.')), 'Describe Kanga Africa as the campus tailoring workshop and boutique');
+      assert.ok(card.includes('kanga-tailoring-workshop.webp'), 'Keep the relevant tailoring photo');
+      assert.ok(!card.includes('<a '), 'Remove the crossed-out tour link from the Kanga Africa card');
+    }
   }
   const leaked = [];
   for (const route of routes) {
@@ -286,6 +333,7 @@ try {
     checkSafariPhotos(englishMarkup, route, 'en');
     checkCampusTour(englishMarkup, route, 'en');
     checkCampusUpdates(englishMarkup, route, 'en');
+    checkHospitalityUpdates(englishMarkup, route, 'en');
     const english = visibleStrings(englishMarkup);
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
@@ -296,6 +344,7 @@ try {
       checkSafariPhotos(markup, route, language);
       checkCampusTour(markup, route, language);
       checkCampusUpdates(markup, route, language);
+      checkHospitalityUpdates(markup, route, language);
       const localized = visibleStrings(markup);
       if (route.startsWith('/contact')) {
         assert.ok(markup.includes(`!1s${language}!2stz`), 'The map embed should request the selected language');
@@ -322,6 +371,7 @@ try {
   console.log('Tour and typography checks passed: one paid daily half-day tour, supplied copy, correct CTAs, expanded Explore more and Peace Villages font roles.');
   console.log('Campus updates passed: six clean homepage actions, expanded card 01, three tour additions, five supplied photos and complete seven-day School Camp in all languages.');
   console.log('Campus spaces and safari checks passed: all ten space cards, explicit photo placeholders, localized labels and exact Mikumi enquiry copy.');
+  console.log('Hospitality checks passed: populated Explore more sections, dining photo and revised copy, direct external card links, and Kanga Africa boutique description in all languages.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

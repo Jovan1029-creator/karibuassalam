@@ -7,6 +7,7 @@ import caveMusicImg from "../../pics/site-marketing/cave-sufi-performance.webp";
 import sawaImg from "../../pics/site-marketing/sawa-music-room.webp";
 import stoneTownImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
+import { SPICE_ROUTE_CAFE } from "./siteConfig";
 
 export const campusTour = {
   title: "Daily Karibu Assalam Tour",
@@ -121,17 +122,17 @@ export const specialEvents = [
     photo: { src: stoneTownImg, alt: "Historic Stone Town in Zanzibar" },
     title: "Visit us in Stone Town",
     text:
-      "Coffee, breakfast and a pause at The Spice Route Cafe on Soko Muhogo Street.",
-    linkLabel: "Discover the cafe",
-    to: "/restaurant#spice-route-cafe",
+      "You can find us in Stone Town as well - our Spice Route Cafe offers yummy drinks & food in the heart of the historic city and our Spice Route Museum takes you on a story telling journey all about spice trade in Zanzibar.",
+    linkLabel: "Find out more",
+    href: SPICE_ROUTE_CAFE.tripAdvisorUrl,
   },
   {
     slug: "stay-updated",
     photo: { src: amphitheatreImg, alt: "The open-air amphitheatre at Karibu Assalam" },
-    title: "Follow Us",
+    title: "Follow us",
     text:
-      "Follow Karibu Assalam on Instagram for community stories, upcoming events and moments from the eco-village.",
-    linkLabel: "Follow on Instagram",
+      "We are on Instagram and Tripadvisor - follow us and learn more about our camps & retreats, volunteer experiences, life in our eco-village as well as special events.",
+    linkLabel: "Follow us",
     external: "instagramUrl",
   },
 ];

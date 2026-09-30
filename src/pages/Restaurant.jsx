@@ -6,9 +6,9 @@ import CTAButton from "../components/CTAButton";
 import { SPICE_ROUTE_CAFE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
-import diningImg from "../../pics/site-marketing/oceanfront-dining.webp";
+import diningImg from "../../pics/rooms/food-1-enhanced.webp";
 
-const features = ["Farm to Table", "Delicious", "Hygienic", "Multicultural", "Talented Chefs"];
+const features = ["Farm to Table", "Delicious", "Swahili and international cuisine", "Talented Chefs"];
 
 export default function Restaurant() {
   const { tx } = useLanguage();
@@ -18,7 +18,7 @@ export default function Restaurant() {
       <SEO
         title={tx("Food at Karibu Assalam Eco-Village | Karibu Assalam")}
         description={tx(
-          "Karibu Assalam food service includes farm-to-table meals, hygienic preparation, multicultural flavors, and beach dinners with sunset views."
+          "Karibu Assalam offers farm-to-table meals, Swahili and international cuisine, and beach dinners with sunset views."
         )}
         image={foodImg}
       />
@@ -26,35 +26,32 @@ export default function Restaurant() {
         eyebrow={tx("Eco-Village Food")}
         title={tx("Meals prepared for camp and retreat life")}
         subtitle={tx(
-          "Daily dining at Karibu Assalam Eco-Village is built around fresh meals, hygienic preparation, and shared experiences."
+          "Daily dining at Karibu Assalam Eco-Village is built around fresh meals, Swahili and international cuisine, and shared experiences."
         )}
         imageSrc={foodImg}
         imageAlt={tx("Farm-to-table meal prepared at Karibu Assalam Eco-Village")}
         compact
       />
 
-      <Section title={tx("Kitchen & Dining Features")}>
-        <div className="pill-list">
+      <Section id="dining-experience" title="Dining Experience" className="surface-section">
+        <div className="pill-list dining-features">
           {features.map((feature) => (
             <span key={feature} className="pill">{tx(feature)}</span>
           ))}
         </div>
-      </Section>
-
-      <Section title={tx("Dining Experience")} className="surface-section">
         <div className="retreat-feature-split">
           <img
             src={diningImg}
-            alt={tx("Guests sharing a meal on the oceanfront dining terrace")}
-            width="1600"
-            height="1066"
+            alt={tx("A fresh meal with fruit, bread and vegetables served in a woven tray")}
+            width="1672"
+            height="941"
             loading="lazy"
             decoding="async"
           />
           <div className="content-card">
             <p>
               {tx(
-                "Camp and retreat guests are served three meals daily, prepared by talented chefs in a hygienic kitchen environment with multicultural food influences."
+                "Camp and retreat guests are served three meals daily, prepared by talented chefs and featuring Swahili and international cuisine."
               )}
             </p>
             <p>
@@ -62,6 +59,7 @@ export default function Restaurant() {
                 "Dining also includes beach dinners with sunset views, creating a shared mealtime experience alongside the program schedule."
               )}
             </p>
+            <p>{tx("Karibu Assalam offers more than just food: If you would like to learn how to cook Swahili cuisine, join us for a cooking lesson. During Ramadan, we welcome you to join an iftar in our kanga village.")}</p>
           </div>
         </div>
       </Section>
