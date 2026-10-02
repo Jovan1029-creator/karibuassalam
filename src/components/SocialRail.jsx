@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { SITE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import useHeaderState from "../hooks/useHeaderState";
@@ -27,10 +28,24 @@ function Icon({ type }) {
   );
 }
 
-/** Fixed rail on the left edge, as on the reference site. */
+/** A compact desktop companion; the contact dock covers smaller screens. */
 export default function SocialRail() {
   const { tx } = useLanguage();
   const { isHome, scrolled } = useHeaderState();
+  const [hovered, setHovered] = useState(null);
+  const [focused, setFocused] = useState(null);
+  const [dismissed, setDismissed] = useState(null);
+  const active = hovered ?? focused;
+
+  // Also dismiss mouse-triggered labels when focus is elsewhere on the page.
+  useEffect(() => {
+    if (!active || dismissed === active) return undefined;
+    const dismiss = (event) => {
+      if (event.key === "Escape") setDismissed(active);
+    };
+    window.addEventListener("keydown", dismiss);
+    return () => window.removeEventListener("keydown", dismiss);
+  }, [active, dismissed]);
 
   const links = [
     { type: "instagram", href: SITE.instagramUrl, label: tx("Follow us on Instagram"), external: true },
@@ -38,7 +53,7 @@ export default function SocialRail() {
     { type: "email", href: `mailto:${SITE.email}`, label: tx("Email"), external: false },
   ];
 
-  // White marks read on the hero photograph; anywhere else they need ink.
+  // Both surfaces remain legible independently of the photograph behind them.
   const onLight = !isHome || scrolled;
 
   return (
@@ -49,12 +64,26 @@ export default function SocialRail() {
       {links.map((link) => (
         <a
           key={link.type}
+          className={`social-rail-link social-rail-link--${link.type}${active === link.type && dismissed !== link.type ? " is-active" : ""}`}
           href={link.href}
           aria-label={link.label}
-          title={link.label}
+          onMouseEnter={() => { setHovered(link.type); setDismissed(null); }}
+          onMouseLeave={() => setHovered(null)}
+          onFocus={() => { setFocused(link.type); setDismissed(null); }}
+          onBlur={() => setFocused(null)}
           {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         >
           <Icon type={link.type} />
+          <span className="social-rail-label" aria-hidden="true">
+            <span className="social-rail-label-inner">
+              {link.label}
+              {link.external && (
+                <svg className="social-rail-external" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                  <path d="M4 12 12 4M4 4h8v8" />
+                </svg>
+              )}
+            </span>
+          </span>
         </a>
       ))}
     </nav>

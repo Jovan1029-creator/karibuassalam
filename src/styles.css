@@ -3437,36 +3437,154 @@ main {
   margin: 0;
 }
 
-/* ---- fixed social rail ---- */
+/* ---- social rail: a small, self-contained contact capsule ---- */
 .social-rail {
+  --rail-ink: #faf6ed;
+  --rail-active-ink: var(--accent-deep);
+  --rail-active-bg: var(--bg);
+  --rail-focus: var(--gold-bright);
   position: fixed;
   top: 50%;
-  left: 0;
+  left: clamp(0.5rem, 0.8vw, 1.25rem);
   z-index: 900;
-  display: grid;
-  gap: 0.15rem;
+  display: none;
+  gap: 0.25rem;
+  padding: 0.375rem;
+  border: 1px solid rgba(250, 246, 237, 0.3);
+  border-radius: 999px;
+  background: rgba(6, 42, 48, 0.92);
+  box-shadow: 0 8px 24px rgba(4, 24, 28, 0.16), inset 0 1px rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   transform: translateY(-50%);
+  transition: background-color 180ms ease, border-color 180ms ease;
 }
 
-.social-rail a {
+.social-rail.on-light {
+  --rail-ink: var(--accent-deep);
+  --rail-active-ink: #fff;
+  --rail-active-bg: var(--accent-ocean);
+  --rail-focus: var(--accent-ocean);
+  background: rgba(250, 246, 237, 0.96);
+  border-color: rgba(6, 58, 65, 0.2);
+}
+
+.social-rail-link {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.875rem;
+  height: 2.875rem;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  color: var(--rail-ink);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.social-rail-link:is(:hover, :focus-visible) {
+  background: var(--rail-active-bg);
+  color: var(--rail-active-ink);
+}
+
+.social-rail-link:focus-visible {
+  outline: 2px solid var(--rail-focus);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.social-rail-link > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The filled WhatsApp mark occupies its full viewBox; balance it optically
+   with the inset outlines of Instagram and email. */
+.social-rail-link--whatsapp > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.social-rail-label {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  z-index: 1;
+  width: max-content;
+  max-width: 17rem;
+  /* This transparent bridge keeps the label hoverable across the gap. */
+  padding-left: 1rem;
+  transform: translateY(-50%);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.social-rail-link.is-active .social-rail-label {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.social-rail-label-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid rgba(250, 246, 237, 0.25);
+  border-left: 2px solid var(--gold-bright);
+  border-radius: 0.875rem;
+  background: var(--accent-deep);
+  box-shadow: var(--shadow-md);
   color: #fff;
-  background: rgba(9, 22, 26, 0.45);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  transition: background-color 160ms ease;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
 }
 
-.social-rail a:hover {
-  background: var(--accent-ocean);
+.social-rail-external {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex: 0 0 auto;
+  color: var(--gold-bright);
 }
 
-.social-rail svg {
-  width: 1.15rem;
-  height: 1.15rem;
+/* Leave the 1120px content column clear. On smaller or short screens, the
+   existing bottom-right contact dock and footer provide these destinations. */
+@media (min-width: 80rem) and (min-height: 30rem) {
+  .social-rail {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-rail,
+  .social-rail-link,
+  .social-rail-label {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .social-rail,
+  .social-rail.on-light,
+  .social-rail-label-inner {
+    --rail-ink: CanvasText;
+    --rail-focus: Highlight;
+    --rail-active-bg: Highlight;
+    --rail-active-ink: HighlightText;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
 }
 
 /* ---- floating contact dock ---- */
@@ -4025,12 +4143,6 @@ main {
   top: 0;
 }
 
-@media (max-width: 1180px) {
-  .social-rail {
-    display: none;
-  }
-}
-
 @media (max-width: 960px) {
   .circle-cards {
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -4454,41 +4566,6 @@ body {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.5);
   background: rgba(0, 0, 0, 0.18);
-}
-
-/* ---- social rail: bare white marks on the photograph ---- */
-.social-rail a {
-  width: 2.4rem;
-  height: 2.4rem;
-  background: transparent;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.6));
-  transition: color 160ms ease, transform 160ms ease;
-}
-
-.social-rail a:hover {
-  background: transparent;
-  color: var(--gold-bright);
-  transform: translateX(2px);
-}
-
-.social-rail svg {
-  width: 1.3rem;
-  height: 1.3rem;
-}
-
-/* Off the home page the rail sits on light ground, so it needs its own ink. */
-.social-rail.on-light a {
-  color: var(--accent-deep);
-  background: rgba(255, 255, 255, 0.88);
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  filter: none;
-}
-
-.social-rail.on-light a:hover {
-  color: var(--accent-ocean);
 }
 
 /* ---- a bolder torn sweep, closer to the reference ---- */

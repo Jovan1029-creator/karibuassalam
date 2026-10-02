@@ -324,6 +324,33 @@ try {
       assert.ok(!card.includes('<a '), 'Remove the crossed-out tour link from the Kanga Africa card');
     }
   }
+  function checkSocialRail(markup, route, language) {
+    const rail = markup.match(/<nav class="social-rail(?: on-light)?"[^>]*>[\s\S]*?<\/nav>/)?.[0];
+    assert.ok(rail, `${route}: preserve the shared social navigation`);
+    assert.ok(visibleStrings(rail).has(translateText(language, 'Stay connected')));
+    assert.equal(rail.includes('class="social-rail on-light"'), route !== '/', 'Use a light surface outside the home hero');
+    const links = [...rail.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+    const expected = [
+      [SITE.instagramUrl, 'Follow us on Instagram', true],
+      [`https://wa.me/${SITE.whatsAppPhone}`, 'Message us on WhatsApp', true],
+      [`mailto:${SITE.email}`, 'Email', false],
+    ];
+    assert.equal(links.length, expected.length, 'Keep exactly the three existing social destinations');
+    links.forEach((link, index) => {
+      const [href, phrase, external] = expected[index];
+      const label = translateText(language, phrase);
+      assert.ok(link[1].includes(`href="${href}"`), 'Keep the configured destination');
+      assert.ok(visibleStrings(`<a ${link[1]}>`).has(label), 'Localize each accessible link name');
+      assert.ok(visibleStrings(link[2]).has(label), 'Localize the revealed label as well');
+      assert.ok(link[2].includes('class="social-rail-label" aria-hidden="true"'), 'Do not announce the same label twice');
+      assert.ok(!link[1].includes('title='), 'Avoid a second native tooltip over the designed label');
+      assert.equal(link[1].includes('target="_blank"'), external, 'Only external destinations open a new tab');
+      if (external) assert.ok(link[1].includes('rel="noopener noreferrer"'));
+      for (const icon of link[2].matchAll(/<svg\b[^>]*>/g)) {
+        assert.ok(icon[0].includes('aria-hidden="true"'), 'Keep decorative icons out of the accessibility tree');
+      }
+    });
+  }
   const leaked = [];
   for (const route of routes) {
     const englishMarkup = await renderPage(route, 'en');
@@ -334,6 +361,7 @@ try {
     checkCampusTour(englishMarkup, route, 'en');
     checkCampusUpdates(englishMarkup, route, 'en');
     checkHospitalityUpdates(englishMarkup, route, 'en');
+    checkSocialRail(englishMarkup, route, 'en');
     const english = visibleStrings(englishMarkup);
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
@@ -345,6 +373,7 @@ try {
       checkCampusTour(markup, route, language);
       checkCampusUpdates(markup, route, language);
       checkHospitalityUpdates(markup, route, language);
+      checkSocialRail(markup, route, language);
       const localized = visibleStrings(markup);
       if (route.startsWith('/contact')) {
         assert.ok(markup.includes(`!1s${language}!2stz`), 'The map embed should request the selected language');
@@ -372,6 +401,7 @@ try {
   console.log('Campus updates passed: six clean homepage actions, expanded card 01, three tour additions, five supplied photos and complete seven-day School Camp in all languages.');
   console.log('Campus spaces and safari checks passed: all ten space cards, explicit photo placeholders, localized labels and exact Mikumi enquiry copy.');
   console.log('Hospitality checks passed: populated Explore more sections, dining photo and revised copy, direct external card links, and Kanga Africa boutique description in all languages.');
+  console.log('Social rail checks passed: three preserved destinations, localized hover/accessibility labels, safe external links and route-specific surfaces.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;
