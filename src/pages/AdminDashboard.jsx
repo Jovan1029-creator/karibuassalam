@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
-import { BOOKING_STATUSES, PLANNING_CAPACITY } from "../data/bookingOptions";
+import { BOOKING_STATUSES, PLANNING_CAPACITY, getBookingTypeLabel } from "../data/bookingOptions";
 import { SITE } from "../data/siteConfig";
 import {
   createSampleBookingRemote,
@@ -408,7 +408,7 @@ export default function AdminDashboard() {
                     <strong>{record.name || tx("Unnamed guest")}</strong>
                     <span className={`status-pill priority-${record.priority}`}>{tx(record.priority)}</span>
                   </span>
-                  <span>{tx(record.retreatTitle || record.bookingType)}</span>
+                  <span>{tx(record.retreatTitle || getBookingTypeLabel(record.bookingType))}</span>
                   <span className="booking-row-meta">
                     {formatDate(record.arrivalDate, language, tx)} - {record.guests} {tx("guest(s)")} - {tx(getStatusLabel(record.status))}
                   </span>
@@ -434,7 +434,7 @@ export default function AdminDashboard() {
                     <h3>{selectedRecord.name || tx("Unnamed guest")}</h3>
                     <p>{tx("{name} · {request} · {count} guest(s) · Arrival: {date}", {
                       name: selectedRecord.name || tx("Unnamed guest"),
-                      request: tx(selectedRecord.retreatTitle || selectedRecord.bookingType),
+                      request: tx(selectedRecord.retreatTitle || getBookingTypeLabel(selectedRecord.bookingType)),
                       count: selectedRecord.guests,
                       date: formatDate(selectedRecord.arrivalDate, language, tx),
                     })}</p>

@@ -1,4 +1,4 @@
-import { BOOKING_STATUSES, PLANNING_CAPACITY } from "../data/bookingOptions";
+import { BOOKING_STATUSES, PLANNING_CAPACITY, getBookingTypeLabel } from "../data/bookingOptions";
 import { getRetreatBySlug } from "../data/retreats";
 import { getBackendMode, isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
@@ -139,7 +139,7 @@ export function buildBookingMessage(data = {}) {
     "",
     "I would like to make a booking request.",
     booking.retreatTitle ? `Retreat/camp: ${booking.retreatTitle}` : null,
-    `Request type: ${booking.bookingType}`,
+    `Request type: ${getBookingTypeLabel(booking.bookingType)}`,
     booking.arrivalDate ? `Arrival date: ${booking.arrivalDate}` : null,
     booking.departureDate ? `Departure date: ${booking.departureDate}` : null,
     `Guests: ${booking.adults} adult${booking.adults === 1 ? "" : "s"}, ${booking.children} child${booking.children === 1 ? "" : "ren"}`,

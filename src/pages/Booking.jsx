@@ -1,9 +1,10 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
-import CTAButton from "../components/CTAButton";
+import BookingSummary from "../components/BookingSummary";
+import BookingConfirmation from "../components/BookingConfirmation";
 import { SITE } from "../data/siteConfig";
 import { retreats } from "../data/retreats";
 import {
@@ -71,14 +72,8 @@ export default function Booking() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
 
-  const selectedRetreat = retreats.find((retreat) => retreat.slug === form.retreatSlug);
+  const selectedRetreat = form.bookingType === "retreat" && retreats.find((retreat) => retreat.slug === form.retreatSlug);
   const directRequest = submitted || { ...form, retreatTitle: selectedRetreat?.title };
-
-  const nights = useMemo(() => {
-    if (!form.arrivalDate || !form.departureDate) return null;
-    const ms = new Date(form.departureDate) - new Date(form.arrivalDate);
-    return ms > 0 ? Math.round(ms / 86400000) : null;
-  }, [form.arrivalDate, form.departureDate]);
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -89,6 +84,7 @@ export default function Booking() {
     setForm((current) => ({
       ...current,
       [name]: type === "checkbox" ? checked : value,
+      ...(name === "bookingType" && value !== "retreat" ? { retreatSlug: "" } : {}),
     }));
   }
 
@@ -150,7 +146,7 @@ export default function Booking() {
       setSubmitted(record);
       if (record.storageMode === "supabase") {
         setStatus(
-          "Thanks — we have your request. The team replies within one day, usually on WhatsApp."
+          "Thanks — we have your request. Our team will contact you with more information."
         );
         setStatusTone("success");
       } else {
@@ -184,9 +180,9 @@ export default function Booking() {
       />
       <Hero
         eyebrow={tx("Booking")}
-        title={tx("Start a booking request")}
+        title={tx("Interested?")}
         subtitle={tx(
-          "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day."
+          "Tell us which retreat, tour or workshop you are interested in, and our team will reach out to you with more information."
         )}
         imageSrc={bookingImg}
         imageAlt={tx("Room at Karibu Assalam Eco-Village prepared for guests")}
@@ -194,14 +190,14 @@ export default function Booking() {
       />
 
       <Section
-        title={tx("Booking request")}
+        title={tx("Submit your request")}
         subtitle={tx(
-          "Share your dates and group details and the team will confirm availability and the next steps."
+          "Share your dates and details, and the team will confirm availability and the next steps."
         )}
       >
         <div className="booking-layout">
           <form className="booking-form" onSubmit={handleSubmit} ref={formRef} noValidate>
-            <div className="form-grid two">
+            <div className={`form-grid${form.bookingType === "retreat" ? " two" : ""}`}>
               <div className="form-field">
                 <label htmlFor="bookingType">{tx("Request type")}</label>
                 <select id="bookingType" name="bookingType" value={form.bookingType} onChange={handleChange}>
@@ -213,7 +209,7 @@ export default function Booking() {
                 </select>
               </div>
 
-              <div className="form-field">
+              {form.bookingType === "retreat" && <div className="form-field">
                 <label htmlFor="retreatSlug">{tx("Retreat or camp")}</label>
                 <select id="retreatSlug" name="retreatSlug" value={form.retreatSlug} onChange={handleChange}
                 aria-invalid={errors.retreatSlug ? "true" : undefined}
@@ -227,7 +223,7 @@ export default function Booking() {
                   ))}
                 </select>
                 {errors.retreatSlug && <p className="field-error" id="retreatSlug-error">{tx(errors.retreatSlug)}</p>}
-              </div>
+              </div>}
             </div>
 
             <div className="form-grid two">
@@ -412,7 +408,7 @@ export default function Booking() {
             </div>
 
             <button type="submit" className="btn btn-primary btn-lg" disabled={isSubmitting}>
-              {isSubmitting ? tx("Sending your request...") : deliveryFailed ? tx("Try again") : tx("Send request")}
+              {isSubmitting ? tx("Sending your request...") : deliveryFailed ? tx("Try again") : tx("Submit your request")}
             </button>
 
             <p className="secondary-actions">
@@ -430,6 +426,7 @@ export default function Booking() {
                 {tx(status)}
               </p>
             )}
+            <BookingConfirmation record={submitted} />
             {deliveryFailed && (
               <div className="booking-handoff">
                 <h3>{tx("Send it straight to the team")}</h3>
@@ -451,41 +448,8 @@ export default function Booking() {
             )}
           </form>
 
-          <aside className="booking-aside" aria-label={tx("What happens next")}>
-            <div className="content-card">
-              <h3>{tx("What happens next")}</h3>
-              <ol className="next-steps">
-                <li>{tx("The team checks availability for your dates.")}</li>
-                <li>{tx("You get a reply with options, pricing, and what is included.")}</li>
-                <li>
-                  {tx("A 20% deposit confirms a camp booking. Individual stays can be paid on arrival.")}
-                </li>
-              </ol>
-            </div>
-
-            <div className="content-card">
-              <h3>{tx("Your trip so far")}</h3>
-              <dl className="trip-summary">
-                <div>
-                  <dt>{tx("Arrival")}</dt>
-                  <dd>{form.arrivalDate || tx("Not set")}</dd>
-                </div>
-                <div>
-                  <dt>{tx("Departure")}</dt>
-                  <dd>{form.departureDate || tx("Not set")}</dd>
-                </div>
-                <div>
-                  <dt>{tx("Trip nights")}</dt>
-                  <dd>{nights ?? tx("Not set")}</dd>
-                </div>
-                <div>
-                  <dt>{tx("Guests")}</dt>
-                  <dd>
-                    {(Number(form.adults) || 0) + (Number(form.children) || 0)} {tx("guest(s)")}
-                  </dd>
-                </div>
-              </dl>
-            </div>
+          <aside className="booking-aside" aria-label={tx("Your trip so far")}>
+            <BookingSummary form={form} />
 
             <div className="content-card">
               <h3>{tx("Questions in the meantime?")}</h3>

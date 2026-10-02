@@ -76,6 +76,26 @@ test("only a confirmed database insert reports successful delivery", async () =>
   assert.equal(writes.length, 0);
 });
 
+test("volunteering enquiries retain their type and details in storage and direct messages", async () => {
+  useStorage();
+  stubBackend(async (row) => {
+    assert.equal(row.booking_type, "volunteering");
+    assert.equal(row.preferred_contact, "email");
+    assert.equal(row.guest_language, "de");
+    assert.equal(row.airport_pickup, true);
+    assert.equal(row.dietary_needs, "Vegetarian");
+    assert.equal(row.message, "Interested in school volunteering.");
+    return { error: null };
+  });
+  const result = await saveBookingRequestRemote({ ...draft, bookingType: "volunteering", preferredContact: "email",
+    guestLanguage: "de", airportPickup: true, dietaryNeeds: "Vegetarian", message: "Interested in school volunteering." });
+  assert.equal(result.storageMode, "supabase");
+  assert.equal(result.bookingType, "volunteering");
+  const message = buildBookingMessage(result);
+  assert.ok(message.includes("Request type: Volunteering options"));
+  assert.ok(message.includes("Interested in school volunteering."));
+});
+
 test("network failure preserves an unsent request for direct contact", async () => {
   const writes = useStorage();
   stubBackend(async () => { throw new TypeError("Failed to fetch"); });

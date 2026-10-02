@@ -78,17 +78,17 @@ function StayOption({ option, index }) {
           width={900}
           height={675}
         />
+        <span className="stay-option-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
       </div>
       <div className="stay-option-body">
-        <p className="stay-option-number">0{index + 1}</p>
         <h3>{tx(option.heading)}</h3>
         <p>{tx(option.copy)}</p>
         {option.href ? (
-          <a className="text-link" href={option.href} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-primary stay-option-action" href={option.href} target="_blank" rel="noopener noreferrer">
             {tx(option.ctaText)}
           </a>
         ) : (
-          <Link className="text-link" to={option.to}>
+          <Link className="btn btn-primary stay-option-action" to={option.to}>
             {tx(option.ctaText)}
           </Link>
         )}

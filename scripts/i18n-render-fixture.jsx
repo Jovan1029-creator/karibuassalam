@@ -6,6 +6,21 @@ import App from '../src/App';
 import { LanguageProvider } from '../src/context/LanguageContext';
 import { retreats } from '../src/data/retreats';
 import { experienceDetails } from '../src/data/experienceDetails';
+import BookingSummary from '../src/components/BookingSummary';
+import BookingConfirmation from '../src/components/BookingConfirmation';
+import { ProgrammeSlide } from '../src/components/ProgrammeSlider';
+
+export function renderBookingSummary(form, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><BookingSummary form={form} /></LanguageProvider>);
+}
+
+export function renderBookingConfirmation(record, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><BookingConfirmation record={record} /></LanguageProvider>);
+}
+
+export function renderProgrammeSlide(item, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><MemoryRouter><ProgrammeSlide item={item} /></MemoryRouter></LanguageProvider>);
+}
 
 export const routes = [
   '/', '/about', '/retreats', '/experiences', '/eco-resort', '/faq', '/contact',

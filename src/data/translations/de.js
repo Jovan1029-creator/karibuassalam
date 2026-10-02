@@ -668,7 +668,7 @@ export const de = {
   "Tell us your dates and who is travelling. The team confirms availability and next steps, usually within one day.":
     "Nennen Sie uns Ihre Termine und wer mitreist. Unser Team bestätigt Verfügbarkeit und nächste Schritte meist innerhalb eines Tages.",
   "Room at Karibu Assalam Eco-Village prepared for guests":
-    "Vorbereitetes Zimmer in der Karibu Assalam Eco-Village",
+    "Für Gäste vorbereitetes Zimmer im Karibu Assalam Öko-Dorf",
   "Booking request": "Buchungsanfrage",
   "Share your dates and group details and the team will confirm availability and the next steps.":
     "Teilen Sie uns Termine und Gruppengröße mit – wir bestätigen Verfügbarkeit und nächste Schritte.",
@@ -686,8 +686,8 @@ export const de = {
   "Preferred language": "Bevorzugte Sprache",
   "Preferred contact": "Bevorzugter Kontaktweg",
   Country: "Land",
-  "I may need airport pickup": "Ich brauche eventuell eine Flughafenabholung",
-  "Dietary or access needs": "Ernährung oder Barrierefreiheit",
+  "I may need airport pickup": "Ich benötige eventuell einen Flughafentransfer",
+  "Dietary or access needs": "Ernährungswünsche oder Unterstützungsbedarf",
   "Halal meals, vegetarian meals, mobility needs, allergies...":
     "Halal, vegetarisch, Barrierefreiheit, Allergien...",
   "Tell us what you want to book, your flexibility, and any questions.":
@@ -708,7 +708,7 @@ export const de = {
   "A 20% deposit confirms a camp booking. Individual stays can be paid on arrival.":
     "Eine Anzahlung von 20 % bestätigt die Camp-Buchung. Einzelaufenthalte können bei Ankunft bezahlt werden.",
   "Questions in the meantime?": "Fragen in der Zwischenzeit?",
-  "Your trip so far": "Ihre Angaben",
+  "Your trip so far": "Ihre bisherige Reiseplanung",
   Arrival: "Anreise",
   Departure: "Abreise",
   "Trip nights": "Nächte",
@@ -835,7 +835,7 @@ export const de = {
   "Accommodation only": "Nur Unterkunft",
   "Campus visit": "Campusbesuch",
   "Group or school program": "Gruppen- oder Schulprogramm",
-  "General travel question": "Allgemeine Reisefrage",
+  "General travel question": "Allgemeine Frage zur Reise",
   "Phone call": "Telefonat",
   "English": "Englisch",
   "French": "Französisch",
@@ -844,7 +844,7 @@ export const de = {
   "Turkish": "Türkisch",
   "Swahili": "Suaheli",
   "Arabic": "Arabisch",
-  "Shared eco-village room": "Geteiltes Zimmer im Öko-Dorf",
+  "Shared eco-village room": "Mehrbettzimmer im Öko-Dorf",
   "Family or private room request": "Familien- oder Privatzimmer",
   "Group room block": "Zimmerkontingent für Gruppen",
   "Contacted": "Kontaktiert",

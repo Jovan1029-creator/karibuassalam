@@ -30,7 +30,68 @@ function visibleStrings(html) {
   return new Set(values.map(decode).map(value => value.replace(/\s+/g, ' ').trim()).filter(Boolean));
 }
 try {
-  const { routes, renderPage } = await server.ssrLoadModule('/scripts/i18n-render-fixture.jsx');
+  const { routes, renderPage, renderBookingSummary, renderBookingConfirmation, renderProgrammeSlide } = await server.ssrLoadModule('/scripts/i18n-render-fixture.jsx');
+  const { BOOKING_TYPES, getBookingTypeLabel } = await server.ssrLoadModule('/src/data/bookingOptions.js');
+  const { bookingNights, bookingDate } = await server.ssrLoadModule('/src/components/BookingSummary.jsx');
+  const { campusProgramme } = await server.ssrLoadModule('/src/data/campusProgramme.js');
+  assert.deepEqual(BOOKING_TYPES.slice(-3).map(item => item.value), ['group-program', 'volunteering', 'general']);
+  assert.equal(getBookingTypeLabel('volunteering'), 'Volunteering options');
+  assert.equal(bookingNights('2026-10-06', '2026-10-13'), 7);
+  assert.equal(bookingNights('2026-10-06', '2026-10-06'), 0, 'Support a same-day campus visit');
+  assert.equal(bookingNights('2026-10-13', '2026-10-06'), null);
+  assert.equal(bookingNights('', '2026-10-06'), null);
+  assert.equal(bookingNights('invalid', '2026-10-06'), null);
+  assert.equal(bookingDate('', 'de'), null);
+  const summaryDraft = {
+    bookingType: 'volunteering', retreatSlug: 'school-camp', roomType: 'shared-room',
+    arrivalDate: '2026-10-06', departureDate: '2026-10-13', adults: '2', children: '1',
+    guestLanguage: 'de', preferredContact: 'email', airportPickup: true,
+    name: 'Example Visitor', email: 'visitor@example.com', phone: '+255000000000', country: 'Germany',
+    dietaryNeeds: 'Vegetarian meals', message: '<script>not executable</script>',
+  };
+  assert.equal(new Set(campusProgramme.activities.map(item => item.image)).size, 3, 'Each activity has its own photograph');
+  assert.ok(campusProgramme.activities.every(item => item.date === null), 'Do not publish example dates as confirmed events');
+  for (const language of ['en', 'tr', 'de']) {
+    const summary = renderBookingSummary(summaryDraft, language);
+    const visible = visibleStrings(summary);
+    for (const phrase of ['Your trip so far', 'Volunteering options', 'Shared eco-village room', 'German', 'Email', 'Requested',
+      'Adults', 'Children', 'Room preference', 'Preferred language', 'Preferred contact', 'Airport pickup', 'Dietary or access needs', 'Message']) {
+      assert.ok(visible.has(translateText(language, phrase)), `Expanded booking summary: ${phrase} (${language})`);
+    }
+    for (const value of [summaryDraft.name, summaryDraft.email, summaryDraft.phone, summaryDraft.country, summaryDraft.dietaryNeeds]) assert.ok(visible.has(value), 'Preserve user-entered details without translating them');
+    assert.ok(visible.has(bookingDate(summaryDraft.arrivalDate, language)), 'Localize summary dates');
+    assert.ok(visible.has('7') && visible.has('2') && visible.has('1'), 'Show nights and separate adult/child counts');
+    assert.ok(!visible.has(translateText(language, 'School Camp')), 'Do not show a stale retreat on a volunteering enquiry');
+    assert.ok(!summary.includes('<script>'), 'Escape user notes in the summary');
+    const changed = renderBookingSummary({ ...summaryDraft, bookingType: 'retreat', retreatSlug: 'school-camp', airportPickup: false }, language);
+    assert.ok(visibleStrings(changed).has(translateText(language, 'School Camp')), 'Reflect a changed form selection');
+    assert.ok(visibleStrings(changed).has(translateText(language, 'Not requested')));
+    for (const record of [null, { storageMode: 'local-fallback' }, { storageMode: 'memory-fallback' }, {}]) {
+      assert.equal(renderBookingConfirmation(record, language), '', 'Never show next steps as success for unsent requests');
+    }
+    const confirmation = renderBookingConfirmation({ storageMode: 'supabase', id: 'test-confirmed' }, language);
+    for (const phrase of ['What happens next', 'The team reviews your dates and interests.', 'We contact you using your preferred contact method.',
+      'You receive the relevant details, availability and next steps.', 'This is a request, not a confirmed booking.']) {
+      assert.ok(visibleStrings(confirmation).has(translateText(language, phrase)), 'Translate all post-submission copy');
+    }
+    assert.match(confirmation, /id="booking-next-title" tabindex="-1"/, 'The successful result can receive focus');
+    const campConfirmation = renderBookingConfirmation({ storageMode: 'supabase', bookingType: 'retreat' }, language);
+    assert.ok(visibleStrings(campConfirmation).has(translateText(language, 'A 20% deposit confirms a camp booking. Individual stays can be paid on arrival.')), 'Preserve existing camp and accommodation payment guidance');
+    const volunteerConfirmation = renderBookingConfirmation({ storageMode: 'supabase', bookingType: 'volunteering' }, language);
+    assert.ok(!visibleStrings(volunteerConfirmation).has(translateText(language, 'A 20% deposit confirms a camp booking. Individual stays can be paid on arrival.')), 'Do not imply a camp deposit applies to volunteering enquiries');
+    for (const item of campusProgramme.activities) {
+      assert.ok(routes.includes(item.to), 'Every activity links to a real detail page');
+      assert.ok(statSync(new URL(`..${item.image}`, import.meta.url)).size > 0, 'Every slider photo exists');
+      const slide = renderProgrammeSlide(item, language);
+      for (const phrase of [item.title, item.description, item.alt, 'Date to be confirmed', 'Activity preview — not a confirmed event.']) {
+        assert.ok(visibleStrings(slide).has(translateText(language, phrase)), 'Translate every slide, not just the first');
+      }
+      assert.ok(slide.includes(`href="${item.to}"`));
+    }
+    const datedSlide = renderProgrammeSlide({ ...campusProgramme.activities[0], date: '2026-10-06' }, language);
+    assert.match(datedSlide, /datetime="2026-10-06"/i, 'A confirmed date can be added without changing the slider');
+    assert.ok(!visibleStrings(datedSlide).has(translateText(language, 'Date to be confirmed')));
+  }
   const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
   const { safariHeroPhoto, safariOverviewPhoto, safariPlanningPhoto, safariGalleryPhotos } = await server.ssrLoadModule('/src/data/safariPhotos.js');
   const { campusTour, safari } = await server.ssrLoadModule('/src/data/experiences.js');
@@ -70,7 +131,11 @@ try {
         const anchor = card.match(/<a\b([^>]*)>([\s\S]*?)<\/a>/);
         assert.equal(decode(anchor?.[2] || ''), translateText(language, actions[index][0]), 'Remove View details and arrow from each homepage action');
         assert.ok(anchor[1].includes(`href="${actions[index][1]}"`), 'Preserve the card destination');
+        assert.ok(anchor[1].includes('class="btn btn-primary stay-option-action"'), 'Give all six card actions the same clear button treatment');
+        assert.ok(card.includes(`<span class="stay-option-number" aria-hidden="true">0${index + 1}</span>`), 'Keep the visual sequence without duplicating it for screen readers');
+        assert.ok(card.indexOf('stay-option-number') < card.indexOf('stay-option-body'), 'Place the number badge in the photo frame');
       });
+      assert.ok(visibleStrings(cards[4]).has(translateText(language, 'Join an existing volunteer programme for a few weeks - support our teachers in the school, engage in practical experience in our permaculture garden, support our operations, fundraise for Qurban and Ramadan donations or apply for long-term volunteering opportunities.')), 'Preserve the complete approved volunteer copy in every language');
       assert.ok(visibleStrings(cards[0]).has(translateText(language, 'Stay in our eco village right on Kizimkazi beach in accommodation with views of the Indian Ocean. Slow down by the sea, enjoy Swahili flavours and discover life on our community-led campus. Explore the permaculture gardens, join a hands-on workshop or make time to connect with the people and culture of Zanzibar.')), 'Card 01 has expanded, localized copy');
     }
     const expectedPhotos = route === '/retreats/school-camp'
@@ -229,7 +294,34 @@ try {
     }
     assert.match(markup, /datetime="2026-10"/i, 'Keep the explicitly requested October edition');
     assert.ok(markup.indexOf('id="happenings-later-title"') > markup.indexOf('id="programme-month"'), 'Later heading follows the monthly programme');
-    assert.ok(markup.includes('href="/contact"'), 'Programme enquiries have a working destination');
+    const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0];
+    assert.ok(!main.includes('href="/contact"'), 'Remove the crossed-out programme and upcoming-date contact links');
+    for (const phrase of ['Ask about the programme', 'Ask about upcoming dates']) {
+      assert.ok(!visible.has(translateText(language, phrase)), 'Remove the superseded enquiry actions');
+    }
+    assert.ok(main.includes('class="happenings-carousel" role="region"'), 'Render the photo-based activity slider');
+    assert.ok(main.includes('id="programme-slide" aria-live="polite"'), 'Announce manually selected slides');
+    for (const phrase of ['Previous activity', 'Next activity', 'Date to be confirmed', 'Activity preview — not a confirmed event.', 'Campus Tour incl Hamammni Workshop']) {
+      assert.ok(visible.has(translateText(language, phrase)), 'Localize slider controls and the first activity');
+    }
+    assert.equal((main.match(/aria-pressed="true"/g) || []).length, 1, 'Exactly one activity is selected');
+    assert.equal((main.match(/class="happenings-dot"/g) || []).length, 3, 'Each photograph has a direct navigation control');
+  }
+  function checkBookingUpdates(markup, route, language) {
+    if (route !== '/booking') return;
+    const visible = visibleStrings(markup);
+    for (const phrase of ['Interested?', 'Submit your request', 'Volunteering options',
+      'Tell us which retreat, tour or workshop you are interested in, and our team will reach out to you with more information.',
+      'Share your dates and details, and the team will confirm availability and the next steps.']) {
+      assert.ok(visible.has(translateText(language, phrase)), `New booking copy: ${phrase} (${language})`);
+    }
+    assert.ok(!visible.has(translateText(language, 'What happens next')), 'Next steps appear after delivery, not beside an empty form');
+    const menu = markup.match(/<select id="bookingType"[\s\S]*?<\/select>/)?.[0];
+    const values = [...menu.matchAll(/<option value="([^"]+)"/g)].map(match => match[1]);
+    assert.deepEqual(values, BOOKING_TYPES.map(option => option.value), 'Keep volunteering between group/school and general travel');
+    const aside = markup.match(/<aside class="booking-aside"[\s\S]*?<\/aside>/)?.[0];
+    assert.ok(aside.indexOf('id="trip-summary-title"') < aside.indexOf('class="aside-contact"'), 'Trip summary is first in the sidebar');
+    assert.ok(aside.includes('booking-summary-hint'), 'Explain the live summary');
   }
   function checkCampusSpaces(markup, route, language) {
     if (route !== '/campus') return;
@@ -362,6 +454,7 @@ try {
     checkCampusUpdates(englishMarkup, route, 'en');
     checkHospitalityUpdates(englishMarkup, route, 'en');
     checkSocialRail(englishMarkup, route, 'en');
+    checkBookingUpdates(englishMarkup, route, 'en');
     const english = visibleStrings(englishMarkup);
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
@@ -374,6 +467,7 @@ try {
       checkCampusUpdates(markup, route, language);
       checkHospitalityUpdates(markup, route, language);
       checkSocialRail(markup, route, language);
+      checkBookingUpdates(markup, route, language);
       const localized = visibleStrings(markup);
       if (route.startsWith('/contact')) {
         assert.ok(markup.includes(`!1s${language}!2stz`), 'The map embed should request the selected language');
@@ -402,6 +496,7 @@ try {
   console.log('Campus spaces and safari checks passed: all ten space cards, explicit photo placeholders, localized labels and exact Mikumi enquiry copy.');
   console.log('Hospitality checks passed: populated Explore more sections, dining photo and revised copy, direct external card links, and Kanga Africa boutique description in all languages.');
   console.log('Social rail checks passed: three preserved destinations, localized hover/accessibility labels, safe external links and route-specific surfaces.');
+  console.log('Booking and programme checks passed: new copy, volunteering option, live summary data, delivery-gated next steps, three photo slides and no invented event dates.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

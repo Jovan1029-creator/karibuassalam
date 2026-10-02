@@ -3,8 +3,13 @@ export const BOOKING_TYPES = [
   { value: "accommodation", label: "Accommodation only" },
   { value: "campus-visit", label: "Campus visit" },
   { value: "group-program", label: "Group or school program" },
+  { value: "volunteering", label: "Volunteering options" },
   { value: "general", label: "General travel question" },
 ];
+
+export function getBookingTypeLabel(value) {
+  return BOOKING_TYPES.find((option) => option.value === value)?.label || value;
+}
 
 export const CONTACT_METHODS = [
   { value: "whatsapp", label: "WhatsApp" },
