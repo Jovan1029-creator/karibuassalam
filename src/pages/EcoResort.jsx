@@ -71,8 +71,8 @@ export default function EcoResort() {
             <p>{tx("Our campus has a tailoring workshop creating unique textiles and souvenirs. Explore our boutique and support our local women tailors by choosing a special souvenir to take home.")}</p>
           </article>
           <article id="hamammni" className="eco-discover-card">
-            <PhotoCardMedia photo={{ src: soapImg, alt: "Handmade soaps being prepared in the Hamammni workshop" }} />
-            <h3>{tx("Hamammni")}</h3>
+            <PhotoCardMedia photo={{ src: soapImg, alt: "Handmade soaps being prepared in the Hamamni workshop" }} />
+            <h3>{tx("Hamamni")}</h3>
             <p>{tx("Make your own soap with the women's cooperative using coconut oil and local botanicals.")}</p>
             <Link className="text-link" to="/experiences/workshops/soap-making">{tx("Explore the workshop")}</Link>
           </article>

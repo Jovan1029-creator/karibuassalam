@@ -5,6 +5,7 @@ import Hero from "../components/Hero";
 import PhotoSlot from "../components/PhotoSlot";
 import PhotoCardMedia from "../components/PhotoCardMedia";
 import EventCard from "../components/EventCard";
+import CafeReviewStrip from "../components/CafeReviewStrip";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { safari, specialEvents, volunteering } from "../data/experiences";
@@ -78,6 +79,7 @@ export default function ExperienceCategory() {
               <EventCard item={item} key={item.slug} />
             ))}
           </div>
+          <CafeReviewStrip />
         </Section>
       )}
 

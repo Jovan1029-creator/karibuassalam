@@ -6,6 +6,7 @@ import CTAButton from "../components/CTAButton";
 import PhotoSlot from "../components/PhotoSlot";
 import PhotoCardMedia from "../components/PhotoCardMedia";
 import EventCard from "../components/EventCard";
+import CafeReviewStrip from "../components/CafeReviewStrip";
 import SEO from "../components/SEO";
 import { EXPERIENCE_LINKS, SITE } from "../data/siteConfig";
 import {
@@ -20,9 +21,10 @@ import { useLanguage } from "../context/LanguageContext";
 import { safariOverviewPhoto } from "../data/safariPhotos";
 import heroImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
 import spiceImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
-import coastImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
-import safariImg from "../../pics/zanzibarpics/Blue Safari.jpg";
-import townImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
+// Legacy filenames are reversed: use the actual subjects for the tour cards.
+import coastImg from "../../pics/zanzibarpics/Blue Safari.jpg";
+import sandbankImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
+import villageImg from "../../pics/site-marketing/ramadan-community-evening.webp";
 import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
 import soapWorkshopImg from "../../pics/site-marketing/hamammni-soap-workshop.webp";
 import drummingWorkshopImg from "../../pics/site-marketing/ngoma-drumming-workshop.webp";
@@ -38,9 +40,9 @@ const workshopImages = {
 
 const tourImages = {
   "spice-tour": spiceImg,
-  "city-tour": townImg,
   "east-coast-tour": coastImg,
-  "blue-safari": safariImg,
+  "blue-safari": sandbankImg,
+  "kizimkazi-village-tour": villageImg,
 };
 
 export default function Experiences() {
@@ -88,9 +90,8 @@ export default function Experiences() {
         <TornEdge position="top" color="var(--bg)" />
 
         <div className="set-intro">
-          <p className="eyebrow">{tx("Visit our campus")}</p>
+          <p className="eyebrow">{tx(campusTour.promise)}</p>
           <h2 className="script-heading">{tx(campusTour.title)}</h2>
-          <p className="section-lead">{tx(campusTour.promise)}</p>
         </div>
 
         <div className="container campus-tour">
@@ -173,7 +174,7 @@ export default function Experiences() {
                 <PhotoSlot
                   src={tourImages[item.slug]}
                   label={tx(item.title)}
-                  alt={tx(item.title)}
+                  alt={tx(item.photoAlt || item.title)}
                   ratio="4 / 3"
                   width={1024}
                   height={768}
@@ -255,6 +256,7 @@ export default function Experiences() {
             <EventCard item={item} key={item.slug} />
           ))}
         </div>
+        <CafeReviewStrip />
         <div className="section-actions">
           <Link className="text-link" to="/experiences/events">{tx("Explore special events")}</Link>
         </div>

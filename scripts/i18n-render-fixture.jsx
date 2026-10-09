@@ -9,6 +9,15 @@ import { experienceDetails } from '../src/data/experienceDetails';
 import BookingSummary from '../src/components/BookingSummary';
 import BookingConfirmation from '../src/components/BookingConfirmation';
 import { ProgrammeSlide } from '../src/components/ProgrammeSlider';
+import GuestReviews, { ReviewQuote } from '../src/components/GuestReviews';
+
+export function renderReviewQuote(review, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><ReviewQuote review={review} /></LanguageProvider>);
+}
+
+export function renderGuestReviews(reviews, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><GuestReviews reviews={reviews} /></LanguageProvider>);
+}
 
 export function renderBookingSummary(form, language) {
   return renderToString(<LanguageProvider initialLanguage={language}><BookingSummary form={form} /></LanguageProvider>);

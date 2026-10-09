@@ -86,6 +86,7 @@ export default function App() {
           <Route path="/retreats/:slug" element={<RetreatDetail />} />
           <Route path="/experiences" element={<Experiences />} />
           <Route path="/experiences/:category" element={<ExperienceCategory />} />
+          <Route path="/experiences/tours/city-tour" element={<Navigate to="/experiences/tours/spice-tour" replace />} />
           <Route path="/experiences/:type/:slug" element={<ExperienceDetail />} />
           <Route path="/eco-resort" element={<EcoResort />} />
           <Route path="/faq" element={<FAQ />} />

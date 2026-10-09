@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { SITE } from "../data/siteConfig";
 import PhotoCardMedia from "./PhotoCardMedia";
-import CafeRating from "./CafeRating";
 
 export default function EventCard({ item }) {
   const { tx } = useLanguage();
@@ -12,7 +11,6 @@ export default function EventCard({ item }) {
       <PhotoCardMedia photo={item.photo} />
       <h3>{tx(item.title)}</h3>
       <p>{tx(item.text)}</p>
-      {item.slug === "stone-town-cafe" && <CafeRating compact />}
       <div className="event-card-action">
         {externalUrl ? (
           <a className="text-link" href={externalUrl} target="_blank" rel="noopener noreferrer">

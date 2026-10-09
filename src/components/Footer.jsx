@@ -1,6 +1,6 @@
 // src\components\Footer.jsx
 import { Link } from "react-router-dom";
-import { ECO_VILLAGE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, SITE } from "../data/siteConfig";
+import { ECO_VILLAGE_LINKS, NAV_LINKS, NAV_LINKS_TAIL, SITE, SPICE_ROUTE_CAFE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
 
@@ -17,6 +17,14 @@ const navLabelKey = {
 };
 
 function FooterIcon({ type }) {
+  if (type === "location") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" />
+        <circle cx="12" cy="10" r="2.5" />
+      </svg>
+    );
+  }
   if (type === "phone") {
     return (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -76,6 +84,9 @@ export default function Footer() {
               <span>{SITE.brandName}</span>
             </Link>
             <p className="footer-tagline">{tx(SITE.tagline)}</p>
+            <a className="text-link footer-stone-town" href={SPICE_ROUTE_CAFE.tripAdvisorUrl} target="_blank" rel="noopener noreferrer">
+              {tx("Visit us in Stone Town")}<span aria-hidden="true"> ↗</span>
+            </a>
           </section>
 
           <nav className="footer-col" aria-label={tx("Explore")}>
@@ -86,7 +97,6 @@ export default function Footer() {
                   <Link to={link.to}>{link.name ? tx(link.name) : t.nav[navLabelKey[link.label]] ?? tx(link.label)}</Link>
                 </li>
               ))}
-              <li><Link to="/restaurant#spice-route-cafe" target="_blank" rel="noopener noreferrer">{tx("Visit us in Stone Town")}<span aria-hidden="true"> ↗</span></Link></li>
             </ul>
           </nav>
 
@@ -122,6 +132,11 @@ export default function Footer() {
                   aria-label={tx("Follow Karibu Assalam on Instagram")}
                 >
                   {SITE.instagramHandle}
+                </a>
+              </FooterContactItem>
+              <FooterContactItem icon="location" label={tx("Location")}>
+                <a href={SITE.googleMapsUrl} target="_blank" rel="noopener noreferrer">
+                  {tx("Find us on Google Maps")}<span aria-hidden="true"> ↗</span>
                 </a>
               </FooterContactItem>
             </ul>

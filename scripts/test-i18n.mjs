@@ -30,10 +30,52 @@ function visibleStrings(html) {
   return new Set(values.map(decode).map(value => value.replace(/\s+/g, ' ').trim()).filter(Boolean));
 }
 try {
-  const { routes, renderPage, renderBookingSummary, renderBookingConfirmation, renderProgrammeSlide } = await server.ssrLoadModule('/scripts/i18n-render-fixture.jsx');
+  const { routes, renderPage, renderBookingSummary, renderBookingConfirmation, renderProgrammeSlide, renderReviewQuote, renderGuestReviews } = await server.ssrLoadModule('/scripts/i18n-render-fixture.jsx');
   const { BOOKING_TYPES, getBookingTypeLabel } = await server.ssrLoadModule('/src/data/bookingOptions.js');
   const { bookingNights, bookingDate } = await server.ssrLoadModule('/src/components/BookingSummary.jsx');
   const { campusProgramme } = await server.ssrLoadModule('/src/data/campusProgramme.js');
+  const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS, RETREAT_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
+  const { guestReviews, reviewSources } = await server.ssrLoadModule('/src/data/guestReviews.js');
+  const { reviewIndex } = await server.ssrLoadModule('/src/components/GuestReviews.jsx');
+  assert.equal(SITE.googleMapsUrl, 'https://maps.app.goo.gl/gQsTRmh4VrURr1zRA', 'Use the exact supplied map pin');
+  assert.notEqual(SITE.foundationTripAdvisorUrl, SPICE_ROUTE_CAFE.tripAdvisorUrl, 'Keep the Foundation and cafe listings separate');
+  assert.equal(guestReviews.length, 12);
+  assert.equal(new Set(guestReviews.map(review => review.id)).size, guestReviews.length, 'Stable unique slide identities');
+  assert.deepEqual(guestReviews.filter(review => review.source === 'google').map(review => review.author), [
+    'Monem Daymi', 'Turan Akgün', 'Muhammad Romadhon Mubarok', 'Lamaar Malik', 'Venance Dulle',
+    'shan ali sumar', 'Cihan', 'Cengizhan Atlihan', 'Suliman Albimani', 'Hayrunnisa E',
+  ], 'Represent all ten Google reviewers from the supplied text, including critical feedback');
+  assert.equal(reviewIndex(-1, 12), 11, 'Previous wraps from first to last');
+  assert.equal(reviewIndex(12, 12), 0, 'Next wraps from last to first');
+  assert.equal(reviewIndex(5, 12), 5);
+  assert.equal(reviewIndex(0, 0), 0, 'Handle an empty selection safely');
+  assert.ok(guestReviews.filter(review => review.source === 'tripadvisor').reduce((words, review) => words + review.text.split(/\s+/).length, 0) <= 25, 'Keep the sourced Tripadvisor excerpts short');
+  for (const language of ['en', 'tr', 'de']) {
+    assert.equal(renderGuestReviews([], language), '', 'Do not render an empty review section');
+    assert.ok(!renderGuestReviews([guestReviews[0]], language).includes('guest-review-controls'), 'A single quote needs no slider controls');
+    for (const review of guestReviews) {
+      assert.ok(reviewSources[review.source], 'Every quote has an identified source');
+      assert.equal(review.rating, undefined, 'Do not infer stars from pasted glyphs');
+      if (review.source === 'google') assert.equal(review.date, undefined, 'Do not invent dates from relative timestamps');
+      const quote = renderReviewQuote(review, language);
+      const visible = visibleStrings(quote);
+      assert.ok(visible.has(translateText(language, review.text)), 'Translate every slide, not just the first');
+      assert.ok(visible.has(review.author), 'Preserve reviewer names without translating them');
+      assert.ok(visible.has(SITE.nonprofitName), 'Attribute each review to the Foundation');
+      assert.ok(visible.has(reviewSources[review.source].platform));
+      assert.ok(visible.has(translateText(language, language === 'en' ? 'Review excerpt' : 'Translated review excerpt')));
+      assert.ok(quote.includes('<blockquote>') && quote.includes('<figcaption>'), 'Use accessible quotation semantics');
+      assert.ok(!quote.includes('<img') && !quote.includes('<iframe'), 'Reviews have no photos or embedded widgets');
+      assert.ok(quote.includes(`href="${reviewSources[review.source].href}"`) && quote.includes('target="_blank"') && quote.includes('rel="noopener noreferrer"'));
+      assert.ok(!quote.includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'Do not mix cafe reviews into Foundation quotes');
+      if (review.response) {
+        assert.ok(visible.has(translateText(language, 'Owner response — excerpt')));
+        assert.ok(visible.has(translateText(language, review.response.text)));
+        assert.ok(quote.indexOf('guest-review-response') > quote.indexOf('</figcaption>'), 'Keep owner responses outside the guest quotation');
+      }
+      if (review.date) assert.ok(quote.toLowerCase().includes(`datetime="${review.date}"`));
+    }
+  }
   assert.deepEqual(BOOKING_TYPES.slice(-3).map(item => item.value), ['group-program', 'volunteering', 'general']);
   assert.equal(getBookingTypeLabel('volunteering'), 'Volunteering options');
   assert.equal(bookingNights('2026-10-06', '2026-10-13'), 7);
@@ -50,7 +92,12 @@ try {
     dietaryNeeds: 'Vegetarian meals', message: '<script>not executable</script>',
   };
   assert.equal(new Set(campusProgramme.activities.map(item => item.image)).size, 3, 'Each activity has its own photograph');
-  assert.ok(campusProgramme.activities.every(item => item.date === null), 'Do not publish example dates as confirmed events');
+  assert.equal(campusProgramme.month, '2026-10', 'Keep recurring activities scoped to the confirmed October edition');
+  assert.deepEqual(campusProgramme.activities.map(item => [item.schedule, item.title, item.to, item.joinLabel]), [
+    ['Every Tuesday', 'Campus Tour including Hamamni Workshop', '/experiences/tours/campus-village-tour', 'Join the next tour'],
+    ['Every Thursday', 'Campus Tour including Ngoma Workshop', '/experiences/tours/campus-village-tour', 'Join the workshop'],
+    ['Every Wednesday', 'Swahili cooking class', '/experiences/workshops/cooking', 'Join the next class'],
+  ], 'Use the supplied weekly schedule, detail pages and join actions');
   for (const language of ['en', 'tr', 'de']) {
     const summary = renderBookingSummary(summaryDraft, language);
     const visible = visibleStrings(summary);
@@ -83,21 +130,68 @@ try {
       assert.ok(routes.includes(item.to), 'Every activity links to a real detail page');
       assert.ok(statSync(new URL(`..${item.image}`, import.meta.url)).size > 0, 'Every slider photo exists');
       const slide = renderProgrammeSlide(item, language);
-      for (const phrase of [item.title, item.description, item.alt, 'Date to be confirmed', 'Activity preview — not a confirmed event.']) {
+      for (const phrase of [item.title, item.description, item.alt, item.schedule, item.joinLabel]) {
         assert.ok(visibleStrings(slide).has(translateText(language, phrase)), 'Translate every slide, not just the first');
       }
       assert.ok(slide.includes(`href="${item.to}"`));
+      for (const old of ['Date to be confirmed', 'Activity preview — not a confirmed event.']) {
+        assert.ok(!visibleStrings(slide).has(translateText(language, old)), 'Confirmed weekly activities must not show preview warnings');
+      }
+      const join = [...slide.matchAll(/<a\b([^>]*)>/g)].find(match => match[1].includes('https://wa.me/'))?.[1];
+      assert.ok(join?.includes('target="_blank"') && join.includes('rel="noopener noreferrer"'), 'Join links open WhatsApp safely in a new tab');
+      const url = new URL(decode(join.match(/href="([^"]+)"/)[1]));
+      assert.equal(url.pathname, `/${SITE.whatsAppPhone}`);
+      assert.equal(url.searchParams.get('text'), translateText(language, item.whatsAppMessage), 'Prefill the correct localized activity message without sending it');
     }
     const datedSlide = renderProgrammeSlide({ ...campusProgramme.activities[0], date: '2026-10-06' }, language);
     assert.match(datedSlide, /datetime="2026-10-06"/i, 'A confirmed date can be added without changing the slider');
     assert.ok(!visibleStrings(datedSlide).has(translateText(language, 'Date to be confirmed')));
   }
-  const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
   const { safariHeroPhoto, safariOverviewPhoto, safariPlanningPhoto, safariGalleryPhotos } = await server.ssrLoadModule('/src/data/safariPhotos.js');
-  const { campusTour, safari } = await server.ssrLoadModule('/src/data/experiences.js');
+  const { campusTour, safari, tours } = await server.ssrLoadModule('/src/data/experiences.js');
   const { getExperienceDetail } = await server.ssrLoadModule('/src/data/experienceDetails.js');
   const campusDetail = getExperienceDetail('tours', 'campus-village-tour');
-  const { getRetreatBySlug } = await server.ssrLoadModule('/src/data/retreats.js');
+  assert.deepEqual(tours.map(item => item.title), ['City & Spice', 'South East Coast', 'Sandbank & Snorkeling', 'Kizimkazi Village Tour'], 'Use the four requested excursion names and order');
+  for (const tour of tours) {
+    assert.equal(getExperienceDetail('tours', tour.slug)?.title, tour.title, 'Every excursion card matches its detail page');
+    assert.ok(routes.includes(`/experiences/tours/${tour.slug}`), 'Every excursion has a tested destination');
+  }
+  const spiceCity = getExperienceDetail('tours', 'spice-tour');
+  assert.equal(spiceCity.intro, "Explore Zanzibar's cultural heritage on a full day tour with a visit of spice gardens and a guided tour of the old town's maze of alleys.");
+  assert.equal(tours[0].text, spiceCity.intro, 'Use the supplied City & Spice introduction on both pages');
+  assert.deepEqual(spiceCity.included, ['Guided spice farm tour', 'Guided tour of the historic city centre'], 'Combine spice and city activities in the shared tour');
+  const villageTour = getExperienceDetail('tours', 'kizimkazi-village-tour');
+  assert.equal(villageTour.intro, 'Take a village tour with our team to connect with the community, learn about local life and visit Salaam Cave.');
+  assert.equal(tours[3].text, villageTour.intro, 'Use the supplied village tour introduction on both pages');
+  assert.ok(villageTour.included.includes('Visit Salaam Cave'), 'Include the requested Salaam Cave visit');
+  assert.equal(villageTour.duration, 'Ask the team');
+  assert.equal(villageTour.start, 'Ask the team');
+  assert.equal(villageTour.price, undefined, 'Do not invent the new village tour price');
+  assert.equal(getExperienceDetail('tours', 'blue-safari').title, 'Sandbank & Snorkeling', 'Preserve the old ocean-tour URL after renaming');
+  assert.ok(decodeURIComponent(getExperienceDetail('tours', 'blue-safari').image).endsWith('/East Coast Tour.jpg'), 'Use the actual sandbank photograph despite its legacy filename');
+  assert.ok(decodeURIComponent(getExperienceDetail('tours', 'east-coast-tour').image).endsWith('/Blue Safari.jpg'), 'Use The Rock photograph for South East Coast despite its legacy filename');
+  const appSource = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8');
+  assert.match(appSource, /path="\/experiences\/tours\/city-tour" element=\{<Navigate to="\/experiences\/tours\/spice-tour" replace/, 'Old city-tour links redirect to the combined tour');
+  const { getRetreatBySlug, retreats } = await server.ssrLoadModule('/src/data/retreats.js');
+  const kindness = getRetreatBySlug('kindness-camp');
+  const volunteerCamp = getRetreatBySlug('volunteering-camp');
+  assert.deepEqual(RETREAT_LINKS.slice(1, 4).map(item => item.to), ['/retreats/kindness-camp', '/retreats/volunteering-camp', '/retreats/ramadan-camp'], 'Insert Volunteering Camp between Kindness and Ramadan');
+  assert.deepEqual(retreats.slice(0, 3).map(item => item.slug), ['kindness-camp', 'volunteering-camp', 'ramadan-camp'], 'Keep the same order in listings and booking choices');
+  assert.deepEqual(volunteerCamp, JSON.parse(JSON.stringify(kindness).replaceAll('"slug":"kindness-camp"', '"slug":"volunteering-camp"').replaceAll('Kindness Camp', 'Volunteering Camp')), 'Start with an exact Kindness Camp copy, changing only its identity');
+  assert.notEqual(volunteerCamp.details, kindness.details, 'Volunteering copy can be edited independently');
+  assert.notEqual(volunteerCamp.details.schedule, kindness.details.schedule, 'Volunteering itinerary can be edited independently');
+  assert.notEqual(volunteerCamp.details.schedule[0], kindness.details.schedule[0]);
+  for (const language of ['en', 'tr', 'de']) {
+    const markup = await renderPage('/retreats/volunteering-camp', language);
+    const visible = visibleStrings(markup);
+    const copy = volunteerCamp.details;
+    for (const phrase of [copy.heading, copy.intro, copy.inclusionHeading, copy.itineraryIntro, copy.stayCopy, copy.bookingCopy, ...copy.includedItems, ...copy.foodCopy, ...copy.schedule.flatMap(item => [item.heading, item.copy])]) {
+      assert.ok(visible.has(translateText(language, phrase)), `Volunteering Camp preserves and translates ${phrase}`);
+    }
+    assert.equal((markup.match(/class="accordion-item"/g) || []).length, 7, 'Copy all seven itinerary days');
+    const booking = await renderPage('/booking?retreat=volunteering-camp', language);
+    assert.ok(booking.includes('value="volunteering-camp"'), 'The new camp is available in booking choices');
+  }
   const { campusVisitPhoto, campusCourtyardPhoto, schoolCampPhotos } = await server.ssrLoadModule('/src/data/campusPhotos.js');
   const school = getRetreatBySlug('school-camp');
   const campusPhotos = [campusVisitPhoto, campusCourtyardPhoto, ...schoolCampPhotos];
@@ -185,10 +279,41 @@ try {
     'make your own hamamni soap',
   ], 'Preserve the five requested tour inclusions');
   assert.deepEqual(safari.facts, ['Arranged on request', 'One day', 'Planned with the team']);
-  assert.equal(campusDetail.description, campusTour.text, 'One shared description for the campus tour');
+  assert.equal(campusDetail.description, undefined, 'Keep the long tour description on the overview only');
   assert.equal(campusDetail.duration, 'Half day');
   assert.equal(campusDetail.days, 'Runs daily');
   assert.equal(campusDetail.price, '$40 per person', 'Keep the existing paid price; do not invent a new price');
+  const soapDetail = getExperienceDetail('workshops', 'soap-making');
+  assert.equal(soapDetail.title, 'Hamamni soap workshop');
+  assert.equal(soapDetail.days, 'Any day');
+  assert.equal(soapDetail.price, '$40 per person', 'Use the soap workshop price supplied in the annotation');
+  assert.equal(soapDetail.duration, '2–3 hours');
+  assert.equal(soapDetail.start, 'Morning or afternoon');
+  const workshopInclusions = {
+    'soap-making': ['Guided workshop', 'Your own soap to take home'],
+    drumming: ['Guided workshop', 'Your own drum to take home'],
+    'eco-print': ['Guided workshop', 'Your printed fabric to take home'],
+    cooking: ['Guided cooking class', 'The dish you make for lunch'],
+  };
+  for (const [slug, included] of Object.entries(workshopInclusions)) {
+    const workshop = getExperienceDetail('workshops', slug);
+    assert.deepEqual(workshop.included, included, 'Keep each workshop’s specific inclusions');
+    for (const photo of [workshop.detailPhoto, workshop.optionsPhoto]) {
+      assert.ok(photo?.src && photo.alt, `${slug}: both sections need a photograph and accessible description`);
+      assert.ok(statSync(new URL(`..${photo.src}`, import.meta.url)).size > 0, 'Workshop photographs exist on disk');
+    }
+    assert.notEqual(workshop.detailPhoto.src, workshop.optionsPhoto.src, 'Use a different photograph for the extension section');
+    assert.equal(workshop.bring, campusDetail.bring, 'Keep the campus dress guidance with the extension options');
+  }
+  for (const slug of ['soap-making', 'drumming']) {
+    assert.deepEqual(getExperienceDetail('workshops', slug).options, campusDetail.options, 'Reuse the approved tour extensions');
+  }
+  assert.deepEqual(getExperienceDetail('workshops', 'eco-print').options, [
+    'add a lunch', 'add a cooking lesson on campus or in the kanga village', 'extend the day with a private spa experience',
+  ], 'Do not offer Eco-print as an extra on the Eco-print workshop');
+  assert.deepEqual(getExperienceDetail('workshops', 'cooking').options, [
+    'Combine with another workshop', 'extend the day with a private spa experience',
+  ], 'Do not offer already-included cooking and lunch as paid extras');
   assert.deepEqual(campusTour.facts, ['Permaculture', 'Snacks', 'Workshop']);
   const safariPhotos = [safariHeroPhoto, safariPlanningPhoto, ...safariGalleryPhotos];
   assert.ok(safariOverviewPhoto.src.endsWith('/zebra-monochrome.jpeg'), 'Overview uses the requested black-and-white zebra');
@@ -202,7 +327,7 @@ try {
     if (!['/experiences', '/experiences/safari', '/experiences/tours/blue-safari'].includes(route)) return;
     const images = [...markup.matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
     if (route === '/experiences/tours/blue-safari') {
-      assert.ok(!images.some(tag => tag.includes('/pics/safari/')), 'Keep mainland safari photographs out of Blue Safari');
+      assert.ok(!images.some(tag => tag.includes('/pics/safari/')), 'Keep mainland safari photographs out of Sandbank & Snorkeling');
       return;
     }
     const expected = route === '/experiences' ? [safariOverviewPhoto] : safariPhotos;
@@ -224,7 +349,7 @@ try {
       assert.ok(safariSection?.includes(safariOverviewPhoto.src), 'Replace the mainland safari overview placeholder');
       assert.ok(!safariSection.includes('photo-slot'), 'No mainland safari placeholder remains');
       assert.ok(visibleStrings(safariSection).has(translateText(language, 'One day')), 'Show the requested One day badge');
-      assert.ok(images.some(tag => decodeURIComponent(tag.match(/src="([^"]+)"/)?.[1] || '').includes('Blue Safari.jpg')), 'Preserve the existing Blue Safari ocean image');
+      assert.ok(images.some(tag => decodeURIComponent(tag.match(/src="([^"]+)"/)?.[1] || '').includes('East Coast Tour.jpg')), 'Use the supplied sandbank photograph');
     } else {
       assert.ok(!markup.includes('photo-slot'), 'The dedicated safari page uses real photos throughout');
       assert.ok(visible.has(translateText(language, 'Ask the team about a trip to Mikumi national park as well as other routes and hikes in Tanzania.')), 'Use the requested Mikumi enquiry sentence in all languages');
@@ -239,21 +364,58 @@ try {
     }
   }
   function checkCampusTour(markup, route, language) {
+    const visible = visibleStrings(markup);
+    assert.doesNotMatch([...visible].join(' '), /Blue Safari|Mavi Safari/i, 'Do not display the superseded ocean-tour name, including in the FAQ');
+    const currentTour = tours.find(tour => route === `/experiences/tours/${tour.slug}`);
+    if (currentTour) {
+      const detail = getExperienceDetail('tours', currentTour.slug);
+      const hero = markup.match(/<section class="hero [\s\S]*?<\/section>/)?.[0];
+      assert.ok(hero && visibleStrings(hero).has(translateText(language, currentTour.title)), 'Detail hero matches the new excursion name');
+      assert.ok(visibleStrings(hero).has(translateText(language, detail.intro)), 'Translate the updated detail introduction');
+      if (detail === villageTour) assert.ok(visible.has(translateText(language, 'Visit Salaam Cave')));
+    }
+    assert.doesNotMatch([...visible].join(' '), /hamammni/i, `Use Hamamni consistently in visible copy and accessibility labels: ${route} (${language})`);
     const detailRoute = route.match(/^\/experiences\/(tours|workshops)\/([^/]+)$/);
     const bookingNote = 'Group and private options are available. Ask the team to confirm dates and the final price before booking.';
     if (detailRoute && detailRoute[2] !== 'campus-village-tour' && getExperienceDetail(detailRoute[1], detailRoute[2])) {
       const otherVisible = visibleStrings(markup);
       assert.ok(otherVisible.has(translateText(language, bookingNote)), 'Keep booking notes on other experience pages');
-      assert.ok(otherVisible.has(translateText(language, 'Plan your experience')), 'Only remove the marked heading on the campus tour page');
+      assert.equal(otherVisible.has(translateText(language, 'Plan your experience')), detailRoute[2] !== 'soap-making', 'Remove only the marked campus tour and soap workshop planning headings');
+    }
+    if (route === '/experiences/workshops/soap-making') {
+      const hero = markup.match(/<section class="hero [\s\S]*?<\/section>/)?.[0];
+      assert.ok(hero && visibleStrings(hero).has(translateText(language, soapDetail.title)), 'Use the shorter Hamamni soap workshop title');
+      const facts = markup.match(/<section class="section experience-detail-facts"[\s\S]*?<\/section>/)?.[0];
+      assert.ok(facts, 'Preserve the soap workshop fact cards');
+      for (const fact of [soapDetail.duration, soapDetail.days, soapDetail.start, soapDetail.price]) {
+        assert.ok(visibleStrings(facts).has(translateText(language, fact)), `Localize the soap workshop fact: ${fact}`);
+      }
+      assert.ok(!visibleStrings(facts).has(translateText(language, 'Any day, subject to availability')), 'Remove the crossed-out availability qualification only from the soap facts');
     }
     if (!['/experiences', '/experiences/tours/campus-village-tour'].includes(route)) return;
-    const visible = visibleStrings(markup);
-    assert.ok(visible.has(translateText(language, campusTour.text)), 'Preserve the supplied tour description in all languages');
     for (const oldPhrase of ['Daily campus tour', 'A free guided walk through the eco-village, every day.', 'Free for guests', 'About 45 minutes', 'Karibu Assalam Tour: campus & village']) {
       assert.ok(!visible.has(translateText(language, oldPhrase)), `Remove the duplicate/free tour claim: ${oldPhrase}`);
     }
     if (route === '/experiences') {
-      assert.ok(visible.has(translateText(language, 'Visit our campus')));
+      const excursions = markup.match(/<section id="zanzibar-excursions"[\s\S]*?<\/section>/)?.[0];
+      const cards = [...excursions.matchAll(/<article class="experience-card">([\s\S]*?)<\/article>/g)].map(match => match[1]);
+      assert.equal(cards.length, 4, 'Show four excursion cards, not separate Spice and City offers');
+      cards.forEach((card, index) => {
+        assert.ok(visibleStrings(card).has(translateText(language, tours[index].title)), 'Translate the revised excursion names in order');
+        assert.ok(visibleStrings(card).has(translateText(language, tours[index].text)), 'Show the requested localized excursion descriptions');
+        if ([1, 2].includes(index)) {
+          const photo = card.match(/<img\b[^>]*src="([^"]+)"/)?.[1];
+          assert.equal(photo, getExperienceDetail('tours', tours[index].slug).image, 'Keep the corrected coast and sandbank photos consistent across cards and details');
+        }
+        assert.ok(card.includes(`href="/experiences/tours/${tours[index].slug}"`));
+      });
+      assert.ok(visible.has(translateText(language, campusTour.text)), 'Preserve the supplied tour description on All Experiences in all languages');
+      const intro = markup.match(/<div class="set-intro">([\s\S]*?)<\/div>/)?.[1];
+      const eyebrow = intro?.match(/<p class="eyebrow">([\s\S]*?)<\/p>/)?.[1];
+      assert.equal(decode(eyebrow || ''), translateText(language, campusTour.promise), 'Move the Kizimkazi invitation above the title');
+      assert.ok(intro.indexOf('class="eyebrow"') < intro.indexOf('<h2'), 'Keep the invitation above the tour title');
+      assert.equal((intro.match(/<p\b/g) || []).length, 1, 'Do not repeat the invitation beneath the title');
+      assert.ok(!visibleStrings(intro).has(translateText(language, 'Visit our campus')), 'Replace the old campus eyebrow');
       assert.ok(visible.has(translateText(language, 'Daily Karibu Assalam Tour')));
       assert.ok(!markup.includes('campus-tour-detail'), 'Do not display a second campus tour card');
       const copy = markup.match(/<div class="campus-tour-copy">([\s\S]*?)<\/div>\s*<\/div>/)?.[1];
@@ -264,6 +426,8 @@ try {
       }
       for (const fact of campusTour.facts) assert.ok(visible.has(translateText(language, fact)));
     } else {
+      assert.ok(!visible.has(translateText(language, campusTour.text)), 'Remove the duplicate long description from the tour detail page');
+      assert.ok(!markup.includes('experience-detail-description'), 'Do not leave an empty paragraph beneath the facts');
       assert.ok(visible.has(translateText(language, campusDetail.intro)), 'Use the new tour introduction');
       assert.ok(!visible.has(translateText(language, 'Plan your experience')), 'Remove the crossed-out planning heading');
       assert.ok(!visible.has(translateText(language, bookingNote)), 'Remove the crossed-out group/private booking paragraph');
@@ -276,7 +440,37 @@ try {
       }
     }
   }
+  function checkWorkshopLayout(markup, route, language) {
+    const slug = route.match(/^\/experiences\/workshops\/([^/]+)$/)?.[1];
+    if (!workshopInclusions[slug]) return;
+    const workshop = getExperienceDetail('workshops', slug);
+    const included = markup.match(/<section id="what-is-included"[\s\S]*?<\/section>/)?.[0];
+    const customize = markup.match(/<section id="make-it-your-own"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(included?.includes('class="retreat-feature-split"'), 'Use the tour’s two-column inclusion layout');
+    assert.ok(customize?.includes('class="retreat-feature-split experience-customize-layout"'), 'Use the photo-and-options layout for every workshop');
+    assert.ok(customize.includes('experience-customize-section') && !customize.includes('closing-section'), 'Keep the centered heading and left-aligned extension list');
+    assert.ok(markup.indexOf(included) < markup.indexOf(customize), 'Show inclusions before Make it your own');
+    assert.ok(included.indexOf('<img') < included.indexOf('<ul'), 'Place the inclusion photograph on the left');
+    assert.ok(customize.indexOf('</ul>') < customize.indexOf('<img'), 'Place the extension photograph on the right');
+    for (const [section, photo, phrases] of [
+      [included, workshop.detailPhoto, ['What is included', ...workshop.included]],
+      [customize, workshop.optionsPhoto, ['Make it your own', ...workshop.options, workshop.bring, workshop.languages]],
+    ]) {
+      const visible = visibleStrings(section);
+      assert.ok(!section.includes('photo-slot'), 'Do not leave empty workshop photo placeholders');
+      assert.equal((section.match(/<img\b/g) || []).length, 1, 'One photograph per section');
+      const image = section.match(/<img\b[^>]*>/)?.[0];
+      assert.ok(image.includes(`src="${photo.src}"`) && image.includes('loading="lazy"'), 'Use the selected lazy-loaded photograph');
+      assert.ok(visibleStrings(image).has(translateText(language, photo.alt)), 'Translate photo descriptions');
+      for (const phrase of phrases) assert.ok(visible.has(translateText(language, phrase)), `${slug}: translate ${phrase} (${language})`);
+    }
+    const list = customize.match(/<ul class="check-list experience-options">([\s\S]*?)<\/ul>/)?.[1];
+    assert.equal((list?.match(/<li>/g) || []).length, workshop.options.length, 'Keep extension options as the tour-style vertical checklist');
+    for (const href of ['/contact', '/experiences#workshops']) assert.ok(customize.includes(`href="${href}"`), 'Preserve booking and workshop discovery links');
+  }
   const typography = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
+  assert.match(typography, /\.retreat-feature-split\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\) minmax\(0, 1fr\)/, 'Shared experience sections use two equal desktop columns');
+  assert.match(typography, /@media \(max-width: 960px\)\s*\{[\s\S]*?\.retreat-feature-split\s*\{[^}]*grid-template-columns: 1fr/, 'Shared experience sections stack on smaller screens');
   const documentHead = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(typography + documentHead, /Caveat|El Messiri|El\+Messiri|var\(--script\)|var\(--arabic-display\)/, 'Use only Peace Villages font families');
   assert.match(typography, /--font-body: Inter/);
@@ -289,19 +483,28 @@ try {
   function checkCampusProgramme(markup, route, language) {
     if (route !== '/whats-happening') return;
     const visible = visibleStrings(markup);
-    for (const phrase of ['What is happening on campus this month?', 'October 2026', 'Programme coming soon', 'What is happening later?']) {
+    for (const phrase of ['What is happening on campus this month?', 'October 2026', 'Weekly activities', 'What else is happening?', '12–14 March 2027', 'Spice Route Cafe', 'Spice Route Museum', 'Follow us on Instagram and stay updated.']) {
       assert.ok(visible.has(translateText(language, phrase)), `Campus programme missing: ${phrase} (${language})`);
     }
     assert.match(markup, /datetime="2026-10"/i, 'Keep the explicitly requested October edition');
     assert.ok(markup.indexOf('id="happenings-later-title"') > markup.indexOf('id="programme-month"'), 'Later heading follows the monthly programme');
     const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0];
+    for (const phrase of ['Programme coming soon', 'Activity preview — not a confirmed event.', 'Date to be confirmed', 'More dates will be shared here once confirmed.']) {
+      assert.ok(!visibleStrings(main).has(translateText(language, phrase)), 'Remove obsolete pending and preview copy');
+    }
+    const more = main.match(/<section class="happenings-later"[\s\S]*?<\/section>/)?.[0];
+    assert.equal((more.match(/class="happenings-more-card"/g) || []).length, 3, 'Show the festival, Stone Town venues and Instagram updates');
+    for (const href of [SITE.sufiFestivalUrl, SPICE_ROUTE_CAFE.tripAdvisorUrl, SITE.spiceRouteMuseumUrl, SITE.instagramUrl]) {
+      const anchor = [...more.matchAll(/<a\b([^>]*)>/g)].find(match => match[1].includes(`href="${href}"`))?.[1];
+      assert.ok(anchor?.includes('target="_blank"') && anchor.includes('rel="noopener noreferrer"'), 'Every outside event and venue link opens a safe new tab');
+    }
     assert.ok(!main.includes('href="/contact"'), 'Remove the crossed-out programme and upcoming-date contact links');
     for (const phrase of ['Ask about the programme', 'Ask about upcoming dates']) {
       assert.ok(!visible.has(translateText(language, phrase)), 'Remove the superseded enquiry actions');
     }
     assert.ok(main.includes('class="happenings-carousel" role="region"'), 'Render the photo-based activity slider');
     assert.ok(main.includes('id="programme-slide" aria-live="polite"'), 'Announce manually selected slides');
-    for (const phrase of ['Previous activity', 'Next activity', 'Date to be confirmed', 'Activity preview — not a confirmed event.', 'Campus Tour incl Hamammni Workshop']) {
+    for (const phrase of ['Previous activity', 'Next activity', 'Every Tuesday', 'Join the next tour', 'Campus Tour including Hamamni Workshop']) {
       assert.ok(visible.has(translateText(language, phrase)), 'Localize slider controls and the first activity');
     }
     assert.equal((main.match(/aria-pressed="true"/g) || []).length, 1, 'Exactly one activity is selected');
@@ -356,6 +559,14 @@ try {
     const cards = [...markup.matchAll(/<article class="event-card">([\s\S]*?)<\/article>/g)].map(match => match[1]);
     if (route === '/experiences' || route === '/experiences/events') {
       assert.equal(cards.length, 4, 'Keep the four-card structure');
+      assert.ok(cards.every(card => !card.includes('cafe-rating')), 'Do not squeeze the rating into an event card');
+      const reviewStrip = markup.match(/<aside class="cafe-review-strip">[\s\S]*?<\/aside>/)?.[0];
+      assert.ok(reviewStrip, 'Give cafe reviews a dedicated full-width panel');
+      assert.ok(markup.indexOf(reviewStrip) > markup.indexOf(cards[3]) + cards[3].length, 'Place the review panel after the four-card grid');
+      assert.ok(reviewStrip.includes('<h3>The Spice Route Cafe</h3>'), 'Visibly attribute reviews to the cafe, not the resort');
+      assert.ok(visibleStrings(reviewStrip).has(translateText(language, 'This cafe is in Stone Town, separate from our eco-village in Kizimkazi.')));
+      assert.ok(reviewStrip.includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'Keep the review link in the wider panel');
+      assert.ok(reviewStrip.includes('cafe-rating-note') && !reviewStrip.includes('cafe-rating--compact'), 'Use the full dated snapshot, not the compact variant');
       assert.ok(decode(cards[2]).includes(translateText(language, 'Visit us in Stone Town')), 'Third card: Stone Town');
       assert.ok(cards[2].includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'Cafe card links to its actual review listing');
       assert.ok(decode(cards[3]).includes(translateText(language, 'Follow us')), 'Fourth card: Follow us');
@@ -376,6 +587,41 @@ try {
     }
     if (route === '/restaurant') assert.ok(markup.includes('id="spice-route-cafe"'), 'Stone Town links have a real destination');
     if (route === '/') assert.ok(!markup.includes('class="cafe-rating'), 'Do not present cafe ratings as homepage resort ratings');
+  }
+  function checkReviewsAndFooter(markup, route, language) {
+    const footer = markup.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)?.[0];
+    assert.ok(footer, 'Every page retains the footer');
+    const brand = footer.match(/<section class="footer-col footer-col-brand"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(brand?.includes(`href="${SPICE_ROUTE_CAFE.tripAdvisorUrl}"`), 'Move Stone Town below the footer brand and link directly to the cafe listing');
+    assert.ok(visibleStrings(brand).has(translateText(language, 'Visit us in Stone Town')));
+    assert.ok(!footer.includes('href="/restaurant#spice-route-cafe"'), 'Remove the old duplicate link in Explore');
+    const contacts = footer.match(/<ul class="footer-contact-list">([\s\S]*?)<\/ul>/)?.[1];
+    const items = [...contacts.matchAll(/<li class="footer-contact-item">([\s\S]*?)<\/li>/g)].map(match => match[1]);
+    assert.equal(items.length, 4, 'Directions are the fourth Contact item');
+    for (const [index, href] of [[0, `tel:${SITE.phoneTel}`], [1, `mailto:${SITE.email}`], [2, SITE.instagramUrl], [3, SITE.googleMapsUrl]]) {
+      assert.ok(items[index].includes(`href="${href}"`), 'Preserve the requested Contact order');
+    }
+    assert.ok(items[3].includes('<svg') && visibleStrings(items[3]).has(translateText(language, 'Find us on Google Maps')));
+    for (const part of [brand, items[3]]) assert.ok(part.includes('target="_blank"') && part.includes('rel="noopener noreferrer"'));
+    assert.ok(!footer.includes('<iframe'), 'Keep footer directions as a lightweight link');
+    if (route.startsWith('/contact')) {
+      const locationLink = markup.match(/<a\b[^>]*class="text-link location-link"[^>]*>/)?.[0];
+      assert.ok(locationLink?.includes(`href="${SITE.googleMapsUrl}"`), 'Use the supplied pin on the Contact page too');
+    }
+    if (route === '/') {
+      const reviews = markup.match(/<section id="guest-reviews"[\s\S]*?<\/section>/)?.[0];
+      assert.ok(reviews, 'Show the dedicated review section on the homepage');
+      assert.ok(!reviews.includes('<img') && !reviews.includes('<iframe'), 'The review carousel is text only');
+      assert.equal((reviews.match(/class="guest-review-card"/g) || []).length, 1, 'Show one spacious quote at a time');
+      assert.ok(reviews.includes('aria-live="polite"') && reviews.includes('aria-atomic="true"'));
+      for (const phrase of ['Guest reviews', 'From the people who’ve been here', 'Previous review', 'Next review', 'Read Google reviews', 'Read Tripadvisor reviews']) {
+        assert.ok(visibleStrings(reviews).has(translateText(language, phrase)));
+      }
+      assert.ok(visibleStrings(reviews).has(translateText(language, 'Review {number} of {total}', { number: 1, total: 12 })));
+      assert.equal((reviews.match(/<button /g) || []).length, 2, 'Keep simple previous and next controls');
+      for (const source of Object.values(reviewSources)) assert.ok(reviews.includes(`href="${source.href}"`));
+      assert.ok(!reviews.includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'The cafe link belongs in its separate footer location');
+    }
   }
   function checkHospitalityUpdates(markup, route, language) {
     if (['/experiences/events', '/experiences/volunteer'].includes(route)) {
@@ -446,11 +692,13 @@ try {
   const leaked = [];
   for (const route of routes) {
     const englishMarkup = await renderPage(route, 'en');
+    checkReviewsAndFooter(englishMarkup, route, 'en');
     checkCafeLinks(englishMarkup, route, 'en');
     checkCampusProgramme(englishMarkup, route, 'en');
     checkCampusSpaces(englishMarkup, route, 'en');
     checkSafariPhotos(englishMarkup, route, 'en');
     checkCampusTour(englishMarkup, route, 'en');
+    checkWorkshopLayout(englishMarkup, route, 'en');
     checkCampusUpdates(englishMarkup, route, 'en');
     checkHospitalityUpdates(englishMarkup, route, 'en');
     checkSocialRail(englishMarkup, route, 'en');
@@ -459,11 +707,13 @@ try {
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
       const markup = await renderPage(route, language);
+      checkReviewsAndFooter(markup, route, language);
       checkCafeLinks(markup, route, language);
       checkCampusProgramme(markup, route, language);
       checkCampusSpaces(markup, route, language);
       checkSafariPhotos(markup, route, language);
       checkCampusTour(markup, route, language);
+      checkWorkshopLayout(markup, route, language);
       checkCampusUpdates(markup, route, language);
       checkHospitalityUpdates(markup, route, language);
       checkSocialRail(markup, route, language);
@@ -489,14 +739,19 @@ try {
   }
   console.log(`Translation tests passed: ${routes.length} routes × 3 languages, visible text and accessibility labels, interpolation, brand preservation.`);
   console.log('Cafe checks passed: correct venue attribution, third/fourth cards, review count, section anchor and safe new-tab links.');
-  console.log('Campus programme checks passed: menu position, singular Accommodation, October edition, pending state and later heading in all languages.');
-  console.log('Safari checks passed: all five supplied photos, no mainland placeholders, localized captions/alt text, lazy loading and separate Blue Safari imagery.');
+  console.log('Campus programme checks passed: weekly October schedules, WhatsApp join links, festival dates and Stone Town venue links in all languages.');
+  console.log('Safari checks passed: all five supplied photos, no mainland placeholders, localized captions/alt text, lazy loading and separate Sandbank & Snorkeling imagery.');
   console.log('Tour and typography checks passed: one paid daily half-day tour, supplied copy, correct CTAs, expanded Explore more and Peace Villages font roles.');
+  console.log('Experience edits passed: overview-only tour description, invitation above the title, consistent Hamamni spelling and revised soap workshop facts in all languages.');
+  console.log('Workshop layout checks passed: four alternating photo-and-text layouts, preserved inclusions, tailored extensions and translated guidance in all languages.');
   console.log('Campus updates passed: six clean homepage actions, expanded card 01, three tour additions, five supplied photos and complete seven-day School Camp in all languages.');
   console.log('Campus spaces and safari checks passed: all ten space cards, explicit photo placeholders, localized labels and exact Mikumi enquiry copy.');
   console.log('Hospitality checks passed: populated Explore more sections, dining photo and revised copy, direct external card links, and Kanga Africa boutique description in all languages.');
   console.log('Social rail checks passed: three preserved destinations, localized hover/accessibility labels, safe external links and route-specific surfaces.');
-  console.log('Booking and programme checks passed: new copy, volunteering option, live summary data, delivery-gated next steps, three photo slides and no invented event dates.');
+  console.log('Booking and programme checks passed: volunteering option, live summary data, delivery-gated next steps and three confirmed weekly photo slides.');
+  console.log('Volunteering Camp checks passed: independently editable Kindness Camp copy, seven-day itinerary, menu order, booking choice and translations.');
+  console.log('Excursion checks passed: four requested offers, consistent detail pages, retained links and no invented village-tour pricing.');
+  console.log('Review checks passed: 12 attributed text-only excerpts, translations, critical feedback and separate owner response, source links, wraparound navigation and footer directions.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

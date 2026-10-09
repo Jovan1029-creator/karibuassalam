@@ -240,7 +240,7 @@ export default function Contact() {
               </div>
               <a
                 className="text-link location-link"
-                href="https://www.google.com/maps/search/?api=1&query=Assalam+Community+Foundation+Kizimkazi+Zanzibar"
+                href={SITE.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -20,7 +20,7 @@ export const campusTour = {
 export const workshops = [
   {
     slug: "soap-making",
-    title: "Hamammni soaps",
+    title: "Hamamni soaps",
     text:
       "Make your own soap with the women's cooperative, using coconut oil and local botanicals. You take your bars home with you.",
   },
@@ -47,27 +47,27 @@ export const workshops = [
 export const tours = [
   {
     slug: "spice-tour",
-    title: "Spice Tour",
+    title: "City & Spice",
     text:
-      "Walk a working spice farm and meet the plants behind the island's name — clove, cardamom, vanilla, nutmeg, cinnamon.",
-  },
-  {
-    slug: "city-tour",
-    title: "City Tour",
-    text:
-      "Stone Town on foot: the old fort, the markets, the carved doors and the seafront at sunset.",
+      "Explore Zanzibar's cultural heritage on a full day tour with a visit of spice gardens and a guided tour of the old town's maze of alleys.",
   },
   {
     slug: "east-coast-tour",
-    title: "East Coast Tour",
+    title: "South East Coast",
     text:
       "The east side of the island, its beaches and its villages, including the Rock Restaurant when the tide allows.",
   },
   {
     slug: "blue-safari",
-    title: "Blue Safari",
+    title: "Sandbank & Snorkeling",
     text:
       "A day on the water — snorkelling, sandbanks and marine life, by traditional dhow.",
+  },
+  {
+    slug: "kizimkazi-village-tour",
+    title: "Kizimkazi Village Tour",
+    text: "Take a village tour with our team to connect with the community, learn about local life and visit Salaam Cave.",
+    photoAlt: "Community gathering during Ramadan at Assalam Kanga Village",
   },
 ];
 

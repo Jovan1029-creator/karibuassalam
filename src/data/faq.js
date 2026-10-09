@@ -40,7 +40,7 @@ export const faqSections = [
       {
         question: "What activities and excursions are available?",
         answer:
-          "We offer Blue Safari, Turtle Cave visits, snorkeling, cultural tours, and other Zanzibar excursions.",
+          "We offer City & Spice, South East Coast, Sandbank & Snorkeling, Kizimkazi Village Tour, and other Zanzibar experiences.",
       },
       {
         question: "Do you offer private tours or custom excursions?",

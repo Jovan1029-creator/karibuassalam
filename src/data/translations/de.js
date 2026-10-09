@@ -12,7 +12,7 @@ export const de = {
   "Campus mosque": "Moschee auf dem Campus",
   "Community gathering during Ramadan at Assalam Kanga Village": "Gemeinschaftliches Treffen im Ramadan im Assalam Kanga Village",
   "Guests sharing a meal on the oceanfront dining terrace": "Gäste beim gemeinsamen Essen auf der Terrasse am Meer",
-  "Handmade soaps being prepared in the Hamammni workshop": "Handgefertigte Seifen werden in der Hamammni-Werkstatt hergestellt",
+  "Handmade soaps being prepared in the Hamamni workshop": "Handgefertigte Seifen werden in der Hamamni-Werkstatt hergestellt",
   "Music practice in the Sawa Ensemble room": "Musikprobe im Raum des Sawa Ensembles",
   "Open-air amphitheatre": "Amphitheater unter freiem Himmel",
   "Private pool and sun loungers at Karibu Assalam": "Privater Pool und Sonnenliegen bei Karibu Assalam",
@@ -57,7 +57,7 @@ export const de = {
   "Yes. There is a mosque on the eco-village campus.": "Ja. Auf dem Gelände des Öko-Dorfs gibt es eine Moschee.",
   "Eco-Resort Overview": "Öko-Resort im Überblick",
   "Kanga Africa": "Kanga Africa",
-  "Hamammni": "Hamammni",
+  "Hamamni": "Hamamni",
   "Arts & Culture Centre": "Kunst- und Kulturzentrum",
   "2–3 hours": "2–3 Stunden",
   "6 hours": "6 Stunden",
@@ -65,8 +65,8 @@ export const de = {
   "Eco-print workshop": "Ökodruck-Workshop",
   "Full day": "Ganztägig",
   "Half day": "Halbtägig",
-  "Hamammni soaps": "Hamammni-Seifen",
-  "Hamammni soap-making workshop": "Hamammni-Seifenworkshop",
+  "Hamamni soaps": "Hamamni-Seifen",
+  "Hamamni soap workshop": "Hamamni-Seifenworkshop",
   "Karibu Assalam Tour": "Karibu-Assalam-Tour",
   "Ngoma drum workshop": "Ngoma-Trommelworkshop",
   "Swahili cooking class": "Swahili-Kochkurs",
@@ -584,8 +584,8 @@ export const de = {
   "Yes, transfers can be arranged upon request.":
     "Ja, Transfers organisieren wir gern auf Anfrage.",
   "What activities and excursions are available?": "Welche Aktivitäten und Ausflüge gibt es?",
-  "We offer Blue Safari, Turtle Cave visits, snorkeling, cultural tours, and other Zanzibar excursions.":
-    "Wir bieten Blue Safari, Besuche der Schildkrötenhöhle, Schnorcheln, Kulturtouren und weitere Ausflüge auf Sansibar.",
+  "We offer City & Spice, South East Coast, Sandbank & Snorkeling, Kizimkazi Village Tour, and other Zanzibar experiences.":
+    "Wir bieten Stadt & Gewürze, Südostküste, Sandbank & Schnorcheln, die Dorftour durch Kizimkazi und weitere Erlebnisse auf Sansibar an.",
   "Do you offer private tours or custom excursions?":
     "Gibt es private oder individuell geplante Touren?",
   "Yes, private and customized tours can be arranged.":

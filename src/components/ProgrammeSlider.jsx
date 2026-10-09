@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
+import CTAButton from "./CTAButton";
+import { SITE } from "../data/siteConfig";
 
 function Arrow({ previous = false }) {
   return (
@@ -24,12 +26,19 @@ export function ProgrammeSlide({ item, priority = false }) {
       </div>
       <div className="happenings-programme">
         <p className="happenings-date">
-          {date ? <time dateTime={item.date}>{date}</time> : tx("Date to be confirmed")}
+          {date ? <time dateTime={item.date}>{date}</time> : tx(item.schedule || "Date to be confirmed")}
         </p>
         <h3>{tx(item.title)}</h3>
         <p>{tx(item.description)}</p>
-        {!date && <p className="happenings-preview-note">{tx("Activity preview — not a confirmed event.")}</p>}
-        <Link className="text-link" to={item.to}>{tx("More details")}</Link>
+        {!date && !item.schedule && <p className="happenings-preview-note">{tx("Activity preview — not a confirmed event.")}</p>}
+        <div className="inline-actions happenings-actions">
+          <Link className="text-link" to={item.to}>{tx("More details")}</Link>
+          {item.joinLabel && item.whatsAppMessage && (
+            <CTAButton href={`https://wa.me/${SITE.whatsAppPhone}?text=${encodeURIComponent(tx(item.whatsAppMessage))}`} newTab>
+              {item.joinLabel}
+            </CTAButton>
+          )}
+        </div>
       </div>
     </article>
   );

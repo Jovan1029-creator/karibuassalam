@@ -7,6 +7,7 @@ import schoolCampImg from "../../pics/our retreats/School Camp-enhanced.webp";
 import natureRetreatImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
 import { retreatPageCopy } from "./retreatContent2026";
 import { schoolCampCopy } from "./schoolCampContent2026";
+import { volunteeringCampCopy } from "./volunteeringCampContent2026";
 import { campusCourtyardPhoto, schoolCampPhotos } from "./campusPhotos";
 
 export const COMMON_INCLUSIONS = [
@@ -64,6 +65,28 @@ export const retreats = [
     ],
     manualPdfUrl:
       "https://karibuassalam.com/wp-content/uploads/2024/11/Kindness-Camp-Handbook.pdf",
+  },
+  {
+    slug: "volunteering-camp",
+    title: "Volunteering Camp",
+    priceFrom: 900,
+    durationDays: 7,
+    shortPromise:
+      "A service-centered retreat combining community volunteering, seminars, and guided Zanzibar experiences.",
+    heroImage: kindnessCampImg,
+    details: volunteeringCampCopy,
+    inclusions: [...COMMON_INCLUSIONS],
+    highlights: ["Kizimkazi Village", "Spice Garden", "Stone Town", "Kanga Village", "Jozani Forest"],
+    itineraryDays: [
+      day(1, "Arrival and orientation", "Airport transfer, check-in, and retreat orientation at Karibu Assalam Eco-Village."),
+      day(2, "Kizimkazi Village", "Guided camp activities and community-focused time in Kizimkazi Village."),
+      day(3, "Spice Garden", "A guided Spice Garden visit as part of the 7-day plan."),
+      day(4, "Stone Town", "Guided exploration and program activities in Stone Town."),
+      day(5, "Kanga Village", "Community activities and camp sessions connected to Kanga Village."),
+      day(6, "Jozani Forest", "Guided excursion to Jozani Forest and shared reflection."),
+      day(7, "Closing and departure", "Final sessions, wrap-up, and airport transportation."),
+    ],
+    manualPdfUrl: "https://karibuassalam.com/wp-content/uploads/2024/11/Kindness-Camp-Handbook.pdf",
   },
   {
     slug: "ramadan-camp",

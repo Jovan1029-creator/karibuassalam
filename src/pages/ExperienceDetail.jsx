@@ -25,6 +25,7 @@ export default function ExperienceDetail() {
 
   const category = type === "workshops" ? "Workshops" : "Zanzibar excursions";
   const isCampusTour = type === "tours" && slug === "campus-village-tour";
+  const isSoapWorkshop = type === "workshops" && slug === "soap-making";
   const related = (type === "workshops" ? "/experiences#workshops" : "/experiences#zanzibar-excursions");
 
   return (
@@ -39,12 +40,12 @@ export default function ExperienceDetail() {
         title={experience.title}
         subtitle={experience.intro}
         imageSrc={experience.image || campusImg}
-        imageAlt={experience.image ? tx("{name} in Zanzibar", { name: tx(experience.title) }) : tx("Karibu Assalam Eco-Village campus")}
+        imageAlt={experience.imageAlt || (experience.image ? tx("{name} in Zanzibar", { name: tx(experience.title) }) : tx("Karibu Assalam Eco-Village campus"))}
         compact
         ctaPrimary={{ to: "/contact", label: isCampusTour ? "Book this experience" : "Ask about this experience" }}
       />
 
-      <Section title={isCampusTour ? undefined : "Plan your experience"} className="experience-detail-facts">
+      <Section title={isCampusTour || isSoapWorkshop ? undefined : "Plan your experience"} className="experience-detail-facts">
         <div className="facts-strip">
           <div className="fact-item"><span>{tx("Duration")}</span><strong>{tx(experience.duration)}</strong></div>
           <div className="fact-item"><span>{tx("When")}</span><strong>{tx(experience.days)}</strong></div>
@@ -54,15 +55,15 @@ export default function ExperienceDetail() {
         {experience.description && <p className="experience-detail-description">{tx(experience.description)}</p>}
       </Section>
 
-      <Section title="What is included" className="surface-section">
+      <Section id="what-is-included" title="What is included" className="surface-section">
         <div className="retreat-feature-split">
           <PhotoSlot
             src={experience.detailPhoto?.src || experience.image}
             alt={experience.detailPhoto?.alt || (experience.image ? experience.title : tx("Photo of {name} coming soon", { name: tx(experience.title) }))}
             label="PLACEHOLDER"
             ratio="4 / 3"
-            width={900}
-            height={675}
+            width={experience.detailPhoto?.width || 900}
+            height={experience.detailPhoto?.height || 675}
           />
           <div>
             <ul className="check-list">

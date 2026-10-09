@@ -1,11 +1,10 @@
 import SEO from "../components/SEO";
 import ProgrammeSlider from "../components/ProgrammeSlider";
 import { useLanguage } from "../context/LanguageContext";
-import { SITE } from "../data/siteConfig";
+import { SITE, SPICE_ROUTE_CAFE } from "../data/siteConfig";
 import { campusProgramme } from "../data/campusProgramme";
 
 // October is the editorial edition requested by the team, not the device month.
-// Replace the pending programme with confirmed details when supplied.
 export default function WhatsHappening() {
   const { tx } = useLanguage();
 
@@ -13,7 +12,7 @@ export default function WhatsHappening() {
     <main id="main-content" className="happenings-page">
       <SEO
         title="What’s happening? | Karibu Assalam"
-        description="Explore campus updates for October 2026 and ask the Karibu Assalam team about confirmed events, workshops and community gatherings."
+        description="Join our weekly campus tours and Swahili cooking classes in October 2026, and discover more events around Zanzibar."
         image={campusProgramme.activities[0].image}
       />
       <div className="container happenings-shell">
@@ -29,21 +28,39 @@ export default function WhatsHappening() {
               <h2 id="programme-month"><time dateTime={campusProgramme.month}>{tx(campusProgramme.label)}</time></h2>
             </div>
             <p className="happenings-status">
-              <span aria-hidden="true" />{tx("Programme coming soon")}
+              <span aria-hidden="true" />{tx("Weekly activities")}
             </p>
           </header>
-          <p className="happenings-intro-copy">{tx("Explore a few of our campus activities below. October dates will be added once confirmed.")}</p>
+          <p className="happenings-intro-copy">{tx("Join our weekly campus tours and cooking classes this October. Choose an activity and message us on WhatsApp to join.")}</p>
           <ProgrammeSlider items={campusProgramme.activities} />
-          <p className="happenings-social">
-            <a className="text-link" href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer">
-              {tx("Follow on Instagram")}<span aria-hidden="true"> ↗</span>
-            </a>
-          </p>
         </section>
 
         <section className="happenings-later" aria-labelledby="happenings-later-title">
-          <h2 id="happenings-later-title">{tx("What is happening later?")}</h2>
-          <p>{tx("More dates will be shared here once confirmed.")}</p>
+          <h2 id="happenings-later-title">{tx("What else is happening?")}</h2>
+          <div className="happenings-more-grid">
+            <article className="happenings-more-card">
+              <p className="eyebrow">{tx("12–14 March 2027")}</p>
+              <h3>{tx("Zanzibar Sufi Festival")}</h3>
+              <a className="text-link" href={SITE.sufiFestivalUrl} target="_blank" rel="noopener noreferrer">
+                {tx("Visit the festival site")}<span aria-hidden="true"> ↗</span>
+              </a>
+            </article>
+            <article className="happenings-more-card">
+              <p className="eyebrow">{tx("Beyond the eco-village")}</p>
+              <h3>{tx("Visit us in Stone Town")}</h3>
+              <p>{tx("Visit our Spice Route Cafe and discover the Spice Route Museum in Stone Town.")}</p>
+              <div className="happenings-more-links">
+                <a className="text-link" href={SPICE_ROUTE_CAFE.tripAdvisorUrl} target="_blank" rel="noopener noreferrer">{tx("Spice Route Cafe")}<span aria-hidden="true"> ↗</span></a>
+                <a className="text-link" href={SITE.spiceRouteMuseumUrl} target="_blank" rel="noopener noreferrer">{tx("Spice Route Museum")}<span aria-hidden="true"> ↗</span></a>
+              </div>
+            </article>
+            <article className="happenings-more-card">
+              <p className="eyebrow">{tx("Stay connected")}</p>
+              <h3>{tx("Follow us on Instagram")}</h3>
+              <p>{tx("Follow us on Instagram and stay updated.")}</p>
+              <a className="text-link" href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer">{tx("Follow us")}<span aria-hidden="true"> ↗</span></a>
+            </article>
+          </div>
         </section>
       </div>
     </main>

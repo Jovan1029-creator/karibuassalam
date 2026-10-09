@@ -11,10 +11,13 @@ export const SITE = {
   email: "camps@vassalam.org",
   instagramUrl: "https://www.instagram.com/karibu.assalam",
   instagramHandle: "@karibu.assalam",
+  googleMapsUrl: "https://maps.app.goo.gl/gQsTRmh4VrURr1zRA",
+  foundationTripAdvisorUrl: "https://www.tripadvisor.com/Attraction_Review-g656265-d23324748-Reviews-Assalam_Community_Foundation-Kizimkazi_Zanzibar_Island_Zanzibar_Archipelago.html",
   logoSrc: logoPng,
 
   // Partner projects and outside profiles.
   sufiFestivalUrl: "https://zanzibarsufifest.com",
+  spiceRouteMuseumUrl: "https://thespiceroutemuseum.com/about/",
   sawaEnsembleUrl: "https://www.instagram.com/sawa.ensemble",
   sawaEnsembleHandle: "@sawa.ensemble",
   foundationUrl: "https://vassalam.org",
@@ -47,7 +50,7 @@ export const ECO_VILLAGE_LINKS = [
   { label: "Accommodation", to: "/accommodations" },
   { label: "Restaurant", to: "/restaurant" },
   { name: "Kanga Africa", to: "/eco-resort#kanga-africa" },
-  { name: "Hamammni", to: "/eco-resort#hamammni" },
+  { name: "Hamamni", to: "/eco-resort#hamammni" },
   { name: "Arts & Culture Centre", to: "/eco-resort#arts-culture" },
   { name: "What’s happening?", to: "/whats-happening", highlight: true },
 ];
@@ -55,6 +58,7 @@ export const ECO_VILLAGE_LINKS = [
 export const RETREAT_LINKS = [
   { name: "All Retreats & Camps", to: "/retreats" },
   { name: "Kindness Camp", to: "/retreats/kindness-camp" },
+  { name: "Volunteering Camp", to: "/retreats/volunteering-camp" },
   { name: "Ramadan Camp", to: "/retreats/ramadan-camp" },
   { name: "Family Camp", to: "/retreats/family-tour" },
   { name: "The Cultural Heritage Retreat", to: "/retreats/cultural-heritage-tour" },
