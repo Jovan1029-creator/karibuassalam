@@ -8,6 +8,7 @@ import { useLanguage } from "../context/LanguageContext";
 export default function Lightbox({ items, index, onClose, onChange }) {
   const { tx } = useLanguage();
   const closeRef = useRef(null);
+  const dialogRef = useRef(null);
   const previouslyFocused = useRef(null);
 
   const count = items.length;
@@ -41,9 +42,16 @@ export default function Lightbox({ items, index, onClose, onChange }) {
         event.preventDefault();
         go(index + 1);
       } else if (event.key === "Tab") {
-        // Only the controls are focusable, so keep Tab inside the dialog.
-        event.preventDefault();
-        closeRef.current?.focus();
+        const controls = [...dialogRef.current.querySelectorAll("button")];
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     }
 
@@ -56,6 +64,7 @@ export default function Lightbox({ items, index, onClose, onChange }) {
   return (
     <div
       className="lightbox"
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label={tx(item.label)}

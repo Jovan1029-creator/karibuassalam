@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "check:i18n": "node scripts/check-i18n.mjs",
     "test:booking": "node scripts/test-booking-delivery.mjs",
+    "test:gallery": "node --test scripts/test-gallery.mjs",
     "test:i18n": "node scripts/check-i18n.mjs && node scripts/test-i18n.mjs"
   },
   "dependencies": {

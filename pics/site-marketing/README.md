@@ -8,6 +8,7 @@ Images retain their original proportions. Most are resized to at most 1600 pixel
 | --- | --- |
 | campus-coast-aerial.webp | Campus from above.jpg |
 | eco-village-room-interior.webp | Our Rooms (1).jpg |
+| eco-village-family-room.jpg | Our Rooms (13).jpg (original JPEG, copied without altering the image) |
 | hamammni-soap-workshop.webp | Hammamni _ Soap Workshop.jpg |
 | ngoma-drumming-workshop.webp | Ngoma _ Drum Workshop.jpg |
 | ocean-jetty.webp | Jetty.jpg |

@@ -39,15 +39,16 @@ try {
   const { reviewIndex } = await server.ssrLoadModule('/src/components/GuestReviews.jsx');
   assert.equal(SITE.googleMapsUrl, 'https://maps.app.goo.gl/gQsTRmh4VrURr1zRA', 'Use the exact supplied map pin');
   assert.notEqual(SITE.foundationTripAdvisorUrl, SPICE_ROUTE_CAFE.tripAdvisorUrl, 'Keep the Foundation and cafe listings separate');
-  assert.equal(guestReviews.length, 12);
+  assert.equal(guestReviews.length, 11);
   assert.equal(new Set(guestReviews.map(review => review.id)).size, guestReviews.length, 'Stable unique slide identities');
   assert.deepEqual(guestReviews.filter(review => review.source === 'google').map(review => review.author), [
-    'Monem Daymi', 'Turan Akgün', 'Muhammad Romadhon Mubarok', 'Lamaar Malik', 'Venance Dulle',
+    'Monem Daymi', 'Turan Akgün', 'Muhammad Romadhon Mubarok', 'Venance Dulle',
     'shan ali sumar', 'Cihan', 'Cengizhan Atlihan', 'Suliman Albimani', 'Hayrunnisa E',
-  ], 'Represent all ten Google reviewers from the supplied text, including critical feedback');
-  assert.equal(reviewIndex(-1, 12), 11, 'Previous wraps from first to last');
-  assert.equal(reviewIndex(12, 12), 0, 'Next wraps from last to first');
-  assert.equal(reviewIndex(5, 12), 5);
+  ], 'Preserve the selected Google excerpts after the requested review removal');
+  assert.ok(!guestReviews.some(review => review.id === 'google-lamaar' || review.response), 'Remove the specified review and its attached owner response');
+  assert.equal(reviewIndex(-1, guestReviews.length), guestReviews.length - 1, 'Previous wraps from first to last');
+  assert.equal(reviewIndex(guestReviews.length, guestReviews.length), 0, 'Next wraps from last to first');
+  assert.equal(reviewIndex(5, guestReviews.length), 5);
   assert.equal(reviewIndex(0, 0), 0, 'Handle an empty selection safely');
   assert.ok(guestReviews.filter(review => review.source === 'tripadvisor').reduce((words, review) => words + review.text.split(/\s+/).length, 0) <= 25, 'Keep the sourced Tripadvisor excerpts short');
   for (const language of ['en', 'tr', 'de']) {
@@ -355,7 +356,14 @@ try {
       assert.ok(visible.has(translateText(language, 'Ask the team about a trip to Mikumi national park as well as other routes and hikes in Tanzania.')), 'Use the requested Mikumi enquiry sentence in all languages');
       assert.doesNotMatch(markup, /Lake Manyara|Manyara-See|Manyara Gölü|Ngorongoro|Serengeti/, 'Remove the superseded park list from the safari page');
       assert.equal((markup.match(/class="safari-gallery-item"/g) || []).length, 3, 'Keep the three-portrait gallery');
-      for (const photo of safariGalleryPhotos) assert.ok(visible.has(translateText(language, photo.label)), 'Localize every gallery caption');
+      const photoButtons = [...markup.matchAll(/<button\b[^>]*class="safari-gallery-open"[^>]*>[\s\S]*?<\/button>/g)].map(match => match[0]);
+      assert.equal(photoButtons.length, 3, 'All three safari photos are keyboard/touch-accessible buttons');
+      for (const [index, photo] of safariGalleryPhotos.entries()) {
+        assert.ok(visible.has(translateText(language, photo.label)), 'Localize every gallery caption');
+        assert.ok(photoButtons[index].includes('type="button"') && photoButtons[index].includes('aria-haspopup="dialog"'));
+        assert.ok(photoButtons[index].includes(`src="${photo.src}"`), 'Keep the correct photo within each clickable target');
+        assert.ok(visibleStrings(photoButtons[index]).has(`${translateText(language, photo.label)} — ${translateText(language, 'View photo')}`));
+      }
       assert.ok(visible.has(translateText(language, 'Moments on safari')), 'Localize the gallery heading');
       const exploreMore = markup.match(/<section id="explore-more"[\s\S]*?<\/section>/)?.[0];
       assert.ok(exploreMore?.includes('permaculture-campus-tour.webp'), 'Explore more includes a relevant campus photograph');
@@ -617,7 +625,7 @@ try {
       for (const phrase of ['Guest reviews', 'From the people who’ve been here', 'Previous review', 'Next review', 'Read Google reviews', 'Read Tripadvisor reviews']) {
         assert.ok(visibleStrings(reviews).has(translateText(language, phrase)));
       }
-      assert.ok(visibleStrings(reviews).has(translateText(language, 'Review {number} of {total}', { number: 1, total: 12 })));
+      assert.ok(visibleStrings(reviews).has(translateText(language, 'Review {number} of {total}', { number: 1, total: guestReviews.length })));
       assert.equal((reviews.match(/<button /g) || []).length, 2, 'Keep simple previous and next controls');
       for (const source of Object.values(reviewSources)) assert.ok(reviews.includes(`href="${source.href}"`));
       assert.ok(!reviews.includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'The cafe link belongs in its separate footer location');
@@ -751,7 +759,7 @@ try {
   console.log('Booking and programme checks passed: volunteering option, live summary data, delivery-gated next steps and three confirmed weekly photo slides.');
   console.log('Volunteering Camp checks passed: independently editable Kindness Camp copy, seven-day itinerary, menu order, booking choice and translations.');
   console.log('Excursion checks passed: four requested offers, consistent detail pages, retained links and no invented village-tour pricing.');
-  console.log('Review checks passed: 12 attributed text-only excerpts, translations, critical feedback and separate owner response, source links, wraparound navigation and footer directions.');
+  console.log('Review checks passed: 11 attributed text-only excerpts, translations, requested review removal, source links, wraparound navigation and footer directions.');
 } finally {
   console.warn = originalWarn;
   console.error = originalError;

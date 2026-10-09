@@ -29,13 +29,6 @@ export const guestReviews = [
     text: "Amazing place to volunteer! People are very warm, friendly, and helpful. If you are looking for a place to contribute to the direct local community in Zanzibar; Assalam Community Foundation is one of the best places to do it. If I get a chance, I'll definitely visit again!",
   },
   {
-    id: "google-lamaar", source: "google", author: "Lamaar Malik",
-    text: "At that point the conversation ended abruptly and I discovered that I had been blocked on WhatsApp in the middle of the exchange. The person contacting me had also not introduced themselves by name. In my opinion, this type of communication is very unprofessional and a red flag for an organisation working with volunteers.",
-    response: {
-      text: "We are so sorry for it and trying to find your application in our forms so contact you back. We couldn’t reach any of your information or WhatsApp messages anywhere.",
-    },
-  },
-  {
     id: "google-venance", source: "google", author: "Venance Dulle",
     text: "It is amazing place for Zanzibar 🇹🇿 a peaceful environment, I love to spend my time here ✨",
   },

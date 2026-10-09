@@ -10,6 +10,25 @@ import BookingSummary from '../src/components/BookingSummary';
 import BookingConfirmation from '../src/components/BookingConfirmation';
 import { ProgrammeSlide } from '../src/components/ProgrammeSlider';
 import GuestReviews, { ReviewQuote } from '../src/components/GuestReviews';
+import CampusMoments, { MomentCard } from '../src/components/CampusMoments';
+import Lightbox from '../src/components/Lightbox';
+import { safariLightboxPhotos } from '../src/components/SafariGallery';
+
+export function renderSafariLightbox(index, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><Lightbox items={safariLightboxPhotos} index={index} onClose={() => {}} onChange={() => {}} /></LanguageProvider>);
+}
+
+export function renderCampusMoments(language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><CampusMoments /></LanguageProvider>);
+}
+
+export function renderMomentCard(moment, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><MomentCard moment={moment} order={0} playing={false} onOpen={() => {}} /></LanguageProvider>);
+}
+
+export function renderMomentLightbox(moment, index, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><Lightbox items={moment.photos.map(photo => ({ ...photo, label: moment.label }))} index={index} onClose={() => {}} onChange={() => {}} /></LanguageProvider>);
+}
 
 export function renderReviewQuote(review, language) {
   return renderToString(<LanguageProvider initialLanguage={language}><ReviewQuote review={review} /></LanguageProvider>);

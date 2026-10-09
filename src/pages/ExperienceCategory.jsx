@@ -7,9 +7,10 @@ import PhotoCardMedia from "../components/PhotoCardMedia";
 import EventCard from "../components/EventCard";
 import CafeReviewStrip from "../components/CafeReviewStrip";
 import Section from "../components/Section";
+import SafariGallery from "../components/SafariGallery";
 import SEO from "../components/SEO";
 import { safari, specialEvents, volunteering } from "../data/experiences";
-import { safariHeroPhoto, safariPlanningPhoto, safariGalleryPhotos } from "../data/safariPhotos";
+import { safariHeroPhoto, safariPlanningPhoto } from "../data/safariPhotos";
 import heroImg from "../../AssalamHero/assalam-hero.webp";
 import campusVisitImg from "../../pics/site-marketing/permaculture-campus-tour.webp";
 
@@ -114,16 +115,7 @@ export default function ExperienceCategory() {
               </div>
             </div>
           </Section>
-          <Section id="safari-gallery" title="Moments on safari" subtitle="A closer look at the wildlife and the journey." className="safari-gallery-section">
-            <div className="safari-gallery">
-              {safariGalleryPhotos.map((photo) => (
-                <figure className="safari-gallery-item" key={photo.src}>
-                  <PhotoSlot {...photo} />
-                  <figcaption>{tx(photo.label)}</figcaption>
-                </figure>
-              ))}
-            </div>
-          </Section>
+          <SafariGallery />
         </>
       )}
 
