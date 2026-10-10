@@ -8,3 +8,11 @@ dist/
 *.err
 *.err.log
 /pics/Marketing images - public/
+
+# Generated editor statistics
+/.VSCodeCounter/
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
