@@ -30,7 +30,7 @@ export function ProgrammeSlide({ item, priority = false }) {
         </p>
         <h3>{tx(item.title)}</h3>
         <p>{tx(item.description)}</p>
-        {!date && !item.schedule && <p className="happenings-preview-note">{tx("Activity preview — not a confirmed event.")}</p>}
+        {!date && !item.schedule && <p className="happenings-preview-note">{tx("Activity preview - not a confirmed event.")}</p>}
         <div className="inline-actions happenings-actions">
           <Link className="text-link" to={item.to}>{tx("More details")}</Link>
           {item.joinLabel && item.whatsAppMessage && (

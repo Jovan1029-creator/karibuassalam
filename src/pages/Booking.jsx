@@ -146,7 +146,7 @@ export default function Booking() {
       setSubmitted(record);
       if (record.storageMode === "supabase") {
         setStatus(
-          "Thanks — we have your request. Our team will contact you with more information."
+          "Thanks - we have your request. Our team will contact you with more information."
         );
         setStatusTone("success");
       } else {

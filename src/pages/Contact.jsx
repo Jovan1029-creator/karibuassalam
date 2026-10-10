@@ -148,7 +148,7 @@ export default function Contact() {
       });
 
       if (record.storageMode === "supabase") {
-        setStatus("Thanks — we have your message. The team usually replies within one day.");
+        setStatus("Thanks - we have your message. The team usually replies within one day.");
         setStatusTone("success");
         setForm(initialForm);
       } else {

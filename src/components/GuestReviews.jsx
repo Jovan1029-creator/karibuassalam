@@ -33,7 +33,7 @@ export function ReviewQuote({ review }) {
         </figcaption>
       </figure>
       {review.response && <div className="guest-review-response">
-        <p className="eyebrow">{tx("Owner response — excerpt")}</p>
+        <p className="eyebrow">{tx("Owner response - excerpt")}</p>
         <p>{tx(review.response.text)}</p>
       </div>}
     </div>
@@ -92,7 +92,7 @@ export default function GuestReviews({ reviews = guestReviews }) {
         <div className="guest-reviews-intro">
           <p className="eyebrow">{tx("Guest reviews")}</p>
           <h2 id={titleId}>{tx("From the people who’ve been here")}</h2>
-          <p className="lead">{tx("Visits, workshops and volunteering — in our visitors’ own words.")}</p>
+          <p className="lead">{tx("Visits, workshops and volunteering - in our visitors’ own words.")}</p>
           <p>{tx("Selected excerpts about Assalam Community Foundation. Explore the original Google and Tripadvisor listings for full reviews and more perspectives.")}</p>
           <div className="guest-review-links">
             {Object.entries(reviewSources).map(([key, source]) => (

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 // Elements that get the reveal treatment. Tagging by selector keeps the markup
-// clean — no wrapper components threaded through every page.
+// clean - no wrapper components threaded through every page.
 const TARGETS = [
   ".showcase",
   ".circle-card",
@@ -38,7 +38,7 @@ export default function useScrollReveal(deps = []) {
     );
 
     elements.forEach((el, i) => {
-      // Anything already in view on load appears immediately — no flash.
+      // Anything already in view on load appears immediately - no flash.
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight * 0.9) {
         el.setAttribute("data-reveal", "");

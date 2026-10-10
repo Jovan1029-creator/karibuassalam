@@ -13,6 +13,7 @@ export const SITE = {
   instagramHandle: "@karibu.assalam",
   googleMapsUrl: "https://maps.app.goo.gl/gQsTRmh4VrURr1zRA",
   foundationTripAdvisorUrl: "https://www.tripadvisor.com/Attraction_Review-g656265-d23324748-Reviews-Assalam_Community_Foundation-Kizimkazi_Zanzibar_Island_Zanzibar_Archipelago.html",
+  dailyTourTripAdvisorUrl: "https://www.tripadvisor.com/AttractionProductReview-g482884-d23329866-Daily_Karibu_Assalam_Tour-Zanzibar_Island_Zanzibar_Archipelago.html",
   logoSrc: logoPng,
 
   // Partner projects and outside profiles.

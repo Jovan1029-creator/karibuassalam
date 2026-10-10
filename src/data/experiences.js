@@ -28,7 +28,7 @@ export const workshops = [
     slug: "drumming",
     title: "Drum workshop",
     text:
-      "Learn Swahili coastal rhythms with local musicians. No experience needed — everyone leaves able to hold a pattern.",
+      "Learn Swahili coastal rhythms with local musicians. No experience needed - everyone leaves able to hold a pattern.",
   },
   {
     slug: "eco-print",
@@ -40,7 +40,7 @@ export const workshops = [
     slug: "cooking",
     title: "Cooking class",
     text:
-      "Cook Zanzibari dishes with the kitchen team — spices from the garden, recipes from the neighbourhood, and the meal is lunch.",
+      "Cook Zanzibari dishes with the kitchen team - spices from the garden, recipes from the neighbourhood, and the meal is lunch.",
   },
 ];
 
@@ -61,7 +61,7 @@ export const tours = [
     slug: "blue-safari",
     title: "Sandbank & Snorkeling",
     text:
-      "A day on the water — snorkelling, sandbanks and marine life, by traditional dhow.",
+      "A day on the water - snorkelling, sandbanks and marine life, by traditional dhow.",
   },
   {
     slug: "kizimkazi-village-tour",
@@ -86,7 +86,7 @@ export const volunteering = [
     title: "Short-term volunteering",
     duration: "Under 3 months",
     text:
-      "Join an existing programme for a few weeks — teaching support, the permaculture garden, workshops or events. Best suited to travellers who want to contribute alongside a normal stay.",
+      "Join an existing programme for a few weeks - teaching support, the permaculture garden, workshops or events. Best suited to travellers who want to contribute alongside a normal stay.",
   },
   {
     slug: "long-term",
@@ -94,7 +94,7 @@ export const volunteering = [
     title: "Long-term volunteering",
     duration: "3 months and over",
     text:
-      "Longer placements take on real responsibility inside a project — a class, a garden, a workshop programme. These are arranged case by case, and start with a conversation about your skills and dates.",
+      "Longer placements take on real responsibility inside a project - a class, a garden, a workshop programme. These are arranged case by case, and start with a conversation about your skills and dates.",
   },
 ];
 

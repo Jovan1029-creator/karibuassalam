@@ -6,6 +6,7 @@ import PhotoSlot from "../components/PhotoSlot";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { getExperienceDetail } from "../data/experienceDetails";
+import { SITE } from "../data/siteConfig";
 import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
 
 export default function ExperienceDetail() {
@@ -91,6 +92,7 @@ export default function ExperienceDetail() {
         </div>
         <div className="section-actions">
           <CTAButton to="/contact" size="lg">Book this experience</CTAButton>
+          {isCampusTour && <CTAButton href={SITE.dailyTourTripAdvisorUrl} variant="secondary" size="lg" newTab>Read the reviews</CTAButton>}
           <CTAButton to={related} variant="secondary" size="lg">
             {tx(type === "workshops" ? "Explore more workshops" : "Explore more Zanzibar excursions")}
           </CTAButton>

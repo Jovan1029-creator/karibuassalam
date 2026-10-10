@@ -39,7 +39,7 @@ export const retreatPageCopy = {
       {
         id: "day-3",
         heading: "Day 3 - Connect with the local community",
-        copy: "Today is about experiencing Zanzibar through the people who call it home. Visit the village and Kanga Village, learn about local life and take part in activities centred around sharing, creativity and community. There is time to listen, learn and contribute — not simply observe.",
+        copy: "Today is about experiencing Zanzibar through the people who call it home. Visit the village and Kanga Village, learn about local life and take part in activities centred around sharing, creativity and community. There is time to listen, learn and contribute - not simply observe.",
       },
       {
         id: "day-4",
@@ -77,7 +77,7 @@ export const retreatPageCopy = {
     foodTags: "Halal · Vegetarian-friendly · Buffet-style · Community dining",
     foodCopy: [
       "Our meals at Kindness Camp are designed to bring people together. Enjoy generous, buffet-style community dinners combining Swahili flavours with Turkish and international influences.",
-      "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style — giving you the chance to discover different flavours, try something new and enjoy food together.",
+      "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style - giving you the chance to discover different flavours, try something new and enjoy food together.",
     ],
     bookingCopy:
       "The Kindness Camp brings together curious travellers, local communities, culture and meaningful experiences for one unforgettable week in Zanzibar. Explore the island, share meals, learn from local people, discover new traditions and find meaningful ways to give back.",
@@ -242,7 +242,7 @@ export const retreatPageCopy = {
     foodTags: "Halal · Vegetarian-friendly · Buffet-style · Community dining",
     foodCopy: [
       "Our meals at Family Camp are designed to bring people together. Enjoy generous, buffet-style community dinners combining Swahili flavours with Turkish and international influences.",
-      "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style — giving you the chance to discover different flavours, try something new and enjoy food together.",
+      "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style - giving you the chance to discover different flavours, try something new and enjoy food together.",
     ],
     bookingCopy:
       "The Family Camp brings together curious families traveling to meet local communities, explore cultures and collect meaningful experiences for one unforgettable week in Zanzibar. Explore the island, share meals with the Karibu Assalam family, learn from local families, discover new traditions and find meaningful ways to engage with the whole family.",
@@ -322,7 +322,7 @@ export const retreatPageCopy = {
     foodTags: "Halal · Vegetarian-friendly · Buffet-style · Community dining",
     foodCopy: [
       "Our meals at Karibu Assalam and for the Cultural Heritage Retreat are designed to bring people together. Enjoy generous, buffet-style community dinners combining Swahili flavours with Turkish and international influences.",
-      "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style — giving you the chance to discover different flavours, try something new and enjoy food together.",
+      "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style - giving you the chance to discover different flavours, try something new and enjoy food together.",
     ],
     bookingCopy:
       "The Cultural Heritage Retreat brings together curious travellers, local communities, culture and meaningful experiences for one unforgettable week in Zanzibar. Explore the island with its rich culture and history, share meals, learn from local people, discover new traditions and find meaningful ways to give back.",
@@ -403,7 +403,7 @@ export const retreatPageCopy = {
     foodTags: "Halal · Vegetarian-friendly · Buffet-style · Community dining",
     foodCopy: [
       "Our meals at Nature Retreat are designed to bring people together. Enjoy generous, buffet-style community dinners combining Swahili flavours with Turkish and international influences.",
-      "Everything is halal and sourced locally where possible, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style — giving you the chance to discover different flavours, try something new and enjoy food together.",
+      "Everything is halal and sourced locally where possible, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style - giving you the chance to discover different flavours, try something new and enjoy food together.",
     ],
     bookingCopy:
       "The Nature Retreat brings together eco-conscious travellers, local communities, and meaningful experiences for one unforgettable week in Zanzibar. Explore the island, its green heritage, share meals, learn from local people, discover new traditions and how Zanzibaris live in harmony with nature.",

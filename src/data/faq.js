@@ -1,27 +1,22 @@
 // src\data\faq.js
 export const faqSections = [
   {
-    id: "booking",
-    title: "Booking & Cancellation",
+    id: "preparation",
+    title: "Preparation",
     items: [
       {
-        question: "What is the cancellation policy?",
-        answer:
-          "The team will confirm cancellation terms and any deposit before you book. Contact us if your plans change.",
+        question: "Can I volunteer?",
+        answer: "Yes. The foundation discusses short-term and long-term opportunities based on your skills and dates. Contact the team to start a conversation.",
       },
       {
-        question: "Can I arrange a private group retreat?",
-        answer: "Tell the team your group size, dates and interests. They will discuss the options and confirm availability with you.",
+        question: "What should I pack?",
+        answer:
+          "Pack travel essentials such as a reusable water bottle, sunscreen, mosquito repellent, and water shoes, along with your regular clothing and personal items. Single-use plastics are prohibited, so reusable items are important.",
       },
       {
-        question: "How can I make a reservation?",
+        question: "Which languages are used during camps?",
         answer:
-          "You can book directly through our website or contact the team via WhatsApp.",
-      },
-      {
-        question: "What are the check-in and check-out times?",
-        answer:
-          "Check-in and check-out times can be arranged according to your needs, subject to availability.",
+          "English, Turkish, and Swahili may be used, depending on the camp and team on site.",
       },
     ],
   },
@@ -109,22 +104,27 @@ export const faqSections = [
     ],
   },
   {
-    id: "preparation",
-    title: "Preparation",
+    id: "booking",
+    title: "Booking & Cancellation",
     items: [
       {
-        question: "Can I volunteer?",
-        answer: "Yes. The foundation discusses short-term and long-term opportunities based on your skills and dates. Contact the team to start a conversation.",
+        question: "What is the cancellation policy?",
+        answer:
+          "The team will confirm cancellation terms and any deposit before you book. Contact us if your plans change.",
       },
       {
-        question: "What should I pack?",
-        answer:
-          "Pack travel essentials such as a reusable water bottle, sunscreen, mosquito repellent, and water shoes, along with your regular clothing and personal items. Single-use plastics are prohibited, so reusable items are important.",
+        question: "Can I arrange a private group retreat?",
+        answer: "Tell the team your group size, dates and interests. They will discuss the options and confirm availability with you.",
       },
       {
-        question: "Which languages are used during camps?",
+        question: "How can I make a reservation?",
         answer:
-          "English, Turkish, and Swahili may be used, depending on the camp and team on site.",
+          "You can book directly through our website or contact the team via WhatsApp.",
+      },
+      {
+        question: "What are the check-in and check-out times?",
+        answer:
+          "Check-in and check-out times can be arranged according to your needs, subject to availability.",
       },
     ],
   },

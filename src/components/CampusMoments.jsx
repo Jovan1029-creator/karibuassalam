@@ -42,7 +42,7 @@ export function MomentCard({ moment, order, playing, onOpen }) {
       type="button"
       ref={cardRef}
       className={`moment-card ${moment.className || ""}`.trim()}
-      aria-label={`${tx(moment.label)} — ${tx("View photo collection")}`}
+      aria-label={`${tx(moment.label)} - ${tx("View photo collection")}`}
       onPointerEnter={event => { if (event.pointerType === "mouse") setInteracting(true); }}
       onPointerLeave={() => setInteracting(false)}
       onFocus={() => setFocused(true)}

@@ -1,4 +1,6 @@
 export const ui2026 = [
+  ["Read the reviews", "Yorumları okuyun", "Bewertungen lesen"],
+  ["Workshops, tours and special events", "Atölyeler, turlar ve özel etkinlikler", "Workshops, Touren und besondere Veranstaltungen"],
   ["What’s happening?", "Neler oluyor?", "Was ist los?"],
   ["What’s happening? | Karibu Assalam", "Neler oluyor? | Karibu Assalam", "Was ist los? | Karibu Assalam"],
   ["What is happening on campus this month?", "Bu ay kampüste neler oluyor?", "Was findet diesen Monat auf dem Campus statt?"],

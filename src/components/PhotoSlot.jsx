@@ -2,7 +2,7 @@ import { useLanguage } from "../context/LanguageContext";
 
 /**
  * Renders a photograph, or a labelled placeholder where none has been supplied
- * yet. Dropping the real image in later is a one-line change at the call site —
+ * yet. Dropping the real image in later is a one-line change at the call site -
  * pass `src` and the placeholder disappears.
  */
 export default function PhotoSlot({

@@ -17,7 +17,7 @@ export default function WhatsHappening() {
       />
       <div className="container happenings-shell">
         <header className="happenings-intro">
-          <p className="eyebrow">{tx("What’s happening?")}</p>
+          <p className="eyebrow">{tx("Workshops, tours and special events")}</p>
           <h1>{tx("What is happening on campus this month?")}</h1>
         </header>
 
@@ -27,11 +27,7 @@ export default function WhatsHappening() {
               <p className="eyebrow">{tx("Campus programme")}</p>
               <h2 id="programme-month"><time dateTime={campusProgramme.month}>{tx(campusProgramme.label)}</time></h2>
             </div>
-            <p className="happenings-status">
-              <span aria-hidden="true" />{tx("Weekly activities")}
-            </p>
           </header>
-          <p className="happenings-intro-copy">{tx("Join our weekly campus tours and cooking classes this October. Choose an activity and message us on WhatsApp to join.")}</p>
           <ProgrammeSlider items={campusProgramme.activities} />
         </section>
 

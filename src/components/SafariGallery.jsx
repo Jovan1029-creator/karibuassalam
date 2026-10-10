@@ -19,7 +19,7 @@ export default function SafariGallery() {
             <button
               type="button"
               className="safari-gallery-open"
-              aria-label={`${tx(photo.label)} — ${tx("View photo")}`}
+              aria-label={`${tx(photo.label)} - ${tx("View photo")}`}
               aria-haspopup="dialog"
               onClick={() => setOpenIndex(index)}
             >

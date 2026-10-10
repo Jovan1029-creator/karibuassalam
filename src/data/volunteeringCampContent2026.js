@@ -2,7 +2,7 @@
 export const volunteeringCampCopy = {
   heading: "Volunteering Camp",
   intro:
-    "Our Volunteering Camp is for curious travellers who want to experience Zanzibar beyond the usual tourist path. Meet local communities, share meaningful moments, discover the island's culture and give back along the way. If you come as a solo traveller, with friends or family, as a halal-conscious traveller or simply as someone looking for a more meaningful way to experience Zanzibar - just come with an open heart, a willingness to connect, and a spirit of kindness.",
+    "Our Volunteering Camp is for travellers who want to give back and share their time and skills while visiting Zanzibar. Meet local communities, share meaningful moments, connect with the local culture and give back along the way - just come with an open heart for people, an open mind for another culture and open hands to join in and support our projects.",
   locationText: "Kizimkazi, Zanzibar",
   durationText: "7 days / 6 nights",
   priceText: "EUR 900",
@@ -37,7 +37,7 @@ export const volunteeringCampCopy = {
     {
       id: "day-3",
       heading: "Day 3 - Connect with the local community",
-      copy: "Today is about experiencing Zanzibar through the people who call it home. Visit the village and Kanga Village, learn about local life and take part in activities centred around sharing, creativity and community. There is time to listen, learn and contribute — not simply observe.",
+      copy: "Today is about experiencing Zanzibar through the people who call it home. Visit the village and Kanga Village, learn about local life and take part in activities centred around sharing, creativity and community. There is time to listen, learn and contribute - not simply observe.",
     },
     {
       id: "day-4",
@@ -75,7 +75,7 @@ export const volunteeringCampCopy = {
   foodTags: "Halal · Vegetarian-friendly · Buffet-style · Community dining",
   foodCopy: [
     "Our meals at Volunteering Camp are designed to bring people together. Enjoy generous, buffet-style community dinners combining Swahili flavours with Turkish and international influences.",
-    "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style — giving you the chance to discover different flavours, try something new and enjoy food together.",
+    "Everything is halal, with vegetarian options available, so everyone can sit down and share the same table. Rather than an à la carte restaurant experience, meals are served buffet-style - giving you the chance to discover different flavours, try something new and enjoy food together.",
   ],
   bookingCopy:
     "The Volunteering Camp brings together curious travellers, local communities, culture and meaningful experiences for one unforgettable week in Zanzibar. Explore the island, share meals, learn from local people, discover new traditions and find meaningful ways to give back.",

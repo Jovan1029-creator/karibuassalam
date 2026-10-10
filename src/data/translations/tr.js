@@ -1,4 +1,4 @@
-﻿// src\data\translations\tr.js
+// src\data\translations\tr.js
 // Turkish copy for every English source string that passes through tx().
 // Keys are the exact English strings used in components and data files.
 
@@ -649,7 +649,7 @@ export const tr = {
     "Talebiniz alındı. Acil destek gerekiyorsa lütfen görünen iletişim kanallarını kullanın.",
   "Send message": "Mesajı gönder",
   "Sending...": "Gönderiliyor...",
-  "Thanks — we have your message. The team usually replies within one day.":
+  "Thanks - we have your message. The team usually replies within one day.":
     "Teşekkürler, mesajınızı aldık. Ekibimiz genellikle bir gün içinde yanıt verir.",
   "We could not send your message just now. Please use WhatsApp or email below and we will get straight back to you.":
     "Mesajınız şu anda gönderilemedi. Lütfen aşağıdaki WhatsApp veya e-posta seçeneğini kullanın; hemen size dönelim.",
@@ -694,7 +694,7 @@ export const tr = {
   "Use direct contact instead": "Bunun yerine doğrudan iletişime geç",
   "Request received. The team will review it shortly.":
     "Talebiniz alındı. Ekibimiz kısa süre içinde inceleyecek.",
-  "Thanks — we have your request. The team replies within one day, usually on WhatsApp.":
+  "Thanks - we have your request. The team replies within one day, usually on WhatsApp.":
     "Teşekkürler, talebinizi aldık. Ekibimiz genellikle bir gün içinde, çoğunlukla WhatsApp üzerinden dönüş yapar.",
   "We could not send your request just now. Please send it by WhatsApp or email below and the team will pick it up right away.":
     "Talebiniz şu anda gönderilemedi. Lütfen aşağıdaki WhatsApp veya e-posta seçeneğiyle iletin; ekibimiz hemen ilgilensin.",
@@ -857,7 +857,7 @@ export const tr = {
   "A simple room, a short walk from the Indian Ocean": "Sade bir oda, Hint Okyanusu’na birkaç adım",
   "Air conditioning": "Klima",
   "Bed configurations that suit families, groups and school camps.": "Ailelere, gruplara ve okul kamplarına uygun yatak düzenleri.",
-  "Each camp keeps the same rhythm — guided days, shared meals, time with the community — and changes what sits at its centre.": "Her kamp aynı ritmi korur — rehberli günler, ortak sofralar, toplulukla geçen zaman — ve merkezine koyduğu şeyi değiştirir.",
+  "Each camp keeps the same rhythm - guided days, shared meals, time with the community - and changes what sits at its centre.": "Her kamp aynı ritmi korur - rehberli günler, ortak sofralar, toplulukla geçen zaman - ve merkezine koyduğu şeyi değiştirir.",
   "Every room is air-conditioned, with mosquito nets on the beds.": "Tüm odalar klimalıdır ve yataklarda cibinlik bulunur.",
   "Ocean on one side, garden on the other.": "Bir yanda okyanus, diğer yanda bahçe.",
   "Ocean or garden": "Okyanus ya da bahçe",
@@ -888,7 +888,7 @@ export const tr = {
   "View more": "Daha fazlası",
 
   /* ---------- experiences, campers, volunteering ---------- */
-  "A day on the water — snorkelling, sandbanks and marine life, by traditional dhow.": "Geleneksel bir dhow ile suda geçen bir gün — şnorkel, kum adacıkları ve deniz yaşamı.",
+  "A day on the water - snorkelling, sandbanks and marine life, by traditional dhow.": "Geleneksel bir dhow ile suda geçen bir gün - şnorkel, kum adacıkları ve deniz yaşamı.",
   "A free guided walk through the eco-village, every day.": "Her gün, eko-köyde ücretsiz rehberli bir yürüyüş.",
   "A member of the team walks you through the campus: the school, the permaculture garden, the solar and water systems, the kitchen and the workshop spaces. It is the quickest way to understand how the village actually works.": "Ekibimizden biri sizi kampüste gezdirir: okul, permakültür bahçesi, güneş enerjisi ve su sistemleri, mutfak ve atölye alanları. Köyün nasıl işlediğini anlamanın en hızlı yolu budur.",
   "Across the island": "Ada genelinde",
@@ -909,26 +909,26 @@ export const tr = {
   "Campers at Karibu Assalam Eco-Village | Karibu Assalam": "Karibu Assalam Eco-Village'da Karavanlar | Karibu Assalam",
   "Camps and retreats": "Kamplar ve retretler",
   "City Tour": "Şehir Turu",
-  "Cook Zanzibari dishes with the kitchen team — spices from the garden, recipes from the neighbourhood, and the meal is lunch.": "Mutfak ekibiyle Zanzibar yemekleri pişirin — bahçeden baharatlar, mahalleden tarifler; pişen yemek de öğle yemeği olur.",
+  "Cook Zanzibari dishes with the kitchen team - spices from the garden, recipes from the neighbourhood, and the meal is lunch.": "Mutfak ekibiyle Zanzibar yemekleri pişirin - bahçeden baharatlar, mahalleden tarifler; pişen yemek de öğle yemeği olur.",
   "Cooking class": "Yemek atölyesi",
   "Daily campus tour": "Günlük kampüs turu",
   "Daily campus tours, hands-on workshops, Zanzibar tours, safari, volunteering and special events at Karibu Assalam.": "Karibu Assalam'da günlük kampüs turları, uygulamalı atölyeler, Zanzibar turları, safari, gönüllülük ve özel etkinlikler.",
   "Dates are announced as they are confirmed. Follow along or ask the team to let you know when something is opening.": "Tarihler kesinleştikçe duyurulur. Bizi takip edin ya da yeni bir program açıldığında haber vermemizi isteyin.",
-  "Details are confirmed with the team when you enquire — space is limited and depends on what else is running that week.": "Detaylar başvurunuzda ekiple netleşir — alan sınırlıdır ve o hafta yürüyen programlara bağlıdır.",
+  "Details are confirmed with the team when you enquire - space is limited and depends on what else is running that week.": "Detaylar başvurunuzda ekiple netleşir - alan sınırlıdır ve o hafta yürüyen programlara bağlıdır.",
   "Drum workshop": "Ritim atölyesi",
   "Eco print workshop": "Eko baskı atölyesi",
-  "Every day at Karibu Assalam Eco-Village has something on it — a walk around the campus, a workshop, a tour across the island, or an evening of music.": "Karibu Assalam Eco-Village'da her günün bir programı vardır — kampüste bir yürüyüş, bir atölye, adada bir tur ya da müzikli bir akşam.",
+  "Every day at Karibu Assalam Eco-Village has something on it - a walk around the campus, a workshop, a tour across the island, or an evening of music.": "Karibu Assalam Eco-Village'da her günün bir programı vardır - kampüste bir yürüyüş, bir atölye, adada bir tur ya da müzikli bir akşam.",
   "Experiences in Zanzibar | Karibu Assalam": "Zanzibar'da Deneyimler | Karibu Assalam",
   "Festivals, music and the programmes that bring people to the village from across the island and beyond.": "Adanın her yerinden ve ötesinden insanları köye getiren festivaller, müzik ve programlar.",
   "Give your time": "Zamanınızı ayırın",
   "Guided days out from the eco-village, with transport and a guide from the team.": "Eko-köyden çıkan rehberli günübirlik turlar; ulaşım ve rehber ekipten.",
   "Half-day sessions run on the campus with the people who do this work every day. Book them on their own or as part of a camp.": "Kampüste, bu işi her gün yapan kişilerle yürütülen yarım günlük oturumlar. Tek başına ya da bir kamp kapsamında alınabilir.",
   "Hands on": "Uygulamalı",
-  "Join an existing programme for a few weeks — teaching support, the permaculture garden, workshops or events. Best suited to travellers who want to contribute alongside a normal stay.": "Birkaç haftalığına yürüyen bir programa katılın — eğitim desteği, permakültür bahçesi, atölyeler ya da etkinlikler. Normal bir konaklamanın yanında katkı sunmak isteyenler için uygundur.",
+  "Join an existing programme for a few weeks - teaching support, the permaculture garden, workshops or events. Best suited to travellers who want to contribute alongside a normal stay.": "Birkaç haftalığına yürüyen bir programa katılın - eğitim desteği, permakültür bahçesi, atölyeler ya da etkinlikler. Normal bir konaklamanın yanında katkı sunmak isteyenler için uygundur.",
   "Join the programme": "Programa katılın",
-  "Learn Swahili coastal rhythms with local musicians. No experience needed — everyone leaves able to hold a pattern.": "Yerel müzisyenlerle Svahili sahil ritimlerini öğrenin. Deneyim gerekmez — herkes bir ritmi tutturarak ayrılır.",
+  "Learn Swahili coastal rhythms with local musicians. No experience needed - everyone leaves able to hold a pattern.": "Yerel müzisyenlerle Svahili sahil ritimlerini öğrenin. Deneyim gerekmez - herkes bir ritmi tutturarak ayrılır.",
   "Long-term volunteering": "Uzun süreli gönüllülük",
-  "Longer placements take on real responsibility inside a project — a class, a garden, a workshop programme. These are arranged case by case, and start with a conversation about your skills and dates.": "Uzun süreli katılımlar bir proje içinde gerçek sorumluluk üstlenir — bir sınıf, bir bahçe, bir atölye programı. Her biri ayrı ayrı planlanır ve becerileriniz ile tarihleriniz üzerine bir görüşmeyle başlar.",
+  "Longer placements take on real responsibility inside a project - a class, a garden, a workshop programme. These are arranged case by case, and start with a conversation about your skills and dates.": "Uzun süreli katılımlar bir proje içinde gerçek sorumluluk üstlenir - bir sınıf, bir bahçe, bir atölye programı. Her biri ayrı ayrı planlanır ve becerileriniz ile tarihleriniz üzerine bir görüşmeyle başlar.",
   "Mainland Tanzania, arranged from Zanzibar.": "Zanzibar'dan düzenlenen Tanzanya anakara turları.",
   "Make your own soap with the women's cooperative, using coconut oil and local botanicals. You take your bars home with you.": "Kadın kooperatifiyle birlikte, hindistan cevizi yağı ve yerel bitkilerle kendi sabununuzu yapın. Sabunlarınızı yanınızda götürürsünüz.",
   "Multi-day safari trips to the mainland parks can be arranged around your stay. Because routes, seasons and prices change, the team plans each one with you directly rather than selling a fixed package.": "Anakaradaki parklara birkaç günlük safari turları konaklamanıza göre düzenlenebilir. Rotalar, mevsimler ve fiyatlar değiştiği için ekip hazır paket satmak yerine her turu sizinle birlikte planlar.",
@@ -953,14 +953,14 @@ export const tr = {
   "Tell the team your dates and what you would like to do. They will put the week together with you and confirm what is available.": "Ekibe tarihlerinizi ve yapmak istediklerinizi yazın. Haftanızı sizinle birlikte planlayıp uygunluğu teyit etsinler.",
   "The east side of the island, its beaches and its villages, including the Rock Restaurant when the tide allows.": "Adanın doğu yakası, plajları ve köyleri; gelgit uygun olduğunda Rock Restaurant dahil.",
   "The music ensemble that grew out of the campus, performing coastal and devotional repertoire. Follow them for performance dates.": "Kampüsten doğan, sahil ve tasavvuf repertuvarı seslendiren müzik topluluğu. Konser tarihleri için takip edin.",
-  "The scheduled programmes that run through the year — kindness camps, Ramadan camps, school camps and nature retreats.": "Yıl boyunca yürüyen programlar — iyilik kampları, Ramazan kampları, okul kampları ve doğa retretleri.",
+  "The scheduled programmes that run through the year - kindness camps, Ramadan camps, school camps and nature retreats.": "Yıl boyunca yürüyen programlar - iyilik kampları, Ramazan kampları, okul kampları ve doğa retretleri.",
   "There is room inside the eco-village for travellers arriving with their own vehicle.": "Eko-köy içinde, kendi aracıyla gelen misafirler için yer vardır.",
   "Things to do from the eco-village": "Eko-köyden yapılabilecekler",
   "Through the year": "Yıl boyunca",
   "Two ways to join the work, depending on how long you can stay. Both start with a conversation about your skills and your dates.": "Kalış sürenize göre çalışmaya katılmanın iki yolu. İkisi de becerileriniz ve tarihleriniz üzerine bir görüşmeyle başlar.",
   "Use the village facilities": "Köyün olanaklarını kullanın",
   "Volunteering": "Gönüllülük",
-  "Walk a working spice farm and meet the plants behind the island's name — clove, cardamom, vanilla, nutmeg, cinnamon.": "Faal bir baharat çiftliğinde yürüyün ve adaya adını veren bitkilerle tanışın — karanfil, kakule, vanilya, küçük hindistan cevizi, tarçın.",
+  "Walk a working spice farm and meet the plants behind the island's name - clove, cardamom, vanilla, nutmeg, cinnamon.": "Faal bir baharat çiftliğinde yürüyün ve adaya adını veren bitkilerle tanışın - karanfil, kakule, vanilya, küçük hindistan cevizi, tarçın.",
   "Workshops": "Atölyeler",
   "Zanzibar Sufi Festival": "Zanzibar Sufi Festivali",
   "Zanzibar tours": "Zanzibar turları",

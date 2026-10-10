@@ -1,4 +1,4 @@
-﻿// src\data\translations\de.js
+// src\data\translations\de.js
 // German copy for every English source string that passes through tx().
 // Keys are the exact English strings used in components and data files.
 
@@ -652,7 +652,7 @@ export const de = {
     "Anfrage erhalten. Für dringende Fälle nutzen Sie bitte die angegebenen Kontaktwege.",
   "Send message": "Nachricht senden",
   "Sending...": "Wird gesendet...",
-  "Thanks — we have your message. The team usually replies within one day.":
+  "Thanks - we have your message. The team usually replies within one day.":
     "Danke – wir haben Ihre Nachricht. Unser Team antwortet meist innerhalb eines Tages.",
   "We could not send your message just now. Please use WhatsApp or email below and we will get straight back to you.":
     "Ihre Nachricht konnte gerade nicht gesendet werden. Bitte nutzen Sie WhatsApp oder E-Mail – wir melden uns sofort.",
@@ -697,7 +697,7 @@ export const de = {
   "Use direct contact instead": "Lieber direkt Kontakt aufnehmen",
   "Request received. The team will review it shortly.":
     "Anfrage erhalten. Unser Team meldet sich in Kürze.",
-  "Thanks — we have your request. The team replies within one day, usually on WhatsApp.":
+  "Thanks - we have your request. The team replies within one day, usually on WhatsApp.":
     "Danke – wir haben Ihre Anfrage. Unser Team antwortet innerhalb eines Tages, meist über WhatsApp.",
   "We could not send your request just now. Please send it by WhatsApp or email below and the team will pick it up right away.":
     "Ihre Anfrage konnte gerade nicht gesendet werden. Bitte senden Sie sie per WhatsApp oder E-Mail – unser Team kümmert sich sofort darum.",
@@ -860,7 +860,7 @@ export const de = {
   "A simple room, a short walk from the Indian Ocean": "Ein schlichtes Zimmer, wenige Schritte vom Indischen Ozean",
   "Air conditioning": "Klimaanlage",
   "Bed configurations that suit families, groups and school camps.": "Bettvarianten für Familien, Gruppen und Schulcamps.",
-  "Each camp keeps the same rhythm — guided days, shared meals, time with the community — and changes what sits at its centre.": "Jedes Camp folgt demselben Rhythmus — begleitete Tage, gemeinsame Mahlzeiten, Zeit in der Gemeinschaft — und setzt jeweils einen anderen Schwerpunkt.",
+  "Each camp keeps the same rhythm - guided days, shared meals, time with the community - and changes what sits at its centre.": "Jedes Camp folgt demselben Rhythmus - begleitete Tage, gemeinsame Mahlzeiten, Zeit in der Gemeinschaft - und setzt jeweils einen anderen Schwerpunkt.",
   "Every room is air-conditioned, with mosquito nets on the beds.": "Alle Zimmer sind klimatisiert, die Betten haben Moskitonetze.",
   "Ocean on one side, garden on the other.": "Auf der einen Seite das Meer, auf der anderen der Garten.",
   "Ocean or garden": "Meer oder Garten",
@@ -891,7 +891,7 @@ export const de = {
   "View more": "Mehr ansehen",
 
   /* ---------- experiences, campers, volunteering ---------- */
-  "A day on the water — snorkelling, sandbanks and marine life, by traditional dhow.": "Ein Tag auf dem Wasser — Schnorcheln, Sandbänke und Meerestiere, an Bord einer traditionellen Dhau.",
+  "A day on the water - snorkelling, sandbanks and marine life, by traditional dhow.": "Ein Tag auf dem Wasser - Schnorcheln, Sandbänke und Meerestiere, an Bord einer traditionellen Dhau.",
   "A free guided walk through the eco-village, every day.": "Täglich ein kostenloser geführter Rundgang durch das Öko-Dorf.",
   "A member of the team walks you through the campus: the school, the permaculture garden, the solar and water systems, the kitchen and the workshop spaces. It is the quickest way to understand how the village actually works.": "Jemand aus dem Team führt Sie über den Campus: Schule, Permakulturgarten, Solar- und Wasseranlagen, Küche und Werkstätten. Der schnellste Weg zu verstehen, wie das Dorf funktioniert.",
   "Across the island": "Auf der ganzen Insel",
@@ -912,32 +912,32 @@ export const de = {
   "Campers at Karibu Assalam Eco-Village | Karibu Assalam": "Wohnmobile in der Karibu Assalam Eco-Village | Karibu Assalam",
   "Camps and retreats": "Camps und Retreats",
   "City Tour": "Stadtrundgang",
-  "Cook Zanzibari dishes with the kitchen team — spices from the garden, recipes from the neighbourhood, and the meal is lunch.": "Kochen Sie sansibarische Gerichte mit dem Küchenteam — Gewürze aus dem Garten, Rezepte aus der Nachbarschaft, und das Ergebnis ist das Mittagessen.",
+  "Cook Zanzibari dishes with the kitchen team - spices from the garden, recipes from the neighbourhood, and the meal is lunch.": "Kochen Sie sansibarische Gerichte mit dem Küchenteam - Gewürze aus dem Garten, Rezepte aus der Nachbarschaft, und das Ergebnis ist das Mittagessen.",
   "Cooking class": "Kochkurs",
   "Daily campus tour": "Täglicher Campus-Rundgang",
   "Daily campus tours, hands-on workshops, Zanzibar tours, safari, volunteering and special events at Karibu Assalam.": "Tägliche Campus-Rundgänge, praktische Workshops, Touren über Sansibar, Safari, Freiwilligenarbeit und besondere Veranstaltungen bei Karibu Assalam.",
   "Dates are announced as they are confirmed. Follow along or ask the team to let you know when something is opening.": "Termine werden veröffentlicht, sobald sie feststehen. Folgen Sie uns oder lassen Sie sich vom Team benachrichtigen.",
-  "Details are confirmed with the team when you enquire — space is limited and depends on what else is running that week.": "Die Details klärt das Team bei Ihrer Anfrage — der Platz ist begrenzt und hängt vom Programm der jeweiligen Woche ab.",
+  "Details are confirmed with the team when you enquire - space is limited and depends on what else is running that week.": "Die Details klärt das Team bei Ihrer Anfrage - der Platz ist begrenzt und hängt vom Programm der jeweiligen Woche ab.",
   "Drum workshop": "Trommel-Workshop",
   "Eco print workshop": "Eco-Print-Workshop",
-  "Every day at Karibu Assalam Eco-Village has something on it — a walk around the campus, a workshop, a tour across the island, or an evening of music.": "Jeder Tag in der Karibu Assalam Eco-Village hat ein Programm — ein Rundgang über den Campus, ein Workshop, eine Tour über die Insel oder ein Abend mit Musik.",
+  "Every day at Karibu Assalam Eco-Village has something on it - a walk around the campus, a workshop, a tour across the island, or an evening of music.": "Jeder Tag in der Karibu Assalam Eco-Village hat ein Programm - ein Rundgang über den Campus, ein Workshop, eine Tour über die Insel oder ein Abend mit Musik.",
   "Experiences in Zanzibar | Karibu Assalam": "Erlebnisse auf Sansibar | Karibu Assalam",
   "Festivals, music and the programmes that bring people to the village from across the island and beyond.": "Festivals, Musik und Programme, die Menschen von der ganzen Insel und darüber hinaus ins Dorf bringen.",
   "Give your time": "Zeit schenken",
   "Guided days out from the eco-village, with transport and a guide from the team.": "Geführte Tagesausflüge ab dem Öko-Dorf, mit Transport und Begleitung aus dem Team.",
   "Half-day sessions run on the campus with the people who do this work every day. Book them on their own or as part of a camp.": "Halbtägige Einheiten auf dem Campus, mit den Menschen, die diese Arbeit täglich machen. Einzeln oder als Teil eines Camps buchbar.",
   "Hands on": "Zum Mitmachen",
-  "Join an existing programme for a few weeks — teaching support, the permaculture garden, workshops or events. Best suited to travellers who want to contribute alongside a normal stay.": "Steigen Sie für einige Wochen in ein laufendes Programm ein — Unterrichtsbegleitung, Permakulturgarten, Workshops oder Veranstaltungen. Ideal für Reisende, die neben dem Aufenthalt etwas beitragen möchten.",
+  "Join an existing programme for a few weeks - teaching support, the permaculture garden, workshops or events. Best suited to travellers who want to contribute alongside a normal stay.": "Steigen Sie für einige Wochen in ein laufendes Programm ein - Unterrichtsbegleitung, Permakulturgarten, Workshops oder Veranstaltungen. Ideal für Reisende, die neben dem Aufenthalt etwas beitragen möchten.",
   "Join the programme": "Am Programm teilnehmen",
-  "Learn Swahili coastal rhythms with local musicians. No experience needed — everyone leaves able to hold a pattern.": "Lernen Sie Rhythmen der Suaheli-Küste mit Musikern von hier. Vorkenntnisse sind nicht nötig — am Ende kann jede und jeder ein Muster halten.",
+  "Learn Swahili coastal rhythms with local musicians. No experience needed - everyone leaves able to hold a pattern.": "Lernen Sie Rhythmen der Suaheli-Küste mit Musikern von hier. Vorkenntnisse sind nicht nötig - am Ende kann jede und jeder ein Muster halten.",
   "Long-term volunteering": "Langfristige Freiwilligenarbeit",
-  "Longer placements take on real responsibility inside a project — a class, a garden, a workshop programme. These are arranged case by case, and start with a conversation about your skills and dates.": "Längere Einsätze übernehmen echte Verantwortung in einem Projekt — eine Klasse, ein Garten, ein Workshop-Programm. Sie werden einzeln abgestimmt und beginnen mit einem Gespräch über Ihre Fähigkeiten und Termine.",
+  "Longer placements take on real responsibility inside a project - a class, a garden, a workshop programme. These are arranged case by case, and start with a conversation about your skills and dates.": "Längere Einsätze übernehmen echte Verantwortung in einem Projekt - eine Klasse, ein Garten, ein Workshop-Programm. Sie werden einzeln abgestimmt und beginnen mit einem Gespräch über Ihre Fähigkeiten und Termine.",
   "Mainland Tanzania, arranged from Zanzibar.": "Das tansanische Festland, organisiert von Sansibar aus.",
   "Make your own soap with the women's cooperative, using coconut oil and local botanicals. You take your bars home with you.": "Stellen Sie mit der Frauenkooperative eigene Seife her, aus Kokosöl und heimischen Pflanzen. Ihre Stücke nehmen Sie mit nach Hause.",
   "Multi-day safari trips to the mainland parks can be arranged around your stay. Because routes, seasons and prices change, the team plans each one with you directly rather than selling a fixed package.": "Mehrtägige Safaris in die Parks auf dem Festland lassen sich um Ihren Aufenthalt herum planen. Da Routen, Jahreszeiten und Preise wechseln, plant das Team jede Reise direkt mit Ihnen statt ein festes Paket zu verkaufen.",
   "Park on the campus": "Stellplatz auf dem Campus",
   "Photograph coming soon": "Foto folgt",
-  "Print fabric with leaves, flowers and bark gathered on the campus, using natural dyes and no synthetic chemicals.": "Bedrucken Sie Stoff mit Blättern, Blüten und Rinde vom Campus — mit natürlichen Farben und ohne synthetische Chemie.",
+  "Print fabric with leaves, flowers and bark gathered on the campus, using natural dyes and no synthetic chemicals.": "Bedrucken Sie Stoff mit Blättern, Blüten und Rinde vom Campus - mit natürlichen Farben und ohne synthetische Chemie.",
   "Read our reviews on Tripadvisor": "Unsere Bewertungen auf Tripadvisor lesen",
   "Ready to plan your days?": "Bereit, Ihre Tage zu planen?",
   "Room for your own vehicle": "Platz für Ihr eigenes Fahrzeug",
@@ -956,14 +956,14 @@ export const de = {
   "Tell the team your dates and what you would like to do. They will put the week together with you and confirm what is available.": "Nennen Sie dem Team Ihre Termine und Ihre Wünsche. Gemeinsam stellen wir Ihre Woche zusammen und bestätigen, was möglich ist.",
   "The east side of the island, its beaches and its villages, including the Rock Restaurant when the tide allows.": "Die Ostseite der Insel mit ihren Stränden und Dörfern, samt Rock Restaurant, wenn es die Gezeiten zulassen.",
   "The music ensemble that grew out of the campus, performing coastal and devotional repertoire. Follow them for performance dates.": "Das Ensemble, das auf dem Campus entstanden ist und Repertoire der Küste und der Andacht spielt. Auftrittstermine gibt es auf ihrem Profil.",
-  "The scheduled programmes that run through the year — kindness camps, Ramadan camps, school camps and nature retreats.": "Die Programme, die über das Jahr laufen — Kindness Camps, Ramadan Camps, Schulcamps und Natur-Retreats.",
+  "The scheduled programmes that run through the year - kindness camps, Ramadan camps, school camps and nature retreats.": "Die Programme, die über das Jahr laufen - Kindness Camps, Ramadan Camps, Schulcamps und Natur-Retreats.",
   "There is room inside the eco-village for travellers arriving with their own vehicle.": "Im Öko-Dorf gibt es Platz für Reisende, die mit dem eigenen Fahrzeug anreisen.",
   "Things to do from the eco-village": "Was Sie vom Öko-Dorf aus unternehmen können",
   "Through the year": "Über das Jahr",
   "Two ways to join the work, depending on how long you can stay. Both start with a conversation about your skills and your dates.": "Zwei Wege mitzuarbeiten, je nachdem wie lange Sie bleiben. Beide beginnen mit einem Gespräch über Ihre Fähigkeiten und Termine.",
   "Use the village facilities": "Die Einrichtungen des Dorfes nutzen",
   "Volunteering": "Freiwilligenarbeit",
-  "Walk a working spice farm and meet the plants behind the island's name — clove, cardamom, vanilla, nutmeg, cinnamon.": "Gehen Sie über eine bewirtschaftete Gewürzfarm und lernen Sie die Pflanzen kennen, die der Insel ihren Ruf geben — Nelke, Kardamom, Vanille, Muskat, Zimt.",
+  "Walk a working spice farm and meet the plants behind the island's name - clove, cardamom, vanilla, nutmeg, cinnamon.": "Gehen Sie über eine bewirtschaftete Gewürzfarm und lernen Sie die Pflanzen kennen, die der Insel ihren Ruf geben - Nelke, Kardamom, Vanille, Muskat, Zimt.",
   "Workshops": "Workshops",
   "Zanzibar Sufi Festival": "Zanzibar Sufi Festival",
   "Zanzibar tours": "Touren über Sansibar",

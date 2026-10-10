@@ -34,6 +34,9 @@ try {
   const { BOOKING_TYPES, getBookingTypeLabel } = await server.ssrLoadModule('/src/data/bookingOptions.js');
   const { bookingNights, bookingDate } = await server.ssrLoadModule('/src/components/BookingSummary.jsx');
   const { campusProgramme } = await server.ssrLoadModule('/src/data/campusProgramme.js');
+  const { faqSections } = await server.ssrLoadModule('/src/data/faq.js');
+  assert.deepEqual(faqSections.map(section => section.id), ['preparation', 'travel-support', 'stay', 'booking'], 'Preparation comes first and cancellation last');
+  assert.equal(faqSections.flatMap(section => section.items).length, 24, 'Preserve all FAQ questions');
   const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS, RETREAT_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
   const { guestReviews, reviewSources } = await server.ssrLoadModule('/src/data/guestReviews.js');
   const { reviewIndex } = await server.ssrLoadModule('/src/components/GuestReviews.jsx');
@@ -70,7 +73,7 @@ try {
       assert.ok(quote.includes(`href="${reviewSources[review.source].href}"`) && quote.includes('target="_blank"') && quote.includes('rel="noopener noreferrer"'));
       assert.ok(!quote.includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'Do not mix cafe reviews into Foundation quotes');
       if (review.response) {
-        assert.ok(visible.has(translateText(language, 'Owner response — excerpt')));
+        assert.ok(visible.has(translateText(language, 'Owner response - excerpt')));
         assert.ok(visible.has(translateText(language, review.response.text)));
         assert.ok(quote.indexOf('guest-review-response') > quote.indexOf('</figcaption>'), 'Keep owner responses outside the guest quotation');
       }
@@ -135,7 +138,7 @@ try {
         assert.ok(visibleStrings(slide).has(translateText(language, phrase)), 'Translate every slide, not just the first');
       }
       assert.ok(slide.includes(`href="${item.to}"`));
-      for (const old of ['Date to be confirmed', 'Activity preview — not a confirmed event.']) {
+      for (const old of ['Date to be confirmed', 'Activity preview - not a confirmed event.']) {
         assert.ok(!visibleStrings(slide).has(translateText(language, old)), 'Confirmed weekly activities must not show preview warnings');
       }
       const join = [...slide.matchAll(/<a\b([^>]*)>/g)].find(match => match[1].includes('https://wa.me/'))?.[1];
@@ -178,7 +181,11 @@ try {
   const volunteerCamp = getRetreatBySlug('volunteering-camp');
   assert.deepEqual(RETREAT_LINKS.slice(1, 4).map(item => item.to), ['/retreats/kindness-camp', '/retreats/volunteering-camp', '/retreats/ramadan-camp'], 'Insert Volunteering Camp between Kindness and Ramadan');
   assert.deepEqual(retreats.slice(0, 3).map(item => item.slug), ['kindness-camp', 'volunteering-camp', 'ramadan-camp'], 'Keep the same order in listings and booking choices');
-  assert.deepEqual(volunteerCamp, JSON.parse(JSON.stringify(kindness).replaceAll('"slug":"kindness-camp"', '"slug":"volunteering-camp"').replaceAll('Kindness Camp', 'Volunteering Camp')), 'Start with an exact Kindness Camp copy, changing only its identity');
+  const originalVolunteerCamp = JSON.parse(JSON.stringify(kindness).replaceAll('"slug":"kindness-camp"', '"slug":"volunteering-camp"').replaceAll('Kindness Camp', 'Volunteering Camp'));
+  const volunteeringIntro = 'Our Volunteering Camp is for travellers who want to give back and share their time and skills while visiting Zanzibar. Meet local communities, share meaningful moments, connect with the local culture and give back along the way - just come with an open heart for people, an open mind for another culture and open hands to join in and support our projects.';
+  assert.equal(volunteerCamp.details.intro, volunteeringIntro, 'Use the supplied volunteering introduction, correcting visiting');
+  originalVolunteerCamp.details.intro = volunteeringIntro;
+  assert.deepEqual(volunteerCamp, originalVolunteerCamp, 'Keep the rest of the independently editable camp copy unchanged');
   assert.notEqual(volunteerCamp.details, kindness.details, 'Volunteering copy can be edited independently');
   assert.notEqual(volunteerCamp.details.schedule, kindness.details.schedule, 'Volunteering itinerary can be edited independently');
   assert.notEqual(volunteerCamp.details.schedule[0], kindness.details.schedule[0]);
@@ -253,6 +260,13 @@ try {
       for (const option of campusDetail.options) assert.ok(visibleStrings(checklist).has(translateText(language, option)));
       assert.ok(section.includes(campusVisitPhoto.src), 'Keep the campus photo alongside the optional additions');
       for (const href of ['/contact', '/experiences#zanzibar-excursions']) assert.ok(section.includes(`href="${href}"`));
+      const actions = section.match(/<div class="section-actions">([\s\S]*?)<\/div>/)?.[1];
+      const buttons = [...actions.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+      assert.equal(buttons.length, 3, 'Keep booking, reviews and discovery as three actions');
+      assert.deepEqual(buttons.map(button => decode(button[2])), ['Book this experience', 'Read the reviews', 'Explore more Zanzibar excursions'].map(phrase => translateText(language, phrase)), 'The review CTA is in the middle');
+      assert.ok(buttons[1][1].includes(`href="${SITE.dailyTourTripAdvisorUrl}"`) && buttons[1][1].includes('target="_blank"') && buttons[1][1].includes('rel="noopener noreferrer"'), 'Open the actual daily-tour listing safely in a new tab');
+      assert.notEqual(SITE.dailyTourTripAdvisorUrl, SITE.foundationTripAdvisorUrl);
+      assert.match(SITE.dailyTourTripAdvisorUrl, /AttractionProductReview-g482884-d23329866-Daily_Karibu_Assalam_Tour/);
     }
     if (route === '/retreats/school-camp') {
       const visible = visibleStrings(markup);
@@ -362,7 +376,7 @@ try {
         assert.ok(visible.has(translateText(language, photo.label)), 'Localize every gallery caption');
         assert.ok(photoButtons[index].includes('type="button"') && photoButtons[index].includes('aria-haspopup="dialog"'));
         assert.ok(photoButtons[index].includes(`src="${photo.src}"`), 'Keep the correct photo within each clickable target');
-        assert.ok(visibleStrings(photoButtons[index]).has(`${translateText(language, photo.label)} — ${translateText(language, 'View photo')}`));
+        assert.ok(visibleStrings(photoButtons[index]).has(`${translateText(language, photo.label)} - ${translateText(language, 'View photo')}`));
       }
       assert.ok(visible.has(translateText(language, 'Moments on safari')), 'Localize the gallery heading');
       const exploreMore = markup.match(/<section id="explore-more"[\s\S]*?<\/section>/)?.[0];
@@ -491,13 +505,17 @@ try {
   function checkCampusProgramme(markup, route, language) {
     if (route !== '/whats-happening') return;
     const visible = visibleStrings(markup);
-    for (const phrase of ['What is happening on campus this month?', 'October 2026', 'Weekly activities', 'What else is happening?', '12–14 March 2027', 'Spice Route Cafe', 'Spice Route Museum', 'Follow us on Instagram and stay updated.']) {
+    for (const phrase of ['Workshops, tours and special events', 'What is happening on campus this month?', 'October 2026', 'What else is happening?', '12–14 March 2027', 'Spice Route Cafe', 'Spice Route Museum', 'Follow us on Instagram and stay updated.']) {
       assert.ok(visible.has(translateText(language, phrase)), `Campus programme missing: ${phrase} (${language})`);
     }
+    for (const phrase of ['Weekly activities', 'Join our weekly campus tours and cooking classes this October. Choose an activity and message us on WhatsApp to join.']) {
+      assert.ok(!visible.has(translateText(language, phrase)), 'Remove the extra weekly activity badge and introduction');
+    }
+    assert.ok(!markup.includes('happenings-status') && !markup.includes('happenings-intro-copy'));
     assert.match(markup, /datetime="2026-10"/i, 'Keep the explicitly requested October edition');
     assert.ok(markup.indexOf('id="happenings-later-title"') > markup.indexOf('id="programme-month"'), 'Later heading follows the monthly programme');
     const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0];
-    for (const phrase of ['Programme coming soon', 'Activity preview — not a confirmed event.', 'Date to be confirmed', 'More dates will be shared here once confirmed.']) {
+    for (const phrase of ['Programme coming soon', 'Activity preview - not a confirmed event.', 'Date to be confirmed', 'More dates will be shared here once confirmed.']) {
       assert.ok(!visibleStrings(main).has(translateText(language, phrase)), 'Remove obsolete pending and preview copy');
     }
     const more = main.match(/<section class="happenings-later"[\s\S]*?<\/section>/)?.[0];
@@ -729,6 +747,12 @@ try {
       checkSocialRail(markup, route, language);
       checkBookingUpdates(markup, route, language);
       const localized = visibleStrings(markup);
+      assert.doesNotMatch([...localized].join(' '), /\u2014/, 'Do not use em dashes in visible text or accessibility labels');
+      if (route === '/faq') {
+        const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0];
+        const headings = [...main.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/g)].map(match => decode(match[1]));
+        assert.deepEqual(headings, faqSections.map(section => translateText(language, section.title)), 'Render the requested FAQ order in every language');
+      }
       if (route.startsWith('/contact')) {
         assert.ok(markup.includes(`!1s${language}!2stz`), 'The map embed should request the selected language');
       }
