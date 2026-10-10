@@ -105,7 +105,7 @@ export default function CampusMoments() {
       subtitle="A glimpse of the spaces, shared meals, workshops and community experiences that shape a stay."
       className="moments-section"
     >
-      <p className="moments-hint" id="moments-hint">{tx("Open any photo to explore its collection.")}</p>
+      <p className="visually-hidden" id="moments-hint">{tx("Open any photo to explore its collection.")}</p>
       <div className="moments-grid" aria-describedby="moments-hint">
         {campusMoments.map((moment, i) => (
           <MomentCard

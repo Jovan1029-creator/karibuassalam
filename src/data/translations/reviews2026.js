@@ -1,4 +1,6 @@
 export const reviews2026 = [
+  ["Pause reviews", "Yorumları duraklat", "Bewertungen pausieren"],
+  ["Resume reviews", "Yorumları sürdür", "Bewertungen fortsetzen"],
   ["Find us on Google Maps", "Bizi Google Haritalar'da bulun", "Auf Google Maps finden"],
   ["Read Google reviews", "Google yorumlarını okuyun", "Google-Bewertungen lesen"],
   ["Read Tripadvisor reviews", "Tripadvisor yorumlarını okuyun", "Tripadvisor-Bewertungen lesen"],

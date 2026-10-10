@@ -620,13 +620,15 @@ try {
       const reviews = markup.match(/<section id="guest-reviews"[\s\S]*?<\/section>/)?.[0];
       assert.ok(reviews, 'Show the dedicated review section on the homepage');
       assert.ok(!reviews.includes('<img') && !reviews.includes('<iframe'), 'The review carousel is text only');
-      assert.equal((reviews.match(/class="guest-review-card"/g) || []).length, 1, 'Show one spacious quote at a time');
+        assert.equal((reviews.match(/class="guest-review-card"/g) || []).length, guestReviews.length, 'Reserve space for the longest translated review');
+        assert.equal((reviews.match(/class="guest-review-slide is-active" aria-hidden="false"/g) || []).length, 1, 'Show only one spacious quote at a time');
+        assert.equal((reviews.match(/class="guest-review-slide" aria-hidden="true" inert=""/g) || []).length, guestReviews.length - 1, 'Inactive slides cannot be focused or read by assistive technology');
       assert.ok(reviews.includes('aria-live="polite"') && reviews.includes('aria-atomic="true"'));
-      for (const phrase of ['Guest reviews', 'From the people who’ve been here', 'Previous review', 'Next review', 'Read Google reviews', 'Read Tripadvisor reviews']) {
+      for (const phrase of ['Guest reviews', 'From the people who’ve been here', 'Previous review', 'Next review', 'Pause reviews', 'Read Google reviews', 'Read Tripadvisor reviews']) {
         assert.ok(visibleStrings(reviews).has(translateText(language, phrase)));
       }
       assert.ok(visibleStrings(reviews).has(translateText(language, 'Review {number} of {total}', { number: 1, total: guestReviews.length })));
-      assert.equal((reviews.match(/<button /g) || []).length, 2, 'Keep simple previous and next controls');
+      assert.equal((reviews.match(/<button /g) || []).length, 3, 'Keep previous/next controls and a small review-autoplay toggle');
       for (const source of Object.values(reviewSources)) assert.ok(reviews.includes(`href="${source.href}"`));
       assert.ok(!reviews.includes(SPICE_ROUTE_CAFE.tripAdvisorUrl), 'The cafe link belongs in its separate footer location');
     }

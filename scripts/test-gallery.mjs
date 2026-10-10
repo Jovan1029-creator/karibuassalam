@@ -4,6 +4,7 @@ import { readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { createServer } from "vite";
 import { schedulePhotoChange } from "../src/utils/photoRotation.js";
+import { reviewReadingTime, scheduleReviewAdvance } from "../src/utils/reviewAutoplay.js";
 import { translateText } from "../src/data/i18n.js";
 
 const server = await createServer({
@@ -99,8 +100,9 @@ test("decode failures and exhausted collections stop safely", async () => {
   }
 });
 
-test("six collections each contain 3–5 distinct, real, theme-specific photos", () => {
-  assert.deepEqual(campusMoments.map(item => item.id), ["learning", "coast", "rooms", "community", "meals", "nature"]);
+test("seven collections fill the original mosaic with a new craft tile", () => {
+  assert.deepEqual(campusMoments.map(item => item.id), ["learning", "craft", "coast", "rooms", "community", "meals", "nature"]);
+  assert.deepEqual(campusMoments.slice(0, 3).map(item => item.className), ["moment-card-tall", "moment-card-tall", "moment-card-wide"]);
   for (const moment of campusMoments) {
     assert.ok(moment.photos.length >= 3 && moment.photos.length <= 5);
     assert.equal(new Set(moment.photos.map(photo => photo.image)).size, moment.photos.length);
@@ -119,11 +121,11 @@ test("six collections each contain 3–5 distinct, real, theme-specific photos",
 test("gallery and every collection/lightbox photo render in all three languages", () => {
   for (const language of ["en", "tr", "de"]) {
     const html = renderCampusMoments(language);
-    assert.equal([...html.matchAll(/class="moment-card(?:\s|\")/g)].length, 6);
-    assert.equal([...html.matchAll(/<img\b/g)].length, 6, "Only six photos render initially, not the entire library");
+    assert.equal([...html.matchAll(/class="moment-card(?:\s|\")/g)].length, 7);
+    assert.equal([...html.matchAll(/<img\b/g)].length, 7, "Only seven photos render initially, not the entire library");
     assert.ok(html.includes("moments-hint"));
     assert.ok(!html.includes("moments-playback"), "Do not show a photo-rotation control");
-    assert.equal([...html.matchAll(/<button\b/g)].length, 6, "Only the six photo collection buttons remain");
+    assert.equal([...html.matchAll(/<button\b/g)].length, 7, "Only the seven photo collection buttons remain");
     assert.ok(!html.includes('aria-live="polite"'), "Do not announce continuous automatic changes");
     for (const moment of campusMoments) {
       assert.ok(html.includes(translateText(language, moment.label)));
@@ -157,13 +159,52 @@ test("every safari photo opens in the shared viewer with its own caption and nav
   }
 });
 
-test("responsive styles reset desktop spans and give narrow phones full-width tiles", () => {
+test("responsive styles retain the tall-pair and wide-photo mosaic on phones and desktop", () => {
   const css = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
   const tablet = css.slice(css.indexOf("@media (max-width: 960px)"), css.indexOf("@media (max-width: 700px)", css.indexOf("@media (max-width: 960px)")));
-  assert.match(tablet, /\.moments-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)[^}]*grid-auto-rows: auto/s);
-  assert.match(tablet, /\.moment-card-tall,\s*\.moment-card-wide\s*\{[^}]*grid-column: auto;\s*grid-row: auto/s);
-  assert.match(css, /@media \(max-width: 480px\)\s*\{\s*\.moments-grid\s*\{\s*grid-template-columns: minmax\(0, 1fr\)/);
-  assert.match(css, /\.moment-card\s*\{[^}]*aspect-ratio: 4 \/ 3/s);
+  assert.match(css, /\.moments-grid\s*\{[^}]*repeat\(5, minmax\(0, 1fr\)\)[^}]*grid-auto-rows: 12rem/s);
+  assert.match(tablet, /\.moments-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)[^}]*grid-auto-rows: 10rem/s);
+  assert.match(css, /\.moment-card-tall\s*\{\s*grid-row: span 2;/);
+  assert.match(css, /\.moment-card-wide\s*\{\s*grid-column: span 2;/);
+  assert.equal([...css.matchAll(/\.moments-grid\s*\{[^}]*grid-template-columns:/g)].length, 2, "No single-column phone override");
+  assert.ok(!tablet.includes(".moment-card-tall,"), "Keep both spans on small screens");
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)\s*\{\s*\.moment-photo-enter \{ animation: none;/);
   assert.ok(!css.includes(".moment-card span {"), "Caption positioning must not affect counters/zoom controls");
+});
+
+test("review autoplay gives longer quotes more reading time and wraps to the first", () => {
+  assert.equal(reviewReadingTime("Lovely place."), 8000);
+  assert.equal(reviewReadingTime("word ".repeat(60)), 22000);
+  assert.equal(reviewReadingTime("word ".repeat(200)), 30000);
+  let advance;
+  let next;
+  let cancelled;
+  const stop = scheduleReviewAdvance({
+    enabled: true, count: 11, index: 10, text: "Lovely place.", onAdvance: value => { next = value; },
+    schedule: (callback, delay) => { assert.equal(delay, 8000); advance = callback; return 7; },
+    cancel: timer => { cancelled = timer; },
+  });
+  assert.equal(next, undefined, "Wait before changing a quote");
+  advance();
+  assert.equal(next, 0, "The final review wraps to the first");
+  stop();
+  assert.equal(cancelled, 7, "Cleanup cancels the current timer");
+});
+
+test("review slides share one grid cell so changing quotes cannot shrink the panel", () => {
+  const css = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+  assert.match(css, /\.guest-review-slides\s*\{\s*display: grid;/);
+  assert.match(css, /\.guest-review-slide\s*\{[^}]*grid-area: 1 \/ 1;[^}]*visibility: hidden;/);
+  assert.match(css, /\.guest-review-slide\.is-active\s*\{\s*visibility: visible;/);
+  assert.match(css, /\.guest-review-slide blockquote\s*\{\s*flex: 1;/, "Keep attribution and controls at a steady position");
+});
+
+test("review autoplay does not schedule when paused, out of view, or with fewer than two quotes", () => {
+  for (const options of [{ enabled: false, count: 11 }, { enabled: true, count: 0 }, { enabled: true, count: 1 }]) {
+    const stop = scheduleReviewAdvance({
+      ...options, index: 0, text: "A review", onAdvance: () => assert.fail("Must not advance"),
+      schedule: () => assert.fail("Must not schedule a timer"),
+    });
+    stop();
+  }
 });

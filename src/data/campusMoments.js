@@ -13,6 +13,9 @@ import freshMeal from "../../pics/site-marketing/fresh-shared-meal.webp";
 import dining from "../../pics/site-marketing/oceanfront-dining.webp";
 import kitchen from "../../pics/site-marketing/swahili-kitchen.webp";
 import garden from "../../pics/site-marketing/permaculture-campus-tour.webp";
+import tailoring from "../../pics/site-marketing/kanga-tailoring-workshop.webp";
+import soapMaking from "../../pics/site-marketing/hamammni-soap-making-closeup.webp";
+import drumMaking from "../../pics/site-marketing/ngoma-drum-making.webp";
 import { campusVisitPhoto, campusCourtyardPhoto, schoolCampPhotos } from "./campusPhotos";
 
 // Each tile keeps its subject as it rotates. Only the visible photo is loaded
@@ -25,6 +28,14 @@ export const campusMoments = [
       { image: education, alt: "Participants working together during a hands-on workshop" },
       suppliedPhoto(schoolCampPhotos[0]),
       suppliedPhoto(schoolCampPhotos[1]),
+    ],
+  },
+  {
+    id: "craft", label: "Made by hand", className: "moment-card-tall",
+    photos: [
+      { image: tailoring, alt: "Textile craft at the Kanga tailoring workshop" },
+      { image: soapMaking, alt: "Making natural soap in the campus workshop" },
+      { image: drumMaking, alt: "Making a ngoma drum by hand" },
     ],
   },
   {

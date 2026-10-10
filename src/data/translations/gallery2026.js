@@ -1,4 +1,7 @@
 export const gallery2026 = [
+  ["Made by hand", "El emeği", "Von Hand gemacht"],
+  ["Making natural soap in the campus workshop", "Kampüs atölyesinde doğal sabun yapımı", "Herstellung von Naturseife in der Campuswerkstatt"],
+  ["Making a ngoma drum by hand", "El yapımı ngoma davulu", "Eine Ngoma-Trommel entsteht in Handarbeit"],
   ["View photo collection", "Fotoğraf koleksiyonunu görüntüle", "Fotosammlung ansehen"],
   ["Open any photo to explore its collection.", "Koleksiyonu keşfetmek için bir fotoğrafı açın.", "Öffnen Sie ein Foto, um die zugehörige Sammlung anzusehen."],
   ["Aerial view of the eco-village along the Zanzibar coast", "Zanzibar kıyısındaki eko-köyün havadan görünümü", "Luftaufnahme des Ökodorfs an der Küste Sansibars"],
