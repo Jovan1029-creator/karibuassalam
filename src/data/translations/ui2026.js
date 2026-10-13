@@ -1,4 +1,8 @@
 export const ui2026 = [
+  ["At the eco-village", "Eko-köyde", "Im Öko-Dorf"],
+  ["Facilities", "Olanaklar", "Ausstattung"],
+  ["Explore our campus", "Kampüsümüzü keşfedin", "Unseren Campus entdecken"],
+  ["Wi-Fi", "Wi-Fi", "WLAN"],
   ["Read the reviews", "Yorumları okuyun", "Bewertungen lesen"],
   ["Workshops, tours and special events", "Atölyeler, turlar ve özel etkinlikler", "Workshops, Touren und besondere Veranstaltungen"],
   ["What’s happening?", "Neler oluyor?", "Was ist los?"],

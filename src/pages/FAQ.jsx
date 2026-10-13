@@ -31,6 +31,7 @@ export default function FAQ() {
       {faqSections.map((section) => (
         <Section
           key={section.id}
+          id={section.id}
           title={tx(section.title)}
           className={section.id === "policies" ? "surface-section" : ""}
         >

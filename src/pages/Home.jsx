@@ -4,6 +4,7 @@ import HeroSlider from "../components/HeroSlider";
 import Section from "../components/Section";
 import CampusMoments from "../components/CampusMoments";
 import GuestReviews from "../components/GuestReviews";
+import Facilities from "../components/Facilities";
 import PhotoSlot from "../components/PhotoSlot";
 import SEO from "../components/SEO";
 import { SITE } from "../data/siteConfig";
@@ -123,6 +124,8 @@ export default function Home() {
           ))}
         </div>
       </Section>
+
+      <Facilities />
 
       <Section
         eyebrow="Life at Assalam"

@@ -35,6 +35,17 @@ try {
   const { bookingNights, bookingDate } = await server.ssrLoadModule('/src/components/BookingSummary.jsx');
   const { campusProgramme } = await server.ssrLoadModule('/src/data/campusProgramme.js');
   const { faqSections } = await server.ssrLoadModule('/src/data/faq.js');
+  const { facilities } = await server.ssrLoadModule('/src/data/facilities.js');
+  assert.equal(facilities.length, 10, 'Show ten amenities grounded in the campus content');
+  assert.equal(new Set(facilities.map(item => item.icon)).size, facilities.length, 'Give each facility its own illustration');
+  for (const destination of new Set(facilities.map(item => item.to))) {
+    const [path, anchor] = destination.split('#');
+    assert.ok(routes.includes(path), `Facility destination exists: ${path}`);
+    if (anchor) {
+      const destinationMarkup = await renderPage(path, 'en');
+      assert.ok(destinationMarkup.includes(`id="${anchor}"`), `Facility fragment exists: ${destination}`);
+    }
+  }
   assert.deepEqual(faqSections.map(section => section.id), ['preparation', 'travel-support', 'stay', 'booking'], 'Preparation comes first and cancellation last');
   assert.equal(faqSections.flatMap(section => section.items).length, 24, 'Preserve all FAQ questions');
   const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS, RETREAT_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
@@ -491,6 +502,9 @@ try {
     for (const href of ['/contact', '/experiences#workshops']) assert.ok(customize.includes(`href="${href}"`), 'Preserve booking and workshop discovery links');
   }
   const typography = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
+  assert.match(typography, /\.facilities-grid\s*\{[^}]*grid-template-columns: repeat\(10, minmax\(0, 1fr\)\)/, 'Facilities fit one desktop row');
+  assert.match(typography, /@media \(max-width: 1100px\)\s*\{\s*\.facilities-grid\s*\{[^}]*repeat\(5, minmax\(0, 1fr\)\)/, 'Facilities use two rows on tablets');
+  assert.match(typography, /@media \(max-width: 540px\)\s*\{\s*\.facilities-grid\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/, 'Phones keep readable two-column facility links');
   assert.match(typography, /\.retreat-feature-split\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\) minmax\(0, 1fr\)/, 'Shared experience sections use two equal desktop columns');
   assert.match(typography, /@media \(max-width: 960px\)\s*\{[\s\S]*?\.retreat-feature-split\s*\{[^}]*grid-template-columns: 1fr/, 'Shared experience sections stack on smaller screens');
   const documentHead = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
@@ -718,8 +732,33 @@ try {
     });
   }
   const leaked = [];
+  function checkFacilities(markup, route, language) {
+    if (route !== '/') return;
+    const section = markup.match(/<section id="facilities"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(section, 'Show the facilities strip on the homepage');
+    assert.ok(markup.indexOf('id="facilities"') > markup.indexOf('id="plan-your-stay"'));
+    assert.ok(markup.indexOf('id="facilities"') < markup.indexOf('life-intro-section'));
+    assert.ok(!section.includes('<img') && !section.includes('<iframe'), 'Use lightweight local vectors rather than remote graphics');
+    const icons = [...section.matchAll(/<svg\b[^>]*>[\s\S]*?<\/svg>/g)].map(match => match[0]);
+    assert.equal(icons.length, 10);
+    assert.equal(new Set(icons).size, 10, 'Ten distinct line illustrations');
+    for (const icon of icons) {
+      assert.ok(icon.includes('aria-hidden="true"') && icon.includes('focusable="false"') && icon.includes('<path'), 'Decorative illustrations do not duplicate link announcements');
+    }
+    const links = [...section.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+    assert.equal(links.length, 11, 'Ten facility links and one campus discovery link');
+    facilities.forEach((facility, index) => {
+      assert.ok(links[index][1].includes(`href="${facility.to}"`), 'Each facility leads to its relevant details');
+      assert.ok(visibleStrings(links[index][2]).has(translateText(language, facility.label)), 'Facility link names are visible and localized');
+    });
+    for (const phrase of ['Facilities', 'At the eco-village', 'Explore our campus']) {
+      assert.ok(visibleStrings(section).has(translateText(language, phrase)), 'Translate the section heading and discovery link');
+    }
+    assert.ok(links.at(-1)[1].includes('href="/campus#campus-spaces"'));
+  }
   for (const route of routes) {
     const englishMarkup = await renderPage(route, 'en');
+    checkFacilities(englishMarkup, route, 'en');
     checkReviewsAndFooter(englishMarkup, route, 'en');
     checkCafeLinks(englishMarkup, route, 'en');
     checkCampusProgramme(englishMarkup, route, 'en');
@@ -735,6 +774,7 @@ try {
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
       const markup = await renderPage(route, language);
+      checkFacilities(markup, route, language);
       checkReviewsAndFooter(markup, route, language);
       checkCafeLinks(markup, route, language);
       checkCampusProgramme(markup, route, language);
@@ -772,6 +812,7 @@ try {
     assert.equal(translateText(language, localized), localized, 'Shared components preserve already-translated text');
   }
   console.log(`Translation tests passed: ${routes.length} routes × 3 languages, visible text and accessibility labels, interpolation, brand preservation.`);
+  console.log('Facilities checks passed: ten distinct decorative icons, localized visible links, valid page anchors and desktop/tablet/phone grids.');
   console.log('Cafe checks passed: correct venue attribution, third/fourth cards, review count, section anchor and safe new-tab links.');
   console.log('Campus programme checks passed: weekly October schedules, WhatsApp join links, festival dates and Stone Town venue links in all languages.');
   console.log('Safari checks passed: all five supplied photos, no mainland placeholders, localized captions/alt text, lazy loading and separate Sandbank & Snorkeling imagery.');
