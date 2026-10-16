@@ -3,7 +3,7 @@
 // Shared photos keep the overview and dedicated category pages consistent.
 import craftImg from "../../pics/site-marketing/community-craft-workshop.webp";
 import schoolImg from "../../pics/site-marketing/school-campus.webp";
-import caveMusicImg from "../../pics/site-marketing/cave-sufi-performance.webp";
+import { campusVenuePhotos } from "./campusGallery";
 import sawaImg from "../../pics/site-marketing/sawa-music-room.webp";
 import stoneTownImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
@@ -48,6 +48,7 @@ export const tours = [
   {
     slug: "spice-tour",
     title: "City & Spice",
+    photoAlt: "Guests enjoying a guided spice garden visit in Zanzibar",
     text:
       "Explore Zanzibar's cultural heritage on a full day tour with a visit of spice gardens and a guided tour of the old town's maze of alleys.",
   },
@@ -101,7 +102,7 @@ export const volunteering = [
 export const specialEvents = [
   {
     slug: "sufi-festival",
-    photo: { src: caveMusicImg, alt: "Sufi musicians performing in the campus cave", position: "50% 32%" },
+    photo: campusVenuePhotos.festival,
     title: "Zanzibar Sufi Festival",
     text:
       "An annual festival of Sufi music, poetry and gathering, hosted with Assalam. It has its own site with the programme and dates.",

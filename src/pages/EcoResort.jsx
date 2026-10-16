@@ -7,10 +7,10 @@ import PhotoCardMedia from "../components/PhotoCardMedia";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import heroImg from "../../AssalamHero/assalam-hero.webp";
-import roomImg from "../../pics/site-marketing/eco-village-room-interior.webp";
+import roomImg from "../../pics/site-marketing/campus-2026/07-room-replacement.webp";
 import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
 import tailoringImg from "../../pics/site-marketing/kanga-tailoring-workshop.webp";
-import soapImg from "../../pics/site-marketing/hamammni-soap-making-closeup.webp";
+import { campusVenuePhotos } from "../data/campusGallery";
 import musicImg from "../../pics/site-marketing/sawa-music-room.webp";
 
 export default function EcoResort() {
@@ -71,7 +71,7 @@ export default function EcoResort() {
             <p>{tx("Our campus has a tailoring workshop creating unique textiles and souvenirs. Explore our boutique and support our local women tailors by choosing a special souvenir to take home.")}</p>
           </article>
           <article id="hamammni" className="eco-discover-card">
-            <PhotoCardMedia photo={{ src: soapImg, alt: "Handmade soaps being prepared in the Hamamni workshop" }} />
+            <PhotoCardMedia photo={campusVenuePhotos.soap} />
             <h3>{tx("Hamamni")}</h3>
             <p>{tx("Make your own soap with the women's cooperative using coconut oil and local botanicals.")}</p>
             <Link className="text-link" to="/experiences/workshops/soap-making">{tx("Explore the workshop")}</Link>
@@ -106,7 +106,7 @@ export default function EcoResort() {
 
       <Section title="Stay within a living community" className="eco-resort-closing">
         <div className="retreat-feature-split is-reversed">
-          <img src={roomImg} alt={tx("Guest accommodation at Karibu Assalam Eco-Village")} width="900" height="675" loading="lazy" />
+          <img src={roomImg} alt={tx("Guest accommodation at Karibu Assalam Eco-Village")} width="1200" height="1600" loading="lazy" />
           <div>
             <p>{tx("Karibu Assalam Eco Resort is for you if you want a stay within a living community and an authentic Zanzibar experience, with nature and sustainability in mind. We offer meaningful halal experiences and accommodation while you travel slow, engage with locals and learn while you create your own memories.")}</p>
             <CTAButton to="/booking" size="lg">{tx("Book Your Stay")}</CTAButton>

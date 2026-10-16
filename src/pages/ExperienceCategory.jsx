@@ -71,10 +71,11 @@ export default function ExperienceCategory() {
         imagePosition={copy.photo?.position}
         compact
         ctaPrimary={{ to: "/contact", label: "Ask the team" }}
+        ctaSecondary={category === "events" ? { to: "/whats-happening", label: "What’s happening", variant: "secondary" } : undefined}
       />
 
       {category === "events" && (
-        <Section title="Come together at Karibu Assalam" subtitle="Programmes and event dates are confirmed as they are announced.">
+        <Section>
           <div className="event-grid">
             {specialEvents.map((item) => (
               <EventCard item={item} key={item.slug} />

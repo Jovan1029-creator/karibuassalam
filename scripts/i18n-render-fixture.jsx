@@ -13,6 +13,16 @@ import GuestReviews, { ReviewQuote } from '../src/components/GuestReviews';
 import CampusMoments, { MomentCard } from '../src/components/CampusMoments';
 import Lightbox from '../src/components/Lightbox';
 import { safariLightboxPhotos } from '../src/components/SafariGallery';
+import CampusLifeGallery from '../src/components/CampusLifeGallery';
+import { campusLifeLightboxPhotos } from '../src/data/campusGallery';
+
+export function renderCampusLifeGallery(language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><CampusLifeGallery /></LanguageProvider>);
+}
+
+export function renderCampusLifeLightbox(index, language) {
+  return renderToString(<LanguageProvider initialLanguage={language}><Lightbox items={campusLifeLightboxPhotos} index={index} onClose={() => {}} onChange={() => {}} /></LanguageProvider>);
+}
 
 export function renderSafariLightbox(index, language) {
   return renderToString(<LanguageProvider initialLanguage={language}><Lightbox items={safariLightboxPhotos} index={index} onClose={() => {}} onChange={() => {}} /></LanguageProvider>);

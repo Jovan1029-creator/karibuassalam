@@ -4,7 +4,7 @@ import { facilities } from "../data/facilities";
 import Section from "./Section";
 
 // A small, consistent set of line illustrations drawn for the campus.
-// Visible link labels provide the accessible name; the artwork is decorative.
+// Visible labels describe each facility; the artwork is decorative.
 const illustrations = {
   dining: <>
     <path d="M13 38a19 19 0 0 1 38 0M10 38h44M14 44h36M19 49h26M32 16v-4M29 12h6" />
@@ -60,14 +60,14 @@ export default function Facilities() {
       <ul className="facilities-grid">
         {facilities.map(facility => (
           <li key={facility.icon}>
-            <Link className="facility-link" to={facility.to}>
+            <div className="facility-item">
               <span className="facility-icon-frame" aria-hidden="true">
                 <svg viewBox="0 0 64 64" width="52" height="52" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" focusable="false" aria-hidden="true">
                   {illustrations[facility.icon]}
                 </svg>
               </span>
               <span className="facility-label">{tx(facility.label)}</span>
-            </Link>
+            </div>
           </li>
         ))}
       </ul>

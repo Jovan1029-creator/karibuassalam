@@ -20,7 +20,7 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { safariOverviewPhoto } from "../data/safariPhotos";
 import heroImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
-import spiceImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
+import spiceImg from "../../pics/site-marketing/campus-2026/16-tours-spice-city.webp";
 // Legacy filenames are reversed: use the actual subjects for the tour cards.
 import coastImg from "../../pics/zanzibarpics/Blue Safari.jpg";
 import sandbankImg from "../../pics/zanzibarpics/East Coast Tour.jpg";

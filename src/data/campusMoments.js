@@ -2,7 +2,7 @@ import education from "../../pics/our stories/education-1-enhanced.webp";
 import jetty from "../../pics/site-marketing/ocean-jetty.webp";
 import aerial from "../../pics/site-marketing/campus-coast-aerial.webp";
 import terrace from "../../pics/rooms/Image-2-edited-enhanced.webp";
-import room from "../../pics/site-marketing/eco-village-room-interior.webp";
+import room from "../../pics/site-marketing/campus-2026/07-room-replacement.webp";
 import guestRoom from "../../pics/rooms/camps-22-enhanced.webp";
 import familyRoom from "../../pics/site-marketing/eco-village-family-room.jpg";
 import kindness from "../../pics/our retreats/Kindness Camp-enhanced.webp";

@@ -14,6 +14,57 @@ after(() => server.close());
 const { campusMoments } = await server.ssrLoadModule("/src/data/campusMoments.js");
 const { renderCampusMoments, renderMomentCard, renderMomentLightbox, renderSafariLightbox } = await server.ssrLoadModule("/scripts/i18n-render-fixture.jsx");
 const { safariGalleryPhotos } = await server.ssrLoadModule("/src/data/safariPhotos.js");
+const { campusLifePhotos, campusVenuePhotos, campusPhotoSrcSet } = await server.ssrLoadModule("/src/data/campusGallery.js");
+const { renderCampusLifeGallery, renderCampusLifeLightbox } = await server.ssrLoadModule("/scripts/i18n-render-fixture.jsx");
+
+test("all thirteen supplied photos have optimized, verified website destinations", () => {
+  const photos = [...campusLifePhotos, ...Object.values(campusVenuePhotos)];
+  assert.equal(campusLifePhotos.length, 8);
+  assert.equal(new Set(photos.map(photo => photo.src)).size, 13);
+  for (const photo of photos) {
+    for (const src of [photo.src, photo.thumb]) {
+      assert.ok(src.startsWith('/pics/site-marketing/campus-2026/'));
+      assert.ok(src.endsWith('.webp'), 'Do not serve large raw JPEGs or unsupported HEIF files');
+      const path = resolve(src.slice(1));
+      assert.ok(statSync(path).size > 0 && statSync(path).size < 500_000);
+    }
+    assert.ok(photo.width > 0 && photo.height > 0);
+    assert.ok(campusPhotoSrcSet(photo).includes(`${photo.src} ${photo.width}w`));
+  }
+  assert.ok(campusVenuePhotos.mosque.src.includes('11-mango-mosque'), 'The conflicting boutique file is actually the mosque');
+  assert.ok(campusVenuePhotos.school.src.includes('08-school-permaculture'));
+  assert.ok(campusLifePhotos[7].width < campusLifePhotos[7].height, 'The sideways school photo is corrected to portrait');
+});
+
+test("Campus Life gallery and all full-size photos are accessible and translated", () => {
+  for (const language of ['en', 'tr', 'de']) {
+    const html = renderCampusLifeGallery(language);
+    assert.equal([...html.matchAll(/<figure\b/g)].length, 8);
+    assert.equal([...html.matchAll(/<button\b/g)].length, 8);
+    assert.equal([...html.matchAll(/aria-haspopup="dialog"/g)].length, 8);
+    const images = [...html.matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
+    assert.equal(images.length, 8);
+    for (const [index, photo] of campusLifePhotos.entries()) {
+      assert.ok(images[index].includes(`src="${photo.thumb}"`) && images[index].includes('srcSet='));
+      assert.ok(images[index].includes('loading="lazy"') && images[index].includes('decoding="async"'));
+      const lightbox = renderCampusLifeLightbox(index, language);
+      assert.ok(lightbox.includes(`src="${photo.src}"`), 'Open the exact photo at full website size');
+      assert.ok(lightbox.includes('role="dialog"') && lightbox.includes('aria-modal="true"'));
+      assert.ok(lightbox.includes(translateText(language, photo.label)));
+      for (const phrase of [photo.label, photo.alt]) {
+        if (language !== 'en') assert.notEqual(translateText(language, phrase), phrase);
+      }
+    }
+  }
+});
+
+test("Campus Life gallery uses four, two and one columns without overflowing", () => {
+  const css = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
+  assert.match(css, /\.campus-life-gallery\s*\{[^}]*repeat\(4, minmax\(0, 1fr\)\)/);
+  assert.match(css, /@media \(max-width: 1100px\)\s*\{\s*\.campus-life-gallery\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(css, /@media \(max-width: 540px\)\s*\{\s*\.campus-life-gallery\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\)/);
+  assert.match(css, /\.campus-life-photo\s*\{[^}]*min-width: 0/);
+});
 
 function fakeRotation({ index = 0, count = 3, decode } = {}) {
   const pending = new Map();

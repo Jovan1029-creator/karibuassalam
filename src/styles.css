@@ -1333,7 +1333,7 @@ select {
 }
 
 .facilities-grid > li { min-width: 0; }
-.facility-link {
+.facility-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1343,7 +1343,6 @@ select {
   border-radius: var(--radius-sm);
   color: var(--accent-deep);
   text-align: center;
-  text-decoration: none;
 }
 
 .facility-icon-frame {
@@ -1357,7 +1356,6 @@ select {
   border-radius: 15px;
   color: var(--accent-ocean);
   background: var(--bg);
-  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
 .facility-icon-frame::before {
@@ -1371,10 +1369,6 @@ select {
 
 .facility-icon-frame svg { display: block; width: 3.25rem; height: 3.25rem; }
 .facility-label { max-width: 100%; font-size: 0.82rem; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
-.facility-link:hover .facility-icon-frame,
-.facility-link:focus-visible .facility-icon-frame { background: var(--surface-alt); border-color: var(--accent-ocean); transform: translateY(-3px); }
-.facility-link:hover .facility-label,
-.facility-link:focus-visible .facility-label { text-decoration: underline; text-underline-offset: 0.25em; }
 .facilities-more { margin-top: 2rem; text-align: center; }
 .facilities-more a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; text-decoration: underline; text-underline-offset: 0.4em; font-size: var(--text-small); }
 
@@ -1387,11 +1381,17 @@ select {
   .facility-label { font-size: var(--text-small); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .facility-icon-frame { transition: none; }
-  .facility-link:hover .facility-icon-frame,
-  .facility-link:focus-visible .facility-icon-frame { transform: none; }
-}
+/* Campus page photographs share the site's rounded frames and quiet captions. */
+.campus-life-intro { max-width: 72ch; margin-bottom: 2rem; }
+.campus-life-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.75rem 1.25rem; }
+.campus-life-photo { margin: 0; min-width: 0; }
+.campus-life-open { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: var(--radius-md); overflow: hidden; background: var(--surface-alt); cursor: zoom-in; }
+.campus-life-open img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.campus-life-photo figcaption { margin-top: 0.7rem; color: var(--accent-deep); font-size: var(--text-small); font-weight: 600; line-height: 1.5; }
+.campus-life-zoom { position: absolute; right: 0.65rem; bottom: 0.65rem; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--bg); color: var(--accent-deep); font-size: 1.25rem; line-height: 1; }
+.campus-life-open:focus-visible { outline: 3px solid var(--accent-ocean); outline-offset: 4px; }
+@media (max-width: 1100px) { .campus-life-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 540px) { .campus-life-gallery { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } }
 
 .moment-card {
   position: relative;

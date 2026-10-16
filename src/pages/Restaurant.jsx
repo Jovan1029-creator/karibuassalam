@@ -6,7 +6,8 @@ import CTAButton from "../components/CTAButton";
 import { SPICE_ROUTE_CAFE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
-import diningImg from "../../pics/rooms/food-1-enhanced.webp";
+import { campusVenuePhotos } from "../data/campusGallery";
+import PhotoCardMedia from "../components/PhotoCardMedia";
 
 const features = ["Farm to Table", "Delicious", "Swahili and international cuisine", "Talented Chefs"];
 
@@ -40,14 +41,7 @@ export default function Restaurant() {
           ))}
         </div>
         <div className="retreat-feature-split">
-          <img
-            src={diningImg}
-            alt={tx("A fresh meal with fruit, bread and vegetables served in a woven tray")}
-            width="1672"
-            height="941"
-            loading="lazy"
-            decoding="async"
-          />
+          <PhotoCardMedia photo={campusVenuePhotos.restaurant} />
           <div className="content-card">
             <p>
               {tx(

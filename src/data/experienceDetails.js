@@ -2,14 +2,14 @@ import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
 import soapWorkshopImg from "../../pics/site-marketing/hamammni-soap-workshop.webp";
 import drummingWorkshopImg from "../../pics/site-marketing/ngoma-drumming-workshop.webp";
 import drumMakingImg from "../../pics/site-marketing/ngoma-drum-making.webp";
-import soapMakingImg from "../../pics/site-marketing/hamammni-soap-making-closeup.webp";
+import { campusVenuePhotos } from "./campusGallery";
 import kitchenImg from "../../pics/site-marketing/swahili-kitchen.webp";
 import mealImg from "../../pics/site-marketing/fresh-shared-meal.webp";
 import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
 import caveImg from "../../pics/site-marketing/campus-cave.webp";
 // Match the photographs to their subjects, not the legacy filenames.
 import coastImg from "../../pics/zanzibarpics/Blue Safari.jpg";
-import spiceImg from "../../pics/aboutpic/Spice Gardens.webp";
+import spiceImg from "../../pics/site-marketing/campus-2026/16-tours-spice-city.webp";
 import townImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import villageImg from "../../pics/site-marketing/ramadan-community-evening.webp";
 import seaImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
@@ -69,6 +69,7 @@ export const experienceDetails = [
     title: "City & Spice",
     intro: "Explore Zanzibar's cultural heritage on a full day tour with a visit of spice gardens and a guided tour of the old town's maze of alleys.",
     image: spiceImg,
+    imageAlt: "Guests enjoying a guided spice garden visit in Zanzibar",
     detailPhoto: { src: townImg, alt: "Historic Stone Town in Zanzibar" },
     duration: "Full day",
     days: "Any day, subject to availability",
@@ -115,7 +116,7 @@ export const experienceDetails = [
     title: "Hamamni soap workshop",
     intro: "Make your own soap with the women's cooperative, using coconut oil and local botanicals. Take your bars home with you.",
     image: soapWorkshopImg,
-    detailPhoto: { src: soapMakingImg, alt: "Handmade soaps being prepared in the Hamamni workshop" },
+    detailPhoto: campusVenuePhotos.soap,
     duration: "2–3 hours",
     days: "Any day",
     start: "Morning or afternoon",

@@ -1,4 +1,5 @@
 import { useLanguage } from "../context/LanguageContext";
+import { campusPhotoSrcSet } from "../data/campusGallery";
 
 export default function PhotoCardMedia({ photo }) {
   const { tx } = useLanguage();
@@ -8,10 +9,12 @@ export default function PhotoCardMedia({ photo }) {
     <img
       className="content-card-photo"
       src={photo.src}
+      srcSet={photo.thumb ? campusPhotoSrcSet(photo) : undefined}
+      sizes={photo.thumb ? "(max-width: 700px) 90vw, (max-width: 1100px) 45vw, 400px" : undefined}
       alt={tx(photo.alt)}
       style={photo.position ? { objectPosition: photo.position } : undefined}
-      width="1200"
-      height="800"
+      width={photo.width || 1200}
+      height={photo.height || 800}
       loading="lazy"
       decoding="async"
     />

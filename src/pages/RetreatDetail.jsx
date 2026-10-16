@@ -8,7 +8,7 @@ import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import PhotoSlot from "../components/PhotoSlot";
 import { getRetreatBySlug, retreats } from "../data/retreats";
-import roomImg from "../../pics/site-marketing/eco-village-room-interior.webp";
+import roomImg from "../../pics/site-marketing/campus-2026/07-room-replacement.webp";
 import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
 
 function StandardRetreatPage({ retreat }) {
@@ -130,7 +130,7 @@ export default function RetreatDetail() {
 
           {copy.stayHeading && <Section className="surface-section retreat-stay-section">
             <div className="retreat-feature-split">
-              <img src={roomImg} alt={tx("Comfortable room at Karibu Assalam Eco-Village")} width="900" height="675" loading="lazy" />
+              <img src={roomImg} alt={tx("Comfortable room at Karibu Assalam Eco-Village")} width="1200" height="1600" loading="lazy" />
               <div>
                 <p className="eyebrow">{tx("Accommodation")}</p>
                 <h2>{tx(copy.stayHeading)}</h2>

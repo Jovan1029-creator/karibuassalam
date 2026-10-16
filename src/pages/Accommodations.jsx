@@ -5,7 +5,7 @@ import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
-import roomsImg from "../../pics/site-marketing/eco-village-room-interior.webp";
+import roomsImg from "../../pics/site-marketing/campus-2026/07-room-replacement.webp";
 import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
 import coastImg from "../../pics/site-marketing/ocean-jetty.webp";
 
@@ -123,8 +123,8 @@ export default function Accommodations() {
             facts={[tx("25 m2"), tx("5 bed capacity"), tx("AC")]}
             image={roomsImg}
             alt={tx("Guest room with mosquito-netted beds at Karibu Assalam Eco-Village")}
-            imageWidth={768}
-            imageHeight={576}
+            imageWidth={1200}
+            imageHeight={1600}
           />
 
           <Showcase

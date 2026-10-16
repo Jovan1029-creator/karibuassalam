@@ -18,7 +18,7 @@ import aboutImg from "../../pics/aboutpic/Why Us-enhanced.webp";
 
 const stayOptions = [
   {
-    heading: "Eco-Village",
+    heading: "Accommodation",
     image: ecoVillageImg,
     alt: "Karibu Assalam Eco-Village accommodation in Kizimkazi",
     copy: "Stay in our eco village right on Kizimkazi beach in accommodation with views of the Indian Ocean. Slow down by the sea, enjoy Swahili flavours and discover life on our community-led campus. Explore the permaculture gardens, join a hands-on workshop or make time to connect with the people and culture of Zanzibar.",
@@ -114,7 +114,7 @@ export default function Home() {
       <Section
         id="plan-your-stay"
         eyebrow="Hospitality + community + sustainability + culture + purpose"
-        title="Plan your stay at Karibu Assalam Eco Resort"
+        title="The Karibu Assalam Eco Resort"
         subtitle="Find out more about our halal-friendly eco-village, retreats and camps, campus tours, workshops, Zanzibar tours and the island’s only muslim friendly wellness and spa (ladies only)."
         className="stay-planner-section"
       >
