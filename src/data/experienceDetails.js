@@ -14,6 +14,7 @@ import townImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import villageImg from "../../pics/site-marketing/ramadan-community-evening.webp";
 import seaImg from "../../pics/zanzibarpics/East Coast Tour.jpg";
 import { campusVisitPhoto } from "./campusPhotos";
+import { ecoPrintPhoto } from "./workshopPhotos";
 
 // The brief leaves most prices as $XX. Those are confirmed by the team on enquiry.
 const tourLanguages = "English, Turkish and Swahili; German and Italian on request";
@@ -148,8 +149,9 @@ export const experienceDetails = [
     slug: "eco-print",
     title: "Eco-print workshop",
     intro: "Create a design on fabric using leaves, flowers and bark gathered on campus, with natural dyes and no synthetic chemicals.",
-    // Show the workshop's campus setting until a dedicated Eco-print photo is supplied.
-    detailPhoto: campusVisitPhoto,
+    image: ecoPrintPhoto.src,
+    imageAlt: ecoPrintPhoto.alt,
+    detailPhoto: ecoPrintPhoto,
     duration: "2–3 hours",
     days: "Any day, subject to availability",
     start: "Morning or afternoon",

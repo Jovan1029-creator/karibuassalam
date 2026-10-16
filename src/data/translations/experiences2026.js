@@ -1,4 +1,7 @@
 export const experiences2026 = [
+  ["Visitors wearing leaf-patterned garments in the campus boutique", "Kampüs butiğinde yaprak desenli giysiler giyen ziyaretçiler", "Besucherinnen mit Kleidungsstücken mit Blattmustern in der Campus-Boutique"],
+  ["Clothing and handmade accessories in the campus boutique", "Kampüs butiğinde giysiler ve el yapımı aksesuarlar", "Kleidung und handgefertigte Accessoires in der Campus-Boutique"],
+  ["Woodworking benches and timber inside the carpentry workshop", "Marangozluk atölyesindeki çalışma tezgâhları ve keresteler", "Werkbänke und Holz in der Tischlerwerkstatt"],
   ["City & Spice", "Şehir ve Baharat", "Stadt & Gewürze"],
   ["South East Coast", "Güneydoğu Sahili", "Südostküste"],
   ["Sandbank & Snorkeling", "Kum Adası ve Şnorkelle Dalış", "Sandbank & Schnorcheln"],

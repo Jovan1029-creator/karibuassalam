@@ -30,8 +30,7 @@ import soapWorkshopImg from "../../pics/site-marketing/hamammni-soap-workshop.we
 import drummingWorkshopImg from "../../pics/site-marketing/ngoma-drumming-workshop.webp";
 import kitchenImg from "../../pics/site-marketing/swahili-kitchen.webp";
 
-// Use supplied photographs only where they depict the actual experience;
-// workshops without a matching photo retain a labelled placeholder.
+// Shared photo metadata takes precedence where a workshop supplies it.
 const workshopImages = {
   "soap-making": soapWorkshopImg,
   drumming: drummingWorkshopImg,
@@ -135,12 +134,12 @@ export default function Experiences() {
             <article className="experience-card" key={item.slug}>
               <div className="experience-card-media">
                 <PhotoSlot
-                  src={workshopImages[item.slug]}
+                  src={item.photo?.src || workshopImages[item.slug]}
                   label={tx(item.title)}
-                  alt={tx(item.title)}
+                  alt={tx(item.photo?.alt || item.title)}
                   ratio="4 / 3"
-                  width={1024}
-                  height={768}
+                  width={item.photo?.width || 1024}
+                  height={item.photo?.height || 768}
                 />
               </div>
               <div className="experience-card-body">

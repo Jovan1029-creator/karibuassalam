@@ -8,6 +8,7 @@ import sawaImg from "../../pics/site-marketing/sawa-music-room.webp";
 import stoneTownImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
 import { SPICE_ROUTE_CAFE } from "./siteConfig";
+import { ecoPrintPhoto } from "./workshopPhotos";
 
 export const campusTour = {
   title: "Daily Karibu Assalam Tour",
@@ -33,6 +34,7 @@ export const workshops = [
   {
     slug: "eco-print",
     title: "Eco print workshop",
+    photo: ecoPrintPhoto,
     text:
       "Print fabric with leaves, flowers and bark gathered on the campus, using natural dyes and no synthetic chemicals.",
   },

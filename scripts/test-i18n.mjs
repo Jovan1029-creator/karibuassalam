@@ -366,6 +366,16 @@ try {
     assert.notEqual(workshop.detailPhoto.src, workshop.optionsPhoto.src, 'Use a different photograph for the extension section');
     assert.equal(workshop.bring, campusDetail.bring, 'Keep the campus dress guidance with the extension options');
   }
+  const { ecoPrintPhoto } = await server.ssrLoadModule('/src/data/workshopPhotos.js');
+  const ecoPrintDetail = getExperienceDetail('workshops', 'eco-print');
+  assert.equal(ecoPrintDetail.image, ecoPrintPhoto.src, 'Use the related fabric photograph in the Eco-print hero');
+  assert.equal(ecoPrintDetail.imageAlt, ecoPrintPhoto.alt, 'Describe the garments without claiming the photo shows a workshop in progress');
+  for (const language of ['en', 'tr', 'de']) {
+    const overview = await renderPage('/experiences', language);
+    const workshopSection = overview.match(/<section id="workshops"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(workshopSection?.includes(`src="${ecoPrintPhoto.src}"`), 'Replace the Eco-print overview placeholder with the shared WebP');
+    assert.ok(visibleStrings(workshopSection).has(translateText(language, ecoPrintPhoto.alt)), 'Translate the accurate fabric photo description');
+  }
   for (const slug of ['soap-making', 'drumming']) {
     assert.deepEqual(getExperienceDetail('workshops', slug).options, campusDetail.options, 'Reuse the approved tour extensions');
   }
@@ -627,8 +637,8 @@ try {
       assert.ok(src?.startsWith('/pics/site-marketing/') && src.endsWith('.webp'), 'Use optimized website photographs');
       assert.ok(statSync(new URL(`..${src}`, import.meta.url)).size > 0, 'Campus image assets exist');
       assert.ok(!card.includes('photo-slot') && !card.includes('<a ') && !card.includes('<button '), 'Keep the space cards non-clickable and free of placeholders');
-      if (index === 7) assert.ok(src.endsWith('/kanga-tailoring-workshop.webp'), 'Use the tailoring photo for Boutique');
-      if (index === 9) assert.ok(src.endsWith('/community-craft-workshop.webp'), 'Use the hands-on craft session for vocational training');
+      if (index === 7) assert.ok(src.endsWith('/campus-boutique.webp'), 'Show the actual boutique and its garments');
+      if (index === 9) assert.ok(src.endsWith('/carpentry-workshop.webp'), 'Show the actual carpentry workshop for vocational training');
     });
   }
   function checkCafeLinks(markup, route, language) {
@@ -806,6 +816,7 @@ try {
   }
   for (const route of routes) {
     const englishMarkup = await renderPage(route, 'en');
+    assert.doesNotMatch(englishMarkup, /class="[^"]*\bphoto-slot\b/, `${route}: no empty photo placeholders`);
     checkFacilities(englishMarkup, route, 'en');
     checkReviewsAndFooter(englishMarkup, route, 'en');
     checkCafeLinks(englishMarkup, route, 'en');
@@ -822,6 +833,7 @@ try {
     assert.ok(!english.has('Accommodations'), `${route}: use singular Accommodation throughout the visible site`);
     for (const language of ['tr', 'de']) {
       const markup = await renderPage(route, language);
+      assert.doesNotMatch(markup, /class="[^"]*\bphoto-slot\b/, `${route} (${language}): no empty photo placeholders`);
       checkFacilities(markup, route, language);
       checkReviewsAndFooter(markup, route, language);
       checkCafeLinks(markup, route, language);

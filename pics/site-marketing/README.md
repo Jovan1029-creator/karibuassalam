@@ -28,5 +28,17 @@ Images retain their original proportions. Most are resized to at most 1600 pixel
 | ngoma-drum-making.webp | Drum making workshop(4).jpg |
 | campus-cave.webp | Copy of IMG_6396.JPG |
 | cave-sufi-performance.webp | Cave Sufi Concert.mov (00:02) |
+| leaf-patterned-garments.webp | Tailoring boutique.jpg |
+| campus-boutique.webp | Tailoring boutique(1).jpg |
+| carpentry-workshop.webp | Carpentry Workshop.jpg |
 
-The supplied collection contains no confirmed eco-printing or mainland safari photograph, so those specific placeholders remain.
+The three additional selections above were read from the user-supplied
+`Downloads/Compressed/Marketing images - public-20260924T232629Z-1-001/Marketing images - public`
+folder and exported at 1600px wide with WebP quality 82. The originals are unchanged.
+The garment photo supports the Eco-print card and detail page; its alt text describes
+the visible leaf-patterned clothing, not a printing class in progress. Boutique and
+Vocational Training Workshop now show the actual boutique and carpentry space.
+
+Safari photographs are supplied separately in `pics/safari` and configured in
+`src/data/safariPhotos.js`. The route-rendering tests check that no photo placeholders
+remain on the current pages.

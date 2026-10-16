@@ -12,8 +12,7 @@ import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp"
 import jettyImg from "../../pics/site-marketing/ocean-jetty.webp";
 import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
 import artsImg from "../../pics/site-marketing/sawa-music-room.webp";
-import tailoringImg from "../../pics/site-marketing/kanga-tailoring-workshop.webp";
-import craftImg from "../../pics/site-marketing/community-craft-workshop.webp";
+import { boutiquePhoto, vocationalWorkshopPhoto } from "../data/workshopPhotos";
 
 const campusSpaces = [
   { ...campusVenuePhotos.school, title: "International School" },
@@ -23,9 +22,9 @@ const campusSpaces = [
   { ...campusVenuePhotos.restaurant, title: "Istanbul restaurant" },
   { title: "Permaculture garden", src: permacultureImg, alt: "Visitors exploring the permaculture area at Assalam" },
   { title: "Halal Spa & Pool", src: spaImg, alt: "Private pool and sun loungers at Karibu Assalam" },
-  { title: "Boutique", src: tailoringImg, alt: "Textile craft at the Kanga tailoring workshop", width: 1600, height: 1068 },
+  { ...boutiquePhoto, title: "Boutique" },
   { title: "Arts & Cultural Centre", src: artsImg, alt: "Music practice in the Sawa Ensemble room" },
-  { title: "Vocational Training Workshop", src: craftImg, alt: "Visitors and community members making crafts together", width: 1600, height: 1068 },
+  { ...vocationalWorkshopPhoto, title: "Vocational Training Workshop" },
 ];
 
 export default function Campus() {
