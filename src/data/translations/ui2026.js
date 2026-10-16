@@ -1,4 +1,5 @@
 export const ui2026 = [
+  ["Book direct", "Doğrudan ayırtın", "Direkt buchen"],
   ["At the eco-village", "Eko-köyde", "Im Öko-Dorf"],
   ["Facilities", "Olanaklar", "Ausstattung"],
   ["Explore our campus", "Kampüsümüzü keşfedin", "Unseren Campus entdecken"],

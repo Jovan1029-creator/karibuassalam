@@ -6,13 +6,14 @@ import { useLanguage } from "../context/LanguageContext";
 import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
 import permacultureImg from "../../pics/site-marketing/permaculture-campus-tour.webp";
 import PhotoCardMedia from "../components/PhotoCardMedia";
-import PhotoSlot from "../components/PhotoSlot";
 import CampusLifeGallery from "../components/CampusLifeGallery";
 import { campusVenuePhotos } from "../data/campusGallery";
 import amphitheatreImg from "../../pics/site-marketing/campus-amphitheatre.webp";
 import jettyImg from "../../pics/site-marketing/ocean-jetty.webp";
 import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
 import artsImg from "../../pics/site-marketing/sawa-music-room.webp";
+import tailoringImg from "../../pics/site-marketing/kanga-tailoring-workshop.webp";
+import craftImg from "../../pics/site-marketing/community-craft-workshop.webp";
 
 const campusSpaces = [
   { ...campusVenuePhotos.school, title: "International School" },
@@ -22,10 +23,9 @@ const campusSpaces = [
   { ...campusVenuePhotos.restaurant, title: "Istanbul restaurant" },
   { title: "Permaculture garden", src: permacultureImg, alt: "Visitors exploring the permaculture area at Assalam" },
   { title: "Halal Spa & Pool", src: spaImg, alt: "Private pool and sun loungers at Karibu Assalam" },
-  // Keep explicit placeholders until clean, verified venue photos are available.
-  { title: "Boutique", alt: "Boutique photograph coming soon" },
+  { title: "Boutique", src: tailoringImg, alt: "Textile craft at the Kanga tailoring workshop", width: 1600, height: 1068 },
   { title: "Arts & Cultural Centre", src: artsImg, alt: "Music practice in the Sawa Ensemble room" },
-  { title: "Vocational Training Workshop", alt: "Vocational training workshop photograph coming soon" },
+  { title: "Vocational Training Workshop", src: craftImg, alt: "Visitors and community members making crafts together", width: 1600, height: 1068 },
 ];
 
 export default function Campus() {
@@ -70,11 +70,7 @@ export default function Campus() {
         <div className="eco-discover-grid campus-spaces-grid">
           {campusSpaces.map((space) => (
             <article className="eco-discover-card" key={space.title}>
-              {space.src ? (
-                <PhotoCardMedia photo={space} />
-              ) : (
-                <PhotoSlot alt={space.alt} label="PLACEHOLDER" ratio="3 / 2" className="content-card-photo" />
-              )}
+              <PhotoCardMedia photo={space} />
               <h3>{tx(space.title)}</h3>
             </article>
           ))}

@@ -33,8 +33,11 @@ The existing Stone Town image remains in the tour's "What is included" section.
 - The file numbered 09 was labelled mosque in the messages but shows a school
   performance. The converted copy is rotated clockwise to display upright.
 - Files numbered 10 and 13 were not supplied. No substitute is presented as
-  those photographs. The existing boutique and vocational-workshop placeholders
-  remain until appropriate venue images are supplied.
+  those photographs.
+- Boutique now uses the existing `kanga-tailoring-workshop.webp` photo. Vocational
+  Training Workshop uses `community-craft-workshop.webp`. Both were visually
+  checked and show relevant hands-on activities rather than the venue exterior.
+  Their card titles and non-clickable layout are preserved.
 
 ## Regeneration
 

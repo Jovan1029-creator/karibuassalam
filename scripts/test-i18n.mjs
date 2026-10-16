@@ -45,6 +45,20 @@ try {
   assert.equal(faqSections.flatMap(section => section.items).length, 24, 'Preserve all FAQ questions');
   const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS, RETREAT_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
   const { guestReviews, reviewSources } = await server.ssrLoadModule('/src/data/guestReviews.js');
+  for (const language of ['en', 'tr', 'de']) {
+    const markup = await renderPage('/campus', language);
+    const whatsapp = markup.match(/<a\b[^>]*class="dock-btn dock-whatsapp"[^>]*>[\s\S]*?<\/a>/)?.[0];
+    assert.ok(whatsapp?.includes('dock-whatsapp-label') && whatsapp.includes('dock-whatsapp-mark'), 'Keep the circular WhatsApp mark and curved booking label together');
+    assert.ok(visibleStrings(whatsapp).has(translateText(language, 'Book direct')), 'Translate the curved Book direct label');
+    assert.ok(whatsapp.includes('<textPath') && whatsapp.includes('startOffset="50%"'), 'Use crisp centered curved text rather than a raster button');
+    const arcId = whatsapp.match(/<path id="([^"]+)"/)?.[1];
+    assert.ok(arcId && whatsapp.includes(`href="#${arcId}"`), 'Connect the label to its unique SVG arc');
+    assert.ok(whatsapp.includes('target="_blank"') && whatsapp.includes('rel="noopener noreferrer"'));
+    const destination = new URL(decode(whatsapp.match(/href="([^"]+)"/)?.[1] || ''));
+    assert.equal(destination.hostname, 'wa.me');
+    assert.equal(destination.pathname, `/${SITE.whatsAppPhone}`, 'Preserve the team WhatsApp destination');
+    assert.ok(destination.searchParams.get('text').includes(translateText(language, 'I need help with booking and travel information.')));
+  }
   const { reviewIndex } = await server.ssrLoadModule('/src/components/GuestReviews.jsx');
   assert.equal(SITE.googleMapsUrl, 'https://maps.app.goo.gl/gQsTRmh4VrURr1zRA', 'Use the exact supplied map pin');
   assert.notEqual(SITE.foundationTripAdvisorUrl, SPICE_ROUTE_CAFE.tripAdvisorUrl, 'Keep the Foundation and cafe listings separate');
@@ -607,17 +621,14 @@ try {
     assert.equal(cards.length, titles.length, 'Keep the original three campus spaces and add all seven requested spaces');
     cards.forEach((card, index) => {
       assert.ok(visibleStrings(card).has(translateText(language, titles[index])), `Translate the campus space: ${titles[index]}`);
-      if ([7, 9].includes(index)) {
-        assert.ok(visibleStrings(card).has(translateText(language, 'PLACEHOLDER')), 'Clearly label unverified venue photos');
-        assert.ok(card.includes('role="img"') && card.includes('aspect-ratio:3 / 2'), 'Keep accessible placeholders at the same ratio as other card photos');
-        assert.ok(!card.includes('<img'), 'Do not publish damaged source previews');
-      } else {
-        const image = card.match(/<img\b[^>]*>/)?.[0];
-        assert.ok(image?.includes('loading="lazy"'), 'Campus photos load lazily');
-        const src = image.match(/src="([^"]+)"/)?.[1];
-        assert.ok(src?.startsWith('/pics/site-marketing/'), 'Use the selected website assets, not the ignored raw source folder');
-        assert.ok(statSync(new URL(`..${src}`, import.meta.url)).size > 0, 'Campus image assets exist');
-      }
+      const image = card.match(/<img\b[^>]*>/)?.[0];
+      assert.ok(image?.includes('loading="lazy"'), 'Campus photos load lazily');
+      const src = image.match(/src="([^"]+)"/)?.[1];
+      assert.ok(src?.startsWith('/pics/site-marketing/') && src.endsWith('.webp'), 'Use optimized website photographs');
+      assert.ok(statSync(new URL(`..${src}`, import.meta.url)).size > 0, 'Campus image assets exist');
+      assert.ok(!card.includes('photo-slot') && !card.includes('<a ') && !card.includes('<button '), 'Keep the space cards non-clickable and free of placeholders');
+      if (index === 7) assert.ok(src.endsWith('/kanga-tailoring-workshop.webp'), 'Use the tailoring photo for Boutique');
+      if (index === 9) assert.ok(src.endsWith('/community-craft-workshop.webp'), 'Use the hands-on craft session for vocational training');
     });
   }
   function checkCafeLinks(markup, route, language) {
@@ -857,7 +868,7 @@ try {
   console.log('Experience edits passed: overview-only tour description, invitation above the title, consistent Hamamni spelling and revised soap workshop facts in all languages.');
   console.log('Workshop layout checks passed: four alternating photo-and-text layouts, preserved inclusions, tailored extensions and translated guidance in all languages.');
   console.log('Campus updates passed: six clean homepage actions, expanded card 01, three tour additions, five supplied photos and complete seven-day School Camp in all languages.');
-  console.log('Campus spaces and safari checks passed: all ten space cards, explicit photo placeholders, localized labels and exact Mikumi enquiry copy.');
+  console.log('Campus spaces and safari checks passed: ten non-clickable photo cards, optimized WebP assets, localized labels and exact Mikumi enquiry copy.');
   console.log('Hospitality checks passed: populated Explore more sections, dining photo and revised copy, direct external card links, and Kanga Africa boutique description in all languages.');
   console.log('Social rail checks passed: three preserved destinations, localized hover/accessibility labels, safe external links and route-specific surfaces.');
   console.log('Booking and programme checks passed: volunteering option, live summary data, delivery-gated next steps and three confirmed weekly photo slides.');
