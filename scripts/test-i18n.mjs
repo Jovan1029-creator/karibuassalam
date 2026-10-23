@@ -215,13 +215,27 @@ try {
   const volunteeringIntro = 'Our Volunteering Camp is for travellers who want to give back and share their time and skills while visiting Zanzibar. Meet local communities, share meaningful moments, connect with the local culture and give back along the way - just come with an open heart for people, an open mind for another culture and open hands to join in and support our projects.';
   assert.equal(volunteerCamp.details.intro, volunteeringIntro, 'Use the supplied volunteering introduction, correcting visiting');
   originalVolunteerCamp.details.intro = volunteeringIntro;
+  originalVolunteerCamp.heroImage = volunteerCamp.heroImage;
+  originalVolunteerCamp.heroImageAlt = volunteerCamp.heroImageAlt;
   assert.deepEqual(volunteerCamp, originalVolunteerCamp, 'Keep the rest of the independently editable camp copy unchanged');
+  assert.notEqual(volunteerCamp.heroImage, kindness.heroImage, 'Volunteering Camp must not reuse the Kindness Camp photo');
+  assert.ok(decodeURIComponent(kindness.heroImage).endsWith('/Kindness Camp-enhanced.webp'), 'Preserve the Kindness Camp painting photo');
+  assert.ok(volunteerCamp.heroImage.endsWith('/04-campus-ramadhan.webp'), 'Show volunteers preparing community food baskets');
+  assert.ok(statSync(new URL(`..${volunteerCamp.heroImage}`, import.meta.url)).size > 0, 'The selected volunteering WebP exists');
+  assert.equal(new Set(retreats.map(retreat => retreat.heroImage)).size, retreats.length, 'Give every retreat its own preview photograph');
   assert.notEqual(volunteerCamp.details, kindness.details, 'Volunteering copy can be edited independently');
   assert.notEqual(volunteerCamp.details.schedule, kindness.details.schedule, 'Volunteering itinerary can be edited independently');
   assert.notEqual(volunteerCamp.details.schedule[0], kindness.details.schedule[0]);
   for (const language of ['en', 'tr', 'de']) {
     const markup = await renderPage('/retreats/volunteering-camp', language);
     const visible = visibleStrings(markup);
+    const listing = await renderPage('/retreats', language);
+    const previews = [...listing.matchAll(/<article class="showcase(?: is-reversed)?">([\s\S]*?)<\/article>/g)];
+    assert.equal(previews.length, retreats.length);
+    previews.forEach((preview, index) => assert.ok(decode(preview[1]).includes(`src="${retreats[index].heroImage}"`), 'Retreat listing uses each camp\'s selected photo'));
+    assert.ok(markup.includes(`src="${volunteerCamp.heroImage}"`), 'Use the new photo on the Volunteering Camp detail page too');
+    assert.ok(visible.has(translateText(language, volunteerCamp.heroImageAlt)), 'Translate the volunteering photo description');
+    assert.ok(visibleStrings(previews[1][1]).has(translateText(language, volunteerCamp.heroImageAlt)), 'Use the same description in the retreat listing');
     const copy = volunteerCamp.details;
     for (const phrase of [copy.heading, copy.intro, copy.inclusionHeading, copy.itineraryIntro, copy.stayCopy, copy.bookingCopy, ...copy.includedItems, ...copy.foodCopy, ...copy.schedule.flatMap(item => [item.heading, item.copy])]) {
       assert.ok(visible.has(translateText(language, phrase)), `Volunteering Camp preserves and translates ${phrase}`);

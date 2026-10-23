@@ -71,7 +71,7 @@ export default function RetreatDetail() {
         title={displayName}
         subtitle={copy?.intro || retreat.shortPromise}
         imageSrc={retreat.heroImage}
-        imageAlt={tx("{name} at Karibu Assalam in Zanzibar", { name: tx(displayName) })}
+        imageAlt={retreat.heroImageAlt || tx("{name} at Karibu Assalam in Zanzibar", { name: tx(displayName) })}
         ctaPrimary={{ to: "/contact", label: copy?.bookingCta || "Book your spot" }}
       />
 

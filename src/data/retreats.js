@@ -1,5 +1,6 @@
 // src\data\retreats.js
 import kindnessCampImg from "../../pics/our retreats/Kindness Camp-enhanced.webp";
+import volunteeringCampImg from "../../pics/site-marketing/campus-2026/04-campus-ramadhan.webp";
 import ramadanCampImg from "../../pics/our retreats/Ramadan Camp-enhanced.webp";
 import familyTourImg from "../../pics/our retreats/Family Tour-enhanced.webp";
 import culturalHeritageImg from "../../pics/our retreats/Cultural Heritage Tour-enhanced.webp";
@@ -73,7 +74,8 @@ export const retreats = [
     durationDays: 7,
     shortPromise:
       "A service-centered retreat combining community volunteering, seminars, and guided Zanzibar experiences.",
-    heroImage: kindnessCampImg,
+    heroImage: volunteeringCampImg,
+    heroImageAlt: "Volunteers preparing woven baskets filled with food supplies",
     details: volunteeringCampCopy,
     inclusions: [...COMMON_INCLUSIONS],
     highlights: ["Kizimkazi Village", "Spice Garden", "Stone Town", "Kanga Village", "Jozani Forest"],

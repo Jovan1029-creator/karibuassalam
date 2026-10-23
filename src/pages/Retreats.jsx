@@ -73,7 +73,7 @@ export default function Retreats() {
                 </>
               }
               image={retreat.heroImage}
-              alt={tx("{name} retreat preview", { name: tx(retreat.details?.heading || retreat.title) })}
+              alt={retreat.heroImageAlt || tx("{name} retreat preview", { name: tx(retreat.details?.heading || retreat.title) })}
               imageWidth={768}
               imageHeight={614}
               cta={{ to: `/retreats/${retreat.slug}`, label: "More details" }}

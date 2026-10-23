@@ -10,7 +10,7 @@ unchanged. The website uses optimized WebP copies in
 | 01 | Reading beside the ocean | Campus Life gallery |
 | 02 | Community celebration | Campus Life gallery |
 | 03 | Guests in the shaded courtyard | Campus Life gallery |
-| 04 | Preparing food baskets | Campus Life gallery |
+| 04 | Preparing food baskets | Campus Life gallery and Volunteering Camp preview/hero |
 | 05 | Mother Language Day dancing | Campus Life gallery |
 | 06 | School gathering | Campus Life gallery |
 | 07 | Guest bedroom | Accommodation, eco-resort, retreats, homepage room collection |

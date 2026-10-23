@@ -22,7 +22,7 @@ export default function RetreatCard({ retreat }) {
       <div className="media-frame">
         <img
           src={retreat.heroImage}
-          alt={`${displayTitle} ${tx("retreat preview")}`}
+          alt={retreat.heroImageAlt ? tx(retreat.heroImageAlt) : `${displayTitle} ${tx("retreat preview")}`}
           loading="lazy"
           decoding="async"
           width="768"
