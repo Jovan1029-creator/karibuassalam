@@ -19,7 +19,7 @@ export const SITE = {
   // Partner projects and outside profiles.
   sufiFestivalUrl: "https://zanzibarsufifest.com",
   spiceRouteMuseumUrl: "https://thespiceroutemuseum.com/about/",
-  sawaEnsembleUrl: "https://www.instagram.com/sawa.ensemble",
+  sawaEnsembleUrl: "https://sawaensemble.com",
   sawaEnsembleHandle: "@sawa.ensemble",
   foundationUrl: "https://vassalam.org",
 

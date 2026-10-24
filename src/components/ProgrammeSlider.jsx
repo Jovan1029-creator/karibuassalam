@@ -14,25 +14,30 @@ function Arrow({ previous = false }) {
 
 export function ProgrammeSlide({ item, priority = false }) {
   const { tx, language } = useLanguage();
-  const date = item.date && new Intl.DateTimeFormat(
+  const dateFormatter = new Intl.DateTimeFormat(
     { en: "en-GB", tr: "tr-TR", de: "de-DE" }[language] || "en-GB",
-    { day: "numeric", month: "short", timeZone: "UTC" },
-  ).format(new Date(`${item.date}T12:00:00Z`));
+    { day: "numeric", month: "long", timeZone: "UTC" },
+  );
+  const formatDate = (value) => dateFormatter.format(new Date(`${value}T12:00:00Z`));
+  const date = item.date && formatDate(item.date);
 
   return (
     <article className="happenings-slide">
-      <div className="happenings-photo">
+      <div className={`happenings-photo${item.imageFit === "contain" ? " happenings-photo--contain" : ""}`}>
         <img src={item.image} alt={tx(item.alt)} width="1200" height="800" loading={priority ? "eager" : "lazy"} decoding="async" />
       </div>
       <div className="happenings-programme">
         <p className="happenings-date">
           {date ? <time dateTime={item.date}>{date}</time> : tx(item.schedule || "Date to be confirmed")}
+          {date && item.endDate && <><span aria-hidden="true"> - </span><time dateTime={item.endDate}>{formatDate(item.endDate)}</time></>}
         </p>
         <h3>{tx(item.title)}</h3>
         <p>{tx(item.description)}</p>
         {!date && !item.schedule && <p className="happenings-preview-note">{tx("Activity preview - not a confirmed event.")}</p>}
         <div className="inline-actions happenings-actions">
-          <Link className="text-link" to={item.to}>{tx("More details")}</Link>
+          {item.to && <Link className="text-link" to={item.to}>{tx("More details")}</Link>}
+          {item.detailsUrl && <a className="text-link" href={item.detailsUrl} target="_blank" rel="noopener noreferrer">{tx("More details")}</a>}
+          {item.bookingTo && <CTAButton to={item.bookingTo}>Book Now</CTAButton>}
           {item.joinLabel && item.whatsAppMessage && (
             <CTAButton href={`https://wa.me/${SITE.whatsAppPhone}?text=${encodeURIComponent(tx(item.whatsAppMessage))}`} newTab>
               {item.joinLabel}

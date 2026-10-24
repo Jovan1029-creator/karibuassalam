@@ -7,6 +7,7 @@ import BookingSummary from "../components/BookingSummary";
 import BookingConfirmation from "../components/BookingConfirmation";
 import { SITE } from "../data/siteConfig";
 import { retreats } from "../data/retreats";
+import { campusProgramme } from "../data/campusProgramme";
 import {
   BOOKING_TYPES,
   CONTACT_METHODS,
@@ -25,14 +26,15 @@ function validEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
 }
 
-function initialFormFromParams(searchParams, language) {
-  const retreatSlug = searchParams.get("retreat") || "";
+function initialFormFromParams(searchParams, language, tx) {
+  const programme = campusProgramme.activities.find((item) => item.bookingTo && item.id === searchParams.get("programme"));
+  const retreatSlug = searchParams.get("retreat") || programme?.retreatSlug || "";
   return {
     bookingType: "retreat",
     retreatSlug,
     roomType: "not-sure",
-    arrivalDate: "",
-    departureDate: "",
+    arrivalDate: programme?.date || "",
+    departureDate: programme?.endDate || "",
     adults: "1",
     children: "0",
     guestLanguage: language || "en",
@@ -43,7 +45,7 @@ function initialFormFromParams(searchParams, language) {
     phone: "",
     country: "",
     dietaryNeeds: "",
-    message: "",
+    message: programme ? tx(programme.title) : "",
     website: "",
   };
 }
@@ -62,7 +64,7 @@ function bookingMessageUrl(record, channel) {
 export default function Booking() {
   const { tx, language } = useLanguage();
   const [searchParams] = useSearchParams();
-  const [form, setForm] = useState(() => initialFormFromParams(searchParams, language));
+  const [form, setForm] = useState(() => initialFormFromParams(searchParams, language, tx));
   // Keep source message keys in state so existing feedback follows language changes.
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(null);

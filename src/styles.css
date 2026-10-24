@@ -3842,7 +3842,8 @@ main {
   background: var(--accent-green);
 }
 
-.dock-btn.dock-whatsapp {
+.dock-btn.dock-whatsapp,
+.dock-btn.dock-mail {
   position: relative;
   width: 5.5rem;
   height: 5.5rem;
@@ -3850,7 +3851,8 @@ main {
   box-shadow: none;
 }
 
-.dock-whatsapp-mark {
+.dock-whatsapp-mark,
+.dock-mail-mark {
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -3864,12 +3866,20 @@ main {
   box-shadow: 0 10px 26px rgba(37, 211, 102, 0.24);
 }
 
+.dock-mail-mark {
+  background: var(--accent-green);
+  box-shadow: 0 10px 26px rgba(20, 42, 47, 0.24);
+}
+
+.dock-mail-mark svg { width: 1.8rem; height: 1.8rem; }
+
 .dock-whatsapp-mark svg {
   width: 2rem;
   height: 2rem;
 }
 
-.dock-whatsapp .dock-whatsapp-label {
+.dock-whatsapp .dock-whatsapp-label,
+.dock-mail .dock-mail-label {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -3889,8 +3899,8 @@ main {
 }
 
 @media (max-width: 700px) {
-  .dock-btn.dock-whatsapp { width: 5rem; height: 5rem; }
-  .dock-whatsapp-mark { width: 3.5rem; height: 3.5rem; }
+  .dock-btn.dock-whatsapp, .dock-btn.dock-mail { width: 5rem; height: 5rem; }
+  .dock-whatsapp-mark, .dock-mail-mark { width: 3.5rem; height: 3.5rem; }
   .dock-whatsapp-mark svg { width: 1.8rem; height: 1.8rem; }
 }
 
@@ -6211,11 +6221,13 @@ body {
   min-height: 26rem;
 }
 
-.happenings-photo { min-width: 0; }
-.happenings-photo img { width: 100%; height: 100%; object-fit: cover; }
+.happenings-photo { position: relative; min-width: 0; }
+.happenings-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.happenings-photo--contain { background: var(--surface-alt); }
+.happenings-photo--contain img { object-fit: contain; }
 .happenings-programme { min-width: 0; align-self: center; padding: clamp(1.5rem, 4vw, 2.5rem); }
 .happenings-programme h3 { margin-bottom: 1rem; font-size: clamp(2rem, 2.7vw, 2.75rem); line-height: 1.08; text-wrap: balance; }
-.happenings-date { display: inline-flex; padding: 0.4rem 0.7rem; border-radius: 999px; background: var(--sand); color: var(--accent-gold); font-size: var(--text-small); font-weight: 700; }
+.happenings-date { display: inline-flex; flex-wrap: wrap; gap: 0.35em; padding: 0.4rem 0.7rem; border-radius: 999px; background: var(--sand); color: var(--accent-gold); font-size: var(--text-small); font-weight: 700; }
 .happenings-date time { text-transform: uppercase; }
 .happenings-preview-note { font-size: var(--text-small); }
 .happenings-actions { margin-top: 1.5rem; gap: 1rem 1.5rem; }
@@ -6247,7 +6259,7 @@ body {
 .happenings-arrow svg { width: 1.4rem; height: 1.4rem; }
 .happenings-pagination { min-width: 0; text-align: center; }
 .happenings-pagination p { margin: 0; font-size: var(--text-small); color: var(--ink); }
-.happenings-dots { display: flex; justify-content: center; }
+.happenings-dots { display: flex; flex-wrap: wrap; justify-content: center; }
 .happenings-dot { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
 .happenings-dot span { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--muted); }
 .happenings-dot[aria-pressed="true"] span { width: 1.25rem; border-radius: 999px; background: var(--accent-ocean); }
@@ -6271,10 +6283,11 @@ body {
 
 @media (max-width: 720px) {
   .happenings-slide { grid-template-columns: minmax(0, 1fr); }
-  .happenings-photo img { height: auto; aspect-ratio: 4 / 3; }
+  .happenings-photo { aspect-ratio: 4 / 3; }
   .happenings-programme { padding: 1.5rem; }
   .happenings-more-grid { grid-template-columns: minmax(0, 1fr); }
   .happenings-actions .btn { width: 100%; }
+  .happenings-controls { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.5rem; padding-inline: 0.75rem; }
 }
 
 /* Dropdowns have a white surface even while the header overlays the hero. */

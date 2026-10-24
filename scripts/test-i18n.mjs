@@ -58,6 +58,12 @@ try {
     assert.equal(destination.hostname, 'wa.me');
     assert.equal(destination.pathname, `/${SITE.whatsAppPhone}`, 'Preserve the team WhatsApp destination');
     assert.ok(destination.searchParams.get('text').includes(translateText(language, 'I need help with booking and travel information.')));
+    const mail = markup.match(/<a\b[^>]*class="dock-btn dock-mail"[^>]*>[\s\S]*?<\/a>/)?.[0];
+    assert.ok(mail?.includes('dock-mail-label') && mail.includes('dock-mail-mark'), 'Give email its matching curved label and circular icon');
+    assert.ok(visibleStrings(mail).has(translateText(language, 'Email Us')), 'Translate the Email Us label');
+    assert.ok(mail.includes(`href="mailto:${SITE.email}"`), 'Preserve the email destination');
+    const mailArcId = mail.match(/<path id="([^"]+)"/)?.[1];
+    assert.ok(mailArcId && mailArcId !== arcId && mail.includes(`href="#${mailArcId}"`), 'Each curved label references its own SVG arc');
   }
   const { reviewIndex } = await server.ssrLoadModule('/src/components/GuestReviews.jsx');
   assert.equal(SITE.googleMapsUrl, 'https://maps.app.goo.gl/gQsTRmh4VrURr1zRA', 'Use the exact supplied map pin');
@@ -115,13 +121,21 @@ try {
     name: 'Example Visitor', email: 'visitor@example.com', phone: '+255000000000', country: 'Germany',
     dietaryNeeds: 'Vegetarian meals', message: '<script>not executable</script>',
   };
-  assert.equal(new Set(campusProgramme.activities.map(item => item.image)).size, 3, 'Each activity has its own photograph');
-  assert.equal(campusProgramme.month, '2026-10', 'Keep recurring activities scoped to the confirmed October edition');
-  assert.deepEqual(campusProgramme.activities.map(item => [item.schedule, item.title, item.to, item.joinLabel]), [
+  assert.equal(campusProgramme.activities.length, 5, 'Keep the three weekly activities and add the two camps');
+  assert.equal(new Set(campusProgramme.activities.map(item => item.image)).size, 5, 'Each activity has its own photograph');
+  assert.deepEqual([campusProgramme.month, campusProgramme.endMonth, campusProgramme.label], ['2026-10', '2026-11', 'October & November 2026'], 'Keep the team-supplied two-month edition explicit');
+  assert.deepEqual(campusProgramme.activities.slice(0, 3).map(item => [item.schedule, item.title, item.to, item.joinLabel]), [
     ['Every Tuesday', 'Campus Tour including Hamamni Workshop', '/experiences/tours/campus-village-tour', 'Join the next tour'],
     ['Every Thursday', 'Campus Tour including Ngoma Workshop', '/experiences/tours/campus-village-tour', 'Join the workshop'],
     ['Every Wednesday', 'Swahili cooking class', '/experiences/workshops/cooking', 'Join the next class'],
   ], 'Use the supplied weekly schedule, detail pages and join actions');
+  assert.deepEqual(campusProgramme.activities.slice(3).map(item => [item.title, item.date, item.endDate]), [
+    ['Kindness Camp', '2026-11-30', '2026-12-05'],
+    ['Art Retreat Camp - Music Edition', '2026-11-30', '2026-12-06'],
+  ], 'Use the exact camp names and date ranges');
+  assert.ok(campusProgramme.activities[3].image.endsWith('/kindness-community-celebration.webp'), 'Use the supplied Kindness Camp celebration photograph');
+  assert.equal(campusProgramme.activities[3].imageFit, 'contain', 'Keep the full group visible');
+  assert.equal(SITE.sawaEnsembleUrl, 'https://sawaensemble.com', 'Link to the supplied Sawa Ensemble website');
   for (const language of ['en', 'tr', 'de']) {
     const summary = renderBookingSummary(summaryDraft, language);
     const visible = visibleStrings(summary);
@@ -151,15 +165,25 @@ try {
     const volunteerConfirmation = renderBookingConfirmation({ storageMode: 'supabase', bookingType: 'volunteering' }, language);
     assert.ok(!visibleStrings(volunteerConfirmation).has(translateText(language, 'A 20% deposit confirms a camp booking. Individual stays can be paid on arrival.')), 'Do not imply a camp deposit applies to volunteering enquiries');
     for (const item of campusProgramme.activities) {
-      assert.ok(routes.includes(item.to), 'Every activity links to a real detail page');
+      if (item.to) assert.ok(routes.includes(item.to), 'Internal activity links go to real detail pages');
       assert.ok(statSync(new URL(`..${item.image}`, import.meta.url)).size > 0, 'Every slider photo exists');
       const slide = renderProgrammeSlide(item, language);
-      for (const phrase of [item.title, item.description, item.alt, item.schedule, item.joinLabel]) {
+      for (const phrase of [item.title, item.description, item.alt, item.schedule, item.joinLabel].filter(Boolean)) {
         assert.ok(visibleStrings(slide).has(translateText(language, phrase)), 'Translate every slide, not just the first');
       }
-      assert.ok(slide.includes(`href="${item.to}"`));
+      if (item.to) assert.ok(slide.includes(`href="${item.to}"`));
+      if (item.detailsUrl) assert.ok(slide.includes(`href="${item.detailsUrl}"`) && slide.includes('rel="noopener noreferrer"'), 'Link to the original event announcement safely');
       for (const old of ['Date to be confirmed', 'Activity preview - not a confirmed event.']) {
         assert.ok(!visibleStrings(slide).has(translateText(language, old)), 'Confirmed weekly activities must not show preview warnings');
+      }
+      if (item.bookingTo) {
+        assert.ok(slide.includes(`href="${item.bookingTo}"`) && visibleStrings(slide).has(translateText(language, 'Book Now')), 'Both camps have a Book Now button');
+        for (const date of [item.date, item.endDate]) assert.ok(slide.includes(`dateTime="${date}"`) || slide.includes(`datetime="${date}"`), 'Render both dates accessibly');
+        const booking = await renderPage(item.bookingTo, language);
+        assert.ok(booking.includes(`value="${item.date}"`) && booking.includes(`value="${item.endDate}"`), 'Prefill the camp arrival and departure dates');
+        assert.ok(visibleStrings(booking).has(translateText(language, item.title)), 'Carry the camp name into the booking request');
+        if (item.retreatSlug) assert.match(booking, /<option value="kindness-camp" selected="">/, 'Preselect the existing Kindness Camp retreat');
+        continue;
       }
       const join = [...slide.matchAll(/<a\b([^>]*)>/g)].find(match => match[1].includes('https://wa.me/'))?.[1];
       assert.ok(join?.includes('target="_blank"') && join.includes('rel="noopener noreferrer"'), 'Join links open WhatsApp safely in a new tab');
@@ -170,6 +194,11 @@ try {
     const datedSlide = renderProgrammeSlide({ ...campusProgramme.activities[0], date: '2026-10-06' }, language);
     assert.match(datedSlide, /datetime="2026-10-06"/i, 'A confirmed date can be added without changing the slider');
     assert.ok(!visibleStrings(datedSlide).has(translateText(language, 'Date to be confirmed')));
+    const eventsPage = await renderPage('/experiences/events', language);
+    assert.ok(eventsPage.includes(`href="${SITE.sawaEnsembleUrl}"`), 'The Sawa card opens its website');
+    assert.ok(visibleStrings(eventsPage).has(translateText(language, 'Visit the Sawa Ensemble website')), 'Name the website destination clearly');
+    const unknownProgramme = await renderPage('/booking?programme=unknown', language);
+    assert.ok(!unknownProgramme.includes('value="2026-11-30"'), 'Unknown programme parameters do not prefill dates');
   }
   const { safariHeroPhoto, safariOverviewPhoto, safariPlanningPhoto, safariGalleryPhotos } = await server.ssrLoadModule('/src/data/safariPhotos.js');
   const { campusTour, safari, tours } = await server.ssrLoadModule('/src/data/experiences.js');
@@ -579,14 +608,15 @@ try {
   function checkCampusProgramme(markup, route, language) {
     if (route !== '/whats-happening') return;
     const visible = visibleStrings(markup);
-    for (const phrase of ['Workshops, tours and special events', 'What is happening on campus this month?', 'October 2026', 'What else is happening?', '12–14 March 2027', 'Spice Route Cafe', 'Spice Route Museum', 'Follow us on Instagram and stay updated.']) {
+    for (const phrase of ['Workshops, tours and special events', 'What is happening on campus this month?', 'October & November 2026', 'What else is happening?', '12–14 March 2027', 'Spice Route Cafe', 'Spice Route Museum', 'Follow us on Instagram and stay updated.']) {
       assert.ok(visible.has(translateText(language, phrase)), `Campus programme missing: ${phrase} (${language})`);
     }
     for (const phrase of ['Weekly activities', 'Join our weekly campus tours and cooking classes this October. Choose an activity and message us on WhatsApp to join.']) {
       assert.ok(!visible.has(translateText(language, phrase)), 'Remove the extra weekly activity badge and introduction');
     }
     assert.ok(!markup.includes('happenings-status') && !markup.includes('happenings-intro-copy'));
-    assert.match(markup, /datetime="2026-10"/i, 'Keep the explicitly requested October edition');
+    assert.ok(!markup.includes('<time datetime="2026-10">'), 'Do not label a two-month heading as a single month');
+    assert.equal((markup.match(/class="happenings-dot"/g) || []).length, 5, 'All five activities are available in the carousel');
     assert.ok(markup.indexOf('id="happenings-later-title"') > markup.indexOf('id="programme-month"'), 'Later heading follows the monthly programme');
     const main = markup.match(/<main\b[\s\S]*?<\/main>/)?.[0];
     for (const phrase of ['Programme coming soon', 'Activity preview - not a confirmed event.', 'Date to be confirmed', 'More dates will be shared here once confirmed.']) {
@@ -608,7 +638,7 @@ try {
       assert.ok(visible.has(translateText(language, phrase)), 'Localize slider controls and the first activity');
     }
     assert.equal((main.match(/aria-pressed="true"/g) || []).length, 1, 'Exactly one activity is selected');
-    assert.equal((main.match(/class="happenings-dot"/g) || []).length, 3, 'Each photograph has a direct navigation control');
+    assert.equal((main.match(/class="happenings-dot"/g) || []).length, campusProgramme.activities.length, 'Each photograph has a direct navigation control');
   }
   function checkBookingUpdates(markup, route, language) {
     if (route !== '/booking') return;
@@ -888,7 +918,7 @@ try {
   console.log(`Translation tests passed: ${routes.length} routes × 3 languages, visible text and accessibility labels, interpolation, brand preservation.`);
   console.log('Facilities checks passed: ten non-interactive illustrated tiles, localized labels, a separate campus link and desktop/tablet/phone grids.');
   console.log('Cafe checks passed: correct venue attribution, third/fourth cards, review count, section anchor and safe new-tab links.');
-  console.log('Campus programme checks passed: weekly October schedules, WhatsApp join links, festival dates and Stone Town venue links in all languages.');
+  console.log('Campus programme checks passed: October and November edition, three weekly activities, two dated camps, prefilled booking links and the Sawa website in all languages.');
   console.log('Safari checks passed: all five supplied photos, no mainland placeholders, localized captions/alt text, lazy loading and separate Sandbank & Snorkeling imagery.');
   console.log('Tour and typography checks passed: one paid daily half-day tour, supplied copy, correct CTAs, expanded Explore more and Peace Villages font roles.');
   console.log('Experience edits passed: overview-only tour description, invitation above the title, consistent Hamamni spelling and revised soap workshop facts in all languages.');
@@ -897,7 +927,7 @@ try {
   console.log('Campus spaces and safari checks passed: ten non-clickable photo cards, optimized WebP assets, localized labels and exact Mikumi enquiry copy.');
   console.log('Hospitality checks passed: populated Explore more sections, dining photo and revised copy, direct external card links, and Kanga Africa boutique description in all languages.');
   console.log('Social rail checks passed: three preserved destinations, localized hover/accessibility labels, safe external links and route-specific surfaces.');
-  console.log('Booking and programme checks passed: volunteering option, live summary data, delivery-gated next steps and three confirmed weekly photo slides.');
+  console.log('Booking and programme checks passed: volunteering option, live summary data, delivery-gated next steps and five confirmed activity slides.');
   console.log('Volunteering Camp checks passed: independently editable Kindness Camp copy, seven-day itinerary, menu order, booking choice and translations.');
   console.log('Excursion checks passed: four requested offers, consistent detail pages, retained links and no invented village-tour pricing.');
   console.log('Review checks passed: 11 attributed text-only excerpts, translations, requested review removal, source links, wraparound navigation and footer directions.');

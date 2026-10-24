@@ -117,7 +117,7 @@ export const specialEvents = [
     title: "Sawa Ensemble",
     text:
       "The music ensemble that grew out of the campus, performing coastal and devotional repertoire. Follow them for performance dates.",
-    linkLabel: "Follow on Instagram",
+    linkLabel: "Visit the Sawa Ensemble website",
     external: "sawaEnsembleUrl",
   },
   {

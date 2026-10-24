@@ -4,7 +4,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { SITE, SPICE_ROUTE_CAFE } from "../data/siteConfig";
 import { campusProgramme } from "../data/campusProgramme";
 
-// October is the editorial edition requested by the team, not the device month.
+// The editorial edition is requested by the team, not based on the device month.
 export default function WhatsHappening() {
   const { tx } = useLanguage();
 
@@ -12,7 +12,7 @@ export default function WhatsHappening() {
     <main id="main-content" className="happenings-page">
       <SEO
         title="What’s happening? | Karibu Assalam"
-        description="Join our weekly campus tours and Swahili cooking classes in October 2026, and discover more events around Zanzibar."
+        description="Explore workshops, tours, Kindness Camp and Art Retreat Camp - Music Edition in our October & November 2026 campus programme."
         image={campusProgramme.activities[0].image}
       />
       <div className="container happenings-shell">
@@ -25,7 +25,7 @@ export default function WhatsHappening() {
           <header className="happenings-month-header">
             <div>
               <p className="eyebrow">{tx("Campus programme")}</p>
-              <h2 id="programme-month"><time dateTime={campusProgramme.month}>{tx(campusProgramme.label)}</time></h2>
+              <h2 id="programme-month">{tx(campusProgramme.label)}</h2>
             </div>
           </header>
           <ProgrammeSlider items={campusProgramme.activities} />

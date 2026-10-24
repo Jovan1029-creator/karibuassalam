@@ -11,6 +11,7 @@ export default function ContactDock() {
   const { tx, language } = useLanguage();
   const [showTip, setShowTip] = useState(false);
   const bookDirectArcId = useId();
+  const emailArcId = useId();
 
   useEffect(() => {
     const onScroll = () => setShowTip(window.scrollY > window.innerHeight * 0.9);
@@ -36,13 +37,25 @@ export default function ContactDock() {
       <a
         className="dock-btn dock-mail"
         href={`mailto:${SITE.email}`}
-        aria-label={tx("Email")}
-        title={tx("Email")}
+        aria-label={tx("Email Us")}
+        title={tx("Email Us")}
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="14" rx="2" />
-          <path d="m3 7 9 6 9-6" />
+        <svg className="dock-mail-label" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <path id={emailArcId} d="M 8 55 A 42 42 0 0 1 92 55" />
+          </defs>
+          <text>
+            <textPath href={`#${emailArcId}`} startOffset="50%" textAnchor="middle" textLength="78" lengthAdjust="spacingAndGlyphs">
+              {tx("Email Us")}
+            </textPath>
+          </text>
         </svg>
+        <span className="dock-mail-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="m3 7 9 6 9-6" />
+          </svg>
+        </span>
       </a>
 
       <a
