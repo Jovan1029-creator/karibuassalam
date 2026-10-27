@@ -37,6 +37,34 @@ try {
   const { faqSections } = await server.ssrLoadModule('/src/data/faq.js');
   const { facilities } = await server.ssrLoadModule('/src/data/facilities.js');
   const { campusLifePhotos, campusVenuePhotos } = await server.ssrLoadModule('/src/data/campusGallery.js');
+  const { retreatPageCopy } = await server.ssrLoadModule('/src/data/retreatContent2026.js');
+  const { volunteeringCampCopy } = await server.ssrLoadModule('/src/data/volunteeringCampContent2026.js');
+  const sharedBedsCopy = 'Shared rooms with up to 5 beds';
+  const familyBedsCopy = 'Comfortable family rooms with a double bed and single beds - up to 5 beds';
+  for (const camp of [...Object.values(retreatPageCopy), volunteeringCampCopy]) {
+    assert.ok(camp.stayFeatures.some(feature => feature === sharedBedsCopy || feature === familyBedsCopy), 'All camp room descriptions use the updated five-bed capacity');
+    assert.doesNotMatch(camp.stayFeatures.join(' '), /up to 4|2, 3 or 4/, 'Do not retain the old four-bed wording');
+  }
+  for (const language of ['en', 'tr', 'de']) {
+    const homeMarkup = await renderPage('/', language);
+    const hero = homeMarkup.match(/<section class="hero-slider[^>]*>[\s\S]*?<\/section>/)?.[0];
+    const heroImages = [...(hero || '').matchAll(/<img\b[^>]*src="([^"]+)"/g)].map(match => decode(match[1]));
+    assert.equal(heroImages.length, 5, 'Keep all five homepage hero slides');
+    assert.equal(heroImages[1], campusLifePhotos[0].src, 'Use the supplied ocean-terrace photo for the eco-village slide');
+    assert.equal(new Set(heroImages).size, 5, 'Keep distinct photographs in the hero carousel');
+    assert.ok(hero.includes('hero-controls'), 'Keep the slideshow controls');
+    assert.ok(visibleStrings(hero).has(translateText(language, 'Book Your Experience')), 'Keep the active slide call to action translated');
+    const roomsMarkup = await renderPage('/accommodations', language);
+    assert.ok(visibleStrings(roomsMarkup).has(translateText(language, 'Up to 5 beds')), 'Accommodation retains the same five-bed capacity');
+    for (const [slug, camp] of [...Object.entries(retreatPageCopy), ['volunteering-camp', volunteeringCampCopy]]) {
+      const route = `/retreats/${slug}`;
+      const phrase = camp.stayFeatures.find(feature => feature === sharedBedsCopy || feature === familyBedsCopy);
+      const markup = await renderPage(route, language);
+      const translated = translateText(language, phrase);
+      if (language !== 'en') assert.notEqual(translated, phrase, 'Translate the updated capacity');
+      assert.ok(visibleStrings(markup).has(translated), `${route}: render the five-bed room description`);
+    }
+  }
   assert.equal(facilities.length, 10, 'Show ten amenities grounded in the campus content');
   assert.equal(new Set(facilities.map(item => item.icon)).size, facilities.length, 'Give each facility its own illustration');
   assert.ok(facilities.every(item => !('to' in item)), 'Facilities are informational, not navigation');

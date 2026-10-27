@@ -66,7 +66,7 @@ export const retreatPageCopy = {
     stayCopy:
       "Stay in comfortable rooms in Kizimkazi right on the beach and experience the warmth of sharing a space with fellow travellers. Choose between shared accommodation or a private room, depending on your preference and availability.",
     stayFeatures: [
-      "Shared rooms: 2, 3 or 4 people per room",
+      "Shared rooms with up to 5 beds",
       "Private/single room: available upon request",
       "En-suite bathrooms in each room",
       "Wifi available",
@@ -148,7 +148,7 @@ export const retreatPageCopy = {
     stayCopy:
       "Stay in comfortable rooms in Kizimkazi right on the beach and experience the warmth of sharing a space with fellow travellers. Choose between shared accommodation or a private room, depending on your preference and availability.",
     stayFeatures: [
-      "Shared rooms: 2, 3 or 4 people per room",
+      "Shared rooms with up to 5 beds",
       "Private/single room: available upon request",
       "En-suite bathrooms in each room",
       "Wifi available",
@@ -231,7 +231,7 @@ export const retreatPageCopy = {
     stayCopy:
       "Stay in comfortable rooms in Kizimkazi right on the beach and experience the warmth of sharing a space with fellow travellers. Choose between shared accommodation or a private room, depending on your preference and availability.",
     stayFeatures: [
-      "Comfortable family rooms with double bed and single beds - up to 4",
+      "Comfortable family rooms with a double bed and single beds - up to 5 beds",
       "Private/single room: available upon request",
       "En-suite bathrooms in each room",
       "Wifi available",
@@ -311,7 +311,7 @@ export const retreatPageCopy = {
     stayCopy:
       "Stay in comfortable rooms in Kizimkazi right on the beach and experience the warmth of sharing a space with fellow travellers. Choose between shared accommodation or a private room, depending on your preference and availability.",
     stayFeatures: [
-      "Shared rooms: 2, 3 or 4 people per room",
+      "Shared rooms with up to 5 beds",
       "Private/single room: available upon request",
       "En-suite bathrooms in each room",
       "Wifi available",
@@ -392,7 +392,7 @@ export const retreatPageCopy = {
     stayCopy:
       "Stay in comfortable rooms in Kizimkazi right on the beach and experience the warmth of sharing a space with fellow travellers. Choose between shared accommodation or a private room, depending on your preference and availability.",
     stayFeatures: [
-      "Shared rooms: 2, 3 or 4 people per room",
+      "Shared rooms with up to 5 beds",
       "Private/single room: available upon request",
       "En-suite bathrooms in each room",
       "Wifi available",

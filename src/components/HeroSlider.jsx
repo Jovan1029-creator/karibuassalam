@@ -7,7 +7,7 @@ import aerialImg from "../../AssalamHero/assalam-hero.webp";
 import purposeImg from "../../pics/aboutpic/Making a Difference in Zanzibar-enhanced.webp";
 import experienceImg from "../../pics/zanzibarpics/Stonetown Historical Site.webp";
 import retreatImg from "../../pics/our retreats/Nature Retreat-enhanced.webp";
-import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
+import campusImg from "../../pics/site-marketing/campus-2026/01-campus-ocean-view.webp";
 
 const INTERVAL = 8500;
 
