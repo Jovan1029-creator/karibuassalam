@@ -1,13 +1,14 @@
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import Showcase from "../components/Showcase";
+import RoomAmenities from "../components/RoomAmenities";
 import TornEdge from "../components/TornEdge";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
 import roomsImg from "../../pics/site-marketing/campus-2026/07-room-replacement.webp";
 import campusImg from "../../pics/site-marketing/campus-coast-aerial.webp";
-import coastImg from "../../pics/site-marketing/ocean-jetty.webp";
+import coastImg from "../../pics/site-marketing/october-albums/ocean-view-terrace.webp";
 
 function AmenityIcon({ type }) {
   const common = {
@@ -89,11 +90,13 @@ export default function Accommodations() {
 
       <Hero
         eyebrow={tx("Eco-Village Rooms")}
-        title={tx("Comfortable stays at Karibu Assalam Eco-Village")}
+        title={tx("Stay at Karibu Assalam Eco-Village")}
         subtitle={tx(
-          "Rooms are designed to support camp and retreat stays with practical comfort and proximity to the sea."
+          "Our rooms are located right on the beach and offer a beautiful base for your stay. Whether you share during a retreat or are looking for a single with a sea view, welcome at Karibu Assalam!"
         )}
         imageSrc={roomsImg}
+        imageWidth={1200}
+        imageHeight={1600}
         imageAlt={tx("Guest room with mosquito-netted beds at Karibu Assalam Eco-Village")}
         compact
         ctaPrimary={{ to: "/booking", label: tx("Check dates and availability") }}
@@ -116,16 +119,16 @@ export default function Accommodations() {
           <Showcase
             priority
             name={tx("The room")}
-            promise={tx("25 m², up to five beds, a bathroom and a balcony.")}
             text={tx(
-              "Rooms include a balcony, mosquito nets, and a location close to the sea. Each room setup includes a bathroom and bed configurations suitable for group and retreat stays."
+              "Our rooms are spacious, offering up to five beds to provide comfort when sharing, or more than enough space for a couple or a family travelling together."
             )}
-            facts={[tx("25 m2"), tx("5 bed capacity"), tx("AC")]}
             image={roomsImg}
             alt={tx("Guest room with mosquito-netted beds at Karibu Assalam Eco-Village")}
             imageWidth={1200}
             imageHeight={1600}
-          />
+          >
+            <RoomAmenities />
+          </Showcase>
 
           <Showcase
             reversed
@@ -136,9 +139,9 @@ export default function Accommodations() {
             )}
             facts={[tx("Ocean or Garden View"), tx("Renewable Energy")]}
             image={coastImg}
-            alt={tx("Ocean-facing jetty at Karibu Assalam Eco-Village")}
-            imageWidth={768}
-            imageHeight={576}
+            alt={tx("Guests relaxing on a terrace overlooking the ocean")}
+            imageWidth={1600}
+            imageHeight={1068}
           />
 
           <Showcase

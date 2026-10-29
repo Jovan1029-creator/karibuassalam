@@ -17,19 +17,20 @@ const { safariGalleryPhotos } = await server.ssrLoadModule("/src/data/safariPhot
 const { campusLifePhotos, campusVenuePhotos, campusPhotoSrcSet } = await server.ssrLoadModule("/src/data/campusGallery.js");
 const { renderCampusLifeGallery, renderCampusLifeLightbox } = await server.ssrLoadModule("/scripts/i18n-render-fixture.jsx");
 
-test("all thirteen supplied photos have optimized, verified website destinations", () => {
+test("supplied campus and album photos have optimized, verified website destinations", () => {
   const photos = [...campusLifePhotos, ...Object.values(campusVenuePhotos)];
-  assert.equal(campusLifePhotos.length, 8);
-  assert.equal(new Set(photos.map(photo => photo.src)).size, 13);
+  assert.equal(campusLifePhotos.length, 12);
+  assert.equal(new Set(photos.map(photo => photo.src)).size, 17);
   for (const photo of photos) {
-    for (const src of [photo.src, photo.thumb]) {
-      assert.ok(src.startsWith('/pics/site-marketing/campus-2026/'));
+    for (const src of [photo.src, photo.thumb].filter(Boolean)) {
+      assert.ok(src.startsWith('/pics/site-marketing/'));
       assert.ok(src.endsWith('.webp'), 'Do not serve large raw JPEGs or unsupported HEIF files');
       const path = resolve(src.slice(1));
       assert.ok(statSync(path).size > 0 && statSync(path).size < 500_000);
     }
     assert.ok(photo.width > 0 && photo.height > 0);
-    assert.ok(campusPhotoSrcSet(photo).includes(`${photo.src} ${photo.width}w`));
+    if (photo.thumb) assert.ok(campusPhotoSrcSet(photo).includes(`${photo.src} ${photo.width}w`));
+    else assert.equal(campusPhotoSrcSet(photo), undefined);
   }
   assert.ok(campusVenuePhotos.mosque.src.includes('11-mango-mosque'), 'The conflicting boutique file is actually the mosque');
   assert.ok(campusVenuePhotos.school.src.includes('08-school-permaculture'));
@@ -39,13 +40,14 @@ test("all thirteen supplied photos have optimized, verified website destinations
 test("Campus Life gallery and all full-size photos are accessible and translated", () => {
   for (const language of ['en', 'tr', 'de']) {
     const html = renderCampusLifeGallery(language);
-    assert.equal([...html.matchAll(/<figure\b/g)].length, 8);
-    assert.equal([...html.matchAll(/<button\b/g)].length, 8);
-    assert.equal([...html.matchAll(/aria-haspopup="dialog"/g)].length, 8);
+    assert.equal([...html.matchAll(/<figure\b/g)].length, campusLifePhotos.length);
+    assert.equal([...html.matchAll(/<button\b/g)].length, campusLifePhotos.length);
+    assert.equal([...html.matchAll(/aria-haspopup="dialog"/g)].length, campusLifePhotos.length);
     const images = [...html.matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
-    assert.equal(images.length, 8);
+    assert.equal(images.length, campusLifePhotos.length);
     for (const [index, photo] of campusLifePhotos.entries()) {
-      assert.ok(images[index].includes(`src="${photo.thumb}"`) && images[index].includes('srcSet='));
+      assert.ok(images[index].includes(`src="${photo.thumb || photo.src}"`));
+      if (photo.thumb) assert.ok(images[index].includes('srcSet='));
       assert.ok(images[index].includes('loading="lazy"') && images[index].includes('decoding="async"'));
       const lightbox = renderCampusLifeLightbox(index, language);
       assert.ok(lightbox.includes(`src="${photo.src}"`), 'Open the exact photo at full website size');

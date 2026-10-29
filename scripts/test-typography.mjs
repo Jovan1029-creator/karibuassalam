@@ -36,13 +36,13 @@ test('Peace Villages families and responsive size roles are shared sitewide', ()
     '--font-heading': '"Cormorant Garamond", Georgia, serif',
     '--text-body': '1rem',
     '--text-lead': 'clamp(1.05rem, 1.4vw, 1.3rem)',
-    '--text-h1': 'clamp(2.5rem, 5.4vw, 5.75rem)',
-    '--text-h2': 'clamp(2.5rem, 5.4vw, 5.75rem)',
+    '--text-h1': 'clamp(2.5rem, 4.5vw, 4.75rem)',
+    '--text-h2': 'clamp(2rem, 3.5vw, 3.75rem)',
     '--text-h3': 'clamp(1.65rem, 2.5vw, 2.35rem)',
     '--text-feature-title': 'clamp(1.9rem, 2.8vw, 3.2rem)',
-    '--text-editorial-title': 'clamp(3rem, 5.5vw, 6.2rem)',
+    '--text-editorial-title': 'clamp(2.5rem, 4.5vw, 4.75rem)',
     '--text-editorial-body': 'clamp(1rem, 1.2vw, 1.15rem)',
-    '--text-quote': 'clamp(1.75rem, 2.5vw, 2.8rem)',
+    '--text-quote': 'clamp(1.4rem, 1.8vw, 1.85rem)',
     '--text-button': '0.75rem',
     '--text-nav': '0.74rem',
     '--text-eyebrow': '0.68rem',
@@ -56,8 +56,8 @@ test('Peace Villages families and responsive size roles are shared sitewide', ()
   });
   assert.equal(responsive['(min-width: 1024px)']['--text-hero'], 'clamp(3.8rem, 5vw, 6rem)');
   assert.equal(responsive['(min-width: 1024px)']['--leading-hero'], '0.9');
-  assert.equal(responsive['(max-width: 640px)']['--text-h2'], 'clamp(2.35rem, 11vw, 3.1rem)');
-  assert.equal(responsive['(max-width: 640px)']['--text-editorial-title'], 'clamp(2.35rem, 11vw, 3.1rem)');
+  assert.equal(responsive['(max-width: 640px)']['--text-h2'], 'clamp(1.9rem, 8vw, 2.5rem)');
+  assert.equal(responsive['(max-width: 640px)']['--text-editorial-title'], 'clamp(2.25rem, 8.5vw, 3.1rem)');
   assert.equal(responsive['(max-width: 640px)']['--leading-heading'], '0.98');
 });
 
@@ -80,13 +80,13 @@ test('editorial titles are upright and do not retain old italic or heavy overrid
 test('page, section, card and feature titles use the appropriate reference sizes', () => {
   const roles = {
     '--text-h1': ['h1'],
-    '--text-h2': ['h2', '.script-heading', '.showcase-name', '.facilities-section h2', '.press-band h2'],
+    '--text-h2': ['h2', '.script-heading', '.facilities-section h2', '.press-band h2'],
     '--text-h3': ['h3', '.amenity h3', '.circle-card h3', '.experience-card-body h3', '.volunteer-card h3', '.event-card h3', '.stay-option-body h3', '.hero-meta-title', '.happenings-more-card h3'],
     '--text-hero': ['.landing-hero-copy h1', '.hero-script', '.hero-slider-center-2026 .hero-script'],
-    '--text-feature-title': ['.happenings-month-header h2', '.happenings-programme h3', '.happenings-later h2'],
-    '--text-editorial-title': ['.retreat-editorial-copy h1'],
-    '--text-editorial-body': ['.retreat-editorial-description'],
-    '--text-quote': ['.guest-review-card blockquote p', '.retreat-editorial-lead'],
+    '--text-feature-title': ['.showcase-name', '.editorial-lead', '.guest-reviews-intro h2', '.happenings-month-header h2', '.happenings-programme h3', '.happenings-later h2'],
+    '--text-editorial-title': ['.editorial-copy h1'],
+    '--text-editorial-body': ['.editorial-description'],
+    '--text-quote': ['.guest-review-card blockquote p'],
     '--text-lead': ['.lead', '.landing-hero-copy p', '.showcase-promise', '.set-intro p', '.cta-band-inner p', '.hero-slide-copy'],
   };
   for (const [token, selectors] of Object.entries(roles)) {
@@ -118,31 +118,23 @@ test('buttons, navigation and form controls use Inter with reference-sized CTA l
   }
 });
 
-test('Ramadan follows the reference split composition and stacks on smaller screens', () => {
+test('shared introductions preserve photographs and stack at the tablet breakpoint', () => {
   const base = css.clone();
   base.walkAtRules(rule => rule.remove());
-  assert.deepEqual(values('.retreat-editorial-grid', 'grid-template-columns', base), ['minmax(0, 1fr)'], 'Default to a single column on phones and tablets');
-  const desktop = css.nodes.find(n => n.type === 'atrule' && n.name === 'media' && n.params === '(min-width: 1024px)' && n.nodes.some(rule => rule.selector === '.retreat-editorial-grid'));
-  assert.ok(desktop, 'Use two columns at the reference desktop breakpoint');
-  assert.deepEqual(values('.retreat-editorial-grid', 'grid-template-columns', desktop), ['repeat(2, minmax(0, 1fr))']);
-  assert.deepEqual(values('.retreat-editorial-grid', 'gap', desktop), ['4rem']);
-  assert.deepEqual(values('.retreat-editorial-photo', 'min-height', desktop), ['42rem']);
-  assertValues('.retreat-editorial-copy', 'justify-content', 'center');
-  assertValues('.retreat-editorial-copy h1', 'line-height', '0.91');
-  assertValues('.retreat-editorial-copy h1', 'letter-spacing', '-0.045em');
-  assertValues('.retreat-editorial-lead', 'font-family', 'var(--font-heading)');
-  assertValues('.retreat-editorial-lead', 'line-height', '1.08');
-  assertValues('.retreat-editorial-description', 'line-height', '1.8');
-  const phone = css.nodes.find(n => n.type === 'atrule' && n.name === 'media' && n.params === '(max-width: 700px)' && n.nodes.some(rule => rule.selector === '.retreat-editorial-actions'));
-  assert.ok(phone, 'Stack the enquiry actions and facts on phones');
-  for (const [selector, property, value] of [
-    ['.retreat-detail-editorial .retreat-facts-strip', 'grid-template-columns', 'minmax(0, 1fr)'],
-    ['.retreat-editorial-actions', 'flex-direction', 'column'],
-  ]) assert.deepEqual(values(selector, property, phone), [value], `${selector}: ${property}`);
+  assert.deepEqual(values('.editorial-grid', 'grid-template-columns', base), ['minmax(0, 1fr)']);
+  const desktop = css.nodes.find(n => n.type === 'atrule' && n.name === 'media' && n.params === '(min-width: 1024px)' && n.nodes.some(rule => rule.selector === '.editorial-grid'));
+  assert.ok(desktop);
+  assert.deepEqual(values('.editorial-grid', 'grid-template-columns', desktop), ['repeat(2, minmax(0, 1fr))']);
+  assertValues('.editorial-image', 'object-fit', 'contain');
+  assertValues('.editorial-image', 'height', 'auto');
+  assertValues('.editorial-description', 'line-height', '1.8');
+  assertValues('.editorial-actions', 'flex-direction', 'column');
+  assertValues('h1', 'overflow-wrap', 'break-word');
+  css.walkDecls('-webkit-line-clamp', () => assert.fail('Do not cut off supplied copy'));
   css.walkRules(rule => {
-    if (rule.selector.includes('.retreat-editorial-copy') || rule.selector.includes('.retreat-editorial-description')) {
+    if (rule.selector.includes('.editorial-copy') || rule.selector.includes('.editorial-description')) {
       for (const declaration of rule.nodes.filter(n => n.type === 'decl')) {
-        assert.ok(!['height', 'max-height', '-webkit-line-clamp', 'position', 'order'].includes(declaration.prop), 'Keep all translated text in normal flow without truncation or absolute positioning');
+        assert.ok(!['height', 'max-height', 'position', 'order'].includes(declaration.prop), 'Keep translated copy in normal flow');
       }
     }
   });

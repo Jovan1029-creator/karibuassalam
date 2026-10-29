@@ -6,6 +6,7 @@ import { useLanguage } from "../context/LanguageContext";
 export default function Hero({
   eyebrow, title, subtitle, standfirst, caption, imageSrc, imageAlt = "",
   slides = [], ctaPrimary, ctaSecondary, imagePosition = "50% 50%",
+  imageWidth = 1600, imageHeight = 1067,
 }) {
   const { tx } = useLanguage();
   const titleId = useId();
@@ -47,6 +48,7 @@ export default function Hero({
             {mediaSlides.map((slide, index) => (
               <img key={slide.src} className={`editorial-image${index === activeSlide ? " is-active" : ""}`}
                 src={slide.src} alt={index === activeSlide ? tx(slide.alt || imageAlt) : ""}
+                width={slide.width || imageWidth} height={slide.height || imageHeight}
                 aria-hidden={index === activeSlide ? undefined : "true"}
                 loading={index === 0 ? "eager" : "lazy"} decoding="async"
                 fetchpriority={index === 0 ? "high" : "auto"}

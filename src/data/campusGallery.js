@@ -24,6 +24,10 @@ import restaurant from "../../pics/site-marketing/campus-2026/14-restaurant.webp
 import restaurantThumb from "../../pics/site-marketing/campus-2026/14-restaurant-thumb.webp";
 import soap from "../../pics/site-marketing/campus-2026/15-soap-workshop.webp";
 import soapThumb from "../../pics/site-marketing/campus-2026/15-soap-workshop-thumb.webp";
+import learningCircle from "../../pics/site-marketing/october-albums/learning-circle.webp";
+import gardening from "../../pics/site-marketing/october-albums/volunteers-gardening.webp";
+import campusGardens from "../../pics/site-marketing/october-albums/campus-gardens.webp";
+import music from "../../pics/site-marketing/october-albums/sawa-violin.webp";
 
 // Subjects were checked against the actual photographs, not the conflicting
 // Drive labels. Keep the original files in pics/new unchanged.
@@ -36,6 +40,10 @@ export const campusLifePhotos = [
   { src: gathering, thumb: gatheringThumb, width: 1600, height: 1200, label: "Our school community", alt: "Students and visitors gathered in the school hall" },
   { src: garden, thumb: gardenThumb, width: 1200, height: 1600, label: "Learning in the garden", alt: "A student tending a young plant in the school garden", position: "50% 35%" },
   { src: performance, thumb: performanceThumb, width: 1200, height: 1600, label: "Young voices on stage", alt: "Students performing with a microphone at a Mother Language Day celebration", position: "50% 35%" },
+  { src: learningCircle, width: 1600, height: 900, label: "Learning together", alt: "A learning circle in the open-sided thatched campus hall" },
+  { src: gardening, width: 1600, height: 1068, label: "Learning in the garden", alt: "Volunteers tending the soil together in the garden" },
+  { src: campusGardens, width: 1600, height: 1200, label: "Spaces around the campus", alt: "Flowers and palms beside the eco-village buildings" },
+  { src: music, width: 1000, height: 667, label: "Music by the ocean", alt: "A violinist performing beside the ocean" },
 ];
 
 export const campusVenuePhotos = {
@@ -48,6 +56,7 @@ export const campusVenuePhotos = {
 };
 
 export function campusPhotoSrcSet(photo) {
+  if (!photo.thumb) return undefined;
   const thumbWidth = Math.round(photo.width * Math.min(640 / photo.width, 640 / photo.height, 1));
   return `${photo.thumb} ${thumbWidth}w, ${photo.src} ${photo.width}w`;
 }

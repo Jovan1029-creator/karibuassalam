@@ -1,6 +1,6 @@
 # Typography
 
-Reference: [Peace Villages](https://www.peacevillages.com/), checked 24 October 2026.
+Reference: [Peace Villages](https://www.peacevillages.com/), checked 24 October 2026. Sitewide layout and sizing pass: 29 October 2026.
 
 Use upright **Cormorant Garamond 600** for editorial headings and **Inter** for
 body copy and controls. The reference uses two main families; mono utilities
@@ -15,11 +15,11 @@ reviews and the programme. Layouts, colours and branding remain Karibu Assalam's
 | Role | Reference treatment | Shared value |
 | --- | --- | --- |
 | Home hero | Home headline | `clamp(3.1rem, 12.5vw, 5.25rem)`; from 1024px: `clamp(3.8rem, 5vw, 6rem)` |
-| Page title | `.headline` | `clamp(2.5rem, 5.4vw, 5.75rem)` |
-| Section title | `.headline`, mobile `.home-heading` | Same as page title; up to 640px: `clamp(2.35rem, 11vw, 3.1rem)` |
+| Page title | `.headline` | `clamp(2.5rem, 4.5vw, 4.75rem)` |
+| Section title | `.headline`, mobile `.home-heading` | `clamp(2rem, 3.5vw, 3.75rem)`; up to 640px: `clamp(1.9rem, 8vw, 2.5rem)` |
 | Card title | Village-card heading | `clamp(1.65rem, 2.5vw, 2.35rem)`, line height 1.02 |
 | Featured activity | Intro heading | `clamp(1.9rem, 2.8vw, 3.2rem)` |
-| Review quote | Editorial introduction | `clamp(1.75rem, 2.5vw, 2.8rem)`, line height 1.08 |
+| Review quote | Editorial introduction | `clamp(1.4rem, 1.8vw, 1.85rem)`, line height 1.3 |
 | Body | Regular Inter | `1rem`, paragraph line height 1.65 |
 | Lead paragraph | `.body-lg` | `clamp(1.05rem, 1.4vw, 1.3rem)`, line height 1.65 |
 | CTA | `.button` | `.75rem`, 700, uppercase, `.08em` tracking |
@@ -35,18 +35,28 @@ does not shrink or jump when reviews rotate.
 
 ## Editorial split layout
 
-The Ramadan Camp introduction also follows the reference's "Local wisdom"
-section, inspected 27 October 2026: equal desktop columns, a tall unframed photo
-on the left, and a vertically centred title, serif standfirst and body copy on
-the right. At 1024px and above the column gap is 4rem and the photo is at least
-42rem tall. Smaller screens stack the photo before the copy.
+Every interior page uses the shared `Hero` composition: photograph on the left,
+title and description on the right on desktop, stacked photo first below 1024px.
+The home slideshow retains its full-width photographs and existing controls.
 
-This composition uses `--text-editorial-title` (`clamp(3rem, 5.5vw, 6.2rem)`,
-line height .91, tracking -.045em), the existing quote scale for its standfirst,
-and `--text-editorial-body` (`clamp(1rem, 1.2vw, 1.15rem)`, line height 1.8).
-The title switches to the reference's mobile heading scale up to 640px. The
-original description and booking action are preserved, with no text over the
-photo except its small location caption.
+The font families follow the reference, with contextual sizes adapted to the
+available column width. Section headings have wider measures, and narrow-column
+titles use the feature scale. Headings wrap at word boundaries. Full descriptions
+stay in normal flow without line clamps.
+
+Photographs in introductions, showcase rows and room/stay sections preserve their
+complete frame. The Campus Life grid and portrait cards use contained photographs;
+gallery viewers still open the original full-size image. Selected additional
+photographs and source links are in `pics/site-marketing/october-albums/`.
+The swing is no longer used in active page components.
+
+Reviews keep all slides in one overlapping grid to reserve the longest quote's
+height while rotating. The title and quote scales are smaller than a full-width
+page title. The floating contact dock retains its curved labels at a smaller
+phone size, without the tooltip obscuring content.
+
+Accommodation's bathroom, shower, balcony/terrace and A/C icons are a labelled,
+non-interactive list matching the homepage facility illustrations.
 
 ## Local font delivery
 

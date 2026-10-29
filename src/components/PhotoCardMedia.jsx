@@ -12,7 +12,7 @@ export default function PhotoCardMedia({ photo }) {
       srcSet={photo.thumb ? campusPhotoSrcSet(photo) : undefined}
       sizes={photo.thumb ? "(max-width: 700px) 90vw, (max-width: 1100px) 45vw, 400px" : undefined}
       alt={tx(photo.alt)}
-      style={photo.position ? { objectPosition: photo.position } : undefined}
+      style={{ objectPosition: photo.position, objectFit: photo.fit || (photo.height > photo.width ? "contain" : "cover") }}
       width={photo.width || 1200}
       height={photo.height || 800}
       loading="lazy"

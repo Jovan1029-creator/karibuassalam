@@ -19,6 +19,7 @@ export default function Showcase({
   imageWidth = 1024,
   imageHeight = 819,
   priority = false,
+  children,
 }) {
   const { tx } = useLanguage();
   return (
@@ -39,6 +40,7 @@ export default function Showcase({
         <h3 className="showcase-name">{tx(name)}</h3>
         {promise && <p className="showcase-promise">{tx(promise)}</p>}
         {text && <p>{tx(text)}</p>}
+        {children}
 
         {facts.length > 0 && (
           <ul className="showcase-facts">

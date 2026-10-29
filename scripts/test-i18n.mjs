@@ -267,22 +267,23 @@ try {
   const ramadanCamp = getRetreatBySlug('ramadan-camp');
   for (const language of ['en', 'tr', 'de']) {
     const markup = await renderPage('/retreats/ramadan-camp', language);
-    const intro = markup.match(/<section class="retreat-editorial"[\s\S]*?<\/section>/)?.[0];
+    const intro = markup.match(/<section class="hero editorial-hero"[\s\S]*?<\/section>/)?.[0];
     assert.ok(intro, 'Use the Peace Villages image-and-copy composition');
     assert.ok(markup.includes('retreat-detail-editorial'), 'Use the opt-in editorial treatment');
-    const photo = intro.match(/<figure class="retreat-editorial-photo">[\s\S]*?<\/figure>/)?.[0];
+    const photo = intro.match(/<figure class="editorial-photo">[\s\S]*?<\/figure>/)?.[0];
     assert.ok(photo?.includes(`src="${ramadanCamp.heroImage}"`), 'Preserve the existing Ramadan photograph');
     assert.ok(photo.includes('loading="eager"') && photo.includes('fetchpriority="high"'), 'Load the opening photograph promptly');
     assert.ok(visibleStrings(photo).has(translateText(language, ramadanCamp.details.locationText)), 'Place the small location caption on the photograph');
     assert.ok(!photo.includes('<h1') && !visibleStrings(photo).has(translateText(language, ramadanCamp.details.intro)), 'Keep the title and description off the photo');
-    assert.ok(intro.indexOf('retreat-editorial-photo') < intro.indexOf('retreat-editorial-copy'), 'Photo first, then copy in document and phone reading order');
-    const text = intro.slice(intro.indexOf('class="retreat-editorial-copy"'));
+    assert.ok(intro.indexOf('editorial-photo') < intro.indexOf('editorial-copy'), 'Photo first, then copy in document and phone reading order');
+    const text = intro.slice(intro.indexOf('class="editorial-copy"'));
     assert.ok(visibleStrings(text).has(translateText(language, ramadanCamp.details.introHeading)), 'Put the serif standfirst beside the photograph');
     assert.ok(visibleStrings(text).has(translateText(language, ramadanCamp.details.intro)), 'Preserve all supplied description beside the photograph');
-    assert.ok(text.indexOf('<h1') < text.indexOf('retreat-editorial-lead') && text.indexOf('retreat-editorial-lead') < text.indexOf('retreat-editorial-description'), 'Title, serif lead and body follow the reference hierarchy');
+    assert.ok(text.indexOf('<h1') < text.indexOf('editorial-lead') && text.indexOf('editorial-lead') < text.indexOf('editorial-description'), 'Title, serif lead and body follow the reference hierarchy');
     assert.ok(!intro.includes('hero-overlay') && !markup.includes('id="camp-introduction"'), 'Remove the overlay hero and separate duplicate introduction');
     assert.equal((markup.match(/<h1\b/g) || []).length, 1, 'Keep one page title');
-    assert.ok(intro.includes('aria-labelledby="retreat-heading"') && intro.includes('id="retreat-heading"'), 'Label the introduction with the page heading');
+    const titleId = intro.match(/aria-labelledby="([^"]+)"/)?.[1];
+    assert.ok(titleId && intro.includes(`id="${titleId}"`), 'Label the introduction with the page heading');
     assert.ok(text.includes('href="/contact"') && visibleStrings(text).has(translateText(language, ramadanCamp.details.bookingCta)), 'Preserve the primary camp enquiry action');
     assert.ok(text.includes('href="#camp-itinerary"') && markup.includes('id="camp-itinerary"'), 'The secondary action jumps to a real itinerary section');
     assert.ok(visibleStrings(text).has(translateText(language, 'Explore the itinerary')));
@@ -291,7 +292,7 @@ try {
       if (language !== 'en') assert.notEqual(translateText(language, phrase), phrase, 'Localize all new editorial copy');
     }
     const kindnessMarkup = await renderPage('/retreats/kindness-camp', language);
-    assert.ok(!kindnessMarkup.includes('retreat-detail-editorial') && !kindnessMarkup.includes('id="camp-introduction"'), 'Do not restyle unrelated camp pages');
+    assert.ok(kindnessMarkup.includes('editorial-hero') && kindnessMarkup.includes('retreat-detail-editorial'), 'Apply the shared composition to every camp');
   }
   const kindness = getRetreatBySlug('kindness-camp');
   const volunteerCamp = getRetreatBySlug('volunteering-camp');
@@ -720,9 +721,9 @@ try {
     assert.ok(!visible.has(translateText(language, 'Campus Features')) && !markup.includes('class="pill-list"'), 'Remove Campus Features and its badges');
     const life = markup.match(/<section id="campus-life"[\s\S]*?<\/section>/)?.[0];
     assert.ok(life?.includes('campus-life-gallery'), 'Place the photo gallery under Campus Life');
-    assert.equal((life.match(/<figure\b/g) || []).length, 8);
+    assert.equal((life.match(/<figure\b/g) || []).length, campusLifePhotos.length);
     for (const photo of campusLifePhotos) {
-      assert.ok(life.includes(`src="${photo.thumb}"`));
+      assert.ok(life.includes(`src="${photo.thumb || photo.src}"`));
       assert.ok(visibleStrings(life).has(translateText(language, photo.label)));
     }
     const section = markup.match(/<section id="campus-spaces"[\s\S]*?<\/section>/)?.[0];
@@ -917,6 +918,29 @@ try {
   }
   for (const route of routes) {
     const englishMarkup = await renderPage(route, 'en');
+    const intro = englishMarkup.match(/<section class="hero editorial-hero[^>]*>[\s\S]*?<\/section>/)?.[0];
+    if (intro) {
+      assert.ok(intro.includes('editorial-photo') && intro.includes('editorial-copy'), `${route}: share the photo-and-copy structure`);
+      assert.ok(intro.indexOf('editorial-photo') < intro.indexOf('editorial-copy'), `${route}: photo precedes copy on small screens`);
+      assert.doesNotMatch(intro, /hero-overlay/, `${route}: keep the photograph clear of text`);
+    }
+    for (const [, rawSrc] of englishMarkup.matchAll(/<img\b[^>]*src="([^"]+)"/g)) {
+      const src = decode(rawSrc);
+      assert.ok(!src.includes('Image-2-edited-enhanced'), `${route}: do not use the swing photograph`);
+      if (src.startsWith('/pics/') || src.startsWith('/AssalamHero/')) {
+        assert.ok(statSync(new URL(`..${src}`, import.meta.url)).size > 0, `${route}: missing photo ${src}`);
+      }
+    }
+    if (route === '/accommodations') {
+      const visible = visibleStrings(englishMarkup);
+      assert.ok(visible.has('Stay at Karibu Assalam Eco-Village'));
+      assert.ok(visible.has('The room'));
+      assert.ok(!visible.has('25 m², up to five beds, a bathroom and a balcony.'));
+      const amenities = englishMarkup.match(/<ul class="room-amenities"[\s\S]*?<\/ul>/)?.[0];
+      assert.ok(amenities);
+      assert.doesNotMatch(amenities, /<(?:a|button)\b/);
+      for (const label of ['Bathroom', 'Shower', 'Balcony / terrace', 'A/C']) assert.ok(visibleStrings(amenities).has(label));
+    }
     assert.doesNotMatch(englishMarkup, /class="[^"]*\bphoto-slot\b/, `${route}: no empty photo placeholders`);
     checkFacilities(englishMarkup, route, 'en');
     checkReviewsAndFooter(englishMarkup, route, 'en');
@@ -986,7 +1010,7 @@ try {
   console.log('Social rail checks passed: three preserved destinations, localized hover/accessibility labels, safe external links and route-specific surfaces.');
   console.log('Booking and programme checks passed: volunteering option, live summary data, delivery-gated next steps and five confirmed activity slides.');
   console.log('Volunteering Camp checks passed: independently editable Kindness Camp copy, seven-day itinerary, menu order, booking choice and translations.');
-  console.log('Ramadan header checks passed: Peace Villages photo-left, copy-right structure, preserved full introduction, translated text and working actions.');
+  console.log('Shared header checks passed: Peace Villages photo-left, copy-right structure, preserved full introduction, translated text and working actions.');
   console.log('Excursion checks passed: four requested offers, consistent detail pages, retained links and no invented village-tour pricing.');
   console.log('Review checks passed: 11 attributed text-only excerpts, translations, requested review removal, source links, wraparound navigation and footer directions.');
 } finally {

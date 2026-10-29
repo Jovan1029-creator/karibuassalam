@@ -1,7 +1,7 @@
 import { useLanguage } from "../context/LanguageContext";
 import roomsImg from "../../pics/rooms/camps-22-enhanced.webp";
 import foodImg from "../../pics/rooms/food-1-enhanced.webp";
-import campusImg from "../../pics/rooms/Image-2-edited-enhanced.webp";
+import campusImg from "../../pics/site-marketing/october-albums/campus-courtyard.webp";
 import CTAButton from "./CTAButton";
 
 const cards = [
@@ -23,7 +23,7 @@ const cards = [
     title: "Campus",
     to: "/campus",
     image: campusImg,
-    alt: "Assalam eco-village campus common space",
+    alt: "Thatched campus buildings surrounded by palms",
     text: "An oceanside campus with learning spaces, a communal area, and sustainability features.",
   },
 ];

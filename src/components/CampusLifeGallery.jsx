@@ -20,7 +20,7 @@ export default function CampusLifeGallery() {
               onClick={() => setOpenIndex(index)}
             >
               <img
-                src={photo.thumb}
+                src={photo.thumb || photo.src}
                 srcSet={campusPhotoSrcSet(photo)}
                 sizes="(max-width: 540px) calc(100vw - 40px), (max-width: 1100px) 45vw, 280px"
                 alt={tx(photo.alt)}

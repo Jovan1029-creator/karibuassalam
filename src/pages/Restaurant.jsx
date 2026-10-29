@@ -6,6 +6,7 @@ import CTAButton from "../components/CTAButton";
 import { SPICE_ROUTE_CAFE } from "../data/siteConfig";
 import { useLanguage } from "../context/LanguageContext";
 import foodImg from "../../pics/site-marketing/fresh-shared-meal.webp";
+import diningImg from "../../pics/site-marketing/october-albums/garden-dining.webp";
 import { campusVenuePhotos } from "../data/campusGallery";
 import PhotoCardMedia from "../components/PhotoCardMedia";
 
@@ -29,8 +30,10 @@ export default function Restaurant() {
         subtitle={tx(
           "Daily dining at Karibu Assalam Eco-Village is built around fresh meals, Swahili and international cuisine, and shared experiences."
         )}
-        imageSrc={foodImg}
-        imageAlt={tx("Farm-to-table meal prepared at Karibu Assalam Eco-Village")}
+        imageSrc={diningImg}
+        imageAlt="Tables set for a shared meal in the seaside garden"
+        imageWidth={1000}
+        imageHeight={667}
         compact
       />
 
