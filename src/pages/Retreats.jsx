@@ -64,7 +64,7 @@ export default function Retreats() {
               reversed={index % 2 === 1}
               priority={index === 0}
               name={retreat.details?.heading || retreat.title}
-              promise={retreat.details?.intro || retreat.shortPromise}
+              promise={retreat.shortPromise}
               facts={(retreat.details?.includedItems || retreat.highlights).slice(0, 3)}
               price={
                 <>

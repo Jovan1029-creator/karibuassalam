@@ -264,6 +264,35 @@ try {
   const appSource = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8');
   assert.match(appSource, /path="\/experiences\/tours\/city-tour" element=\{<Navigate to="\/experiences\/tours\/spice-tour" replace/, 'Old city-tour links redirect to the combined tour');
   const { getRetreatBySlug, retreats } = await server.ssrLoadModule('/src/data/retreats.js');
+  const ramadanCamp = getRetreatBySlug('ramadan-camp');
+  for (const language of ['en', 'tr', 'de']) {
+    const markup = await renderPage('/retreats/ramadan-camp', language);
+    const intro = markup.match(/<section class="retreat-editorial"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(intro, 'Use the Peace Villages image-and-copy composition');
+    assert.ok(markup.includes('retreat-detail-editorial'), 'Use the opt-in editorial treatment');
+    const photo = intro.match(/<figure class="retreat-editorial-photo">[\s\S]*?<\/figure>/)?.[0];
+    assert.ok(photo?.includes(`src="${ramadanCamp.heroImage}"`), 'Preserve the existing Ramadan photograph');
+    assert.ok(photo.includes('loading="eager"') && photo.includes('fetchpriority="high"'), 'Load the opening photograph promptly');
+    assert.ok(visibleStrings(photo).has(translateText(language, ramadanCamp.details.locationText)), 'Place the small location caption on the photograph');
+    assert.ok(!photo.includes('<h1') && !visibleStrings(photo).has(translateText(language, ramadanCamp.details.intro)), 'Keep the title and description off the photo');
+    assert.ok(intro.indexOf('retreat-editorial-photo') < intro.indexOf('retreat-editorial-copy'), 'Photo first, then copy in document and phone reading order');
+    const text = intro.slice(intro.indexOf('class="retreat-editorial-copy"'));
+    assert.ok(visibleStrings(text).has(translateText(language, ramadanCamp.details.introHeading)), 'Put the serif standfirst beside the photograph');
+    assert.ok(visibleStrings(text).has(translateText(language, ramadanCamp.details.intro)), 'Preserve all supplied description beside the photograph');
+    assert.ok(text.indexOf('<h1') < text.indexOf('retreat-editorial-lead') && text.indexOf('retreat-editorial-lead') < text.indexOf('retreat-editorial-description'), 'Title, serif lead and body follow the reference hierarchy');
+    assert.ok(!intro.includes('hero-overlay') && !markup.includes('id="camp-introduction"'), 'Remove the overlay hero and separate duplicate introduction');
+    assert.equal((markup.match(/<h1\b/g) || []).length, 1, 'Keep one page title');
+    assert.ok(intro.includes('aria-labelledby="retreat-heading"') && intro.includes('id="retreat-heading"'), 'Label the introduction with the page heading');
+    assert.ok(text.includes('href="/contact"') && visibleStrings(text).has(translateText(language, ramadanCamp.details.bookingCta)), 'Preserve the primary camp enquiry action');
+    assert.ok(text.includes('href="#camp-itinerary"') && markup.includes('id="camp-itinerary"'), 'The secondary action jumps to a real itinerary section');
+    assert.ok(visibleStrings(text).has(translateText(language, 'Explore the itinerary')));
+    assert.ok(markup.indexOf('retreat-facts-section') > markup.indexOf(intro), 'Keep the practical details below the split introduction');
+    for (const phrase of [ramadanCamp.details.introHeading, 'Explore the itinerary']) {
+      if (language !== 'en') assert.notEqual(translateText(language, phrase), phrase, 'Localize all new editorial copy');
+    }
+    const kindnessMarkup = await renderPage('/retreats/kindness-camp', language);
+    assert.ok(!kindnessMarkup.includes('retreat-detail-editorial') && !kindnessMarkup.includes('id="camp-introduction"'), 'Do not restyle unrelated camp pages');
+  }
   const kindness = getRetreatBySlug('kindness-camp');
   const volunteerCamp = getRetreatBySlug('volunteering-camp');
   assert.deepEqual(RETREAT_LINKS.slice(1, 4).map(item => item.to), ['/retreats/kindness-camp', '/retreats/volunteering-camp', '/retreats/ramadan-camp'], 'Insert Volunteering Camp between Kindness and Ramadan');
@@ -957,6 +986,7 @@ try {
   console.log('Social rail checks passed: three preserved destinations, localized hover/accessibility labels, safe external links and route-specific surfaces.');
   console.log('Booking and programme checks passed: volunteering option, live summary data, delivery-gated next steps and five confirmed activity slides.');
   console.log('Volunteering Camp checks passed: independently editable Kindness Camp copy, seven-day itinerary, menu order, booking choice and translations.');
+  console.log('Ramadan header checks passed: Peace Villages photo-left, copy-right structure, preserved full introduction, translated text and working actions.');
   console.log('Excursion checks passed: four requested offers, consistent detail pages, retained links and no invented village-tour pricing.');
   console.log('Review checks passed: 11 attributed text-only excerpts, translations, requested review removal, source links, wraparound navigation and footer directions.');
 } finally {

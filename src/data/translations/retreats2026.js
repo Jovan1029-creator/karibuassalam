@@ -6,6 +6,8 @@ const day = (slug, index, tr, de) => [source[slug].schedule[index].copy, tr, de]
 const food = (slug, index, tr, de) => [source[slug].foodCopy[index], tr, de];
 
 export const retreats2026 = [
+  field('ramadan-camp', 'introHeading', "Ramazan'ın ruhunu paylaşın", "Den Geist des Ramadan gemeinsam erleben"),
+  ["Explore the itinerary", "Programı keşfedin", "Reiseprogramm entdecken"],
   food('kindness-camp', 0, "İyilik Kampı'ndaki yemeklerimiz insanları bir araya getirmek için hazırlanır. Svahili tatlarını Türk ve dünya mutfağından dokunuşlarla birleştiren zengin, açık büfe topluluk akşam yemeklerinin keyfini çıkarın.", "Unsere Mahlzeiten im Kindness Camp bringen Menschen zusammen. Genießen Sie großzügige gemeinsame Abendbuffets, die Swahili-Aromen mit türkischen und internationalen Einflüssen verbinden."),
   food('family-tour', 0, "Aile Kampı'ndaki yemeklerimiz insanları bir araya getirmek için hazırlanır. Svahili tatlarını Türk ve dünya mutfağından dokunuşlarla birleştiren zengin, açık büfe topluluk akşam yemeklerinin keyfini çıkarın.", "Unsere Mahlzeiten im Familiencamp bringen Menschen zusammen. Genießen Sie großzügige gemeinsame Abendbuffets, die Swahili-Aromen mit türkischen und internationalen Einflüssen verbinden."),
   food('cultural-heritage-tour', 0, "Karibu Assalam'da ve Kültürel Miras İnzivası'nda yemeklerimiz insanları bir araya getirmek için hazırlanır. Svahili tatlarını Türk ve dünya mutfağından dokunuşlarla birleştiren zengin, açık büfe topluluk akşam yemeklerinin keyfini çıkarın.", "Unsere Mahlzeiten bei Karibu Assalam und im Kulturerbe-Retreat bringen Menschen zusammen. Genießen Sie großzügige gemeinsame Abendbuffets, die Swahili-Aromen mit türkischen und internationalen Einflüssen verbinden."),

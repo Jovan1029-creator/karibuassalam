@@ -59,7 +59,7 @@ export default function RetreatDetail() {
   const related = retreats.filter((item) => item.slug !== retreat.slug).slice(0, 3);
 
   return (
-    <main id="main-content" className="retreat-detail-2026">
+    <main id="main-content" className="retreat-detail-2026 retreat-detail-editorial">
       <SEO
         title={`${tx(displayName)} | ${tx("Karibu Assalam Retreats")}`}
         description={copy?.intro || retreat.shortPromise}
@@ -69,10 +69,13 @@ export default function RetreatDetail() {
       <Hero
         eyebrow="Retreats & Camps"
         title={displayName}
+        standfirst={copy?.introHeading}
         subtitle={copy?.intro || retreat.shortPromise}
+        caption={copy?.locationText}
         imageSrc={retreat.heroImage}
         imageAlt={retreat.heroImageAlt || tx("{name} at Karibu Assalam in Zanzibar", { name: tx(displayName) })}
         ctaPrimary={{ to: "/contact", label: copy?.bookingCta || "Book your spot" }}
+        ctaSecondary={copy ? { href: "#camp-itinerary", label: "Explore the itinerary", variant: "secondary" } : undefined}
       />
 
       {copy ? (
@@ -100,6 +103,7 @@ export default function RetreatDetail() {
           </Section>
 
           <Section
+            id="camp-itinerary"
             eyebrow="7-Day Itinerary"
             title={copy.itineraryHeading || "What your days will look like"}
             subtitle={copy.itineraryIntro}

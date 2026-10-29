@@ -54,6 +54,8 @@
   --text-h1: clamp(2.5rem, 5.4vw, 5.75rem);
   --text-hero: clamp(3.1rem, 12.5vw, 5.25rem);
   --text-feature-title: clamp(1.9rem, 2.8vw, 3.2rem);
+  --text-editorial-title: clamp(3rem, 5.5vw, 6.2rem);
+  --text-editorial-body: clamp(1rem, 1.2vw, 1.15rem);
   --text-quote: clamp(1.75rem, 2.5vw, 2.8rem);
   --text-button: 0.75rem;
   --text-nav: 0.74rem;
@@ -74,6 +76,7 @@
 @media (max-width: 640px) {
   :root {
     --text-h2: clamp(2.35rem, 11vw, 3.1rem);
+    --text-editorial-title: clamp(2.35rem, 11vw, 3.1rem);
     --leading-heading: 0.98;
   }
 }
@@ -6074,6 +6077,181 @@ body {
 
 .retreat-facts-section {
   padding-bottom: 1.25rem;
+}
+
+/* Peace Villages' "Local wisdom" composition: unframed photo on the left,
+   editorial title, serif standfirst and body copy on a solid cream ground. */
+.retreat-editorial {
+  padding-block: clamp(2rem, 4vw, 4rem);
+  background: var(--bg);
+}
+
+.retreat-editorial-grid,
+.retreat-detail-editorial .retreat-facts-section > .container {
+  width: min(1440px, calc(100% - clamp(2rem, 4vw, 4rem)));
+}
+
+.retreat-editorial-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+.retreat-editorial-photo {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface-alt);
+}
+
+.retreat-editorial-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 55%;
+}
+
+.retreat-editorial-photo figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 3.5rem 1.25rem 1.25rem;
+  background: linear-gradient(transparent, rgba(9, 26, 31, 0.7));
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.retreat-editorial-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.retreat-editorial-copy .eyebrow {
+  margin-bottom: 1.25rem;
+  color: var(--accent-gold);
+}
+
+.retreat-editorial-copy h1 {
+  margin: 0;
+  font-size: var(--text-editorial-title);
+  line-height: 0.91;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.retreat-editorial-lead {
+  margin: 2.25rem 0 0;
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: var(--text-quote);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.retreat-editorial-description {
+  margin: 2.25rem 0 0;
+  max-width: 65ch;
+  font-size: var(--text-editorial-body);
+  line-height: 1.8;
+}
+
+.retreat-editorial-actions {
+  margin-top: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .retreat-editorial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4rem;
+  }
+
+  .retreat-editorial-photo {
+    min-height: 42rem;
+    aspect-ratio: auto;
+  }
+
+  .retreat-editorial-copy {
+    padding-block: 2rem;
+  }
+}
+
+.retreat-detail-editorial .retreat-facts-section {
+  padding-block: 0;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border);
+}
+
+.retreat-detail-editorial .retreat-facts-strip {
+  gap: 2rem;
+  padding-block: 1.75rem;
+}
+
+.retreat-detail-editorial .retreat-facts-strip .fact-item {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.retreat-detail-editorial .retreat-facts-strip .fact-item + .fact-item {
+  padding-left: 2rem;
+  border-left: 1px solid var(--border);
+}
+
+.retreat-detail-editorial .retreat-facts-strip .fact-item span {
+  margin-bottom: 0.5rem;
+}
+
+.retreat-detail-editorial .retreat-facts-strip .fact-item strong {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .retreat-editorial-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .retreat-detail-editorial .retreat-facts-strip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-block: 0.5rem;
+  }
+
+  .retreat-detail-editorial .retreat-facts-strip .fact-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    padding-block: 1rem;
+  }
+
+  .retreat-detail-editorial .retreat-facts-strip .fact-item + .fact-item {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .retreat-detail-editorial .retreat-facts-strip .fact-item span {
+    margin: 0;
+  }
+
 }
 
 .retreat-inclusions {

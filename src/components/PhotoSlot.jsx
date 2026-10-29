@@ -14,6 +14,7 @@ export default function PhotoSlot({
   width = 1024,
   height = 819,
   priority = false,
+  position,
 }) {
   const { tx } = useLanguage();
 
@@ -25,6 +26,7 @@ export default function PhotoSlot({
         alt={tx(alt)}
         width={width}
         height={height}
+        style={position ? { objectPosition: position } : undefined}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
         fetchpriority={priority ? "high" : "auto"}

@@ -33,6 +33,21 @@ class names remain for compatibility, but use the upright editorial typeface.
 The review carousel still sizes its shared grid to the longest quote, so it
 does not shrink or jump when reviews rotate.
 
+## Editorial split layout
+
+The Ramadan Camp introduction also follows the reference's "Local wisdom"
+section, inspected 27 October 2026: equal desktop columns, a tall unframed photo
+on the left, and a vertically centred title, serif standfirst and body copy on
+the right. At 1024px and above the column gap is 4rem and the photo is at least
+42rem tall. Smaller screens stack the photo before the copy.
+
+This composition uses `--text-editorial-title` (`clamp(3rem, 5.5vw, 6.2rem)`,
+line height .91, tracking -.045em), the existing quote scale for its standfirst,
+and `--text-editorial-body` (`clamp(1rem, 1.2vw, 1.15rem)`, line height 1.8).
+The title switches to the reference's mobile heading scale up to 640px. The
+original description and booking action are preserved, with no text over the
+photo except its small location caption.
+
 ## Local font delivery
 
 `src/fonts.css` loads the same WOFF2 files used by the reference. Files live in

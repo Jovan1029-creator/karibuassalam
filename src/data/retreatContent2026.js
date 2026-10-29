@@ -86,6 +86,7 @@ export const retreatPageCopy = {
 
   "ramadan-camp": {
     heading: "Ramadan Camp",
+    introHeading: "Share the spirit of Ramadan",
     intro:
       "Our Ramadan Camp is especially for the muslim travellers who want to experience Zanzibar during the holy month of Ramadan. Meet local communities, share meaningful moments with food packaging and zakat distribution, discover the island's culture and share iftars every evening with the local community. If you come as a solo traveller, with friends or family, as a halal-conscious traveller or simply as someone looking for a more meaningful way to experience Zanzibar - just come with an open heart, a willingness to connect, and a spirit of kindness.",
     locationText: "Kizimkazi, Zanzibar",
