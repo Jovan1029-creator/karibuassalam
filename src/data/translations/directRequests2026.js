@@ -1,0 +1,16 @@
+export const directRequests2026 = [
+  ["Prepare your request", "Talebinizi hazırlayın", "Anfrage vorbereiten"],
+  ["Prepare your message", "Mesajınızı hazırlayın", "Nachricht vorbereiten"],
+  ["Fill in your details, then send your request through WhatsApp or your email app. Nothing is sent automatically.",
+    "Bilgilerinizi doldurun, ardından talebinizi WhatsApp veya e-posta uygulamanız üzerinden gönderin. Form, bilgilerinizi otomatik olarak göndermez.",
+    "Tragen Sie Ihre Angaben ein und senden Sie Ihre Anfrage anschließend über WhatsApp oder Ihr E-Mail-Programm. Es wird nichts automatisch versendet."],
+  ["Your request is ready. Choose WhatsApp or email below, then send the message to our team.",
+    "Talebiniz hazır. Aşağıdan WhatsApp veya e-postayı seçin ve açılan uygulamada mesajınızı ekibimize gönderin.",
+    "Ihre Anfrage ist vorbereitet. Wählen Sie unten WhatsApp oder E-Mail und senden Sie die Nachricht an unser Team."],
+  ["Your message is ready. Choose WhatsApp or email below, then send it to our team.",
+    "Mesajınız hazır. Aşağıdan WhatsApp veya e-postayı seçin ve açılan uygulamada mesajınızı ekibimize gönderin.",
+    "Ihre Nachricht ist vorbereitet. Wählen Sie unten WhatsApp oder E-Mail und senden Sie sie an unser Team."],
+  ["Choose an app to send your message. Nothing is sent automatically.",
+    "Mesajınızı göndermek için bir uygulama seçin. Form, mesajınızı otomatik olarak göndermez.",
+    "Wählen Sie eine App, um Ihre Nachricht zu senden. Es wird nichts automatisch versendet."],
+];

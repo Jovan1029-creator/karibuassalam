@@ -28,6 +28,9 @@ import learningCircle from "../../pics/site-marketing/october-albums/learning-ci
 import gardening from "../../pics/site-marketing/october-albums/volunteers-gardening.webp";
 import campusGardens from "../../pics/site-marketing/october-albums/campus-gardens.webp";
 import music from "../../pics/site-marketing/october-albums/sawa-violin.webp";
+import resortAerial from "../../pics/site-marketing/october-albums/resort-coast-aerial.webp";
+import campusOverhead from "../../pics/site-marketing/october-albums/campus-overhead.webp";
+import privatePool from "../../pics/site-marketing/october-albums/private-pool-ocean.webp";
 
 // Subjects were checked against the actual photographs, not the conflicting
 // Drive labels. Keep the original files in pics/new unchanged.
@@ -44,6 +47,9 @@ export const campusLifePhotos = [
   { src: gardening, width: 1600, height: 1068, label: "Learning in the garden", alt: "Volunteers tending the soil together in the garden" },
   { src: campusGardens, width: 1600, height: 1200, label: "Spaces around the campus", alt: "Flowers and palms beside the eco-village buildings" },
   { src: music, width: 1000, height: 667, label: "Music by the ocean", alt: "A violinist performing beside the ocean" },
+  { src: resortAerial, width: 960, height: 540, label: "Eco-village by the coast", alt: "Aerial view of the eco-village buildings and pool beside the Indian Ocean" },
+  { src: campusOverhead, width: 1600, height: 900, label: "Our campus from above", alt: "Overhead view of the campus buildings, gardens and coastal paths" },
+  { src: privatePool, width: 1002, height: 676, label: "Poolside by the ocean", alt: "A private pool beside the ocean with sun loungers and a white building" },
 ];
 
 export const campusVenuePhotos = {

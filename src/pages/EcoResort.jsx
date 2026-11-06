@@ -6,7 +6,7 @@ import EcoVillageCards from "../components/EcoVillageCards";
 import PhotoCardMedia from "../components/PhotoCardMedia";
 import CTAButton from "../components/CTAButton";
 import SEO from "../components/SEO";
-import heroImg from "../../pics/site-marketing/october-albums/campus-gardens.webp";
+import heroImg from "../../pics/site-marketing/october-albums/resort-coast-aerial.webp";
 import roomImg from "../../pics/site-marketing/campus-2026/07-room-replacement.webp";
 import spaImg from "../../pics/site-marketing/spa-ocean-pool.webp";
 import tailoringImg from "../../pics/site-marketing/kanga-tailoring-workshop.webp";
@@ -27,9 +27,9 @@ export default function EcoResort() {
         title="Eco-Village on the beach"
         subtitle="Karibu Assalam is a community-based eco-village experience in Kizimkazi, Zanzibar, where visitors can stay, learn, relax and connect with local culture while supporting sustainable community development."
         imageSrc={heroImg}
-        imageAlt="Flowers and palms beside the eco-village buildings"
-        imageWidth={1600}
-        imageHeight={1200}
+        imageAlt="Aerial view of the eco-village buildings and pool beside the Indian Ocean"
+        imageWidth={960}
+        imageHeight={540}
         ctaPrimary={{ to: "/booking", label: "Find Your Stay" }}
       />
 

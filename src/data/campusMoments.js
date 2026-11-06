@@ -2,6 +2,7 @@ import education from "../../pics/our stories/education-1-enhanced.webp";
 import jetty from "../../pics/site-marketing/ocean-jetty.webp";
 import aerial from "../../pics/site-marketing/campus-coast-aerial.webp";
 import terrace from "../../pics/site-marketing/october-albums/campus-gardens.webp";
+import resortAerial from "../../pics/site-marketing/october-albums/resort-coast-aerial.webp";
 import room from "../../pics/site-marketing/campus-2026/07-room-replacement.webp";
 import guestRoom from "../../pics/rooms/camps-22-enhanced.webp";
 import familyRoom from "../../pics/site-marketing/eco-village-family-room.jpg";
@@ -44,6 +45,7 @@ export const campusMoments = [
       { image: jetty, alt: "Ocean-facing jetty at Karibu Assalam Eco-Village" },
       { image: aerial, alt: "Aerial view of the eco-village along the Zanzibar coast" },
       { image: terrace, alt: "Flowers and palms beside the eco-village buildings" },
+      { image: resortAerial, alt: "Aerial view of the eco-village buildings and pool beside the Indian Ocean" },
     ],
   },
   {

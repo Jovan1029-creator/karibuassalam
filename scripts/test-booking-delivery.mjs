@@ -21,7 +21,15 @@ const server = await createServer({
 });
 const { supabase } = await server.ssrLoadModule("/src/lib/supabaseClient.js");
 const { saveBookingRequestRemote, buildBookingMessage } = await server.ssrLoadModule("/src/utils/bookingAutomation.js");
+const { usesDirectHandoff } = await server.ssrLoadModule("/src/utils/requestDelivery.js");
 const originalFrom = supabase.from;
+
+test("database delivery requires explicit opt-in; missing or invalid modes use direct handoff", () => {
+  for (const mode of ["", "direct", "supabase", "DATABASE", null]) {
+    assert.equal(usesDirectHandoff(mode), true);
+  }
+  assert.equal(usesDirectHandoff("database"), false);
+});
 
 after(async () => {
   supabase.from = originalFrom;

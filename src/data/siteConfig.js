@@ -7,7 +7,7 @@ export const SITE = {
   tagline: "Hospitality + community + sustainability + culture + purpose",
   phoneDisplay: "+255 771 000 800",
   phoneTel: "+255771000800",
-  whatsAppPhone: "255771000800",
+  whatsAppPhone: "255776143285",
   email: "camps@vassalam.org",
   instagramUrl: "https://www.instagram.com/karibu.assalam",
   instagramHandle: "@karibu.assalam",

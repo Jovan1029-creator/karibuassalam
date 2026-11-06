@@ -72,6 +72,22 @@ try {
   assert.deepEqual(faqSections.map(section => section.id), ['preparation', 'travel-support', 'stay', 'booking'], 'Preparation comes first and cancellation last');
   assert.equal(faqSections.flatMap(section => section.items).length, 24, 'Preserve all FAQ questions');
   const { SITE, SPICE_ROUTE_CAFE, ECO_VILLAGE_LINKS, RETREAT_LINKS } = await server.ssrLoadModule('/src/data/siteConfig.js');
+  assert.equal(SITE.whatsAppPhone, '255776143285', 'All shared WhatsApp links use the requested booking number');
+  const { experienceDetails } = await server.ssrLoadModule('/src/data/experienceDetails.js');
+  for (const language of ['en', 'tr', 'de']) {
+    const markup = await renderPage('/booking', language);
+    assert.ok(visibleStrings(markup).has(translateText(language, 'Prepare your request')), 'Default booking flow prepares a message without claiming delivery');
+    assert.ok(visibleStrings(markup).has(translateText(language, 'Fill in your details, then send your request through WhatsApp or your email app. Nothing is sent automatically.')));
+    const contact = await renderPage('/contact', language);
+    assert.ok(visibleStrings(contact).has(translateText(language, 'Prepare your message')));
+    const overview = await renderPage('/experiences', language);
+    for (const workshop of experienceDetails.filter(item => item.type === 'workshops')) {
+      assert.ok(overview.includes(`href="/booking?workshop=${workshop.slug}"`));
+      const booking = await renderPage(`/booking?workshop=${workshop.slug}`, language);
+      assert.match(booking, /<option value="campus-visit" selected="">/);
+      assert.ok(visibleStrings(booking).has(translateText(language, workshop.title)), 'Workshop booking preserves the selected activity in the message');
+    }
+  }
   const { guestReviews, reviewSources } = await server.ssrLoadModule('/src/data/guestReviews.js');
   for (const language of ['en', 'tr', 'de']) {
     const markup = await renderPage('/campus', language);

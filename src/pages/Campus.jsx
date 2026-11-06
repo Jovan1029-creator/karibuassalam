@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import Section from "../components/Section";
 import SEO from "../components/SEO";
 import { useLanguage } from "../context/LanguageContext";
-import campusImg from "../../pics/site-marketing/october-albums/campus-coast.webp";
+import campusImg from "../../pics/site-marketing/october-albums/campus-overhead.webp";
 import permacultureImg from "../../pics/site-marketing/permaculture-campus-tour.webp";
 import PhotoCardMedia from "../components/PhotoCardMedia";
 import CampusLifeGallery from "../components/CampusLifeGallery";
@@ -46,9 +46,9 @@ export default function Campus() {
           "An oceanside, multicultural campus environment designed for learning, community activities, and sustainability-focused living."
         )}
         imageSrc={campusImg}
-        imageWidth={1023}
-        imageHeight={1023}
-        imageAlt={tx("Aerial view of Karibu Assalam Eco-Village on the coast")}
+        imageWidth={1600}
+        imageHeight={900}
+        imageAlt={tx("Overhead view of the campus buildings, gardens and coastal paths")}
         compact
       />
 

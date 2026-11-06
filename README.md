@@ -8,13 +8,25 @@ Production-ready React + Vite website for **Karibu Assalam**, built from local a
 2. `npm run dev`
 3. `npm run build`
 
+## Request delivery and email
+
+Public forms default to **direct handoff**: visitors prepare their request, then
+send it through WhatsApp or their email app. The form itself sends no email.
+WhatsApp goes to **+255 776 143 285**; email links go to **camps@vassalam.org**.
+
+Keep `VITE_BOOKING_DELIVERY=direct` (or leave it unset) while the Supabase project
+is unavailable. Draft details remain in the form until the visitor sends the
+prepared message. The interface never reports a prepared message as delivered.
+
 ## Supabase Setup
 
-The booking system uses Supabase when these Vite environment variables exist:
+To enable database submission, verify the Supabase project and then set these
+Vite environment variables before rebuilding:
 
 ```bash
 VITE_SUPABASE_URL=https://your-project-ref.supabase.co
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_BOOKING_DELIVERY=database
 ```
 
 Setup steps:
@@ -27,7 +39,9 @@ Setup steps:
 
 Rerun `supabase/schema.sql` after pulling schema updates. It is idempotent and enables Realtime updates for the booking inbox.
 
-Without those variables, `/booking` and `/admin` use browser local storage as a fallback.
+The admin dashboard uses browser local storage if Supabase is not configured.
+In database delivery mode, failed submissions can also fall back to an unsent
+local draft. Database saves do not send email notifications.
 
 Local fallback is an unsent draft, not confirmation that the team received a request. If the database cannot be reached, the booking form keeps the guest's details and shows prefilled WhatsApp and email links next to the error. It also preserves the handoff when browser storage is blocked or full.
 
@@ -51,9 +65,9 @@ If submissions fail with `ENOTFOUND` or `ERR_NAME_NOT_RESOLVED`, check that the 
 
 - Booking form:
   - Public route: `/booking`
-  - Saves booking requests to Supabase when configured
-  - Falls back transparently to browser local storage when Supabase is missing or unreachable
-  - Prompts guests to send the prepared WhatsApp or email handoff if cloud sync is unavailable
+  - Prepares a WhatsApp or email message by default, with explicit send instructions
+  - Saves requests to Supabase only with `VITE_BOOKING_DELIVERY=database`
+  - Clearly identifies failed database delivery and offers direct WhatsApp/email links
   - Adds automated priority, room estimate, next action, and reply draft
 - Operations dashboard:
   - Local admin route: `/admin`

@@ -19,8 +19,8 @@ const { renderCampusLifeGallery, renderCampusLifeLightbox } = await server.ssrLo
 
 test("supplied campus and album photos have optimized, verified website destinations", () => {
   const photos = [...campusLifePhotos, ...Object.values(campusVenuePhotos)];
-  assert.equal(campusLifePhotos.length, 12);
-  assert.equal(new Set(photos.map(photo => photo.src)).size, 17);
+  assert.equal(campusLifePhotos.length, 15);
+  assert.equal(new Set(photos.map(photo => photo.src)).size, 20);
   for (const photo of photos) {
     for (const src of [photo.src, photo.thumb].filter(Boolean)) {
       assert.ok(src.startsWith('/pics/site-marketing/'));

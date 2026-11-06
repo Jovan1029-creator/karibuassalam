@@ -1,4 +1,9 @@
 export const hospitalityUpdates2026 = [
+  ["Our campus from above", "Kampüsümüzün havadan görünümü", "Unser Campus von oben"],
+  ["Poolside by the ocean", "Okyanus kıyısında havuz keyfi", "Am Pool mit Meerblick"],
+  ["Aerial view of the eco-village buildings and pool beside the Indian Ocean", "Hint Okyanusu kıyısındaki eko-köy binalarının ve havuzun havadan görünümü", "Luftaufnahme der Gebäude und des Pools des Öko-Dorfs am Indischen Ozean"],
+  ["Overhead view of the campus buildings, gardens and coastal paths", "Kampüs binalarının, bahçelerin ve kıyı yollarının yukarıdan görünümü", "Blick von oben auf die Campusgebäude, Gärten und Küstenwege"],
+  ["A private pool beside the ocean with sun loungers and a white building", "Şezlonglar ve beyaz bir binanın yanında, okyanus kıyısındaki özel havuz", "Ein privater Pool am Meer mit Sonnenliegen und einem weißen Gebäude"],
   ["Stay at Karibu Assalam Eco-Village", "Karibu Assalam Eko-Köyü'nde konaklayın", "Übernachten im Karibu Assalam Öko-Dorf"],
   ["Our rooms are located right on the beach and offer a beautiful base for your stay. Whether you share during a retreat or are looking for a single with a sea view, welcome at Karibu Assalam!",
     "Odalarımız doğrudan sahilde yer alır ve konaklamanız için güzel bir ortam sunar. İster bir inziva sırasında odanızı paylaşın, ister deniz manzaralı tek kişilik bir oda arayın, Karibu Assalam'a hoş geldiniz!",

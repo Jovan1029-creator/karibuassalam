@@ -8,6 +8,8 @@ import BookingConfirmation from "../components/BookingConfirmation";
 import { SITE } from "../data/siteConfig";
 import { retreats } from "../data/retreats";
 import { campusProgramme } from "../data/campusProgramme";
+import { getExperienceDetail } from "../data/experienceDetails";
+import { usesDirectHandoff } from "../utils/requestDelivery";
 import {
   BOOKING_TYPES,
   CONTACT_METHODS,
@@ -29,8 +31,10 @@ function validEmail(value) {
 function initialFormFromParams(searchParams, language, tx) {
   const programme = campusProgramme.activities.find((item) => item.bookingTo && item.id === searchParams.get("programme"));
   const retreatSlug = searchParams.get("retreat") || programme?.retreatSlug || "";
+  const workshop = getExperienceDetail("workshops", searchParams.get("workshop"));
+  const requestedType = searchParams.get("type");
   return {
-    bookingType: "retreat",
+    bookingType: workshop ? "campus-visit" : BOOKING_TYPES.some((item) => item.value === requestedType) ? requestedType : "retreat",
     retreatSlug,
     roomType: "not-sure",
     arrivalDate: programme?.date || "",
@@ -45,7 +49,7 @@ function initialFormFromParams(searchParams, language, tx) {
     phone: "",
     country: "",
     dietaryNeeds: "",
-    message: programme ? tx(programme.title) : "",
+    message: workshop ? tx(workshop.title) : programme ? tx(programme.title) : "",
     website: "",
   };
 }
@@ -69,6 +73,7 @@ export default function Booking() {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(null);
   const [deliveryFailed, setDeliveryFailed] = useState(false);
+  const [requestPrepared, setRequestPrepared] = useState(false);
   const [status, setStatus] = useState("");
   const [statusTone, setStatusTone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,6 +86,7 @@ export default function Booking() {
     const { name, value, type, checked } = event.target;
     setSubmitted(null);
     setDeliveryFailed(false);
+    setRequestPrepared(false);
     setStatus("");
     setStatusTone("");
     setForm((current) => ({
@@ -117,6 +123,7 @@ export default function Booking() {
     event.preventDefault();
     if (isSubmitting) return;
     setDeliveryFailed(false);
+    setRequestPrepared(false);
     setSubmitted(null);
     if (form.website.trim()) {
       setStatus("Request received. The team will review it shortly.");
@@ -132,6 +139,13 @@ export default function Booking() {
       // Send the visitor straight to the first problem instead of making them
       // hunt for red text.
       formRef.current?.querySelector('[aria-invalid="true"]')?.focus();
+      return;
+    }
+
+    if (usesDirectHandoff()) {
+      setRequestPrepared(true);
+      setStatus("Your request is ready. Choose WhatsApp or email below, then send the message to our team.");
+      setStatusTone("");
       return;
     }
 
@@ -199,6 +213,7 @@ export default function Booking() {
       >
         <div className="booking-layout">
           <form className="booking-form" onSubmit={handleSubmit} ref={formRef} noValidate>
+            {usesDirectHandoff() && <p className="request-delivery-note">{tx("Fill in your details, then send your request through WhatsApp or your email app. Nothing is sent automatically.")}</p>}
             <div className={`form-grid${form.bookingType === "retreat" ? " two" : ""}`}>
               <div className="form-field">
                 <label htmlFor="bookingType">{tx("Request type")}</label>
@@ -410,7 +425,7 @@ export default function Booking() {
             </div>
 
             <button type="submit" className="btn btn-primary btn-lg" disabled={isSubmitting}>
-              {isSubmitting ? tx("Sending your request...") : deliveryFailed ? tx("Try again") : tx("Submit your request")}
+              {isSubmitting ? tx("Sending your request...") : usesDirectHandoff() ? tx("Prepare your request") : deliveryFailed ? tx("Try again") : tx("Submit your request")}
             </button>
 
             <p className="secondary-actions">
@@ -429,7 +444,7 @@ export default function Booking() {
               </p>
             )}
             <BookingConfirmation record={submitted} />
-            {deliveryFailed && (
+            {(deliveryFailed || requestPrepared) && (
               <div className="booking-handoff">
                 <h3>{tx("Send it straight to the team")}</h3>
                 <p>{tx("Your details are included. Review the message, then send it.")}</p>

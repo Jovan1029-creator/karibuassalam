@@ -6,6 +6,7 @@ import SEO from "../components/SEO";
 import { SITE } from "../data/siteConfig";
 import { getRetreatBySlug } from "../data/retreats";
 import { buildMailtoUrl, buildWhatsAppUrl } from "../utils/contact";
+import { usesDirectHandoff } from "../utils/requestDelivery";
 import { useLanguage } from "../context/LanguageContext";
 import contactImg from "../../AssalamHero/hero-poster.webp";
 
@@ -103,6 +104,8 @@ export default function Contact() {
 
   function handleChange(event) {
     const { name, value } = event.target;
+    setStatus(null);
+    setStatusTone("");
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
@@ -122,6 +125,12 @@ export default function Contact() {
       setStatus("Please fix the highlighted fields and try again.");
       setStatusTone("error");
       formRef.current?.querySelector('[aria-invalid="true"]')?.focus();
+      return;
+    }
+
+    if (usesDirectHandoff()) {
+      setStatus("Your message is ready. Choose WhatsApp or email below, then send it to our team.");
+      setStatusTone("");
       return;
     }
 
@@ -320,7 +329,7 @@ export default function Contact() {
             </div>
 
             <button type="submit" className="btn btn-primary btn-lg" disabled={isSending}>
-              {isSending ? tx("Sending...") : tx("Send message")}
+              {isSending ? tx("Sending...") : usesDirectHandoff() ? tx("Prepare your message") : tx("Send message")}
             </button>
 
             {status && (
@@ -334,7 +343,7 @@ export default function Contact() {
             )}
 
             <div className="secondary-actions">
-              <span>{tx("Prefer to write directly?")}</span>
+              <span>{tx(usesDirectHandoff() ? "Choose an app to send your message. Nothing is sent automatically." : "Prefer to write directly?")}</span>
               <a
                 className="text-link"
                 href={buildWhatsAppUrl(payload)}

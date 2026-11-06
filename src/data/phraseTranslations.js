@@ -4,9 +4,10 @@
 import { tr } from "./translations/tr.js";
 import { de } from "./translations/de.js";
 import { siteTranslations } from "./translations/siteContent.js";
+import { trEditorial2026 } from "./translations/trEditorial2026.js";
 
 export const phraseTranslations = {
   en: {},
-  tr: { ...tr, ...siteTranslations.tr },
+  tr: { ...tr, ...siteTranslations.tr, ...trEditorial2026 },
   de: { ...de, ...siteTranslations.de },
 };

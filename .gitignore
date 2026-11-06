@@ -8,6 +8,7 @@ dist/
 *.err
 *.err.log
 /pics/Marketing images - public/
+/pics/album-downloads/
 
 # Original downloads; optimized WebP copies are tracked in pics/site-marketing/
 /pics/new/*.[jJ][pP][gG]

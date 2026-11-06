@@ -19,6 +19,7 @@ import {
 } from "../data/experiences";
 import { useLanguage } from "../context/LanguageContext";
 import { safariOverviewPhoto } from "../data/safariPhotos";
+import { getExperienceDetail } from "../data/experienceDetails";
 import heroImg from "../../pics/zanzibarpics/Stonetown & Spice Garden.jpg";
 import spiceImg from "../../pics/site-marketing/campus-2026/16-tours-spice-city.webp";
 // Legacy filenames are reversed: use the actual subjects for the tour cards.
@@ -122,17 +123,19 @@ export default function Experiences() {
       {/* ---------------- workshops ---------------- */}
       <Section
         id="workshops"
-        scriptTitle
+        className="workshops-section"
         eyebrow={tx("Hands on")}
         title={tx("Workshops")}
         subtitle={tx(
           "Half-day sessions run on the campus with the people who do this work every day. Book them on their own or as part of a camp."
         )}
       >
-        <div className="experience-grid">
-          {workshops.map((item) => (
-            <article className="experience-card" key={item.slug}>
-              <div className="experience-card-media">
+        <div className="workshop-grid">
+          {workshops.map((item) => {
+            const detail = getExperienceDetail("workshops", item.slug);
+            return (
+            <article className="workshop-card" key={item.slug}>
+              <Link className="workshop-card-media" to={`/experiences/workshops/${item.slug}`} aria-label={tx(item.title)}>
                 <PhotoSlot
                   src={item.photo?.src || workshopImages[item.slug]}
                   label={tx(item.title)}
@@ -141,17 +144,21 @@ export default function Experiences() {
                   width={item.photo?.width || 1024}
                   height={item.photo?.height || 768}
                 />
-              </div>
-              <div className="experience-card-body">
+              </Link>
+              <div className="workshop-card-body">
+                <p className="workshop-card-meta"><span>{tx(detail.duration)}</span><span>{tx(detail.days)}</span></p>
                 <h3>{tx(item.title)}</h3>
                 <p>{tx(item.text)}</p>
-                <Link className="text-link" to={`/experiences/workshops/${item.slug}`}>{tx("More details")}</Link>
+                <div className="workshop-card-actions">
+                  <Link className="text-link" to={`/experiences/workshops/${item.slug}`}>{tx("More details")}</Link>
+                  <CTAButton to={`/booking?workshop=${item.slug}`}>{tx("Book a workshop")}</CTAButton>
+                </div>
               </div>
             </article>
-          ))}
+          );})}
         </div>
         <div className="section-actions">
-          <CTAButton to="/booking">{tx("Book a workshop")}</CTAButton>
+          <Link className="text-link" to="/whats-happening">{tx("Workshops, tours and special events")} <span aria-hidden="true">↗</span></Link>
         </div>
       </Section>
 
