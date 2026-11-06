@@ -8,6 +8,10 @@ Production-ready React + Vite website for **Karibu Assalam**, built from local a
 2. `npm run dev`
 3. `npm run build`
 
+Vercel deploys `main` automatically. `vercel.json` supplies the SPA fallback so
+direct links and refreshes on routes such as `/booking` reach React Router.
+After deployment, check page URLs as well as static assets on the public URL.
+
 ## Request delivery and email
 
 Public forms default to **direct handoff**: visitors prepare their request, then
