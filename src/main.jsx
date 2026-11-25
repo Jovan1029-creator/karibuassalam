@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 // src\main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -11,6 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <LanguageProvider>
       <BrowserRouter>
         <App />
+        <Analytics />
       </BrowserRouter>
     </LanguageProvider>
   </React.StrictMode>
